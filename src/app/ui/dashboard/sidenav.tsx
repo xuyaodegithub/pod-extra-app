@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 export default function SideNav() {
   return (
       <div className="flex flex-col md:flex-row md:overflow-hidden">
