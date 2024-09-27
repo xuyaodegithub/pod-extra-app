@@ -5,6 +5,8 @@ import SideNav from '@/app/ui/home/sidenav'
 import { Button } from '@/components/ui/button'
 import SearchInput from '@/app/ui/home/searchInput'
 import PopularPodcasts from '@/app/ui/home/popular-podcasts'
+import { Suspense } from 'react'
+import { RevenueChartSkeleton } from '@/app/ui/skeletons'
 export default function Home() {
   return (
     <div className="flex bg-white w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-100">
@@ -45,7 +47,9 @@ export default function Home() {
       <SideNav />
       <main className={`flex-1 overflow-auto pl-[14px]`}>
         <div className={`mb-24px`}>
-          <SearchInput />
+          <Suspense fallback={<RevenueChartSkeleton />}>
+            <SearchInput />
+          </Suspense>
         </div>
         <div className={`mb-24px`}>
           <PopularPodcasts title={`Popular Podcasts`} />
