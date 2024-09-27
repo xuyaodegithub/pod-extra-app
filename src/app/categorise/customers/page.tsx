@@ -1,7 +1,7 @@
 import Image from 'next/image'
 // import styles from '@/app/ui/home.module.css';
 // import clsx from 'clsx';
-import { fetchRevenue } from '@/app/lib/data'
+// import { fetchRevenue } from '@/app/lib/data'
 export default async function Home() {
   // const revenue = await fetchRevenue();
   // console.log(revenue,'------')

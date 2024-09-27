@@ -7,6 +7,9 @@ const nextConfig = (phase) => {
    * @type {import('next').NextConfig}
    */
   const nextConfig = {
+    eslint: {
+      dirs: ['app'], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
+    },
     basePath: '',
     assetPrefix: isDev ? '' : 'https://cdn.mydomain.com',
     crossOrigin: 'anonymous',

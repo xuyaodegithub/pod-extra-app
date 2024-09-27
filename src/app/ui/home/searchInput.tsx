@@ -1,7 +1,7 @@
 'use client'
 import { Input } from '@/components/ui/input'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
-import { useDebouncedCallback, useThrottledCallback } from 'use-debounce'
+import { useDebouncedCallback } from 'use-debounce' //useThrottledCallback
 export default function SearchInput({ ...props }: {}) {
   const searchParams = useSearchParams()
   const pathname = usePathname()

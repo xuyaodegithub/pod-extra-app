@@ -1,7 +1,7 @@
 // lib/axios.ts
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
-const { replace } = useRouter()
+// import { useRouter } from 'next/navigation'
+// const { replace } = useRouter()
 
 const instance: any = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -29,7 +29,7 @@ instance.interceptors.response.use(
     // 对响应数据做点什么
     if (res.code === 0) return res
     else if (res.code === 10001) {
-      replace('/')
+      window.location.host = '/'
     }
   },
   (err: any) => {
