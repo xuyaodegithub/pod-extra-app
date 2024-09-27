@@ -11,7 +11,7 @@ const nextConfig = (phase) => {
       dirs: ['app'], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
     },
     basePath: '',
-    assetPrefix: isDev ? '' : 'https://cdn.mydomain.com',
+    assetPrefix: isDev ? '' : '',
     crossOrigin: 'anonymous',
     experimental: {
       cssChunking: 'loose', // default
