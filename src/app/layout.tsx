@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import '@/app/ui/global.css'
+import SideNav from '@/app/ui/home/sidenav'
+
 export const metadata: Metadata = {
   title: {
     template: '%s | pod-extra-front',
@@ -24,7 +26,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`h-100`}>
-      <body className={`antialiased h-100`}>{children}</body>
+      <body className={`antialiased h-100`}>
+        <div className="flex bg-white w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-100">
+          <SideNav />
+          <main className={`flex-1 overflow-auto pl-[14px]`}>{children}</main>
+        </div>
+      </body>
     </html>
   )
 }

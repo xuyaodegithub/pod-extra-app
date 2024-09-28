@@ -7,6 +7,9 @@ const nextConfig = (phase) => {
    * @type {import('next').NextConfig}
    */
   const nextConfig = {
+    sassOptions: {
+      additionalData: `$var: red;`,
+    },
     eslint: {
       dirs: ['app'], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
     },

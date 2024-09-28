@@ -10,6 +10,12 @@ export const formatCurrency = (amount: number) => {
 export const formatDateToLocal = (dateStr: string, locale: string = 'en-US') => {
   const date = new Date(dateStr)
   const options: Intl.DateTimeFormatOptions = {
+    second: 'numeric',
+    minute: 'numeric',
+    // timeZone: 'UTC',
+    hour12: false,
+    hour: 'numeric',
+    // weekday: 'short',
     day: 'numeric',
     month: 'short',
     year: 'numeric',

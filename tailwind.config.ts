@@ -11,6 +11,7 @@ const config: Config = {
       xl: '1280px',
     },
     fontSize: {
+      min: ['12px', { lineHeight: '18px' }],
       sm: ['14px', { lineHeight: '20px' }],
       md: ['16px', { lineHeight: '24px' }],
       lg: ['18px', { lineHeight: '28px' }],
@@ -49,6 +50,10 @@ const config: Config = {
         '100': '#999',
         '900': '#1a202c',
       },
+      fontGry: {
+        '100': '#B4B4B4',
+        '600': '#646464',
+      },
     },
     borderRadius: {
       none: '0',
@@ -59,6 +64,7 @@ const config: Config = {
       round: '50%',
       full: '9999px',
       '10px': '10px',
+      '5px': '5px',
     },
     spacing: {
       '0': '0',

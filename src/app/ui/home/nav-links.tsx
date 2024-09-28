@@ -10,7 +10,7 @@ import {
 import Link from 'next/link'
 
 const links = [
-  { name: 'Home', href: '/', icon: HomeIcon },
+  { name: 'Home', href: '/home', icon: HomeIcon },
   {
     name: 'Popular Podcasts',
     href: '/popularPodcasts',
@@ -31,7 +31,7 @@ export default function NavLinks() {
           <Link
             key={link.name}
             href={link.href}
-            className={`flex px-[14px] h-[48px] items-center rounded-md text-md hover:bg-accent hover:text-accent-foreground`}
+            className={`flex px-[14px] h-[48px] items-center transition duration-200 rounded-md text-md hover:bg-accent hover:text-accent-foreground`}
           >
             <LinkIcon className="w-[20px] mr-[10px]" />
             <p>{link.name}</p>
