@@ -5,6 +5,7 @@ import axios from 'axios'
 
 const instance: any = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
+  // timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -14,6 +15,7 @@ const instance: any = axios.create({
 instance.interceptors.request.use(
   (config: any) => {
     // 在发送请求之前做些什么
+    console.log('start')
     return config
   },
   (error: any) => {
@@ -27,15 +29,15 @@ instance.interceptors.response.use(
   (response: any) => {
     const res = response.data
     // 对响应数据做点什么
-    if (res.code === 0) return res
-    else if (res.code === 10001) {
+    if (res.code === 0) {
+      console.log('success')
+      // Promise.resolve(res)
+      return res
+    } else if (res.code === 10001) {
       window.location.host = '/'
     }
   },
   (err: any) => {
-    if (!navigator.onLine) {
-      return 'networkdisconnect'
-    }
     // 根据你设置的timeout/真的请求超时 判断请求现在超时了，你可以在这里加入超时的处理方案
     if (err.code === 'ECONNABORTED' && err.message.indexOf('timeout') !== -1) {
       // return axios.request(originalRequest) // 再重复请求一次

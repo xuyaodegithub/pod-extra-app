@@ -2,6 +2,7 @@
 import clsx from 'clsx'
 import styles from '@/app/ui/home.module.scss'
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
+import { getPodCategory } from '@/app/lib/service'
 
 const iconMap = [
   'rgb(132,183,57)',
@@ -24,11 +25,17 @@ const iconMap = [
   'rgb(72,73,245)',
   'rgb(119,107,229)',
 ]
-const list: any[] = Array.from({ length: 19 }, (_: any, ind: number) => ({
-  title: 'a cate name',
-  type: ind,
-}))
 export default async function Categories({ title }: { title: string }) {
+  const payload = {
+    pageNum: 1,
+    pageSize: 20,
+    parentAliasCategoryId: '',
+  }
+  const {
+    data: { resultList },
+  } = await getPodCategory(payload)
+  console.log('isPopularity', resultList)
+
   return (
     <div className={`bg-bgGray rounded-10px py-[21px] px-[25px] mb-24px`}>
       <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
@@ -36,24 +43,20 @@ export default async function Categories({ title }: { title: string }) {
         <ChevronRightIcon className={`ml-[10px] w-[20px]`} />
       </div>
       <div className={`flex flex-wrap`}>
-        {list.map((item, index) => (
-          <Cate key={index} {...item} />
-        ))}
+        {resultList?.map((item: any, index: number) => <Cate key={item.categoryId} {...item} ind={index} />)}
       </div>
     </div>
   )
 }
 
-export function Cate({ title, type }: { title: string; value: number | string; type: number }) {
-  const color = iconMap[type]
-  console.log(color, '----')
-
+export function Cate({ categoryName, ind }: { categoryName: string; ind: number }) {
+  const color = iconMap[ind]
   return (
     <div
-      className={`rounded-5px mb-24px cursor-pointer mr-24px w-[168px] h-[100px] leading-[100px] text-center text-white`}
+      className={`rounded-5px mb-24px cursor-pointer mr-24px w-[170px] h-[100px] leading-[100px] text-center text-white`}
       style={{ backgroundColor: color }}
     >
-      {title}
+      {categoryName}
     </div>
   )
 }

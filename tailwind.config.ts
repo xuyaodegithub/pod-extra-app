@@ -49,6 +49,7 @@ const config: Config = {
       gray: {
         '100': '#999',
         '900': '#1a202c',
+        '1000': '#F0F0F0',
       },
       fontGry: {
         '100': '#B4B4B4',

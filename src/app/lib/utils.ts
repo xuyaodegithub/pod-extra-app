@@ -1,5 +1,6 @@
 import { Revenue } from './definitions'
-
+export const POPULARITY = 'POPULARITY'
+export const PUB_DATE = 'PUB_DATE'
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {
     style: 'currency',
@@ -61,4 +62,46 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   // show the first page, an ellipsis, the current page and its neighbors,
   // another ellipsis, and the last page.
   return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages]
+}
+export const timeFormatter = (val: any, type: string) => {
+  const time = new Date(val)
+  const y = time.getFullYear()
+  const m = time.getMonth() + 1
+  const d = time.getDay()
+  const h = time.getHours()
+  const min = time.getMinutes()
+  const s = time.getSeconds()
+  return
+}
+
+export const formatTime = function (date: any, mode: any) {
+  if (!date) {
+    return ''
+  }
+  const d0 = new Date(0)
+  const d1 = new Date('1970/01/01 08:00:00')
+  // eslint-disable-next-line no-param-reassign
+  date = parseInt(date) + (d1.getTime() - d0.getTime()) / 1000
+  const d = new Date(parseInt(date) * 1000)
+  let format = mode
+  const o = {
+    'M+': d.getMonth() + 1, // month
+    'd+': d.getDate(), // day
+    'h+': d.getHours(), // hour
+    's+': d.getSeconds(), // second
+    'm+': d.getMinutes(), // minute
+    'q+': Math.floor((d.getMonth() + 3) / 3), // quarter
+    S: d.getMilliseconds(), // millisecond
+  }
+  if (/(y+)/.test(format)) {
+    format = format.replace(RegExp.$1, `${d.getFullYear()}`.substr(4 - RegExp.$1.length))
+  }
+  for (const k in o) {
+    if (new RegExp(`(${k})`).test(format)) {
+      // @ts-ignore
+      format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : `00${o[k]}`.substr(`${o[k]}`.length))
+    }
+  }
+
+  return format
 }

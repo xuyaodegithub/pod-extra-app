@@ -7,6 +7,9 @@ const nextConfig = (phase) => {
    * @type {import('next').NextConfig}
    */
   const nextConfig = {
+    // images: {
+    //   domains: ['*'],
+    // },
     sassOptions: {
       additionalData: `$var: red;`,
     },
