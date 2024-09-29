@@ -60,7 +60,7 @@ export function Card({
   itunesAuthor: string
 }) {
   return (
-    <div className="rounded-10px w-[170px] mr-[25px] mb-[18px] overflow-hidden cursor-pointer">
+    <div className="rounded-10px w-[170px] mr-[25px] mb-[18px] overflow-hidden cursor-pointer hover:shadow-md hover:translate-y-[-10px] transition-all">
       <img
         src={coverUrl}
         title={showTitle}

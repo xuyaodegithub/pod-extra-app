@@ -53,7 +53,7 @@ export function Cate({ categoryName, ind }: { categoryName: string; ind: number 
   const color = iconMap[ind]
   return (
     <div
-      className={`rounded-5px mb-24px cursor-pointer mr-24px w-[170px] h-[100px] leading-[100px] text-center text-white`}
+      className={`hover:opacity-80 transition-all rounded-5px mb-24px cursor-pointer mr-24px w-[170px] h-[100px] leading-[100px] text-center text-white`}
       style={{ backgroundColor: color }}
     >
       {categoryName}

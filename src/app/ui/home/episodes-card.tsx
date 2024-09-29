@@ -25,7 +25,7 @@ export function Card({
     setOneLine(elA.offsetHeight > 24)
   }, [])
   return (
-    <div className="flex rounded-[5px] w-[50%] mb-[25px] pr-[12px] overflow-hidden cursor-pointer">
+    <div className="flex rounded-[5px] w-[50%] mb-[25px] pr-[12px] overflow-hidden cursor-pointer hover:shadow-md hover:translate-x-[-10px] transition-all">
       <img
         src={coverUrl}
         title={episodeTitle}
