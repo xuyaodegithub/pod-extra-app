@@ -49,15 +49,15 @@ export default async function PopularPodcasts({ title, type }: { title: string; 
 export function Card({
   coverUrl,
   showTitle,
-  showNotes,
+  itunesAuthor,
   gmtLastUpdate,
   isPopularity,
 }: {
   coverUrl: string
   showTitle: string
-  showNotes: string
   gmtLastUpdate: any
   isPopularity: boolean
+  itunesAuthor: string
 }) {
   return (
     <div className="rounded-10px w-[170px] mr-[25px] mb-[18px] overflow-hidden cursor-pointer">
@@ -70,16 +70,15 @@ export function Card({
         height={170}
       />
       {!isPopularity && (
-        <div className={`text-sm whitespace-nowrap overflow-hidden text-ellipsis text-fontGry-100`} title={showTitle}>
+        <div className={`text-sm whitespace-nowrap overflow-hidden text-ellipsis text-fontGry-100`}>
           Update {formatTime(gmtLastUpdate / 1000, 'dd/MM/yyyy')}
         </div>
       )}
-      <div className={`text-sm whitespace-nowrap overflow-hidden text-ellipsis text-fontGry-100`} title={showTitle}>
-        {showTitle}
-        {isPopularity}
+      <div className={`text-sm whitespace-nowrap overflow-hidden text-ellipsis text-fontGry-100`} title={itunesAuthor}>
+        {itunesAuthor}
       </div>
-      <div className={`text-md overflow-hidden text-ellipsis line-clamp-2 text-fontGry-600`} title={showNotes}>
-        {showNotes || '-'}
+      <div className={`text-md overflow-hidden text-ellipsis line-clamp-2 text-fontGry-600`} title={showTitle}>
+        {showTitle || '-'}
       </div>
     </div>
   )
