@@ -1,5 +1,5 @@
 // import { fetchCardData } from '@/app/lib/data'
-import clsx from 'clsx'
+// import clsx from 'clsx'
 import styles from '@/app/ui/home.module.scss'
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import { getPodCategory } from '@/app/lib/service'

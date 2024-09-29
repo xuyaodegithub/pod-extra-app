@@ -1,4 +1,4 @@
-import Image from 'next/image'
+// import Image from 'next/image'
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import styles from '@/app/ui/home.module.scss'
 import { getPodEpisode } from '@/app/lib/service'
