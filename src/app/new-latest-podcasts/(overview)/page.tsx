@@ -3,7 +3,7 @@ import CardWrapper from '@/app/ui/dashboard/cards'
 import RevenueChart from '@/app/ui/dashboard/revenue-chart'
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices'
 import { Suspense } from 'react'
-import { RevenueChartSkeleton, InvoiceSkeleton, CardsSkeleton } from '@/app/ui/skeletons'
+import { LoadingLine } from '@/app/ui/skeletons'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default async function Page() {
     <main>
       <h1 className={` mb-4 text-xl md:text-2xl`}>{process.env.NEXT_PUBLIC_MODE}</h1>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <Suspense fallback={<CardsSkeleton />}>
+        <Suspense fallback={<LoadingLine />}>
           <CardWrapper />
         </Suspense>
         {/*<Card title="Collected" value={totalPaidInvoices} type="collected" />*/}
@@ -25,10 +25,10 @@ export default async function Page() {
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
         {/*<RevenueChart revenue={revenue} />*/}
-        <Suspense fallback={<RevenueChartSkeleton />}>
+        <Suspense fallback={<LoadingLine />}>
           <RevenueChart />
         </Suspense>
-        <Suspense fallback={<InvoiceSkeleton />}>
+        <Suspense fallback={<LoadingLine />}>
           <LatestInvoices />
         </Suspense>
         {/*<LatestInvoices latestInvoices={latestInvoices} />*/}

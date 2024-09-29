@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 import SearchInput from '@/app/ui/home/searchInput'
 import PopularPodcasts from '@/app/ui/home/popular-podcasts'
 import { Suspense } from 'react'
-import { RevenueChartSkeleton } from '@/app/ui/skeletons'
+import { LoadingLine } from '@/app/ui/skeletons'
 export default function IndexPage() {
   redirect('/home') // 重定向到 /home
   return null

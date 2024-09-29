@@ -1,7 +1,7 @@
 // import { Card } from '@/app/ui/dashboard/cards'
 // import { fetchRevenue, fetchLatestInvoices, fetchCardData } from '@/app/lib/data'
 import { Suspense } from 'react'
-import { RevenueChartSkeleton, LoadingLine } from '@/app/ui/skeletons'
+import { LoadingLine } from '@/app/ui/skeletons'
 import SearchInput from '@/app/ui/home/searchInput'
 import PopularPodcasts from '@/app/ui/home/popular-podcasts'
 import LatestEpisodes from '@/app/ui/home/latest-episodes'
@@ -12,7 +12,7 @@ export default async function Home() {
   return (
     <main>
       <div className={`mb-24px`}>
-        <Suspense fallback={<RevenueChartSkeleton />}>
+        <Suspense fallback={<LoadingLine />}>
           <SearchInput />
         </Suspense>
       </div>
