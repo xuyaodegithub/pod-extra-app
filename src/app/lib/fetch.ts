@@ -8,6 +8,7 @@ const instance: any = axios.create({
   // timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
+    'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
   },
 })
 

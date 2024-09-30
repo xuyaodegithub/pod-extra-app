@@ -1,7 +1,8 @@
 'use client'
 // import Image from 'next/image'
 import { useEffect, useState, useRef } from 'react'
-import { formatTime } from '@/app/lib/utils'
+import { getCurrentLocalTime } from '@/app/lib/utils'
+import { ClockIcon } from '@heroicons/react/24/outline'
 
 export function Card({
   coverUrl,
@@ -30,7 +31,7 @@ export function Card({
         src={coverUrl}
         title={episodeTitle}
         alt={episodeTitle}
-        className={`mr-[6px] rounded-[5px] w-[110px] h-[110px]`}
+        className={`mr-[6px] rounded-[5px] w-[110px] h-[110px] object-cover`}
         width={110}
         height={110}
       />
@@ -42,10 +43,11 @@ export function Card({
           className={`text-sm overflow-hidden text-ellipsis ${oneline ? 'line-clamp-2' : 'line-clamp-3'} line-clamp-2 text-fontGry-100`}
           title={showNotes}
         >
-          {showNotes}
+          {showNotes.replace(/<[^>]*>/g, '')}
         </div>
         <div className={`flex text-sm text-fontGry-100 mt-auto overflow-hidden w-[100%]`}>
-          <span>{formatTime(gmtPubDate / 1000, 'hh:mm:ss  dd/MM/yyyy')}</span>
+          <ClockIcon className={`w-[14px] mr-[4px]`} />
+          <span>{getCurrentLocalTime(gmtPubDate)}</span>
           <span className={`ml-[24px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap`}>{showTitle}</span>
         </div>
       </div>

@@ -7,7 +7,6 @@ export default async function Page() {
   const revenue = await fetchRevenue()
   // const latestInvoices = await fetchLatestInvoices()
   const { numberOfCustomers, numberOfInvoices, totalPaidInvoices, totalPendingInvoices } = await fetchCardData()
-  console.log(revenue, 'ppp')
   return (
     <main>
       <h1 className={`mb-4 text-xl md:text-2xl`}>Dashboard</h1>

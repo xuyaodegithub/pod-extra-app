@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import '@/app/ui/global.css'
 import SideNav from '@/app/ui/home/sidenav'
-
+import Audio from '@/app/ui/home/audio'
 export const metadata: Metadata = {
   title: {
     template: '%s | pod-extra-front',
@@ -31,6 +31,7 @@ export default function RootLayout({
           <SideNav />
           <main className={`flex-1 overflow-auto pl-[14px]`}>{children}</main>
         </div>
+        <Audio />
       </body>
     </html>
   )

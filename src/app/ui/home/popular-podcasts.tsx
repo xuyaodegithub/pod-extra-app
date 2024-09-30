@@ -2,7 +2,7 @@
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import styles from '@/app/ui/home.module.scss'
 import { getPodShow } from '@/app/lib/service'
-import { POPULARITY, formatTime } from '@/app/lib/utils'
+import { POPULARITY, getCurrentLocalTime } from '@/app/lib/utils'
 
 // {
 //   title,
@@ -19,6 +19,7 @@ import { POPULARITY, formatTime } from '@/app/lib/utils'
 //   des: 'A beautiful and respected teacher, she comes from the beautiful city of Hangzhou, China, and her name is Little Cute,',
 // }
 // const list: any[] = Array.from({ length: 10 }, () => cardItem)
+// export async function getServerSideProps(){}
 
 export default async function PopularPodcasts({ title, type }: { title: string; type: string }) {
   const isPopularity = POPULARITY === type
@@ -32,7 +33,7 @@ export default async function PopularPodcasts({ title, type }: { title: string; 
     data: { resultList },
   } = await getPodShow(payload)
   return (
-    <div className={`bg-bgGray rounded-10px py-[18px] px-[25px] mb-24px`}>
+    <div className={`bg-gray-1000 rounded-10px py-[18px] px-[25px] mb-24px`}>
       <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
         <span className={`${styles.hoverBBorder}`}>{title}</span>
         <ChevronRightIcon className={`ml-[10px] w-[20px]`} />
@@ -65,13 +66,13 @@ export function Card({
         src={coverUrl}
         title={showTitle}
         alt={showTitle}
-        className={`mb-[8px] rounded-10px w-[170px] h-[170px]`}
+        className={`mb-[8px] rounded-10px w-[170px] h-[170px] object-cover`}
         width={170}
         height={170}
       />
       {!isPopularity && (
         <div className={`text-sm whitespace-nowrap overflow-hidden text-ellipsis text-fontGry-100`}>
-          Update {formatTime(gmtLastUpdate / 1000, 'dd/MM/yyyy')}
+          Update {getCurrentLocalTime(gmtLastUpdate)}
         </div>
       )}
       <div className={`text-sm whitespace-nowrap overflow-hidden text-ellipsis text-fontGry-100`} title={itunesAuthor}>

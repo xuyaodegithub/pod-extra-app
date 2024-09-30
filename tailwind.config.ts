@@ -48,6 +48,8 @@ const config: Config = {
       bgGray: '#F0F0F0',
       gray: {
         '100': '#999',
+        '200': '#898989',
+        '300': '#BEBEBE',
         '900': '#1a202c',
         '1000': '#F0F0F0',
       },
@@ -55,6 +57,7 @@ const config: Config = {
         '100': '#B4B4B4',
         '600': '#646464',
       },
+      play: '#FF5A0F',
     },
     borderRadius: {
       none: '0',

@@ -105,3 +105,39 @@ export const formatTime = function (date: any, mode: any) {
 
   return format
 }
+export function getCurrentLocalTime(val: any): string {
+  // 获取当前日期
+  const now = new Date(val)
+
+  // 使用 Intl.DateTimeFormat 获取日期部分
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+
+  // 格式化后的日期字符串
+  const parts = formatter.formatToParts(now)
+  let day = ''
+  let month = ''
+  let year = ''
+
+  // 找到并提取 day, month 和 year
+  for (const part of parts) {
+    switch (part.type) {
+      case 'day':
+        day = part.value.padStart(2, '0')
+        break
+      case 'month':
+        month = part.value.padStart(2, '0')
+        break
+      case 'year':
+        year = part.value
+        break
+    }
+  }
+
+  // 组合成 dd/MM/yyyy 格式
+  const formattedDateTime = `${day}/${month}/${year}`
+  return formattedDateTime
+}

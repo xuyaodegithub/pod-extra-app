@@ -34,10 +34,9 @@ export default async function Categories({ title }: { title: string }) {
   const {
     data: { resultList },
   } = await getPodCategory(payload)
-  console.log('isPopularity', resultList)
 
   return (
-    <div className={`bg-bgGray rounded-10px py-[21px] px-[25px] mb-24px`}>
+    <div className={`bg-gray-1000 rounded-10px py-[21px] px-[25px] mb-[100px]`}>
       <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
         <span className={`${styles.hoverBBorder}`}>{title}</span>
         <ChevronRightIcon className={`ml-[10px] w-[20px]`} />
