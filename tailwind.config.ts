@@ -16,6 +16,7 @@ const config: Config = {
       md: ['16px', { lineHeight: '24px' }],
       lg: ['18px', { lineHeight: '28px' }],
       max: ['20px', { lineHeight: '32px' }],
+      max2: ['24px', { lineHeight: '40px' }],
     },
     zIndex: {
       '0': '0',

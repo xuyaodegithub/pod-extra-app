@@ -16,7 +16,9 @@ export default function Audio() {
     'https://content.production.cdn.art19.com/images/75/d9/fa/6b/75d9fa6b-10e8-45e3-9a9d-0cfebd39cd47/6bd37aa60a35dc4a942bdb35d4132ecdb2479f4e8e4863e9eeb5b13b64f1046eac297f5d874cb1585636dd11a508c652acc2a0bc3278d985918125123e0e6626.jpeg'
   )
   const isAudio: any = useRef(null)
-
+  useEffect(() => {
+    setAllTime(isAudio.current.duration)
+  }, [allTime])
   function palyAudio() {
     const isPaused = isAudio.current.paused
     isPaused ? isAudio.current.play() : isAudio.current.pause()

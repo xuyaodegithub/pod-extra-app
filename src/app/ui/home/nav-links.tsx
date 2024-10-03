@@ -9,17 +9,17 @@ import {
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 
-const links = [
+export const links = [
   { name: 'Home', href: '/home', icon: HomeIcon },
   {
     name: 'Popular Podcasts',
-    href: '/popularPodcasts',
+    href: '/popular-top-best-podcasts',
     icon: SignalIcon,
   },
-  { name: 'Latest Podcasts', href: '/latestPodcasts', icon: MicrophoneIcon },
-  { name: 'Latest Episodes', href: '/latestEpisodes', icon: NewspaperIcon },
-  { name: 'Latest AI-processed', href: '/latestAi-processed', icon: StarIcon },
-  { name: 'Categories', href: '/categorise', icon: Squares2X2Icon },
+  { name: 'Latest Podcasts', href: '/new-latest-podcasts', icon: MicrophoneIcon },
+  { name: 'Latest Episodes', href: '/new-latest-episodes', icon: NewspaperIcon },
+  { name: 'Latest AI-processed', href: '/latest-ai-processed-episodes', icon: StarIcon },
+  { name: 'Categories', href: '/podcasts-categories', icon: Squares2X2Icon },
 ]
 
 export default function NavLinks() {

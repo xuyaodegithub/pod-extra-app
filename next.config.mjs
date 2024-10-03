@@ -57,6 +57,24 @@ const nextConfig = (phase) => {
     //   ]
     // },
     // keepAlive: false,
+    // devIndicators: {
+    //   autoPrerender: false,
+    // },
+    // server: {
+    //   // 代理配置
+    //   dev: [
+    //     {
+    //       // 匹配所有以 /api 开头的请求
+    //       path: '/api/*',
+    //       // 目标服务器地址
+    //       target: 'http://localhost:3001',
+    //       // 是否转发主机头
+    //       changeOrigin: true,
+    //       // 是否忽略路径
+    //       pathRewrite: { '^/api': '' },
+    //     },
+    //   ],
+    // },
   }
   return nextConfig
   // experimental: {//最新版next才能使用ppr

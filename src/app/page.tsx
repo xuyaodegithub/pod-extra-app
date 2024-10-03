@@ -1,7 +1,6 @@
 // import Image from 'next/image'
 // import styles from '@/app/ui/home.module.css'
 // import clsx from 'clsx'
-// import { Button } from '@/components/ui/button'
 import { redirect } from 'next/navigation'
 import SearchInput from '@/app/ui/home/searchInput'
 import PopularPodcasts from '@/app/ui/home/popular-podcasts'
