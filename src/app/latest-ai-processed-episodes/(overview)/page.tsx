@@ -1,6 +1,6 @@
 import Pagination from '@/app/ui/pagination'
 import { getPodEpisode } from '@/app/lib/service'
-import { getNoTagText, PUB_DATE } from '@/app/lib/utils'
+import { getNoTagText, TRANSCRIPT_TIME } from '@/app/lib/utils'
 import { Card } from '@/app/ui/home/episodes-card'
 export default async function Page({
   searchParams,
@@ -14,7 +14,7 @@ export default async function Page({
   const pageNum = searchParams?.page || 1
   const {
     data: { resultList, total },
-  } = await getPodEpisode({ sortBy: PUB_DATE, pageNum, pageSize, levelCategoryId: '' })
+  } = await getPodEpisode({ sortBy: TRANSCRIPT_TIME, pageNum, pageSize, levelCategoryId: '' })
   const totalPages = Math.ceil(+total / +pageSize)
   return (
     <main className={`flex flex-col overflow-hidden h-[100%]`}>

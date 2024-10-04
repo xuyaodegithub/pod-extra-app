@@ -3,6 +3,7 @@
 import styles from '@/app/ui/home.module.scss'
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import { getPodCategory } from '@/app/lib/service'
+import Link from 'next/link'
 
 const iconMap = [
   'rgb(132,183,57)',
@@ -34,11 +35,12 @@ export default async function Categories({ title }: { title: string }) {
   const {
     data: { resultList },
   } = await getPodCategory(payload)
-
   return (
     <div className={`bg-gray-1000 rounded-10px py-[21px] px-[25px] mb-[100px]`}>
       <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
-        <span className={`${styles.hoverBBorder}`}>{title}</span>
+        <Link href={`/podcasts-categories`} className={`${styles.hoverBBorder}`}>
+          {title}
+        </Link>
         <ChevronRightIcon className={`ml-[10px] w-[20px]`} />
       </div>
       <div className={`flex flex-wrap`}>

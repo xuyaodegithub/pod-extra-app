@@ -27,6 +27,7 @@ export default function Pagination({ totalPages, total }: { totalPages: number; 
   const selectChange = (v: any) => {
     const params = new URLSearchParams(searchParams)
     params.set('pageSize', v)
+    params.set('page', '1')
     push(`${pathname}?${params.toString()}`)
   }
   const inputBlur = (v: any) => {

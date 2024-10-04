@@ -6,7 +6,7 @@ import SearchInput from '@/app/ui/home/searchInput'
 import PopularPodcasts from '@/app/ui/home/popular-podcasts'
 import LatestEpisodes from '@/app/ui/home/latest-episodes'
 import Categories from '@/app/ui/home/categories'
-import { POPULARITY, PUB_DATE, SUMMARIZE_TIME } from '@/app/lib/utils'
+import { POPULARITY, PUB_DATE, SUMMARIZE_TIME, TRANSCRIPT_TIME } from '@/app/lib/utils'
 
 export default async function Home() {
   return (
@@ -22,7 +22,7 @@ export default async function Home() {
           <LatestEpisodes title={`Latest Episodes`} type={PUB_DATE} />
         </Suspense>
         <Suspense fallback={<LoadingLine />}>
-          <LatestEpisodes title={`Latest AI-processed`} type={SUMMARIZE_TIME} />
+          <LatestEpisodes title={`Latest AI-processed`} type={TRANSCRIPT_TIME} />
         </Suspense>
         <Suspense fallback={<LoadingLine />}>
           <Categories title={`Categories`} />

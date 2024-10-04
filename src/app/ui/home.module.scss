@@ -16,3 +16,21 @@
     }
   }
 }
+.hoverPlayBorder {
+  position: relative;
+  &:after {
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    content: '';
+    height: 2px;
+    background-color: #FF5A0F;
+    transition: all .2s ease-in-out;
+  }
+  &:hover {
+    &:after{
+      width: 100%;
+    }
+  }
+}

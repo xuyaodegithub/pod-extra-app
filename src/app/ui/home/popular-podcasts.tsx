@@ -2,7 +2,8 @@
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import styles from '@/app/ui/home.module.scss'
 import { getPodShow } from '@/app/lib/service'
-import { POPULARITY, getCurrentLocalTime } from '@/app/lib/utils'
+import { POPULARITY, PUB_DATE, getCurrentLocalTime } from '@/app/lib/utils'
+import Link from 'next/link'
 
 // {
 //   title,
@@ -32,10 +33,16 @@ export default async function PopularPodcasts({ title, type }: { title: string; 
   const {
     data: { resultList },
   } = await getPodShow(payload)
+  const urlObj: any = {
+    [POPULARITY]: '/popular-top-best-podcasts',
+    [PUB_DATE]: '/new-latest-podcasts',
+  }
   return (
     <div className={`bg-gray-1000 rounded-10px py-[18px] px-[25px] mb-24px`}>
       <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
-        <span className={`${styles.hoverBBorder}`}>{title}</span>
+        <Link href={urlObj[type]} className={`${styles.hoverBBorder}`}>
+          {title}
+        </Link>
         <ChevronRightIcon className={`ml-[10px] w-[20px]`} />
       </div>
       <div className={`flex flex-wrap`}>

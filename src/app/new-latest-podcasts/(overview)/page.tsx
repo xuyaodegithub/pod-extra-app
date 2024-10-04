@@ -1,6 +1,6 @@
 import Pagination from '@/app/ui/pagination'
 import { getPodShow } from '@/app/lib/service'
-import { getNoTagText, PUB_DATE } from '@/app/lib/utils'
+import { getNoTagText, PUB_DATE, getCurrentLocalTime } from '@/app/lib/utils'
 export default async function Page({
   searchParams,
 }: {
@@ -19,7 +19,7 @@ export default async function Page({
     <main className={`flex flex-col overflow-hidden h-[100%]`}>
       <Pagination totalPages={totalPages} total={total} />
       <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[25px] mt-[22px] flex-1 overflow-auto pb-[100px]`}>
-        {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription }: any) => {
+        {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate }: any) => {
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           return (
             <div className={`flex mb-24px cursor-pointer w-[50%] pr-[14px] overflow-hidden`} key={showId}>
@@ -38,7 +38,10 @@ export default async function Page({
                 <div className={`overflow-hidden text-ellipsis whitespace-nowrap text-fontGry-600 text-md`} title={title}>
                   {title}
                 </div>
-                <div className={`text-sm overflow-hidden text-ellipsis line-clamp-3 text-fontGry-100`} title={des}>
+                <div className={`text-sm text-fontGry-100`} title={des}>
+                  {itunesAuthor}（{`Update ${getCurrentLocalTime(gmtLastUpdate)}`}）
+                </div>
+                <div className={`text-sm overflow-hidden text-ellipsis line-clamp-2 text-fontGry-100`} title={des}>
                   {des}
                 </div>
               </div>

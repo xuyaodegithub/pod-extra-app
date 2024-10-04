@@ -1,5 +1,5 @@
 import { LoadingLine } from '@/app/ui/skeletons'
 
 export default function Loading() {
-  return <LoadingLine />
+  return <LoadingLine num={12} />
 }
