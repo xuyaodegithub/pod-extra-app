@@ -1,7 +1,7 @@
 'use client'
 // import Image from 'next/image'
 import { useEffect, useState, useRef } from 'react'
-import { getCurrentLocalTime } from '@/app/lib/utils'
+import { getCurrentLocalTime, getNoTagText } from '@/app/lib/utils'
 import { ClockIcon } from '@heroicons/react/24/outline'
 
 export function Card({
@@ -31,7 +31,7 @@ export function Card({
         src={coverUrl}
         title={episodeTitle}
         alt={episodeTitle}
-        className={`mr-[6px] rounded-[5px] w-[110px] h-[110px] object-cover`}
+        className={`mr-[6px] rounded-[10px] w-[110px] h-[110px] object-cover`}
         width={110}
         height={110}
       />
@@ -40,10 +40,10 @@ export function Card({
           {episodeTitle}
         </div>
         <div
-          className={`text-sm overflow-hidden text-ellipsis ${oneline ? 'line-clamp-2' : 'line-clamp-3'} line-clamp-2 text-fontGry-100`}
+          className={`text-sm overflow-hidden text-ellipsis ${oneline ? 'line-clamp-2' : 'line-clamp-3'} text-fontGry-100`}
           title={showNotes}
         >
-          {showNotes.replace(/<[^>]*>/g, '')}
+          {getNoTagText(showNotes)}
         </div>
         <div className={`flex text-sm text-fontGry-100 mt-auto overflow-hidden w-[100%]`}>
           <ClockIcon className={`w-[14px] mr-[4px]`} />

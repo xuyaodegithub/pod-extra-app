@@ -1,6 +1,8 @@
 import { Revenue } from './definitions'
 export const POPULARITY = 'POPULARITY'
 export const PUB_DATE = 'PUB_DATE'
+export const TRANSCRIPT_TIME = 'TRANSCRIPT_TIME'
+export const SUMMARIZE_TIME = 'SUMMARIZE_TIME'
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {
     style: 'currency',
@@ -42,6 +44,7 @@ export const generateYAxis = (revenue: Revenue[]) => {
 export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the total number of pages is 7 or less,
   // display all pages without any ellipsis.
+  console.log(currentPage, 'currentPage', currentPage <= 3)
   if (totalPages <= 7) {
     return Array.from({ length: totalPages }, (_, i) => i + 1)
   }
@@ -140,4 +143,7 @@ export function getCurrentLocalTime(val: any): string {
   // 组合成 dd/MM/yyyy 格式
   const formattedDateTime = `${day}/${month}/${year}`
   return formattedDateTime
+}
+export const getNoTagText = (val: string) => {
+  return val.replace(/<[^>]*>/g, '')
 }

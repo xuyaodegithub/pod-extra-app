@@ -1,15 +1,15 @@
-import SideNav from '@/app/ui/dashboard/sidenav'
-// import NavLink from '@/app/ui/dashboard/nav-links'
-// export const experimental_ppr = true//ppr相关
+'use client'
+import { usePathname } from 'next/navigation'
+import { links } from '@/app/ui/home/nav-links'
+import Breadcrumb from '@/app/ui/breadcrumb'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const title = links.find((link) => link.href === pathname)?.name || '-'
   return (
-    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-      <div className="w-full flex-none md:w-64">
-        <SideNav />
-        {/*<NavLink />*/}
-      </div>
-      <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
-    </div>
+    <main className={`h-[100%] flex flex-col`}>
+      <Breadcrumb title={title} />
+      <section className={`flex-1 overflow-hidden`}>{children}</section>
+    </main>
   )
 }

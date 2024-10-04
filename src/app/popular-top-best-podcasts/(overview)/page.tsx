@@ -1,6 +1,6 @@
 import Pagination from '@/app/ui/pagination'
 import { getPodShow } from '@/app/lib/service'
-import { getNoTagText, PUB_DATE } from '@/app/lib/utils'
+import { getNoTagText, POPULARITY } from '@/app/lib/utils'
 export default async function Page({
   searchParams,
 }: {
@@ -13,7 +13,7 @@ export default async function Page({
   const pageNum = searchParams?.page || 1
   const {
     data: { resultList, total },
-  } = await getPodShow({ pageSize, pageNum, sortBy: PUB_DATE, levelCategoryId: '' })
+  } = await getPodShow({ pageSize, pageNum, sortBy: POPULARITY, levelCategoryId: '' })
   const totalPages = Math.ceil(+total / +pageSize)
   return (
     <main className={`flex flex-col overflow-hidden h-[100%]`}>

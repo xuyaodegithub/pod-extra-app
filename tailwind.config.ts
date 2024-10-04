@@ -45,6 +45,7 @@ const config: Config = {
       health: '#1ED760',
       society: '#C167FD',
       crime: '#F3408E',
+      active: '#EC6630',
       religion: '#776BE5',
       bgGray: '#F0F0F0',
       gray: {

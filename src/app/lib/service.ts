@@ -8,3 +8,6 @@ export function getPodEpisode(payload: any) {
 export function getPodCategory(payload: any) {
   return fetchGet('v1/podCategory/pageQuery', payload)
 }
+export function getPopularPodcasts(payload: any) {
+  return fetchGet('v1/podCategory/pageQuery', payload)
+}

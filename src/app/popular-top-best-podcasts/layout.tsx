@@ -1,15 +1,15 @@
 'use client'
 import Breadcrumb from '@/app/ui/breadcrumb'
-import { useSearchParams, usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { links } from '@/app/ui/home/nav-links'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const title = links.find((link) => link.href === pathname)?.name || '-'
   return (
-    <main className={`h-[100%]`}>
+    <main className={`h-[100%] flex flex-col`}>
       <Breadcrumb title={title} />
-      <section>{children}</section>
+      <section className={`flex-1 overflow-hidden`}>{children}</section>
     </main>
   )
 }
