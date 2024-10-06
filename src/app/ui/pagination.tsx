@@ -80,13 +80,17 @@ export default function Pagination({ totalPages, total }: { totalPages: number; 
             })}
           </SelectContent>
         </Select>
-        <span className={`mx-[10px] inline-block leading-[30px]`}> Go to </span>
-        <Input
-          className={`w-[60px] h-[30px] rounded-[10px]`}
-          value={searchParams.get('query')?.toString()}
-          placeholder=""
-          onBlur={(e: any) => inputBlur(e.target?.value || '')}
-        />
+        {totalPages > 1 && (
+          <div className={`flex items-center`}>
+            <span className={`mx-[10px] inline-block leading-[30px]`}> Go to </span>
+            <Input
+              className={`w-[60px] h-[30px] rounded-[10px]`}
+              value={searchParams.get('query')?.toString()}
+              placeholder=""
+              onBlur={(e: any) => inputBlur(e.target?.value || '')}
+            />
+          </div>
+        )}
       </div>
     </>
   )

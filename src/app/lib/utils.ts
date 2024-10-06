@@ -147,3 +147,6 @@ export function getCurrentLocalTime(val: any): string {
 export const getNoTagText = (val: string) => {
   return val.replace(/<[^>]*>/g, '')
 }
+export function capitalizeFirstLetter(str: string) {
+  return str.replace(/\b\w/g, (char) => char.toUpperCase())
+}
