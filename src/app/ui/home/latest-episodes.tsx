@@ -29,9 +29,9 @@ export default async function LatestEpisodes({ title, type }: { title: string; t
         <ChevronRightIcon className={`ml-[10px] w-[20px]`} />
       </div>
       <div className={`flex flex-wrap`}>
-        {resultList.map((item: any) => (
-          <Card key={item?.episodeId} {...item} />
-        ))}
+        {resultList.map((item: any) => {
+          return <Card key={item?.episodeId} {...item} />
+        })}
       </div>
     </div>
   ) : null

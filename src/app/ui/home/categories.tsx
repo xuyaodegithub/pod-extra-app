@@ -50,14 +50,16 @@ export default async function Categories({ title }: { title: string }) {
   )
 }
 
-export function Cate({ categoryName, ind }: { categoryName: string; ind: number }) {
+export function Cate({ categoryName, ind, categoryId }: { categoryName: string; ind: number; categoryId: string }) {
   const color = iconMap[ind]
   return (
-    <div
-      className={`hover:opacity-80 transition-all rounded-5px mb-24px cursor-pointer mr-24px w-[170px] h-[100px] leading-[100px] text-center text-white`}
-      style={{ backgroundColor: color }}
-    >
-      {categoryName}
-    </div>
+    <Link href={`/podcasts-categories/${encodeURIComponent(categoryName)}-podcasts?categoryId=${categoryId}`}>
+      <div
+        className={`hover:opacity-80 transition-all rounded-5px mb-24px cursor-pointer mr-24px w-[170px] h-[100px] leading-[100px] text-center text-white`}
+        style={{ backgroundColor: color }}
+      >
+        {categoryName}
+      </div>
+    </Link>
   )
 }

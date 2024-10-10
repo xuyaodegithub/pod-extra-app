@@ -16,7 +16,6 @@ const instance: any = axios.create({
 instance.interceptors.request.use(
   (config: any) => {
     // 在发送请求之前做些什么
-    console.log('start')
     return config
   },
   (error: any) => {
@@ -31,7 +30,6 @@ instance.interceptors.response.use(
     const res = response.data
     // 对响应数据做点什么
     if (res.code === 0) {
-      console.log('success')
       // Promise.resolve(res)
       return res
     } else if (res.code === 10001) {

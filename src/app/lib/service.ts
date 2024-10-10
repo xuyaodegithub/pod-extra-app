@@ -11,3 +11,6 @@ export function getPodCategory(payload: any) {
 export function getPopularPodcasts(payload: any) {
   return fetchGet('v1/podCategory/pageQuery', payload)
 }
+export function getPodcastsDetail(showId: string) {
+  return fetchGet(`v1/podShow/${showId}`, {})
+}

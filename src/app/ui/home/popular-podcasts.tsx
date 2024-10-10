@@ -46,9 +46,14 @@ export default async function PopularPodcasts({ title, type }: { title: string; 
         <ChevronRightIcon className={`ml-[10px] w-[20px]`} />
       </div>
       <div className={`flex flex-wrap`}>
-        {resultList.map((item: any) => (
-          <Card key={item.showId} {...item} isPopularity={isPopularity} />
-        ))}
+        {resultList.map((item: any) => {
+          const { showId, showTitle } = item
+          return (
+            <Link href={`/podcast/${encodeURIComponent(showTitle)}-podcast-${showId}`} key={item.showId}>
+              <Card {...item} isPopularity={isPopularity} />
+            </Link>
+          )
+        })}
       </div>
     </div>
   )

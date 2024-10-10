@@ -59,6 +59,7 @@ const config: Config = {
       fontGry: {
         '100': '#B4B4B4',
         '600': '#646464',
+        c8: '#C8C8C8',
       },
       play: '#FF5A0F',
     },

@@ -23,7 +23,6 @@ export default function Pagination({ totalPages, total }: { totalPages: number; 
     return `${pathname}?${params.toString()}`
   }
   const allPages = generatePagination(currentPage, totalPages)
-  console.log(allPages, 'curren')
   const selectChange = (v: any) => {
     const params = new URLSearchParams(searchParams)
     params.set('pageSize', v)
@@ -40,7 +39,7 @@ export default function Pagination({ totalPages, total }: { totalPages: number; 
     <>
       {/*  NOTE: Uncomment this code in Chapter 11 */}
 
-      <div className="inline-flex">
+      <div className="flex items-center">
         <span className={`mr-[16px] text-sm`}>{`Total ${total} episodes`}</span>
         <PaginationArrow direction="left" href={createPageURL(currentPage - 1)} isDisabled={currentPage <= 1} />
 
