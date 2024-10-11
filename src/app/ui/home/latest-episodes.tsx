@@ -21,7 +21,7 @@ export default async function LatestEpisodes({ title, type }: { title: string; t
     [TRANSCRIPT_TIME]: '/latest-ai-processed-episodes',
   }
   return resultList.length ? (
-    <div className={`bg-gray-1000 rounded-10px py-[21px] px-[25px] mb-24px`}>
+    <div className={`bg-gray-1000 rounded-10px py-[11px] px-[15px] mb-24px`}>
       <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
         <Link href={urlObj[type]} className={`${styles.hoverBBorder}`}>
           {title}
@@ -30,7 +30,7 @@ export default async function LatestEpisodes({ title, type }: { title: string; t
       </div>
       <div className={`flex flex-wrap`}>
         {resultList.map((item: any) => {
-          return <Card key={item?.episodeId} {...item} />
+          return <Card key={item?.episodeId} {...item} isHome={true} />
         })}
       </div>
     </div>

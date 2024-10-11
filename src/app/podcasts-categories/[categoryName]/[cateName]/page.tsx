@@ -31,12 +31,12 @@ export default async function Page({
   return (
     <main className={`flex flex-col overflow-hidden h-[100%]`}>
       <Pagination totalPages={totalPages} total={total} />
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[25px] mt-[22px] overflow-auto pb-[100px]`}>
+      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] mt-[22px] overflow-auto pb-[100px]`}>
         {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate }: any) => {
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           return (
             <Link href={`/podcast/${encodeURIComponent(title)}-podcast-${showId}`} key={showId} className={` w-[50%]`}>
-              <div className={`flex mb-24px cursor-pointer pr-[14px] overflow-hidden`}>
+              <div className={`flex mb-4px cursor-pointer overflow-hidden hover:bg-hbg transition-all p-[10px] rounded-10px`}>
                 <img src={coverUrl} alt="" className={`w-[110px] h-[110px] object-cover rounded-10px`} />
                 <div className={`flex-1 ml-[10px] overflow-hidden`}>
                   <div className={`flex mb-[6px]`}>{categoryList?.map((item: any) => <CateItem {...item} key={item.categoryId} />)}</div>

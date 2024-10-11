@@ -36,7 +36,7 @@ export default async function Page({
   const totalPages = Math.ceil(+total / +pageSize)
   console.log({ showId, sortBy: PUB_DATE, pageNum, pageSize }, resultList, total)
   return (
-    <main className={`flex flex-col overflow-hidden h-[100%]`}>
+    <main className={`flex flex-col overflow-auto h-[100%] relative`}>
       <div className={`flex `}>
         <img src={coverUrl} alt="" className={`w-[250px] h-[250px] mr-[17px] rounded-10px`} />
         <div className={`flex flex-1 flex-col`}>
@@ -52,10 +52,10 @@ export default async function Page({
           <CardDes des={getNoTagText(showDescription)} maxLine={8} />
         </div>
       </div>
-      <div className={`my-[20px]`}>
+      <div className={`py-[20px] sticky top-0 bg-white`}>
         <Pagination totalPages={totalPages} total={total} />
       </div>
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[25px] overflow-auto pb-[100px]`}>
+      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] pb-[100px]`}>
         {resultList.map((item: any) => {
           return <Card key={item?.episodeId} {...item} />
         })}

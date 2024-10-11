@@ -62,6 +62,8 @@ const config: Config = {
         c8: '#C8C8C8',
       },
       play: '#FF5A0F',
+      hbg: '#f5f5f5',
+      homehbg: '#dcdcdc',
     },
     borderRadius: {
       none: '0',

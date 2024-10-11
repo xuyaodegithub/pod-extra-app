@@ -1,3 +1,4 @@
+'use client'
 import {
   HomeIcon,
   SignalIcon,
@@ -8,7 +9,8 @@ import {
   ChevronRightIcon,
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
-
+import { usePathname } from 'next/navigation'
+// import { clsx } from 'clsx'
 export const links = [
   { name: 'Home', href: '/home', icon: HomeIcon },
   {
@@ -23,6 +25,7 @@ export const links = [
 ]
 
 export default function NavLinks() {
+  const pathname = usePathname()
   return (
     <>
       {links.map((link) => {
@@ -31,7 +34,7 @@ export default function NavLinks() {
           <Link
             key={link.name}
             href={link.href}
-            className={`flex px-[14px] h-[48px] items-center transition duration-200 rounded-md text-md hover:bg-accent hover:text-accent-foreground`}
+            className={`flex px-[14px] h-[48px] items-center transition duration-200 rounded-md text-md ${link.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}
           >
             <LinkIcon className="w-[20px] mr-[10px]" />
             <p>{link.name}</p>

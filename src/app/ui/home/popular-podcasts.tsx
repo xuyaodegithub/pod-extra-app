@@ -38,7 +38,7 @@ export default async function PopularPodcasts({ title, type }: { title: string; 
     [PUB_DATE]: '/new-latest-podcasts',
   }
   return (
-    <div className={`bg-gray-1000 rounded-10px py-[18px] px-[25px] mb-24px`}>
+    <div className={`bg-gray-1000 rounded-10px py-[8px] px-[15px] mb-24px`}>
       <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
         <Link href={urlObj[type]} className={`${styles.hoverBBorder}`}>
           {title}
@@ -73,7 +73,7 @@ export function Card({
   itunesAuthor: string
 }) {
   return (
-    <div className="rounded-10px w-[170px] mr-[25px] mb-[18px] overflow-hidden cursor-pointer hover:shadow-md hover:translate-y-[-10px] transition-all">
+    <div className="rounded-10px w-[180px] p-[10px] mr-[15px] mb-[8px] overflow-hidden cursor-pointer hover:bg-homehbg transition-all">
       <img
         src={coverUrl}
         title={showTitle}

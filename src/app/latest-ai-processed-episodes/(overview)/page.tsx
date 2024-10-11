@@ -26,7 +26,7 @@ export default async function Page({
   return (
     <main className={`flex flex-col overflow-hidden h-[100%]`}>
       <Pagination totalPages={totalPages} total={total} />
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[25px] mt-[22px] flex-1 overflow-auto pb-[100px]`}>
+      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] mt-[22px] flex-1 overflow-auto pb-[100px]`}>
         {resultList.map((item: any) => {
           return <Card key={item?.episodeId} {...item} />
         })}

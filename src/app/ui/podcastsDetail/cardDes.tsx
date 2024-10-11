@@ -3,12 +3,14 @@ import { useEffect, useState, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 
 export function CardDes({ maxLine = 4, des, lineHeight = 18 }: { maxLine?: number; des: string; lineHeight?: number }) {
+  const [initHeight, setInitHeight] = useState(0)
   const [showMore, setShowMore] = useState(false)
   const [showMoreBtn, setShowMoreBtn] = useState(false)
   const boxRef: any = useRef(null)
   useEffect(() => {
     const box = boxRef.current
     const h = box.offsetHeight
+    setInitHeight(h)
     setShowMore(h > lineHeight * maxLine)
     setShowMoreBtn(h > lineHeight * maxLine)
     // return () => {}
@@ -16,8 +18,8 @@ export function CardDes({ maxLine = 4, des, lineHeight = 18 }: { maxLine?: numbe
   return (
     <div className={``}>
       <div
-        className={`overflow-hidden text-fontGry-600 text-sm mb-[5px] relative`}
-        style={{ maxHeight: showMore ? `${maxLine * lineHeight}px` : '' }}
+        className={`overflow-hidden text-fontGry-600 text-sm mb-[5px] relative transition-all`}
+        style={{ height: showMore ? `${maxLine * lineHeight}px` : `${initHeight || 'auto'}px` }}
         ref={boxRef}
       >
         {des}

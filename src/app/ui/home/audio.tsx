@@ -65,7 +65,7 @@ export default function Audio() {
     return `${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
   }
   return (
-    <div className={`group fixed left-0 bottom-0 w-[100%] bg-bgGray py-[20px] px-[35px]`}>
+    <div className={`fixed left-0 bottom-0 w-[100%] bg-bgGray py-[9px] px-[35px]`}>
       <div className={`flex items-center w-1280 mx-auto`}>
         <audio
           src="/17193_1461772397.mp3"

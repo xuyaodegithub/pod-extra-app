@@ -11,6 +11,7 @@ export function Card({
   showTitle,
   showNotes,
   episodeId,
+  isHome = false,
 }: {
   coverUrl: string
   episodeTitle: string
@@ -18,6 +19,7 @@ export function Card({
   showTitle: any
   showNotes: any
   episodeId: string
+  isHome?: boolean
 }) {
   const elementARef = useRef(null)
   const [oneline, setOneLine] = useState(false)
@@ -27,7 +29,9 @@ export function Card({
   }, [])
   return (
     <Link href={`/episode/${encodeURIComponent(episodeTitle)}-${episodeId}`} className={` w-[50%]`}>
-      <div className="flex rounded-[5px] mb-[25px] pr-[12px] overflow-hidden cursor-pointer hover:shadow-md hover:translate-x-[-10px] transition-all">
+      <div
+        className={`flex rounded-[5px] p-[10px] mb-[15px] overflow-hidden cursor-pointer ${isHome ? 'hover:bg-homehbg' : 'hover:bg-hbg'} transition-all`}
+      >
         <img
           src={coverUrl}
           title={episodeTitle}
@@ -49,7 +53,9 @@ export function Card({
           <div className={`flex text-sm text-fontGry-100 mt-auto overflow-hidden w-[100%]`}>
             <ClockIcon className={`w-[14px] mr-[4px]`} />
             <span>{getCurrentLocalTime(gmtPubDate)}</span>
-            <span className={`ml-[24px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap`}>{showTitle}</span>
+            <span className={`ml-[24px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap`} title={showTitle}>
+              {showTitle}
+            </span>
           </div>
         </div>
       </div>
