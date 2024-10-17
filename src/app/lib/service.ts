@@ -14,3 +14,12 @@ export function getPopularPodcasts(payload: any) {
 export function getPodcastsDetail(showId: string) {
   return fetchGet(`v1/podShow/${showId}`, {})
 }
+export function getEpisodeDetail(episodeId: string) {
+  return fetchGet(`v1/podEpisode/${episodeId}`, {})
+}
+export function getEpisodeSummarize(episodeId: string) {
+  return fetchGet(`v1/podEpisode/${episodeId}/summarize`, {})
+}
+export function getEpisodeTranscript(episodeId: string) {
+  return fetchGet(`v1/podEpisode/${episodeId}/transcript`, {})
+}

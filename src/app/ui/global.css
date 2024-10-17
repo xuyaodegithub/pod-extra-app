@@ -9,8 +9,8 @@
 /*  }*/
 /*}*/
 body {
-  color: var(--background);
-  background: var(--foreground);
+  /*color: var(--background);*/
+  /*background: var(--foreground);*/
   font-family: 'Open Sans',sans-serif;
   font-style: Normal;
   font-weight: 500;

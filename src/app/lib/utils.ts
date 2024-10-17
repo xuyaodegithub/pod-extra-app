@@ -107,7 +107,7 @@ export const formatTime = function (date: any, mode: any) {
 
   return format
 }
-export function getCurrentLocalTime(val: any): string {
+export function getCurrentLocalTime(val: any, needHour: boolean = false): string {
   // 获取当前日期
   const now = new Date(val)
 
@@ -116,6 +116,9 @@ export function getCurrentLocalTime(val: any): string {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
   })
 
   // 格式化后的日期字符串
@@ -123,10 +126,22 @@ export function getCurrentLocalTime(val: any): string {
   let day = ''
   let month = ''
   let year = ''
+  let hour = ''
+  let minute = ''
+  let second = ''
 
   // 找到并提取 day, month 和 year
   for (const part of parts) {
     switch (part.type) {
+      case 'second':
+        second = part.value.padStart(2, '0')
+        break
+      case 'minute':
+        minute = part.value.padStart(2, '0')
+        break
+      case 'hour':
+        hour = part.value.padStart(2, '0')
+        break
       case 'day':
         day = part.value.padStart(2, '0')
         break
@@ -140,12 +155,19 @@ export function getCurrentLocalTime(val: any): string {
   }
 
   // 组合成 dd/MM/yyyy 格式
-  const formattedDateTime = `${day}/${month}/${year}`
-  return formattedDateTime
+  // const formattedDateTime = `${day}/${month}/${year}`
+  const formattedTime = needHour ? `${hour}:${minute}:${second}` : `${day}/${month}/${year}`
+  return formattedTime
 }
 export const getNoTagText = (val: string) => {
   return val.replace(/<[^>]*>/g, '')
 }
 export function capitalizeFirstLetter(str: string) {
   return str.replace(/\b\w/g, (char) => char.toUpperCase())
+}
+export function timeFormat(t: number) {
+  const h = Math.floor(t / 3600)
+  const m = Math.floor(t / 60)
+  const s = Math.floor(t % 60)
+  return `${h > 9 ? h : '0' + h}:${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
 }

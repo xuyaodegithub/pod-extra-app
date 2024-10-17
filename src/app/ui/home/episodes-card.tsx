@@ -28,7 +28,7 @@ export function Card({
     setOneLine(elA.offsetHeight > 24)
   }, [])
   return (
-    <Link href={`/episode/${encodeURIComponent(episodeTitle)}-${episodeId}`} className={` w-[50%]`}>
+    <Link href={`/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`} className={` w-[50%]`}>
       <div
         className={`flex rounded-[5px] p-[10px] mb-[15px] overflow-hidden cursor-pointer ${isHome ? 'hover:bg-homehbg' : 'hover:bg-hbg'} transition-all`}
       >

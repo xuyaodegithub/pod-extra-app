@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  darkMode: ['class'],
+  darkMode: ['selector', 'class'],
   content: ['./src/pages/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     screens: {
@@ -49,6 +49,7 @@ const config: Config = {
       active: '#EC6630',
       religion: '#776BE5',
       bgGray: '#F0F0F0',
+      borderb: '#E8EDF1',
       gray: {
         '100': '#999',
         '200': '#898989',
@@ -64,6 +65,7 @@ const config: Config = {
       play: '#FF5A0F',
       hbg: '#f5f5f5',
       homehbg: '#dcdcdc',
+      e8e: '#E8EDF1',
     },
     borderRadius: {
       none: '0',
@@ -75,6 +77,7 @@ const config: Config = {
       full: '9999px',
       '10px': '10px',
       '5px': '5px',
+      1: '1px',
     },
     spacing: {
       '0': '0',
@@ -167,11 +170,44 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        darkTheme: {
+          '100': '#1E1E1E',
+          '200': '#2A2A2A',
+          '300': '#3A3A3A',
+          '400': '#4A4A4A',
+          '500': '#5A5A5A',
+          '600': '#6A6A6A',
+          '700': '#7A7A7A',
+          '800': '#8A8A8A',
+          '900': '#9A9A9A',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      keyframes: {
+        'accordion-down': {
+          from: {
+            height: '0',
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+        },
+        'accordion-up': {
+          from: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+          to: {
+            height: '0',
+          },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
   },

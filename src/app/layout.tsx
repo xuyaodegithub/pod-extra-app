@@ -1,4 +1,6 @@
-import type { Metadata, Viewport } from 'next'
+'use client'
+import type { Viewport } from 'next'
+import { useEffect } from 'react'
 import '@/app/ui/global.css'
 import SideNav from '@/app/ui/home/sidenav'
 import Audio from '@/app/ui/home/audio'
@@ -6,19 +8,6 @@ import { Suspense } from 'react'
 import { LoadingLine } from '@/app/ui/skeletons'
 import SearchInput from '@/app/ui/home/searchInput'
 import { MyProvider } from '@/context/MyContext'
-export const metadata: Metadata = {
-  title: {
-    template: '%s',
-    default: 'PodExtra AI—Unleash the power of podcast',
-  },
-  description:
-    'PodExtra is an innovative AI-powered podcast tool that provides transcripts, summaries, mind maps, outlines, highlights, and takeaways for your favorite podcasts. It allows you to quickly browse through the content, saving time and improving efficiency.',
-  icons: {
-    icon: '/images/logo.svg',
-  },
-  keywords:
-    'podcast,podcast summaries,podcast transcripts, AI transcription,podcast tool,mind maps,outlines, highlights,takeaways,favorite podcasts,',
-}
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -31,11 +20,28 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  useEffect(() => {
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    // if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    //   document.body.classList.add('dark')
+    // } else {
+    //   document.body.classList.remove('dark')
+    // }
+    // // Whenever the user explicitly chooses light mode
+    //   localStorage.theme = 'light'
+    //
+    // // Whenever the user explicitly chooses dark mode
+    //   localStorage.theme = 'dark'
+    //
+    // // Whenever the user explicitly chooses to respect the OS preference
+    //   localStorage.removeItem('theme')
+  }, [])
+
   return (
     <MyProvider>
       <html lang="en" className={`h-100`}>
-        <body className={`antialiased h-100`}>
-          <div className="flex bg-white w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-100">
+        <body className={`antialiased h-100 dark:bg-black dark:text-darkTheme-900`}>
+          <div className="flex w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-100">
             <SideNav />
             <main className={`flex-1 overflow-hidden pl-[14px] flex flex-col`}>
               <div className={`mb-[25px]`}>

@@ -1,13 +1,13 @@
 'use client'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import { links } from '@/app/ui/home/nav-links'
 import Breadcrumb from '@/app/ui/breadcrumb'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
-  const title = links.find((link) => link.href === pathname)?.name || '-'
+  const { episodeId }: { episodeId: string } = useParams()
+  const [title, id] = decodeURIComponent(episodeId).split('-')
   return (
-    <main className={`h-[100%] flex flex-col`}>
+    <main className={`h-[100%] flex flex-col overflow-hidden`}>
       <Breadcrumb title={title} />
       <section className={`flex-1 overflow-hidden`}>{children}</section>
     </main>
