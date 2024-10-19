@@ -18,10 +18,10 @@ export function Outlines({ data }: { data: any }) {
       setStepTime(t)
     }, 500)
   }
-  const { chapters = [] } = data || {}
+  const { outline = [] } = data || {}
   return (
     <div className={``} key="Outlines">
-      {chapters?.map((item: any) => (
+      {outline?.map((item: any) => (
         // <div key={item.start} className={`mb-[15px] font-md `}>
         //   <div className={`text-min rounded-[8px] bg-bgGray text-play pl-[16px] pr-[5px] inline-block mb-[8px] cursor-pointer`}>
         //     <span className={`mr-[10px] cursor-pointer leading-[20px] inline-block`}>{timeFormat(item.start)}</span>
@@ -40,26 +40,29 @@ export function Outlines({ data }: { data: any }) {
             <AccordionTrigger className={`text-left`}>
               <div>
                 <div
-                  className={`text-min rounded-[8px] bg-bgGray text-play pl-[16px] pr-[5px] inline-block mb-[8px] cursor-pointer`}
+                  className={`text-min rounded-[8px] bg-bgGray text-play pl-[16px] pr-[5px] inline-block mb-[8px] cursor-pointer dark:bg-darkHomeBg dark:text-homehbg`}
                   onClick={(e: any) => playCurrTime(item.start, e)}
                 >
                   <span className={`mr-[10px] cursor-pointer leading-[20px] inline-block`}>{timeFormat(item.start)}</span>
                   <img src="/images/fa-play.png" alt="" className={`inline-block align-baseline w-[10px] h-[10px]`} />
                 </div>
-                <div className={`cursor-pointer relative relative`}>{item.text}</div>
+                <div className={`cursor-pointer relative dark:text-homehbg`}>{item.title}</div>
               </div>
             </AccordionTrigger>
             <AccordionContent>
-              <div className={`py-[10px] px-[15px] bg-bgGray rounded-[10px]`}>
-                {item.children?.map((it: any) => (
-                  <span
-                    className={`hover:text-play cursor-pointer ${it.start <= time && it.end >= time ? 'text-play' : ''}`}
-                    onClick={(e: any) => playCurrTime(it.start, e)}
-                    key={it.start}
-                  >
-                    {it.text}，
-                  </span>
-                ))}
+              <div
+                className={`py-[10px] px-[15px] bg-bgGray rounded-[10px] dark:bg-bgDark dark:text-homehbg ${item.start <= time && item.end >= time ? 'text-play' : ''}`}
+              >
+                {item.description}
+                {/*{item.children?.map((it: any) => (*/}
+                {/*  <span*/}
+                {/*    className={`hover:text-play cursor-pointer ${it.start <= time && it.end >= time ? 'text-play' : ''}`}*/}
+                {/*    onClick={(e: any) => playCurrTime(it.start, e)}*/}
+                {/*    key={it.start}*/}
+                {/*  >*/}
+                {/*    {it.text}，*/}
+                {/*  </span>*/}
+                {/*))}*/}
               </div>
             </AccordionContent>
           </AccordionItem>

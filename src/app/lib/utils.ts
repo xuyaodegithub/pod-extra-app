@@ -108,6 +108,7 @@ export const formatTime = function (date: any, mode: any) {
   return format
 }
 export function getCurrentLocalTime(val: any, needHour: boolean = false): string {
+  if (!val) return '-'
   // 获取当前日期
   const now = new Date(val)
 
@@ -167,7 +168,24 @@ export function capitalizeFirstLetter(str: string) {
 }
 export function timeFormat(t: number) {
   const h = Math.floor(t / 3600)
-  const m = Math.floor(t / 60)
+  const m = Math.floor((t % 3600) / 60)
   const s = Math.floor(t % 60)
-  return `${h > 9 ? h : '0' + h}:${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
+  const hh = h > 9 ? h : h === 0 ? '' : '0' + h
+  return `${hh ? `${hh}:` : ''}${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
+}
+export function getMetaData(data?: any) {
+  return {
+    title: {
+      template: '%s',
+      default: 'PodExtra AI—Unleash the power of podcast',
+    },
+    description:
+      'PodExtra is an innovative AI-powered podcast tool that provides transcripts, summaries, mind maps, outlines, highlights, and takeaways for your favorite podcasts. It allows you to quickly browse through the content, saving time and improving efficiency.',
+    icons: {
+      icon: '/images/logo.svg',
+    },
+    keywords:
+      'podcast,podcast summaries,podcast transcripts, AI transcription,podcast tool,mind maps,outlines, highlights,takeaways,favorite podcasts,',
+    ...data,
+  }
 }

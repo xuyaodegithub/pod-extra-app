@@ -7,19 +7,8 @@ import SearchInput from '@/app/ui/home/searchInput'
 import PopularPodcasts from '@/app/ui/home/popular-podcasts'
 import { Suspense } from 'react'
 import { LoadingLine } from '@/app/ui/skeletons'
-export const metadata: Metadata = {
-  title: {
-    template: '%s',
-    default: 'PodExtra AI—Unleash the power of podcast',
-  },
-  description:
-    'PodExtra is an innovative AI-powered podcast tool that provides transcripts, summaries, mind maps, outlines, highlights, and takeaways for your favorite podcasts. It allows you to quickly browse through the content, saving time and improving efficiency.',
-  icons: {
-    icon: '/images/logo.svg',
-  },
-  keywords:
-    'podcast,podcast summaries,podcast transcripts, AI transcription,podcast tool,mind maps,outlines, highlights,takeaways,favorite podcasts,',
-}
+import { getMetaData } from '@/app/lib/utils'
+export const metadata: Metadata = getMetaData()
 export default function IndexPage() {
   redirect('/home') // 重定向到 /home
   return null

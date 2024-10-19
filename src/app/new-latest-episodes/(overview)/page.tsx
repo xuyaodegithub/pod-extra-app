@@ -1,14 +1,14 @@
 import Pagination from '@/app/ui/pagination'
 import { getPodEpisode } from '@/app/lib/service'
-import { PUB_DATE } from '@/app/lib/utils'
+import { PUB_DATE, getMetaData } from '@/app/lib/utils'
 import { Card } from '@/app/ui/home/episodes-card'
 import { Metadata } from 'next'
 const y = new Date().getFullYear()
-export const metadata: Metadata = {
+export const metadata: Metadata = getMetaData({
   title: `The Latest Episodes episodes of  ${y - 1}-${y} ｜PodExtra.AI`,
   description: `PodExtra keeps a close eye on Latest Episodes, bringing you updates on popular Episodes as soon as they're available, ensuring that you can transcribe and summarize the content right away.`,
   keywords: '',
-}
+})
 export default async function Page({
   searchParams,
 }: {
@@ -26,7 +26,9 @@ export default async function Page({
   return (
     <main className={`flex flex-col overflow-hidden h-[100%]`}>
       <Pagination totalPages={totalPages} total={total} />
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] mt-[22px] overflow-auto pb-[100px]`}>
+      <div
+        className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] mt-[22px] overflow-auto pb-[100px] dark:border-fontGry-600`}
+      >
         {resultList.map((item: any) => {
           return <Card key={item?.episodeId} {...item} />
         })}

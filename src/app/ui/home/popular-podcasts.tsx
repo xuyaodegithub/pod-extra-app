@@ -28,7 +28,6 @@ export default async function PopularPodcasts({ title, type }: { title: string; 
     sortBy: type,
     pageNum: 1,
     pageSize: 10,
-    levelCategoryId: '',
   }
   const {
     data: { resultList },
@@ -38,12 +37,12 @@ export default async function PopularPodcasts({ title, type }: { title: string; 
     [PUB_DATE]: '/new-latest-podcasts',
   }
   return (
-    <div className={`bg-gray-1000 rounded-10px py-[8px] px-[15px] mb-24px`}>
+    <div className={`bg-gray-1000 dark:bg-bgDark rounded-10px py-[8px] px-[15px] mb-24px`}>
       <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
-        <Link href={urlObj[type]} className={`${styles.hoverBBorder}`}>
+        <Link href={urlObj[type]} className={`${styles.hoverBBorder} dark:text-white`}>
           {title}
         </Link>
-        <ChevronRightIcon className={`ml-[10px] w-[20px]`} />
+        <ChevronRightIcon className={`ml-[10px] w-[20px] dark:text-white`} />
       </div>
       <div className={`flex flex-wrap`}>
         {resultList.map((item: any) => {
@@ -73,7 +72,7 @@ export function Card({
   itunesAuthor: string
 }) {
   return (
-    <div className="rounded-10px w-[180px] p-[10px] mr-[15px] mb-[8px] overflow-hidden cursor-pointer hover:bg-homehbg transition-all">
+    <div className="rounded-10px w-[180px] p-[10px] mr-[15px] mb-[8px] overflow-hidden cursor-pointer hover:bg-homehbg dark:hover:bg-darkHomeBg transition-all">
       <img
         src={coverUrl}
         title={showTitle}
@@ -90,7 +89,7 @@ export function Card({
       <div className={`text-sm whitespace-nowrap overflow-hidden text-ellipsis text-fontGry-100`} title={itunesAuthor}>
         {itunesAuthor}
       </div>
-      <div className={`text-md overflow-hidden text-ellipsis line-clamp-2 text-fontGry-600`} title={showTitle}>
+      <div className={`text-md overflow-hidden text-ellipsis line-clamp-2 text-fontGry-600 dark:text-white`} title={showTitle}>
         {showTitle || '-'}
       </div>
     </div>

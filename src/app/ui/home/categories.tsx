@@ -36,12 +36,12 @@ export default async function Categories({ title }: { title: string }) {
     data: { resultList },
   } = await getPodCategory(payload)
   return (
-    <div className={`bg-gray-1000 rounded-10px py-[21px] px-[25px] mb-[100px]`}>
+    <div className={`bg-gray-1000 rounded-10px py-[21px] px-[25px] mb-[100px] dark:bg-bgDark`}>
       <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
-        <Link href={`/podcasts-categories`} className={`${styles.hoverBBorder}`}>
+        <Link href={`/podcasts-categories`} className={`${styles.hoverBBorder} dark:text-white`}>
           {title}
         </Link>
-        <ChevronRightIcon className={`ml-[10px] w-[20px]`} />
+        <ChevronRightIcon className={`ml-[10px] w-[20px] dark:text-white`} />
       </div>
       <div className={`flex flex-wrap`}>
         {resultList?.map((item: any, index: number) => <Cate key={item.categoryId} {...item} ind={index} />)}

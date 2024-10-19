@@ -1,18 +1,35 @@
 import Pagination from '@/app/ui/pagination'
-import { getPodcastsDetail, getPodEpisode } from '@/app/lib/service'
-import { getNoTagText, PUB_DATE } from '@/app/lib/utils'
+import { getEpisodeDetail, getPodcastsDetail, getPodEpisode } from '@/app/lib/service'
+import { getCurrentLocalTime, getMetaData, getNoTagText, PUB_DATE, timeFormat } from '@/app/lib/utils'
 import { CardDes } from '@/app/ui/podcastsDetail/cardDes'
 import Link from 'next/link'
-import { Metadata } from 'next'
+import { Metadata, ResolvingMetadata } from 'next'
 import CateItem from '@/app/ui/categories/cateItem'
 import { MicrophoneIcon } from '@heroicons/react/24/outline'
 import { Card } from '@/app/ui/home/episodes-card'
 const y = new Date().getFullYear()
-export const metadata: Metadata = {
-  title: `The Latest Podcasts episodes of ${y - 1}-${y} ｜PodExtra.AI`,
-  description:
-    'PodExtra keeps you up-to-date with the latest podcasts from across the web in real-time, offering comprehensive tools like transcripts, mind maps, summaries, keywords, highlights, and shownotes to enrich your listening experience.',
-  keywords: '',
+let podcastsDetail: any = null,
+  episodeList: any = null
+export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
+  const [podcastName, showId] = decodeURIComponent(params.podcastId).split('-podcast-')
+  if (!podcastsDetail) {
+    const { data = {} } = await getPodcastsDetail(showId)
+    podcastsDetail = data
+  }
+  const { itunesAuthor } = podcastsDetail || {}
+  const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
+  if (!episodeList) {
+    const {
+      data: { resultList, total },
+    } = await getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
+    episodeList = { resultList, total }
+  }
+  const { total = 0, resultList = [] } = episodeList
+
+  return getMetaData({
+    title: `${podcastName} all Episodes with AI Transcript｜PodExtra.AI`,
+    description: `Dive into all ${total} episodes of ${itunesAuthor}'s '${podcastName}' podcast, enhanced with AI-powered transcription and episode summaries. Discover the latest episode from ${getCurrentLocalTime(resultList[0]?.gmtPubDate)}.`,
+  })
 }
 export default async function Page({
   searchParams,
@@ -27,14 +44,20 @@ export default async function Page({
   }
 }) {
   const [podcastName, showId] = decodeURIComponent(params.podcastId).split('-podcast-')
-  const { data } = await getPodcastsDetail(showId)
-  const { coverUrl, itunesAuthor, showDescription, categoryList } = data || {}
+  if (!podcastsDetail) {
+    const { data } = await getPodcastsDetail(showId)
+    podcastsDetail = data
+  }
+  const { coverUrl, itunesAuthor, showDescription, categoryList } = podcastsDetail || {}
   const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
-  const {
-    data: { resultList, total },
-  } = await getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
+  if (!episodeList) {
+    const {
+      data: { resultList, total },
+    } = await getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
+    episodeList = { resultList, total }
+  }
+  const { total = 0, resultList = [] } = episodeList
   const totalPages = Math.ceil(+total / +pageSize)
-  console.log({ showId, sortBy: PUB_DATE, pageNum, pageSize }, resultList, total)
   return (
     <main className={`flex flex-col overflow-auto h-[100%] relative`}>
       <div className={`flex `}>
@@ -52,10 +75,10 @@ export default async function Page({
           <CardDes des={getNoTagText(showDescription)} maxLine={8} />
         </div>
       </div>
-      <div className={`py-[20px] sticky top-0 bg-white`}>
+      <div className={`py-[20px] sticky top-0 bg-white dark:bg-black`}>
         <Pagination totalPages={totalPages} total={total} />
       </div>
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] pb-[100px]`}>
+      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] pb-[100px] dark:border-fontGry-600`}>
         {resultList.map((item: any) => {
           return <Card key={item?.episodeId} {...item} />
         })}

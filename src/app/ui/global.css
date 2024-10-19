@@ -9,8 +9,6 @@
 /*  }*/
 /*}*/
 body {
-  /*color: var(--background);*/
-  /*background: var(--foreground);*/
   font-family: 'Open Sans',sans-serif;
   font-style: Normal;
   font-weight: 500;
@@ -76,6 +74,7 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --fontColor:#ffffff
   }
 }
 

@@ -39,7 +39,7 @@ export default function Pagination({ totalPages, total }: { totalPages: number; 
     <>
       {/*  NOTE: Uncomment this code in Chapter 11 */}
 
-      <div className="flex items-center">
+      <div className="flex items-center dark:text-fontGry-dark9b">
         <span className={`mr-[16px] text-sm`}>{`Total ${total} episodes`}</span>
         <PaginationArrow direction="left" href={createPageURL(currentPage - 1)} isDisabled={currentPage <= 1} />
 

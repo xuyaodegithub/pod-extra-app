@@ -24,7 +24,7 @@ export function Highlights({ data }: { data: any }) {
         const i = ind > speakerList.length - 1 ? ind % speakerList.length : ind
         const speaker = speakerList[i]
         return (
-          <div className={`mb-[16px] pb-[12px] border-b-[1px] border-e8e`} key={item.start}>
+          <div className={`mb-[16px] pb-[12px] border-b-[1px] border-e8e dark:border-fontGry-600`} key={item.start}>
             <div className={`flex mb-[9px]`} style={{ color: speaker.color }}>
               <div
                 className={`w-[50px] h-[50px] mr-[8px] text-max leading-[50px] text-center rounded-[6px]`}
@@ -44,7 +44,9 @@ export function Highlights({ data }: { data: any }) {
                 <div className={`text-md leading-[20px]`}>{item.speaker || `Speaker ${ind + 1}`}</div>
               </div>
             </div>
-            <div className={`text-md text-fontGry-600 py-[10px] px-[15px] bg-hbg rounded-10px`}>{item.text}</div>
+            <div className={`text-md text-fontGry-600 py-[10px] px-[15px] bg-hbg rounded-10px dark:bg-bgDark dark:text-homehbg`}>
+              {item.description}
+            </div>
           </div>
         )
       })}

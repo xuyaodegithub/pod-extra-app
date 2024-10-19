@@ -1,7 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  darkMode: ['selector', 'class'],
+  darkMode: ['class'],
   content: ['./src/pages/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     screens: {
@@ -49,6 +49,7 @@ const config: Config = {
       active: '#EC6630',
       religion: '#776BE5',
       bgGray: '#F0F0F0',
+      bgDark: '#242424',
       borderb: '#E8EDF1',
       gray: {
         '100': '#999',
@@ -61,10 +62,12 @@ const config: Config = {
         '100': '#B4B4B4',
         '600': '#646464',
         c8: '#C8C8C8',
+        dark9b: '#9B9B9B',
       },
       play: '#FF5A0F',
       hbg: '#f5f5f5',
       homehbg: '#dcdcdc',
+      darkHomeBg: '#404040',
       e8e: '#E8EDF1',
     },
     borderRadius: {

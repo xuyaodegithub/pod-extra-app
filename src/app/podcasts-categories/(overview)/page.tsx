@@ -2,12 +2,13 @@ import { getPodCategory, getPodEpisode } from '@/app/lib/service'
 import styles from '@/app/ui/home.module.scss'
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { getMetaData } from '@/app/lib/utils'
 const y = new Date().getFullYear()
-export const metadata: Metadata = {
+export const metadata: Metadata = getMetaData({
   title: `Discover all the best podcasts of ${y - 1}-${y} ｜PodExtra.AI`,
   description: `Discover all the best podcasts of ${y - 1}-${y}  on PodExtra, covering Society & Culture, True Crime, Comedy, History, News, Business, Education, Health & Fitness, Technology, etc.`,
   keywords: '',
-}
+})
 export default async function Page() {
   const payload = {
     pageNum: 1,
@@ -39,7 +40,7 @@ export default async function Page() {
                     <Link
                       href={`/podcasts-categories/${encodeURIComponent(categoryName)}/${encodeURIComponent(childName)}-podcasts?childId=${childId}`}
                     >
-                      <span>{childName}</span>
+                      <span className={`dark:text-homehbg`}>{childName}</span>
                       <span
                         className={`absolute top-0 left-0 mr-[15px] text-play w-0 transition-all group-hover:w-[100%] overflow-hidden whitespace-nowrap`}
                         key={childId}

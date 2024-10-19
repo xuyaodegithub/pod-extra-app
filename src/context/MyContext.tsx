@@ -1,6 +1,6 @@
 'use client'
 // src/context/MyContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from 'react'
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 
 // 定义上下文的值的类型
 interface MyContextType {
@@ -12,6 +12,8 @@ interface MyContextType {
   setTime: (time: number) => void
   stepTime: number
   setStepTime: (stepTime: number) => void
+  isDark: boolean
+  setIsDark: (isDark: boolean) => void
 }
 
 // 创建上下文，指定默认值
@@ -22,9 +24,14 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [time, setTime] = useState(0)
   const [stepTime, setStepTime] = useState(0)
+  const [isDark, setIsDark] = useState(false)
+  useEffect(() => {
+    const dark = localStorage?.theme ? localStorage.theme === 'dark' : window?.matchMedia('(prefers-color-scheme: dark)').matches
+    setIsDark(dark)
+  }, [])
 
   return (
-    <MyContext.Provider value={{ data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime }}>
+    <MyContext.Provider value={{ data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime, isDark, setIsDark }}>
       {children}
     </MyContext.Provider>
   )

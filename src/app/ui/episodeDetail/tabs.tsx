@@ -19,7 +19,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
   return (
     <div className={`h-[100%] flex flex-col`}>
       <Tabs value={activeTab} className={`pb-[100px]`}>
-        <TabsList className={`flex sticky top-0 bg-white mb-[22px] z-10`}>
+        <TabsList className={`flex sticky top-0 bg-white mb-[22px] z-10 dark:bg-black`}>
           {tabList.map((item: any) => (
             <TabsTrigger value={item.key} key={item.key} className={`flex-1`} onClick={() => tabChange(item.key)}>
               {item.title}
@@ -32,7 +32,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
         <div className={`text-md text-fontGry-600 flex-1 overflow-hidden`}>
           {tabList.map((tab) => (
             <div key={tab.key} style={{ display: activeTab === tab.key ? 'block' : 'none' }}>
-              {tab.com({ data })}
+              {tab.com({ data, isMindMap: activeTab === tabList[2].key })}
             </div>
           ))}
         </div>

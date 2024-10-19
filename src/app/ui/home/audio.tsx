@@ -94,7 +94,7 @@ export default function Audio() {
     console.log('start')
   }
   return enclosureUrl ? (
-    <div className={`fixed left-0 bottom-0 w-[100%] bg-bgGray py-[9px] px-[35px]`}>
+    <div className={`fixed left-0 bottom-0 w-[100%] bg-bgGray py-[9px] px-[35px] dark:bg-bgDark dark:text-gray-200`}>
       <div className={`flex items-center w-1280 mx-auto`}>
         <audio
           src={enclosureUrl}
@@ -147,7 +147,9 @@ export default function Audio() {
         />
         <Select onValueChange={(e: any) => selectChange(e)} defaultValue={`${playbackRate}`} value={`${playbackRate}`}>
           <SelectTrigger className="w-auto bg-transparent border-0 shadow-none focus:ring-0 focus:ring-offset-0">
-            <span className={`font-bold bg-gray-300 text-white px-[8px] py-[2px] text-min rounded-10px cursor-pointer`}>
+            <span
+              className={`font-bold bg-gray-300 px-[8px] py-[2px] text-white text-min rounded-10px cursor-pointer dark:bg-fontGry-600 dark:text-homehbg`}
+            >
               Speed {playbackRate}X
             </span>
           </SelectTrigger>
@@ -164,8 +166,8 @@ export default function Audio() {
         <div className={`flex ml-auto items-center cursor-pointer`} onClick={toEpisodeDetail}>
           <img src={coverUrl} title={''} alt={''} className={`mr-[10px] rounded-[5px] w-[50px] h-[50px] object-cover`} />
           <div className={`w-[390px]`}>
-            <div className={`text-[14px] text-fontGry-100 leading-normal`}>{showTitle}</div>
-            <div className={`text-[14px] text-fontGry-600 leading-normal overflow-hidden text-ellipsis line-clamp-2`}>
+            <div className={`text-[14px] text-fontGry-100 leading-normal dark:text-white`}>{showTitle}</div>
+            <div className={`text-[14px] text-fontGry-600 leading-normal overflow-hidden text-ellipsis line-clamp-2 dark:text-fontGry-100`}>
               {getNoTagText(showNotes)}
             </div>
           </div>

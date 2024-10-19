@@ -30,7 +30,7 @@ export function Card({
   return (
     <Link href={`/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`} className={` w-[50%]`}>
       <div
-        className={`flex rounded-[5px] p-[10px] mb-[15px] overflow-hidden cursor-pointer ${isHome ? 'hover:bg-homehbg' : 'hover:bg-hbg'} transition-all`}
+        className={`flex rounded-[5px] p-[10px] mb-[15px] overflow-hidden cursor-pointer ${isHome ? 'hover:bg-homehbg' : 'hover:bg-hbg'} dark:hover:bg-darkHomeBg transition-all`}
       >
         <img
           src={coverUrl}
@@ -41,7 +41,11 @@ export function Card({
           height={110}
         />
         <div className={`flex-1 flex flex-col overflow-hidden`}>
-          <div ref={elementARef} className={`text-md overflow-hidden text-ellipsis line-clamp-2 text-fontGry-600`} title={episodeTitle}>
+          <div
+            ref={elementARef}
+            className={`text-md overflow-hidden text-ellipsis line-clamp-2 text-fontGry-600 dark:text-white`}
+            title={episodeTitle}
+          >
             {episodeTitle}
           </div>
           <div
