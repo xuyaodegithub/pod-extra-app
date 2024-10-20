@@ -5,7 +5,7 @@ import { LoadingLine } from '@/app/ui/skeletons'
 // import SearchInput from '@/app/ui/home/searchInput'
 const PopularPodcasts = lazy(() => import('@/app/ui/home/popular-podcasts')) //import PopularPodcasts from '@/app/ui/home/popular-podcasts'
 const LatestEpisodes = lazy(() => import('@/app/ui/home/latest-episodes')) //import LatestEpisodes from '@/app/ui/home/latest-episodes'
-import Categories from '@/app/ui/home/categories'
+const Categories = lazy(() => import('@/app/ui/home/categories')) //import Categories from '@/app/ui/home/categories'
 import { POPULARITY, PUB_DATE, SUMMARIZE_TIME, TRANSCRIPT_TIME, getMetaData } from '@/app/lib/utils'
 import { Metadata } from 'next'
 export const metadata: Metadata = getMetaData({

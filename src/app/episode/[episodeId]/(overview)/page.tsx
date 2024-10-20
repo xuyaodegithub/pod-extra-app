@@ -8,14 +8,9 @@ const y = new Date().getFullYear()
 import { Tab } from '@/app/ui/episodeDetail/tabs'
 import { tabList } from '@/app/lib/config'
 import { PlayAudio } from '@/app/ui/episodeDetail/palyAudio'
-let data: any = null // 用于缓存数据
 export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [episodeName, episodeId] = decodeURIComponent(params.episodeId).split('-')
-  console.log(episodeId, 'episodeId')
-  // if (!data) {
-  const { data: res = {} } = await getEpisodeDetail(episodeId)
-  data = res
-  // }
+  const { data } = await getEpisodeDetail(episodeId)
   const { coverUrl, itunesAuthor, gmtPubDate, showTitle, duration } = data || {}
   return getMetaData({
     title: `${episodeName} | PodExtra.AI`,
@@ -35,10 +30,7 @@ export default async function Page({
   }
 }) {
   const [episodeName, episodeId] = decodeURIComponent(params.episodeId).split('-')
-  if (!data) {
-    const { data: res = {} } = await getEpisodeDetail(episodeId)
-    data = res
-  }
+  const { data } = await getEpisodeDetail(episodeId)
   const { coverUrl, itunesAuthor, gmtPubDate, showTitle } = data || {}
   const [res1, res2] = await Promise.all([getEpisodeSummarize(episodeId), getEpisodeTranscript(episodeId)])
   const summery = res1.data

@@ -7,24 +7,14 @@ import { Metadata, ResolvingMetadata } from 'next'
 import CateItem from '@/app/ui/categories/cateItem'
 import { MicrophoneIcon } from '@heroicons/react/24/outline'
 import { Card } from '@/app/ui/home/episodes-card'
-const y = new Date().getFullYear()
-let podcastsDetail: any = null,
-  episodeList: any = null
 export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [podcastName, showId] = decodeURIComponent(params.podcastId).split('-podcast-')
-  if (!podcastsDetail) {
-    const { data = {} } = await getPodcastsDetail(showId)
-    podcastsDetail = data
-  }
-  const { itunesAuthor } = podcastsDetail || {}
+  const { data = {} } = await getPodcastsDetail(showId)
+  const { itunesAuthor } = data || {}
   const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
-  if (!episodeList) {
-    const {
-      data: { resultList, total },
-    } = await getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
-    episodeList = { resultList, total }
-  }
-  const { total = 0, resultList = [] } = episodeList
+  const {
+    data: { resultList, total },
+  } = await getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
 
   return getMetaData({
     title: `${podcastName} all Episodes with AI Transcript｜PodExtra.AI`,
@@ -44,19 +34,12 @@ export default async function Page({
   }
 }) {
   const [podcastName, showId] = decodeURIComponent(params.podcastId).split('-podcast-')
-  if (!podcastsDetail) {
-    const { data } = await getPodcastsDetail(showId)
-    podcastsDetail = data
-  }
-  const { coverUrl, itunesAuthor, showDescription, categoryList } = podcastsDetail || {}
+  const { data } = await getPodcastsDetail(showId)
+  const { coverUrl, itunesAuthor, showDescription, categoryList } = data || {}
   const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
-  if (!episodeList) {
-    const {
-      data: { resultList, total },
-    } = await getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
-    episodeList = { resultList, total }
-  }
-  const { total = 0, resultList = [] } = episodeList
+  const {
+    data: { resultList, total },
+  } = await getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
   const totalPages = Math.ceil(+total / +pageSize)
   return (
     <main className={`flex flex-col overflow-auto h-[100%] relative`}>
