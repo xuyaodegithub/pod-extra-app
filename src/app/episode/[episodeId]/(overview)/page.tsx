@@ -31,10 +31,11 @@ export default async function Page({
 }) {
   const [episodeName, episodeId] = decodeURIComponent(params.episodeId).split('-')
   const { data } = await getEpisodeDetail(episodeId)
-  const { coverUrl, itunesAuthor, gmtPubDate, showTitle } = data || {}
+  const { coverUrl, itunesAuthor, gmtPubDate, showTitle, duration } = data || {}
   const [res1, res2] = await Promise.all([getEpisodeSummarize(episodeId), getEpisodeTranscript(episodeId)])
   const summery = res1.data
   const paragraphs = res2.data?.paragraphs || []
+  console.log(data, 'pppp')
   return (
     <main className={`flex flex-col overflow-auto h-[100%] relative episode-item`}>
       <div className={`flex `}>
@@ -46,8 +47,8 @@ export default async function Page({
           </div>
           <div className={`flex text-sm text-fontGry-100 overflow-hidden w-[100%]`}>
             <ClockIcon className={`w-[14px] mr-[4px]`} />
-            <span className={`mr-24px`}>{getCurrentLocalTime(gmtPubDate, true)}</span>
-            <span>Update: {getCurrentLocalTime(gmtPubDate, false)}</span>
+            <span className={`mr-24px`}>{timeFormat(duration)}</span>
+            <span>Update: {getCurrentLocalTime(duration, false)}</span>
           </div>
           <div>
             <PlayAudio audioInfo={data} />
