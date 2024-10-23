@@ -11,6 +11,7 @@ export function Transcript({ data }: { data: any }) {
   const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
   const { setData, setIsPlaying, isPlaying, time, setStepTime, isDark } = useMyContext()
   let speakerInd = -1
+  let listInd = 0
   function playCurrTime(t: number, e: any) {
     if (t === 0) t = t + 0.1
     e.stopPropagation()
@@ -26,6 +27,7 @@ export function Transcript({ data }: { data: any }) {
         const isSame = item.speaker === paragraphs[ind - 1]?.speaker
         if (!isSame) {
           speakerInd = speakerInd >= 8 ? 0 : speakerInd + 1
+          listInd += 1
         }
         const speaker = speakerList[speakerInd]
         return (
@@ -38,7 +40,7 @@ export function Transcript({ data }: { data: any }) {
                   className={`w-[50px] h-[50px] mr-[8px] text-max leading-[50px] text-center rounded-[6px]`}
                   style={{ background: speaker.bg }}
                 >
-                  {ind + 1 > 9 ? ind + 1 : `0${ind + 1}`}
+                  {listInd > 9 ? listInd : `0${listInd}`}
                 </div>
               )}
               <div className={`flex flex-col justify-between`}>

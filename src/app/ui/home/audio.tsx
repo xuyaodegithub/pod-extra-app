@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import Image from 'next/image'
 const volumeList: number[] = [0.5, 0.8, 1, 1.1, 1.3, 1.5, 1.8, 2.0, 3.0]
 import { useMyContext } from '@/context/MyContext'
-import { getNoTagText } from '@/app/lib/utils'
+import { getNoTagText, timeFormat } from '@/app/lib/utils'
 import { useRouter } from 'next/navigation'
 import { Loading } from '@/app/ui/home/loading'
 
@@ -75,11 +75,6 @@ export default function Audio() {
       setVoice(oldVoice)
     }
     isAudio.current.volume = v > 0 ? 0 : oldVoice
-  }
-  function timeFormat(t: number) {
-    const m = Math.floor(t / 60)
-    const s = Math.floor(t % 60)
-    return `${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
   }
   function toEpisodeDetail() {
     push(`/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`)

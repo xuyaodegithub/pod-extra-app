@@ -31,11 +31,10 @@ export default async function Page({
 }) {
   const [episodeName, episodeId] = decodeURIComponent(params.episodeId).split('-')
   const { data } = await getEpisodeDetail(episodeId)
-  const { coverUrl, itunesAuthor, gmtPubDate, showTitle, duration } = data || {}
+  const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration } = data || {}
   const [res1, res2] = await Promise.all([getEpisodeSummarize(episodeId), getEpisodeTranscript(episodeId)])
   const summery = res1.data
   const paragraphs = res2.data?.paragraphs || []
-  console.log(data, 'pppp')
   return (
     <main className={`flex flex-col overflow-auto h-[100%] relative episode-item`}>
       <div className={`flex `}>
@@ -57,7 +56,7 @@ export default async function Page({
             className={`border border-gray-1000 rounded-5px text-sm py-[10px] px-[15px] mt-auto flex items-center dark:border-fontGry-600 dark:text-fontGry-100`}
           >
             <span>All Episodes from</span>
-            <img src={coverUrl} alt="" className={`w-[25px] h-[25px] rounded-5px mx-[6px]`} />
+            <img src={showCoverUrl} alt="" className={`w-[25px] h-[25px] rounded-5px mx-[6px]`} />
             <span className={`flex-1 overflow-hidden text-ellipsis whitespace-nowrap`}>{showTitle}</span>
           </div>
         </div>
