@@ -25,13 +25,17 @@ export default function RootLayout({
   const pathname = usePathname()
   const isLanding = pathname === '/'
   useEffect(() => {
+    if (isLanding) {
+      document.body.classList.remove('dark')
+      return
+    }
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window?.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.body.classList.add('dark')
     } else {
       document.body.classList.remove('dark')
     }
-  }, [])
+  }, [isLanding])
 
   return (
     <MyProvider>

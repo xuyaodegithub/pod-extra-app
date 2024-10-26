@@ -12,44 +12,71 @@ import { Loading } from '@/app/ui/home/loading'
 
 export default function Audio() {
   const { data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime } = useMyContext()
-  const { enclosureUrl = '', showTitle = '', showNotes = '', coverUrl = '', episodeTitle = '', episodeId = '' } = data || {}
+  const { enclosureUrl = '', showTitle = '', showNotes = '', coverUrl = '', episodeTitle = '', episodeId = '' }: any = data || {}
   const [allTime, setAllTime] = useState(0)
   const [playbackRate, setPlaybackRate] = useState(1)
   const [voice, setVoice] = useState(1)
   const [oldVoice, setOldVoice] = useState(1)
   const [loading, setLoading] = useState(false)
-  const isAudio: any = useRef(null)
+  // const [isAudio, setIsAudio] = useState(null)
+  let isAudio: any = useRef(null)
   const { push } = useRouter()
+  const funs: any = { canplaythrough, timeupdate, loadstart, error, ended }
   // const newUrlAudio = enclosureUrl.includes('?') ? `${enclosureUrl}&t=${Date.now()}` : `${enclosureUrl}?t=${Date.now()}`
   useEffect(() => {
-    if (isPlaying) {
-      const isPaused = isAudio.current.paused
-      if (isPaused) isAudio.current.play()
-      if (stepTime > 0) {
-        isAudio.current.currentTime = stepTime
-        setStepTime(0)
-      }
-    } else {
-      if (!enclosureUrl) return
-      const isPaused = isAudio.current?.paused
-      if (!isPaused) isAudio.current.pause()
+    if (!enclosureUrl) return
+    if (isAudio.current) {
+      removeEvent()
+      isAudio.current.pause()
+      isAudio.current.src = ''
     }
-  }, [isPlaying, enclosureUrl, stepTime])
+    isAudio.current = new (window.Audio as any)(enclosureUrl)
+    addEvent()
+    if (isPlaying) isAudio.current.play()
+    return () => {
+      if (isAudio.current) {
+        removeEvent()
+        isAudio.current.pause()
+        isAudio.current = null
+        setTime(0)
+      }
+    }
+  }, [enclosureUrl, isPlaying])
+  useEffect(() => {
+    console.log('isPlaying', isPlaying, isAudio.current)
+    if (isAudio.current) {
+      if (isPlaying) {
+        if (isAudio.current.paused) {
+          isAudio.current.play()
+        }
+        if (stepTime > 0) {
+          isAudio.current.currentTime = stepTime
+        }
+      } else {
+        if (!isAudio.current.paused) {
+          isAudio.current.pause()
+        }
+      }
+    }
+  }, [isPlaying, stepTime])
+  function removeEvent() {
+    if (isAudio)
+      Object.keys(funs).forEach((item) => {
+        isAudio.current.removeEventListener(item, funs[item])
+      })
+  }
+  function addEvent() {
+    if (isAudio)
+      Object.keys(funs).forEach((item) => {
+        isAudio.current.addEventListener(item, funs[item])
+      })
+  }
   function palyAudio() {
     const isPaused = isAudio.current.paused
     isPaused ? isAudio.current.play() : isAudio.current.pause()
     setIsPlaying(isPaused)
   }
-  function loadRead() {
-    const t = isAudio.current.duration
-    setAllTime(parseInt(t))
-    setLoading(false)
-  }
-  function timeUpdate() {
-    const t = isAudio.current.currentTime
-    setTime(t)
-    // loadRead()
-  }
+
   function changeProgress(val: any) {
     setTime(val[0])
     isAudio.current.currentTime = val[0]
@@ -63,9 +90,7 @@ export default function Audio() {
     isAudio.current.playbackRate = val
     console.log(val, playbackRate, '---')
   }
-  function palyEnd() {
-    setIsPlaying(false)
-  }
+
   function closeViose() {
     const v = isAudio.current.volume
     if (v > 0) {
@@ -79,34 +104,48 @@ export default function Audio() {
   function toEpisodeDetail() {
     push(`/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`)
   }
-  function playError(err: any) {
+  function ended() {
+    setIsPlaying(false)
+  }
+  function error(err: any) {
     setIsPlaying(false)
     setLoading(false)
     throw new Error('播放失败')
   }
-  function loadStart() {
+  function loadstart() {
     setLoading(true)
-    console.log('start')
+    console.log(111)
+  }
+  function canplaythrough() {
+    const t = isAudio.current.duration
+    setAllTime(parseInt(t))
+    setLoading(false)
+    console.log(222)
+  }
+  function timeupdate() {
+    const t = isAudio.current.currentTime
+    setTime(t)
+    // loadRead()
   }
   return enclosureUrl ? (
     <div className={`fixed left-0 bottom-0 w-[100%] bg-bgGray py-[9px] px-[35px] dark:bg-bgDark dark:text-gray-200`}>
       <div className={`flex items-center w-1280 mx-auto`}>
-        <audio
-          src={enclosureUrl}
-          ref={isAudio}
-          className={`hidden`}
-          controls={true}
-          crossOrigin={'anonymous'}
-          onCanPlayThrough={loadRead}
-          onTimeUpdate={timeUpdate}
-          onEnded={palyEnd}
-          onError={playError}
-          onLoadStart={loadStart}
-        >
-          <source src={`/17193_1461772397.mp3`} type={'audio/mpeg'} />
-          <source src={`/17193_1461772397.mp3`} type={'audio/ogg'} />
-          your browser does not support the audio element
-        </audio>
+        {/*<audio*/}
+        {/*  src={enclosureUrl}*/}
+        {/*  ref={isAudio}*/}
+        {/*  className={`hidden`}*/}
+        {/*  controls={true}*/}
+        {/*  crossOrigin={'anonymous'}*/}
+        {/*  onCanPlayThrough={loadRead}*/}
+        {/*  onTimeUpdate={timeUpdate}*/}
+        {/*  onEnded={palyEnd}*/}
+        {/*  onError={playError}*/}
+        {/*  onLoadStart={loadStart}*/}
+        {/*>*/}
+        {/*  <source src={`/17193_1461772397.mp3`} type={'audio/mpeg'} />*/}
+        {/*  <source src={`/17193_1461772397.mp3`} type={'audio/ogg'} />*/}
+        {/*  your browser does not support the audio element*/}
+        {/*</audio>*/}
         <Image
           src={`/images/${isPlaying ? 'playing' : 'paused'}.svg`}
           width={38}

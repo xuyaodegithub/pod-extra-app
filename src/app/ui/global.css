@@ -87,3 +87,12 @@ body {
   }
 }
 
+@keyframes scroll-x {
+  to{
+    transform: translateX(-50%);
+  }
+  from{
+    transform: translateX(0);
+  }
+
+}

@@ -39,6 +39,9 @@ const config: Config = {
       extrabold: '800',
       black: '900',
     },
+    boxShadow: {
+      cardShow: '0px 13px 40px 0px rgba(75, 102, 135, 0.10);',
+    },
     colors: {
       transparent: 'transparent',
       black: '#000',
@@ -211,9 +214,18 @@ const config: Config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'scroll-x': 'linear scroll-x 60s infinite',
       },
     },
   },
   plugins: [require('tailwindcss-animate')],
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*', // 配置代理的路径
+        destination: 'https://pfx.vpixl.com/:path*', // 目标服务器地址
+      },
+    ]
+  },
 }
 export default config
