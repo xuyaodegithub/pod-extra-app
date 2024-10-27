@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { episodeId }: { episodeId: string } = useParams()
   const [title, id] = decodeURIComponent(episodeId).split('-')
   return (
-    <main className={`h-[100%] flex flex-col overflow-hidden`}>
+    <main className={`h-[100%] flex flex-col overflow-hidden pb-[80px]`}>
       <Breadcrumb title={title} />
       <section className={`flex-1 overflow-hidden`}>{children}</section>
     </main>

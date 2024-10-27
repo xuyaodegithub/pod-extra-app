@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useMyContext } from '@/context/MyContext'
 
-export function PlayAudio({ audioInfo }: { audioInfo: any }) {
+export function PlayAudio({ audioInfo, classStyle }: { audioInfo: any; classStyle?: string }) {
   const { data, setData, isPlaying, setIsPlaying } = useMyContext()
   const { enclosureUrl = '' } = data || {}
   const { enclosureUrl: currUrl } = audioInfo
@@ -22,7 +22,7 @@ export function PlayAudio({ audioInfo }: { audioInfo: any }) {
       <img
         src={`/images/${!play ? 'paused' : 'playing'}.svg`}
         alt=""
-        className={`w-[]40px] h-[40px] mt-[10px] mb-[16px] cursor-pointer`}
+        className={`w-[]40px] h-[40px] mt-[10px] mb-[16px] cursor-pointer ${classStyle}`}
         onClick={playAuido}
       />
     </div>

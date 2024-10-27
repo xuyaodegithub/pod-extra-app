@@ -27,11 +27,9 @@ export default async function Page({
   } = await getPodShow({ pageSize, pageNum, sortBy: PUB_DATE })
   const totalPages = Math.ceil(+total / +pageSize)
   return (
-    <main className={`flex flex-col overflow-hidden h-[100%]`}>
-      <Pagination totalPages={totalPages} total={total} />
-      <div
-        className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] mt-[22px] overflow-auto pb-[100px] dark:border-fontGry-600`}
-      >
+    <main className={`flex flex-col overflow-hidden h-[100%] pb-[80px]`}>
+      <Pagination totalPages={totalPages} total={total} title="podcasts" />
+      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] mt-[22px] overflow-auto dark:border-fontGry-600`}>
         {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate }: any) => {
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           return (

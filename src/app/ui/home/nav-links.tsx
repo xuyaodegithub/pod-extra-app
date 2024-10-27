@@ -87,12 +87,12 @@ export default function NavLinks() {
           </PopoverTrigger>
           <PopoverContent side="right">
             <div className={`rounded-md bg-bgGray dark:bg-black py-[13px] px-[10px]`}>
-              {selectItemList.map((item: any) => {
+              {selectItemList.map((item: any, ind) => {
                 const active = (item.value === selectItemList[1].value && isDark) || (item.value === selectItemList[0].value && !isDark)
                 return (
                   <div
                     key={item.value}
-                    className={`${active ? 'bg-play text-white' : ''} flex items-center cursor-pointer text-md rounded-[6px] mb-[12px] dark:text-white text-fontGry-600 py-[6px] px-[15px]`}
+                    className={`${active ? 'bg-play text-white' : ''} flex items-center cursor-pointer text-md rounded-[6px] ${ind === selectItemList.length - 1 ? '' : 'mb-[12px]'} dark:text-white text-fontGry-600 py-[6px] px-[15px]`}
                     onClick={() => changeMode(item.value)}
                   >
                     {item.label}

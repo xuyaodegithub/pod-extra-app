@@ -37,7 +37,7 @@ export default async function PopularPodcasts({ title, type }: { title: string; 
     [PUB_DATE]: '/new-latest-podcasts',
   }
   return (
-    <div className={`bg-gray-1000 dark:bg-bgDark rounded-10px py-[8px] px-[15px] mb-24px`}>
+    <div className={`bg-gray-1000 dark:bg-bgDark rounded-10px py-[18px] px-[15px] mb-24px`}>
       <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
         <Link href={urlObj[type]} className={`${styles.hoverBBorder} dark:text-white`}>
           {title}

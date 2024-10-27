@@ -31,7 +31,7 @@ export default async function Page({
 }) {
   const [episodeName, episodeId] = decodeURIComponent(params.episodeId).split('-')
   const { data } = await getEpisodeDetail(episodeId)
-  const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration } = data || {}
+  const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, showId } = data || {}
   const [res1, res2] = await Promise.all([getEpisodeSummarize(episodeId), getEpisodeTranscript(episodeId)])
   const summery = res1.data
   const paragraphs = res2.data?.paragraphs || []
@@ -39,7 +39,7 @@ export default async function Page({
     <main className={`flex flex-col overflow-auto h-[100%] relative episode-item`}>
       <div className={`flex `}>
         <img src={coverUrl} alt="" className={`w-[160px] h-[160px] mr-[17px] rounded-10px object-cover`} />
-        <div className={`flex flex-1 flex-col overflow-hidden`}>
+        <div className={`flex flex-1 flex-col overflow-hidden items-start`}>
           <div className={`text-lg font-semibold flex items-center mb-[5px]`}>
             <MicrophoneIcon className={`mr-[5px] w-[20px] h-[28px]`} />
             <div className={`flex-1 text-fontGry-600 overflow-hidden text-ellipsis whitespace-nowrap`}>{itunesAuthor}</div>
@@ -50,15 +50,16 @@ export default async function Page({
             <span>Update: {getCurrentLocalTime(duration, false)}</span>
           </div>
           <div>
-            <PlayAudio audioInfo={data} />
+            <PlayAudio audioInfo={data} classStyle={`mt-0 mb-0`} />
           </div>
-          <div
+          <Link
+            href={`/podcast/${encodeURIComponent(showTitle)}-podcast-${showId}`}
             className={`border border-gray-1000 rounded-5px text-sm py-[10px] px-[15px] mt-auto flex items-center dark:border-fontGry-600 dark:text-fontGry-100`}
           >
-            <span>All Episodes from</span>
+            <span className={`shrink-0`}>from podcast</span>
             <img src={showCoverUrl} alt="" className={`w-[25px] h-[25px] rounded-5px mx-[6px]`} />
-            <span className={`flex-1 overflow-hidden text-ellipsis whitespace-nowrap`}>{showTitle}</span>
-          </div>
+            <span className={`max-w-[710px] overflow-hidden text-ellipsis whitespace-nowrap`}>{showTitle}</span>
+          </Link>
         </div>
       </div>
       <div className={`mt-[13px]`}>

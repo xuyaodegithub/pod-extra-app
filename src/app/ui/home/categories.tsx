@@ -26,6 +26,27 @@ const iconMap = [
   'rgb(72,73,245)',
   'rgb(119,107,229)',
 ]
+const iconList = [
+  '/images/cateIcon/Arts.svg',
+  '/images/cateIcon/Business.svg',
+  '/images/cateIcon/Comedy.svg',
+  '/images/cateIcon/Education.svg',
+  '/images/cateIcon/Fiction.svg',
+  '/images/cateIcon/Government.svg',
+  '/images/cateIcon/HealthFitness.svg',
+  '/images/cateIcon/History.svg',
+  '/images/cateIcon/KidsFamily.svg',
+  '/images/cateIcon/LeisureLeisure.svg',
+  '/images/cateIcon/music.svg',
+  '/images/cateIcon/News.svg',
+  '/images/cateIcon/ReligionSpirituality.svg',
+  '/images/cateIcon/Science.svg',
+  '/images/cateIcon/SocietyCulture.svg',
+  '/images/cateIcon/Sports.svg',
+  '/images/cateIcon/film-fill.svg',
+  '/images/cateIcon/Technology.svg',
+  '/images/cateIcon/TrueCrime.svg',
+]
 export default async function Categories({ title }: { title: string }) {
   const payload = {
     pageNum: 1,
@@ -52,13 +73,15 @@ export default async function Categories({ title }: { title: string }) {
 
 export function Cate({ categoryName, ind, categoryId }: { categoryName: string; ind: number; categoryId: string }) {
   const color = iconMap[ind]
+  const url = iconList[ind]
   return (
     <Link href={`/podcasts-categories/${encodeURIComponent(categoryName)}-podcasts?categoryId=${categoryId}`}>
       <div
-        className={`hover:opacity-80 transition-all rounded-5px mb-24px cursor-pointer mr-24px w-[170px] h-[100px] leading-[100px] text-center text-white`}
+        className={`hover:opacity-80 relative transition-all rounded-5px mb-24px cursor-pointer mr-24px w-[170px] h-[100px] leading-[100px] text-white`}
         style={{ backgroundColor: color }}
       >
-        {categoryName}
+        <span className={`absolute top-[10px] left-[10px] text-sm`}>{categoryName}</span>
+        <img src={url} alt="" className={`absolute top-[50%] right-[10px] translate-y-[-50%]`} />
       </div>
     </Link>
   )

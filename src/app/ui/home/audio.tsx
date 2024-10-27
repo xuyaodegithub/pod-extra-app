@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 import { Slider } from '@/components/ui/slider'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
 import Image from 'next/image'
-const volumeList: number[] = [0.5, 0.8, 1, 1.1, 1.3, 1.5, 1.8, 2.0, 3.0]
+const volumeList: number[] = [0.5, 0.8, 1, 1.1, 1.2, 1.3, 1.5, 1.8, 2.0, 3.0]
 import { useMyContext } from '@/context/MyContext'
 import { getNoTagText, timeFormat } from '@/app/lib/utils'
 import { useRouter } from 'next/navigation'
@@ -28,22 +28,22 @@ export default function Audio() {
     if (isAudio.current) {
       removeEvent()
       isAudio.current.pause()
-      isAudio.current.src = ''
+      isAudio.current = null
     }
     isAudio.current = new (window.Audio as any)(enclosureUrl)
     addEvent()
     if (isPlaying) isAudio.current.play()
     return () => {
       if (isAudio.current) {
-        removeEvent()
-        isAudio.current.pause()
-        isAudio.current = null
-        setTime(0)
+        // console.log('removeEvent', isPlaying)
+        // removeEvent()
+        // isAudio.current.pause()
+        // isAudio.current = null
+        // setTime(0)
       }
     }
-  }, [enclosureUrl, isPlaying])
+  }, [enclosureUrl])
   useEffect(() => {
-    console.log('isPlaying', isPlaying, isAudio.current)
     if (isAudio.current) {
       if (isPlaying) {
         if (isAudio.current.paused) {
@@ -114,13 +114,11 @@ export default function Audio() {
   }
   function loadstart() {
     setLoading(true)
-    console.log(111)
   }
   function canplaythrough() {
     const t = isAudio.current.duration
     setAllTime(parseInt(t))
     setLoading(false)
-    console.log(222)
   }
   function timeupdate() {
     const t = isAudio.current.currentTime

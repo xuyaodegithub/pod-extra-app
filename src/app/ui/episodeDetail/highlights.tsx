@@ -24,7 +24,7 @@ export function Highlights({ data }: { data: any }) {
         const i = ind > speakerList.length - 1 ? ind % speakerList.length : ind
         const speaker = speakerList[i]
         return (
-          <div className={`mb-[16px] pb-[12px] border-b-[1px] border-e8e dark:border-fontGry-600`} key={item.start}>
+          <div className={`mb-[16px] pb-[12px] border-b-[1px] border-e8e dark:border-fontGry-600`} key={`${item.start}-${ind}`}>
             <div className={`flex mb-[9px]`} style={{ color: speaker.color }}>
               <div
                 className={`w-[50px] h-[50px] mr-[8px] text-max leading-[50px] text-center rounded-[6px]`}

@@ -21,7 +21,7 @@ export function Outlines({ data }: { data: any }) {
   const { outline = [] } = data || {}
   return (
     <div className={``} key="Outlines">
-      {outline?.map((item: any) => (
+      {outline?.map((item: any, ind: number) => (
         // <div key={item.start} className={`mb-[15px] font-md `}>
         //   <div className={`text-min rounded-[8px] bg-bgGray text-play pl-[16px] pr-[5px] inline-block mb-[8px] cursor-pointer`}>
         //     <span className={`mr-[10px] cursor-pointer leading-[20px] inline-block`}>{timeFormat(item.start)}</span>
@@ -35,7 +35,7 @@ export function Outlines({ data }: { data: any }) {
         //     {item.children?.map((it: any) => <span className={`hover:text-play cursor-pointer`}>{it.text}，</span>)}
         //   </div>
         // </div>
-        <Accordion type="single" collapsible key={item.start}>
+        <Accordion type="single" collapsible key={`${item.start}-${ind}`}>
           <AccordionItem value="item-1">
             <AccordionTrigger className={`text-left`}>
               <div>

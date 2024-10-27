@@ -31,7 +31,7 @@ export function Transcript({ data }: { data: any }) {
         }
         const speaker = speakerList[speakerInd]
         return (
-          <div className={`mb-[16px] pb-[12px] border-b-[1px] border-e8e dark:border-fontGry-600`} key={item.start}>
+          <div className={`mb-[16px] pb-[12px] border-b-[1px] border-e8e dark:border-fontGry-600`} key={`${item.start}-${ind}`}>
             <div className={`flex mb-[9px] ${isSame ? 'items-center' : ''}`} style={{ color: speaker.color }}>
               {isSame ? (
                 <div className={`w-[10px] h-[30px] rounded-[6px] mr-[48px]`} style={{ background: speaker.bg }}></div>
@@ -56,7 +56,7 @@ export function Transcript({ data }: { data: any }) {
               </div>
             </div>
             <div className={`text-md text-fontGry-600`}>
-              {item.sentences.map((it: any) => {
+              {item.sentences.map((it: any, ind: number) => {
                 const isactive = isPlaying && time >= it.start && time <= it.end
                 const bg = isDark ? '#404040' : speaker.bg
                 const color = isDark ? speaker.bg : speaker.color
@@ -64,7 +64,7 @@ export function Transcript({ data }: { data: any }) {
                   <span
                     className={`hover:bg-bgGray cursor-pointer dark:hover:bg-darkHomeBg dark:text-homehbg`}
                     style={{ background: isactive ? bg : '', color: isactive ? color : '' }}
-                    key={it.start}
+                    key={`${it.start}-${ind}`}
                     onClick={(e: any) => playCurrTime(it.start, e)}
                   >
                     {it.description}

@@ -6,6 +6,9 @@ import fs from 'fs'
 import path from 'path'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 export const metadata: Metadata = getMetaData()
+import AcmeLogo from '@/app/ui/acme-logo'
+import OtherLogo from '@/app/ui/other-logo'
+
 export default function IndexPage() {
   const imagesDirectory = path.join(process.cwd(), 'public/images/imgWall')
   const filenames = fs.readdirSync(imagesDirectory).sort((a: string, b: string) => +a.split('.')[0] - +b.split('.')[0])
@@ -199,25 +202,25 @@ export default function IndexPage() {
     <main className={`landing`}>
       <div className={`w-1280 mx-auto`}>
         <div className={`flex justify-between pt-[24px] items-center mb-[124px]`}>
-          <img src="/images/logo.svg" alt="" />
-          <Link href={'/home'} className={`text-md py-[10px] px-[16px] text-play bg-[#FFF0D7] rounded-[5px] font-bold`}>
+          <AcmeLogo />
+          <Link href={'/home'} className={`text-md py-[10px] px-[16px] text-play bg-[#FFF0D7] rounded-[5px] font-bold dark:bg-bgDark`}>
             Get Started
           </Link>
         </div>
         <div className={`relative mb-[146px]`}>
           <h1
-            className={`text-[65px] font-bold space-x-[-3px] text-[#02073E] w-[753px] mb-[30px] leading-[80px]`}
+            className={`text-[65px] font-bold space-x-[-3px] text-[#02073E] w-[753px] mb-[30px] leading-[80px] dark:text-white`}
             style={{ fontFamily: 'Tilt Warp' }}
           >
             Unleash the power of podcast with AI
           </h1>
-          <div className={`text-[30px] leading-[45px] mb-[30px]`}>
+          <div className={`text-[30px] leading-[45px] mb-[30px] dark:text-homehbg`}>
             Transcripts, Summaries, Mind maps,
             <br /> Outlines, Highlights and Takeaways
           </div>
           <Link
             href={'/home'}
-            className={`text-[23px] inline-block leading-[40px] p-[10px]  text-white bg-play rounded-[5px] font-bold mb-[50px]`}
+            className={`ml-[30px] text-[23px] inline-block leading-[40px] p-[10px]  text-white bg-play rounded-[5px] font-bold mb-[50px]`}
           >
             Get Started for free
           </Link>
@@ -242,13 +245,13 @@ export default function IndexPage() {
               return (
                 <div
                   key={ind}
-                  className={`w-[420px] bg-[#F6F8FB] ${(ind + 1) % 3 === 0 ? '' : 'mr-[10px]'} mb-[30px] rounded-[8px] py-[22px] px-[26px] text-md leading-[32px]`}
+                  className={`w-[420px] bg-[#F6F8FB] ${(ind + 1) % 3 === 0 ? '' : 'mr-[10px]'} mb-[30px] rounded-[8px] py-[22px] px-[26px] text-md leading-[32px] dark:bg-bgDark`}
                 >
                   <div className={`flex mb-[15px]`}>
                     <img src={img} className={`w-[66px] h-[66px] mr-[22px]`} alt="" />
-                    <h2 className={`text-[40px] leading-[1] self-end`}>{title}</h2>
+                    <h2 className={`text-[40px] leading-[1] self-end dark:text-white`}>{title}</h2>
                   </div>
-                  <div>{desc}</div>
+                  <div className={`dark:text-homehbg`}>{desc}</div>
                 </div>
               )
             })}
@@ -256,18 +259,22 @@ export default function IndexPage() {
         </div>
         <div className={`relative flex flex-wrap mb-[240px]`}>
           <div className={`w-[50%] mb-[146px]`}>
-            <h2 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black font-bold`}>Summarize podcasts with AI</h2>
-            <div className={`text-[30px] leading-[45px]`}>
+            <h2 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black font-bold dark:text-white`}>
+              Summarize podcasts with AI
+            </h2>
+            <div className={`text-[30px] leading-[45px] dark:text-homehbg`}>
               Generate podcast summaries with AI to quickly grasp the gist of the content before listening.
             </div>
           </div>
           <div className={`w-[50%] relative`}>
             <img src="/images/right-man.png" alt="" className={`absolute top-0 right-[50px] w-[300px]`} />
-            <div className={`rounded-[10px] absolute left-0 top-[250px] w-[330px] bg-[#F6F8FB] py-[20px] px-[25px]`}>
-              <h3 className={`text-black  text-[26px] leading-[30px] pb-[15px] border-b-[1px] border-[#E0E2E4] mb-[15px] font-bold`}>
+            <div className={`rounded-[10px] absolute left-0 top-[250px] w-[330px] bg-[#F6F8FB] py-[20px] px-[25px] dark:bg-bgDark`}>
+              <h3
+                className={`text-black  text-[26px] leading-[30px] pb-[15px] border-b-[1px] border-[#E0E2E4] mb-[15px] font-bold dark:border-darkHomeBg dark:text-homehbg`}
+              >
                 AI Summary
               </h3>
-              <div className={`text-sm text-[#343D48]`}>
+              <div className={`text-sm text-[#343D48] dark:text-fontGry-100`}>
                 In this podcast episode, Dr. Koniver and Andrew Huberman dive into the fascinating world of peptides and growth hormone
                 secretagogues, discussing their health implications and the need for personalized therapy and mindset for optimal
                 well-being. They examine various compounds, including GLP-1 agonists, BPC-157, and NAD infusions, highlighting their unique
@@ -277,11 +284,13 @@ export default function IndexPage() {
           </div>
           <div className={`w-[50%] relative mb-[140px]`}>
             <img src="/images/left-man.png" alt="" className={`w-[300px] block`} />
-            <div className={`rounded-[10px] absolute top-[230px] left-[88px] w-[325px] bg-[#F6F8FB] py-[20px] px-[25px]`}>
-              <h3 className={`text-black text-[26px] leading-[30px] pb-[15px] border-b-[1px] border-[#E0E2E4] mb-[15px] font-bold`}>
+            <div className={`rounded-[10px] absolute top-[230px] left-[88px] w-[325px] bg-[#F6F8FB] py-[20px] px-[25px] dark:bg-bgDark`}>
+              <h3
+                className={`text-black text-[26px] leading-[30px] pb-[15px] border-b-[1px] border-[#E0E2E4] mb-[15px] font-bold dark:border-darkHomeBg dark:text-homehbg`}
+              >
                 AI Transcript
               </h3>
-              <div className={`text-sm text-[#343D48] leading-[24px]`}>
+              <div className={`text-sm text-[#343D48] leading-[24px] dark:text-fontGry-100`}>
                 <span className={`text-play`}>Lex Fridman 13:47</span>
                 <p>So Copilot was kind of like the first killer app for LLMs.</p>
                 <span className={`text-play`}>SPEAKER_01 13:53</span>
@@ -300,8 +309,10 @@ export default function IndexPage() {
             </div>
           </div>
           <div className={`w-[50%] relative mt-[386px]`}>
-            <h3 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black font-bold`}>AI Podcast Transcript</h3>
-            <div className={`text-[30px] leading-[45px]`}>
+            <h3 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black font-bold dark:text-white`}>
+              AI Podcast Transcript
+            </h3>
+            <div className={`text-[30px] leading-[45px] dark:text-homehbg`}>
               Accurate and comprehensive full transcripts of podcasts, supporting the distinction of speakers. You can listen while reading,
               or quickly jump to the corresponding position by clicking on the text.
             </div>
@@ -342,14 +353,14 @@ export default function IndexPage() {
                 {it.map((item, ind) => {
                   return (
                     <div
-                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[480px] rounded-[5px] shadow-cardShow mr-[20px] mb-[20px]`}
+                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[480px] rounded-[5px] shadow-cardShow mr-[20px] mb-[20px] dark:bg-bgDark dark:text-homehbg`}
                       key={index + '-' + ind}
                     >
                       <div className={`text-md leading-[30px] mb-[15px]`}>{item.message}</div>
                       <div className={`flex justify-between items-center`}>
                         <div className={`flex items-center`}>
                           <img src={item.img} alt="" className={`w-[45px] h-[45px] object-cover mr-[15px] rounded-[50%]`} />
-                          <div className={`max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap`}>{item.title}</div>
+                          <div className={`max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap font-bold`}>{item.title}</div>
                         </div>
                         <div className={`flex items-center`}>
                           {Array.from({ length: 5 }).map((i, ind) => (
@@ -369,14 +380,14 @@ export default function IndexPage() {
                 {it.map((item, ind) => {
                   return (
                     <div
-                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[480px] rounded-[5px] shadow-cardShow mr-[20px] mb-[20px]`}
+                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[480px] rounded-[5px] shadow-cardShow mr-[20px] mb-[20px] dark:bg-bgDark dark:text-homehbg`}
                       key={index + '-' + ind}
                     >
                       <div className={`text-md leading-[30px] mb-[15px]`}>{item.message}</div>
                       <div className={`flex justify-between items-center`}>
                         <div className={`flex items-center`}>
                           <img src={item.img} alt="" className={`w-[45px] h-[45px] object-cover mr-[15px] rounded-[50%]`} />
-                          <div className={`max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap`}>{item.title}</div>
+                          <div className={`max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap font-bold`}>{item.title}</div>
                         </div>
                         <div className={`flex items-center`}>
                           {Array.from({ length: 5 }).map((i, ind) => (
@@ -393,12 +404,14 @@ export default function IndexPage() {
         </div>
       </div>
       <div className={`w-1280 mx-auto mb-[190px]`}>
-        <h1 className={`text-black text-[68px] text-center font-black mb-[65px]`}>Frequently Asked Questions</h1>
+        <h1 className={`text-black text-[68px] text-center font-black mb-[65px] dark:text-white`}>Frequently Asked Questions</h1>
         <div className={`w-[880px] mx-auto`}>
-          <Accordion type="single" collapsible defaultValue={'item-1'}>
+          <Accordion type="single" collapsible defaultValue={'item-1'} className={`dark:bg-bgDark`}>
             {QAList.map((it, index) => (
               <AccordionItem value={`item-${index + 1}`} key={index} className={`mb-[15px] border-[1px]  rounded-[10px] border-[#D9D9D9]`}>
-                <AccordionTrigger className={`text-lg font-bold p-[20px] data-[state=closed]:bg-[#f5f5f5] rounded-[10px]`}>
+                <AccordionTrigger
+                  className={`text-lg font-bold p-[20px] data-[state=closed]:bg-[#f5f5f5] dark:data-[state=closed]:bg-bgDark rounded-[10px]`}
+                >
                   {it.q}
                 </AccordionTrigger>
                 <AccordionContent className={`text-sm px-[20px]`}>
@@ -414,18 +427,13 @@ export default function IndexPage() {
         </div>
       </div>
       <div className={`w-1280 mx-auto p-[32px] flex items-start mb-[110px]`}>
-        <div className={`flex w-[260px]`}>
-          <img src="/images/speakBox/XLogo.svg" alt="" className={`mr-[20px]`} />
-          <img src="/images/speakBox/LogoInstagram.svg" alt="" className={`mr-[20px]`} />
-          <img src="/images/speakBox/LogoYouTube.svg" alt="" className={`mr-[20px]`} />
-          <img src="/images/speakBox/Facebook.svg" alt="" className={`mr-[20px]`} />
-        </div>
+        <OtherLogo />
         {otherLinks.map((item: any) =>
           !!item.list.length ? (
             <div className={`w-[260px] text-md`}>
-              <h3 className={` font-bold mb-[30px]`}>{item.title}</h3>
+              <h3 className={` font-bold mb-[30px] dark:text-homehbg`}>{item.title}</h3>
               {item.list.map((item: any) => (
-                <div className={`mb-[15px]`}>
+                <div className={`mb-[15px] dark:text-fontGry-100`}>
                   <Link href={item.href}>{item.name}</Link>
                 </div>
               ))}

@@ -1,7 +1,7 @@
 'use client'
 // import Image from 'next/image'
 import { useEffect, useState, useRef } from 'react'
-import { getCurrentLocalTime, getNoTagText } from '@/app/lib/utils'
+import { getCurrentLocalTime, getNoTagText, timeFormat } from '@/app/lib/utils'
 import { ClockIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 export function Card({
@@ -12,6 +12,8 @@ export function Card({
   showNotes,
   episodeId,
   isHome = false,
+  duration,
+  isShowTitle = true,
 }: {
   coverUrl: string
   episodeTitle: string
@@ -20,6 +22,8 @@ export function Card({
   showNotes: any
   episodeId: string
   isHome?: boolean
+  isShowTitle?: boolean
+  duration: number
 }) {
   const elementARef = useRef(null)
   const [oneline, setOneLine] = useState(false)
@@ -56,10 +60,13 @@ export function Card({
           </div>
           <div className={`flex text-sm text-fontGry-100 mt-auto overflow-hidden w-[100%]`}>
             <ClockIcon className={`w-[14px] mr-[4px]`} />
+            <span className={`mr-[10px]`}>{timeFormat(duration)}</span>
             <span>{getCurrentLocalTime(gmtPubDate)}</span>
-            <span className={`ml-[24px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap`} title={showTitle}>
-              {showTitle}
-            </span>
+            {isShowTitle && (
+              <span className={`ml-[24px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap`} title={showTitle}>
+                {showTitle}
+              </span>
+            )}
           </div>
         </div>
       </div>

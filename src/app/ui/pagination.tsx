@@ -8,7 +8,7 @@ import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 const volumeList: any[] = [50, 100, 150, 200]
-export default function Pagination({ totalPages, total }: { totalPages: number; total: number }) {
+export default function Pagination({ totalPages, total, title }: { totalPages: number; total: number; title?: string }) {
   // NOTE: Uncomment this code in Chapter 11
   // const [pageSize, setPageSize] = useState(50)
   const { replace, back, push } = useRouter()
@@ -40,7 +40,7 @@ export default function Pagination({ totalPages, total }: { totalPages: number; 
       {/*  NOTE: Uncomment this code in Chapter 11 */}
 
       <div className="flex items-center dark:text-fontGry-dark9b">
-        <span className={`mr-[16px] text-sm`}>{`Total ${total} episodes`}</span>
+        <span className={`mr-[16px] text-sm`}>{`Total ${total} ${title || 'episodes'}`}</span>
         <PaginationArrow direction="left" href={createPageURL(currentPage - 1)} isDisabled={currentPage <= 1} />
 
         <div className="flex ">
@@ -87,6 +87,7 @@ export default function Pagination({ totalPages, total }: { totalPages: number; 
               value={searchParams.get('query')?.toString()}
               placeholder=""
               onBlur={(e: any) => inputBlur(e.target?.value || '')}
+              onKeyUp={(e: any) => e.key === 'Enter' && inputBlur(e.target?.value || '')}
             />
           </div>
         )}
