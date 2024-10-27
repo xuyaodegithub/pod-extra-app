@@ -51,6 +51,7 @@ export default function Audio() {
         }
         if (stepTime > 0) {
           isAudio.current.currentTime = stepTime
+          setStepTime(0)
         }
       } else {
         if (!isAudio.current.paused) {
