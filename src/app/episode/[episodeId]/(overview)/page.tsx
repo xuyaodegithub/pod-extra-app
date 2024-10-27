@@ -42,7 +42,9 @@ export default async function Page({
         <div className={`flex flex-1 flex-col overflow-hidden items-start`}>
           <div className={`text-lg font-semibold flex items-center mb-[5px]`}>
             <MicrophoneIcon className={`mr-[5px] w-[20px] h-[28px]`} />
-            <div className={`flex-1 text-fontGry-600 overflow-hidden text-ellipsis whitespace-nowrap`}>{itunesAuthor}</div>
+            <div className={`flex-1 text-fontGry-600 overflow-hidden text-ellipsis whitespace-nowrap dark:text-homehbg`}>
+              {itunesAuthor}
+            </div>
           </div>
           <div className={`flex text-sm text-fontGry-100 overflow-hidden w-[100%]`}>
             <ClockIcon className={`w-[14px] mr-[4px]`} />
