@@ -82,10 +82,10 @@ export default function MarkmapHooks({ mindmapInMd }: { mindmapInMd: any }) {
     const mm = refMm.current
     if (!mm) return
     const val = addLevelMarkers(value)
-    const { root } = transformer.transform(value)
+    const { root } = transformer.transform(val)
     // 设置最大展开层级，例如：只展开到第二层
-    const r = setFoldedByLevel(root, 3)
-    console.log(val, '---', root, r)
+    setFoldedByLevel(root, 3)
+    // console.log(val, '---', root, r)
     mm.setData(root)
     mm.fit()
   }, [refMm.current, value])
