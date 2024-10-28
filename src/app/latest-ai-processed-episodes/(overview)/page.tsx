@@ -24,10 +24,10 @@ export default async function Page({
   } = await getPodEpisode({ sortBy: SUMMARIZE_TIME, pageNum, pageSize })
   const totalPages = Math.ceil(+total / +pageSize)
   return (
-    <main className={`flex flex-col overflow-hidden h-[100%] pb-[80px]`}>
+    <main className={`flex flex-col overflow-hidden h-[100%]`}>
       <Pagination totalPages={totalPages} total={total} />
       <div
-        className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] mt-[22px] flex-1 overflow-auto dark:border-fontGry-600`}
+        className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] pb-[80px] mt-[22px] flex-1 overflow-auto dark:border-fontGry-600`}
       >
         {resultList.map((item: any) => {
           return <Card key={item?.episodeId} {...item} />

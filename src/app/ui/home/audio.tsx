@@ -163,7 +163,15 @@ export default function Audio() {
           className={`w-[310px] mr-[18px]`}
           onValueChange={(e: any) => changeProgress(e)}
         />
-        <span className={`mr-[20px]`}>{loading ? <Loading /> : !!allTime ? timeFormat(allTime) : '--:--'}</span>
+        <span className={`mr-[20px]`}>
+          {loading ? (
+            <img src="/images/loading.png" className={`w-[24px] h-[24px] animate-spin`} alt="" />
+          ) : !!allTime ? (
+            timeFormat(allTime)
+          ) : (
+            '--:--'
+          )}
+        </span>
         {voice > 0 ? (
           <SpeakerWaveIcon className={`w-[24px] h-[24px] text-gray-200 mr-[12px]`} onClick={closeViose} />
         ) : (

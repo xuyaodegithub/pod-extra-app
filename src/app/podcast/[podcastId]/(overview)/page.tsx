@@ -42,7 +42,7 @@ export default async function Page({
   } = await getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
   const totalPages = Math.ceil(+total / +pageSize)
   return (
-    <main className={`flex flex-col overflow-auto h-[100%] relative pb-[80px]`}>
+    <main className={`flex flex-col overflow-auto h-[100%] relative`}>
       <div className={`flex `}>
         <img src={coverUrl} alt="" className={`w-[250px] h-[250px] mr-[17px] rounded-10px`} />
         <div className={`flex flex-1 flex-col`}>
@@ -61,7 +61,7 @@ export default async function Page({
       <div className={`py-[20px] sticky top-0 bg-white dark:bg-black`}>
         <Pagination totalPages={totalPages} total={total} />
       </div>
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
+      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600 pb-[80px]`}>
         {resultList.map((item: any) => {
           return <Card key={item?.episodeId} {...item} isShowTitle={false} />
         })}

@@ -39,8 +39,8 @@ function renderToolbar(mm: Markmap, wrapper: HTMLElement) {
   }
 }
 
-export default function MarkmapHooks() {
-  const [value, setValue] = useState(initValue)
+export default function MarkmapHooks({ mindmapInMd }: { mindmapInMd: any }) {
+  const [value, setValue] = useState(mindmapInMd)
   // Ref for SVG element
   const refSvg = useRef<any>(null)
   // Ref for markmap object

@@ -31,7 +31,10 @@ export function Transcript({ data }: { data: any }) {
         const speaker = speakerList[speakerIndex] || speakerList[0]
         return (
           <div className={`mb-[16px] pb-[12px] border-b-[1px] border-e8e dark:border-fontGry-600`} key={`${item.start}-${ind}`}>
-            <div className={`flex mb-[9px] ${isSame ? 'items-center' : ''}`} style={{ color: speaker.color }}>
+            <div
+              className={`flex mb-[9px] ${isSame ? 'items-center' : ''} active_${((item.start || '') + '').replace(/\./g, '_')}`}
+              style={{ color: speaker.color }}
+            >
               {isSame ? (
                 <div className={`w-[10px] h-[30px] rounded-[6px] mr-[48px]`} style={{ background: speaker.bg }}></div>
               ) : (
@@ -61,7 +64,7 @@ export function Transcript({ data }: { data: any }) {
                 const color = isDark ? speaker.bg : speaker.color
                 return (
                   <span
-                    className={`hover:bg-bgGray cursor-pointer dark:hover:bg-darkHomeBg dark:text-homehbg`}
+                    className={`hover:bg-bgGray cursor-pointer dark:hover:bg-darkHomeBg dark:text-homehbg active_${((it.start || '') + '').replace(/\./g, '_')}`}
                     style={{ background: isactive ? bg : '', color: isactive ? color : '' }}
                     key={`${it.start}-${ind}`}
                     onClick={(e: any) => playCurrTime(it.start, e)}
