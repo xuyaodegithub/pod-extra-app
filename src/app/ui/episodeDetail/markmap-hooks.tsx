@@ -47,7 +47,28 @@ export default function MarkmapHooks({ mindmapInMd }: { mindmapInMd: any }) {
   const refMm = useRef<Markmap>()
   // Ref for toolbar wrapper
   const refToolbar = useRef<any>(null)
+  function addLevelMarkers(markdown: any) {
+    return markdown
+      .split('\n')
+      .map((line: any) => {
+        const indentLevel = line.match(/^\s*/)[0].length / 4 // 假设每个层级使用 4 个空格
+        const cleanedLine = line.trim()
+        return `${' '.repeat(indentLevel * 4)}${cleanedLine} <!-- .level${indentLevel + 1} -->`
+      })
+      .join('\n')
+  }
 
+  function setFoldedByLevel(node: any, maxExpandedLevel = 2, currentLevel = 1) {
+    if (currentLevel > maxExpandedLevel) {
+      node.state = { ...node.state, expanded: false } // 超过最大展开层级的节点将被折叠
+    } else {
+      node.state = { ...node.state, expanded: true }
+    }
+    if (node.children) {
+      node.children.forEach((child: any) => setFoldedByLevel(child, maxExpandedLevel, currentLevel + 1))
+    }
+  }
+  // 初始化 Markmap，并设置默认折叠
   useEffect(() => {
     // Create markmap and save to refMm
     if (refMm.current) return
@@ -60,7 +81,11 @@ export default function MarkmapHooks({ mindmapInMd }: { mindmapInMd: any }) {
     // Update data for markmap once value is changed
     const mm = refMm.current
     if (!mm) return
+    const val = addLevelMarkers(value)
     const { root } = transformer.transform(value)
+    // 设置最大展开层级，例如：只展开到第二层
+    const r = setFoldedByLevel(root, 3)
+    console.log(val, '---', root, r)
     mm.setData(root)
     mm.fit()
   }, [refMm.current, value])
