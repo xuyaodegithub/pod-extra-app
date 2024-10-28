@@ -28,7 +28,7 @@ export default async function Home() {
           <LatestEpisodes title={`Latest Episodes`} type={PUB_DATE} />
         </Suspense>
         <Suspense fallback={<LoadingLine />}>
-          <LatestEpisodes title={`Latest AI-processed`} type={TRANSCRIPT_TIME} />
+          <LatestEpisodes title={`Latest AI-processed`} type={SUMMARIZE_TIME} />
         </Suspense>
         <Suspense fallback={<LoadingLine />}>
           <Categories title={`Categories`} />

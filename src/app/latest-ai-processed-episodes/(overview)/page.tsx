@@ -1,6 +1,6 @@
 import Pagination from '@/app/ui/pagination'
 import { getPodEpisode } from '@/app/lib/service'
-import { TRANSCRIPT_TIME, getMetaData } from '@/app/lib/utils'
+import { TRANSCRIPT_TIME, getMetaData, SUMMARIZE_TIME } from '@/app/lib/utils'
 import { Card } from '@/app/ui/home/episodes-card'
 import { Metadata } from 'next'
 const y = new Date().getFullYear()
@@ -21,7 +21,7 @@ export default async function Page({
   const pageNum = searchParams?.page || 1
   const {
     data: { resultList, total },
-  } = await getPodEpisode({ sortBy: TRANSCRIPT_TIME, pageNum, pageSize })
+  } = await getPodEpisode({ sortBy: SUMMARIZE_TIME, pageNum, pageSize })
   const totalPages = Math.ceil(+total / +pageSize)
   return (
     <main className={`flex flex-col overflow-hidden h-[100%] pb-[80px]`}>
