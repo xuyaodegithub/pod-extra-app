@@ -5,7 +5,7 @@ import { getPodEpisode } from '@/app/lib/service'
 // import { formatDateToLocal } from '@/app/lib/utils'
 import { Card } from '@/app/ui/home/episodes-card'
 import Link from 'next/link'
-import { POPULARITY, PUB_DATE, TRANSCRIPT_TIME } from '@/app/lib/utils'
+import { POPULARITY, PUB_DATE, SUMMARIZE_TIME, TRANSCRIPT_TIME } from '@/app/lib/utils'
 export default async function LatestEpisodes({ title, type }: { title: string; type: string }) {
   const payload = {
     sortBy: type,
@@ -17,7 +17,7 @@ export default async function LatestEpisodes({ title, type }: { title: string; t
   } = await getPodEpisode(payload)
   const urlObj: any = {
     [PUB_DATE]: '/new-latest-episodes',
-    [TRANSCRIPT_TIME]: '/latest-ai-processed-episodes',
+    [SUMMARIZE_TIME]: '/latest-ai-processed-episodes',
   }
   return resultList.length ? (
     <div className={`bg-gray-1000 rounded-10px py-[11px] px-[15px] mb-24px dark:bg-bgDark`}>
