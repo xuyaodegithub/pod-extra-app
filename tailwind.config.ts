@@ -72,6 +72,7 @@ const config: Config = {
       homehbg: '#dcdcdc',
       darkHomeBg: '#404040',
       e8e: '#E8EDF1',
+      646410: 'rgba(100, 100, 100, 0.1)',
     },
     borderRadius: {
       none: '0',

@@ -40,13 +40,13 @@ export default function RootLayout({
           {!isLanding ? (
             <div className="flex w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-100">
               <SideNav />
-              <main className={`flex-1 overflow-hidden pl-[14px] flex flex-col`}>
+              <main className={`flex-1 overflow-hidden flex flex-col`}>
                 <div className={`mb-[20px] h-[40px]`}>
                   {/*<Suspense fallback={<LoadingLine />}>*/}
                   {/*  <SearchInput />*/}
                   {/*</Suspense>*/}
                 </div>
-                <section className={`flex-1 overflow-auto`}>{children}</section>
+                <section className={`flex-1 overflow-auto pr-[20px]`}>{children}</section>
               </main>
             </div>
           ) : (

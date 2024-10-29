@@ -5,7 +5,7 @@ import { PowerIcon } from '@heroicons/react/24/outline'
 
 export default function SideNav() {
   return (
-    <div className="flex h-full flex-col w-[240px]">
+    <div className="flex h-full flex-col w-[260px]">
       <Link className="mb-[32px]" href="/">
         <AcmeLogo />
       </Link>

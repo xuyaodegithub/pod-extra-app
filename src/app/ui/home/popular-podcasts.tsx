@@ -37,19 +37,19 @@ export default async function PopularPodcasts({ title, type }: { title: string; 
     [PUB_DATE]: '/new-latest-podcasts',
   }
   return (
-    <div className={`bg-gray-1000 dark:bg-bgDark rounded-10px py-[18px] px-[15px] mb-24px`}>
-      <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
+    <div className={`bg-gray-1000 dark:bg-bgDark rounded-10px py-[11px] px-[15px] mb-24px`}>
+      <div className={`mb-[16px] text-max text-fontGry-600 ml-[10px] flex pt-[8px] items-center font-bold cursor-pointer`}>
         <Link href={urlObj[type]} className={`${styles.hoverBBorder} dark:text-white`}>
           {title}
         </Link>
         <ChevronRightIcon className={`ml-[10px] w-[20px] dark:text-white`} />
       </div>
       <div className={`flex flex-wrap`}>
-        {resultList.map((item: any) => {
+        {resultList.map((item: any, ind: number) => {
           const { showId, showTitle } = item
           return (
             <Link href={`/podcast/${encodeURIComponent(showTitle)}-podcast-${showId}`} key={item.showId}>
-              <Card {...item} isPopularity={isPopularity} />
+              <Card {...item} isPopularity={isPopularity} noMr={(ind + 1) % 5 === 0} />
             </Link>
           )
         })}
@@ -64,15 +64,19 @@ export function Card({
   itunesAuthor,
   gmtLastUpdate,
   isPopularity,
+  noMr = false,
 }: {
   coverUrl: string
   showTitle: string
   gmtLastUpdate: any
   isPopularity: boolean
   itunesAuthor: string
+  noMr: boolean
 }) {
   return (
-    <div className="rounded-10px w-[180px] p-[10px] mr-[15px] mb-[8px] overflow-hidden cursor-pointer hover:bg-homehbg dark:hover:bg-darkHomeBg transition-all">
+    <div
+      className={`rounded-10px w-[190px] box-border p-[10px] ${noMr ? '' : 'mr-[5px]'} overflow-hidden cursor-pointer hover:bg-homehbg dark:hover:bg-darkHomeBg transition-all`}
+    >
       <img
         src={coverUrl}
         title={showTitle}

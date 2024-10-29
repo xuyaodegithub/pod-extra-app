@@ -5,11 +5,11 @@ import { useMyContext } from '@/context/MyContext'
 export default function AcmeLogo() {
   const { isDark } = useMyContext()
   return (
-    <div className={``}>
+    <div className={`ml-24px`}>
       <Image
         src={`/images/${isDark ? 'darkLogo' : 'logo'}.svg`}
-        width={200}
-        height={36}
+        width={188}
+        height={26}
         className="hidden md:block"
         alt="pod-extra-front_logo"
       />

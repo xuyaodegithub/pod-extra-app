@@ -53,7 +53,7 @@ export default async function Page({
           </div>
           <div className={`text-lg font-semibold flex items-center mb-[5px]`}>
             <MicrophoneIcon className={`mr-[5px] w-[20px] h-[28px]`} />
-            <div className={`flex-1 overflow-hidden text-ellipsis whitespace-nowrap`}>{itunesAuthor}</div>
+            <div className={`flex-1 overflow-hidden text-fontGry-600 text-ellipsis whitespace-nowrap`}>{itunesAuthor}</div>
           </div>
           <CardDes des={getNoTagText(showDescription)} maxLine={8} />
         </div>

@@ -59,11 +59,7 @@ export default function MarkmapHooks({ mindmapInMd }: { mindmapInMd: any }) {
   }
 
   function setFoldedByLevel(node: any, maxExpandedLevel = 2, currentLevel = 1) {
-    if (currentLevel > maxExpandedLevel) {
-      node.state = { ...node.state, expanded: false } // 超过最大展开层级的节点将被折叠
-    } else {
-      node.state = { ...node.state, expanded: true }
-    }
+    node.state = { ...node.state, expanded: currentLevel <= maxExpandedLevel } // 超过最大展开层级的节点将被折叠
     if (node.children) {
       node.children.forEach((child: any) => setFoldedByLevel(child, maxExpandedLevel, currentLevel + 1))
     }

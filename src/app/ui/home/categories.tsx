@@ -57,27 +57,29 @@ export default async function Categories({ title }: { title: string }) {
     data: { resultList },
   } = await getPodCategory(payload)
   return (
-    <div className={`bg-gray-1000 rounded-10px py-[21px] px-[25px] mb-[100px] dark:bg-bgDark`}>
-      <div className={`mb-[16px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
+    <div className={`bg-gray-1000 rounded-10px py-[25px] px-[25px] pt-[19px] mb-[100px] dark:bg-bgDark`}>
+      <div className={`mb-[22px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
         <Link href={`/podcasts-categories`} className={`${styles.hoverBBorder} dark:text-white`}>
           {title}
         </Link>
         <ChevronRightIcon className={`ml-[10px] w-[20px] dark:text-white`} />
       </div>
       <div className={`flex flex-wrap`}>
-        {resultList?.map((item: any, index: number) => <Cate key={item.categoryId} {...item} ind={index} />)}
+        {resultList?.map((item: any, index: number) => (
+          <Cate key={item.categoryId} {...item} ind={index} noMd={index >= resultList.length - 3} />
+        ))}
       </div>
     </div>
   )
 }
 
-export function Cate({ categoryName, ind, categoryId }: { categoryName: string; ind: number; categoryId: string }) {
+export function Cate({ categoryName, ind, categoryId, noMd }: { categoryName: string; ind: number; categoryId: string; noMd: boolean }) {
   const color = iconMap[ind]
   const url = iconList[ind]
   return (
     <Link href={`/podcasts-categories/${encodeURIComponent(categoryName)}-podcasts?categoryId=${categoryId}`}>
       <div
-        className={`hover:opacity-80 relative transition-all rounded-5px mb-24px cursor-pointer mr-24px w-[170px] h-[100px] leading-[100px] text-white`}
+        className={`hover:opacity-80 relative transition-all rounded-5px ${noMd ? '' : 'mb-24px'} cursor-pointer mr-24px w-[170px] h-[100px] leading-[100px] text-white`}
         style={{ backgroundColor: color }}
       >
         <span className={`absolute top-[10px] left-[10px] text-sm`}>{categoryName}</span>

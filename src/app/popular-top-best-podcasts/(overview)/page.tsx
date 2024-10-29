@@ -27,11 +27,11 @@ export default async function Page({
   const totalPages = Math.ceil(+total / +pageSize)
   console.timeEnd()
   return (
-    <main className={`flex flex-col overflow-hidden h-[100%]`}>
-      <Pagination totalPages={totalPages} total={total} title="podcasts" />
-      <div
-        className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] mt-[22px] pb-[80px] overflow-auto dark:border-fontGry-600`}
-      >
+    <main className={`flex flex-col overflow-auto h-[100%] relative`}>
+      <div className={`sticky top-0 bg-white dark:bg-black pb-[22px]`}>
+        <Pagination totalPages={totalPages} total={total} title="podcasts" />
+      </div>
+      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] pb-[80px] dark:border-fontGry-600`}>
         {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate }: any) => {
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           return (

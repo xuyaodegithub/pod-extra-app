@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 export default function Breadcrumb({ title }: { title: string }) {
   const { back, push } = useRouter()
   function toback() {
-    if (history.length <= 1 || document.referrer === '') {
+    if (history.length <= 2) {
       push('/home')
     } else back()
   }
