@@ -24,7 +24,7 @@ export default async function Page({
   } = await getPodEpisode({ sortBy: PUB_DATE, pageNum, pageSize })
   const totalPages = Math.ceil(+total / +pageSize)
   return (
-    <main className={`flex flex-col overflow-auto h-[100%] relative`}>
+    <main className={`flex flex-col relative`}>
       <div className={`sticky top-0 bg-white dark:bg-black pb-[22px]`}>
         <Pagination totalPages={totalPages} total={total} />
       </div>

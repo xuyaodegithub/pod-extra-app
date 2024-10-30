@@ -36,7 +36,7 @@ export default async function Page({
   const summery = res1.data
   const paragraphs = res2.data?.paragraphs || []
   return (
-    <main className={`flex flex-col overflow-auto h-[100%] relative episode-item`}>
+    <main className={`flex flex-col relative episode-item`}>
       <div className={`flex `}>
         <img src={coverUrl} alt="" className={`w-[160px] h-[160px] mr-[17px] rounded-10px object-cover`} />
         <div className={`flex flex-1 flex-col overflow-hidden items-start`}>

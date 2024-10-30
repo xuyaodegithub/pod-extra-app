@@ -27,7 +27,7 @@ export default async function Page({
   const totalPages = Math.ceil(+total / +pageSize)
   console.timeEnd()
   return (
-    <main className={`flex flex-col overflow-auto h-[100%] relative`}>
+    <main className={`flex flex-col relative`}>
       <div className={`sticky top-0 bg-white dark:bg-black pb-[22px]`}>
         <Pagination totalPages={totalPages} total={total} title="podcasts" />
       </div>

@@ -19,8 +19,8 @@ export default async function Page() {
     data: { resultList },
   } = await getPodCategory(payload)
   return (
-    <main className={`overflow-hidden h-[100%] flex flex-col`}>
-      <div className={`border border-gray-1000 rounded-10px p-[25px] flex-1 mt-[22px] overflow-auto pb-[100px]`}>
+    <main className={`flex flex-col`}>
+      <div className={`border border-gray-1000 rounded-10px p-[25px] flex-1 mt-[22px] pb-[100px]`}>
         {resultList.map(({ categoryName, children, categoryId }: any) => {
           return (
             <div className={`mb-[25px]`} key={categoryId}>

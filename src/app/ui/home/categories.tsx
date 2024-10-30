@@ -66,20 +66,32 @@ export default async function Categories({ title }: { title: string }) {
       </div>
       <div className={`flex flex-wrap`}>
         {resultList?.map((item: any, index: number) => (
-          <Cate key={item.categoryId} {...item} ind={index} noMd={index >= resultList.length - 3} />
+          <Cate key={item.categoryId} {...item} ind={index} noMd={index >= resultList.length - 3} noMr={(index + 1) % 5 === 0} />
         ))}
       </div>
     </div>
   )
 }
 
-export function Cate({ categoryName, ind, categoryId, noMd }: { categoryName: string; ind: number; categoryId: string; noMd: boolean }) {
+export function Cate({
+  categoryName,
+  ind,
+  categoryId,
+  noMd,
+  noMr,
+}: {
+  categoryName: string
+  ind: number
+  categoryId: string
+  noMd: boolean
+  noMr: boolean
+}) {
   const color = iconMap[ind]
   const url = iconList[ind]
   return (
     <Link href={`/podcasts-categories/${encodeURIComponent(categoryName)}-podcasts?categoryId=${categoryId}`}>
       <div
-        className={`hover:opacity-80 relative transition-all rounded-5px ${noMd ? '' : 'mb-24px'} cursor-pointer mr-24px w-[170px] h-[100px] leading-[100px] text-white`}
+        className={`hover:opacity-80 relative transition-all rounded-5px ${noMd ? '' : 'mb-24px'} cursor-pointer ${noMr ? '' : 'mr-24px'} w-[170px] h-[100px] leading-[100px] text-white`}
         style={{ backgroundColor: color }}
       >
         <span className={`absolute top-[10px] left-[10px] text-sm`}>{categoryName}</span>
