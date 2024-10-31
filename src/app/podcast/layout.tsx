@@ -12,11 +12,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const scrollRef = useRef(null)
   useScrollRestoration(scrollRef)
   return (
-    <main className={`h-[100%] flex flex-col`}>
+    <main className={`h-[100%] flex flex-col overflow-auto relative pb-[100px]`} ref={scrollRef}>
       <Breadcrumb title={podcastName} />
-      <section className={`flex-1 overflow-auto`} ref={scrollRef}>
-        {children}
-      </section>
+      <section className={``}>{children}</section>
     </main>
   )
 }

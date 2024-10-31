@@ -182,7 +182,7 @@ export function getMetaData(data?: any) {
     description:
       'PodExtra is an innovative AI-powered podcast tool that provides transcripts, summaries, mind maps, outlines, highlights, and takeaways for your favorite podcasts. It allows you to quickly browse through the content, saving time and improving efficiency.',
     icons: {
-      icon: '/images/logo.svg',
+      icon: '/images/logo.png',
     },
     keywords:
       'podcast,podcast summaries,podcast transcripts, AI transcription,podcast tool,mind maps,outlines, highlights,takeaways,favorite podcasts,',

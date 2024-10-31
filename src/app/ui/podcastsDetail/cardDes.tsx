@@ -18,7 +18,7 @@ export function CardDes({ maxLine = 4, des, lineHeight = 18 }: { maxLine?: numbe
   return (
     <div className={``}>
       <div
-        className={`overflow-hidden text-fontGry-600 text-sm mb-[5px] relative transition-all`}
+        className={`overflow-hidden text-fontGry-600 text-sm mb-[5px] relative transition-all dark:text-homehbg`}
         style={{ height: showMore ? `${maxLine * lineHeight}px` : `${initHeight || 'auto'}px` }}
         ref={boxRef}
       >

@@ -22,7 +22,7 @@ export function PlayAudio({ audioInfo, classStyle }: { audioInfo: any; classStyl
       <img
         src={`/images/${!play ? 'paused' : 'playing'}.svg`}
         alt=""
-        className={`w-[]40px] h-[40px] mt-[10px] mb-[16px] cursor-pointer ${classStyle}`}
+        className={`w-[]40px] h-[40px] mt-[10px] cursor-pointer ${classStyle}`}
         onClick={playAuido}
       />
     </div>
