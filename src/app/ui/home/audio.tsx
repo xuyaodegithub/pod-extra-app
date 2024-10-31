@@ -127,8 +127,10 @@ export default function Audio() {
     // loadRead()
   }
   return enclosureUrl ? (
-    <div className={`fixed left-0 bottom-0 w-[100%] bg-bgGray py-[9px] px-[35px] dark:bg-bgDark dark:text-gray-200`}>
-      <div className={`flex items-center w-1280 mx-auto`}>
+    <div
+      className={`w-[1200px] fixed left-[50%] translate-x-[-50%] bottom-0 w-[100%] bg-bgGray py-[6px] px-[35px] dark:bg-bgDark dark:text-gray-200 rounded-[10px] dark:border-[1px] dark:border-fontGry-600`}
+    >
+      <div className={`flex items-center`}>
         {/*<audio*/}
         {/*  src={enclosureUrl}*/}
         {/*  ref={isAudio}*/}
@@ -147,23 +149,23 @@ export default function Audio() {
         {/*</audio>*/}
         <Image
           src={`/images/${isPlaying ? 'playing' : 'paused'}.svg`}
-          width={38}
-          height={38}
+          width={34}
+          height={34}
           alt={'play'}
           title={'play'}
           className={`mr-[10px] cursor-pointer`}
           onClick={palyAudio}
         />
-        <span className={`mr-[10px]`}>{timeFormat(time)}</span>
+        <span className={`mr-[10px] text-min`}>{timeFormat(time)}</span>
         <Slider
           value={[time]}
           defaultValue={[time]}
           step={1}
           max={allTime}
-          className={`w-[310px] mr-[18px]`}
+          className={`w-[309px] mr-[18px] h-[32px] p-0`}
           onValueChange={(e: any) => changeProgress(e)}
         />
-        <span className={`mr-[20px]`}>
+        <span className={`mr-[20px] text-min`}>
           {loading ? (
             <img src="/images/loading.png" className={`w-[24px] h-[24px] animate-spin`} alt="" />
           ) : !!allTime ? (
@@ -181,7 +183,7 @@ export default function Audio() {
           max={1}
           min={0}
           step={0.01}
-          className={`mr-[25px] w-[150px]`}
+          className={`mr-[25px] w-[50px] h-[32px] p-0`}
           value={[voice]}
           defaultValue={[voice]}
           onValueChange={(e: any) => changeVoice(e)}
@@ -197,7 +199,11 @@ export default function Audio() {
           <SelectContent>
             {volumeList.map((item: number) => {
               return (
-                <SelectItem value={`${item}`} key={item} className={`data-[state=checked]:bg-play data-[state=checked]:text-white`}>
+                <SelectItem
+                  value={`${item}`}
+                  key={item}
+                  className={`data-[state=checked]:bg-play data-[state=checked]:text-white text-center text-min`}
+                >
                   {item}X
                 </SelectItem>
               )
@@ -205,13 +211,15 @@ export default function Audio() {
           </SelectContent>
         </Select>
         <div className={`flex ml-auto items-center cursor-pointer`} onClick={toEpisodeDetail}>
-          <img src={coverUrl} title={''} alt={''} className={`mr-[10px] rounded-[5px] w-[50px] h-[50px] object-cover`} />
-          <div className={`w-[390px]`}>
-            <div className={`text-[14px] text-fontGry-100 leading-normal dark:text-white`}>{showTitle}</div>
-            <div className={`text-[14px] text-fontGry-600 leading-normal overflow-hidden text-ellipsis line-clamp-2 dark:text-fontGry-100`}>
-              {getNoTagText(showNotes)}
-            </div>
+          <img src={coverUrl} title={''} alt={''} className={`mr-[15px] rounded-[5px] w-[38px] h-[38px] object-cover`} />
+          {/*<div className={`w-[390px]`}>*/}
+          {/*  <div className={`text-[14px] text-fontGry-100 leading-normal dark:text-white`}>{showTitle}</div>*/}
+          <div
+            className={`flex-1 w-[380px] text-[14px] text-fontGry-600 leading-[19px] overflow-hidden text-ellipsis line-clamp-2 dark:text-fontGry-100`}
+          >
+            {getNoTagText(showNotes)}
           </div>
+          {/*</div>*/}
         </div>
       </div>
     </div>

@@ -42,7 +42,7 @@ export default async function Page({
   } = await getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
   const totalPages = Math.ceil(+total / +pageSize)
   return (
-    <main className={`flex flex-col overflow-auto h-[100%] relative`}>
+    <main className={`flex flex-col`}>
       <div className={`flex `}>
         <img src={coverUrl} alt="" className={`w-[250px] h-[250px] mr-[17px] rounded-10px`} />
         <div className={`flex flex-1 flex-col`}>
@@ -53,17 +53,19 @@ export default async function Page({
           </div>
           <div className={`text-lg font-semibold flex items-center mb-[5px]`}>
             <MicrophoneIcon className={`mr-[5px] w-[20px] h-[28px]`} />
-            <div className={`flex-1 overflow-hidden text-fontGry-600 text-ellipsis whitespace-nowrap`}>{itunesAuthor}</div>
+            <div className={`flex-1 overflow-hidden text-fontGry-600 text-ellipsis whitespace-nowrap dark:text-homehbg`}>
+              {itunesAuthor}
+            </div>
           </div>
           <CardDes des={getNoTagText(showDescription)} maxLine={8} />
         </div>
       </div>
-      <div className={`py-[20px] sticky top-0 bg-white dark:bg-black`}>
+      <div className={`py-[20px] sticky top-[57px] bg-white dark:bg-black`}>
         <Pagination totalPages={totalPages} total={total} />
       </div>
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600 pb-[80px]`}>
-        {resultList.map((item: any) => {
-          return <Card key={item?.episodeId} {...item} isShowTitle={false} />
+      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
+        {resultList.map((item: any, ind: number) => {
+          return <Card key={item?.episodeId} {...item} isShowTitle={false} noMb={ind >= resultList.length - 2} />
         })}
       </div>
     </main>
