@@ -14,6 +14,7 @@ export function Card({
   isHome = false,
   duration,
   isShowTitle = true,
+  noMb = false,
 }: {
   coverUrl: string
   episodeTitle: string
@@ -24,6 +25,7 @@ export function Card({
   isHome?: boolean
   isShowTitle?: boolean
   duration: number
+  noMb: boolean
 }) {
   const elementARef = useRef(null)
   const [oneline, setOneLine] = useState(false)
@@ -34,7 +36,7 @@ export function Card({
   return (
     <Link href={`/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`} className={` w-[50%]`}>
       <div
-        className={`flex rounded-[5px] p-[10px] mb-[15px] overflow-hidden cursor-pointer ${isHome ? 'hover:bg-homehbg' : 'hover:bg-hbg'} dark:hover:bg-darkHomeBg transition-all`}
+        className={`flex rounded-[5px] p-[10px] ${noMb ? '' : 'mb-[15px]'} overflow-hidden cursor-pointer ${isHome ? 'hover:bg-homehbg' : 'hover:bg-hbg'} dark:hover:bg-darkHomeBg transition-all`}
       >
         <img
           src={coverUrl}

@@ -1,5 +1,6 @@
 'use client'
 import MarkmapHooks from './markmap-hooks'
+import { timeFormat } from '@/app/lib/utils'
 
 export function Mindmap({ data, isMindMap, goThisTime }: { data: any; isMindMap?: boolean; goThisTime?: any }) {
   const { mindmapInMd = {}, episodeTitle } = data || {}
@@ -17,8 +18,8 @@ export function Mindmap({ data, isMindMap, goThisTime }: { data: any; isMindMap?
       <div id="mindMap" className={`h-[500px] bg-hbg relative`} onClick={clickSpan}>
         {isMindMap && (
           <MarkmapHooks
-            mindmapInMd={mindmapInMd.replace(/\((\d+\.\d+)\)/g, (match: any, p1: any) => {
-              return `<span class="clickable text-fontGry-100 cursor-pointer" data-val="${p1}">(${p1})</span>`
+            mindmapInMd={mindmapInMd?.replace(/\((\d+\.\d+)\)/g, (match: any, p1: any) => {
+              return `<span class="clickable text-fontGry-100 cursor-pointer" data-val="${p1}">(${timeFormat(+p1)})</span>`
             })}
           />
         )}

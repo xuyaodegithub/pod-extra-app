@@ -47,12 +47,29 @@ export function Transcript({ data }: { data: any }) {
               )}
               <div className={`flex flex-col justify-between`}>
                 <div
-                  className={`text-min rounded-[8px] pl-[16px] pr-[5px] inline-block cursor-pointer`}
+                  className={`text-min rounded-[8px] pl-[16px] pr-[5px] inline-block cursor-pointer self-start`}
                   onClick={(e: any) => playCurrTime(item.start, e)}
                   style={{ background: speaker.bg }}
                 >
                   <span className={`mr-[10px] leading-[20px] inline-block`}>{timeFormat(item.start)}</span>
-                  <img src="/images/fa-play.png" alt="" className={`inline-block align-baseline w-[10px] h-[10px]`} />
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`inline-block align-baseline w-[10px] h-[10px]`}
+                  >
+                    <g id="fa-play">
+                      <path
+                        id="play"
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M2.24738 9.86849L9.12236 5.806C9.73563 5.44467 9.7376 4.55406 9.12236 4.19273L2.24738 0.128275C1.68878 -0.201791 0.833313 0.118509 0.833313 0.934929V9.06185C0.833313 9.79427 1.62824 10.2357 2.24738 9.86849Z"
+                        fill={speaker.color}
+                      />
+                    </g>
+                  </svg>
                 </div>
                 {!isSame && <div className={`text-md leading-[20px]`}>{item.speaker}</div>}
               </div>
