@@ -2,18 +2,21 @@
 import { usePathname } from 'next/navigation'
 import { links } from '@/app/ui/home/nav-links'
 import Breadcrumb from '@/app/ui/breadcrumb'
-import { useRef } from 'react'
-import useScrollRestoration from '@/hooks/useScrollRestoration'
+import { Suspense, useRef } from 'react'
+import { LoadingLine } from '@/app/ui/skeletons'
+import SaveScroll from '@/app/ui/save-scroll'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const title = links.find((link) => link.href === pathname)?.name || '-'
-  const scrollRef = useRef(null)
-  useScrollRestoration(scrollRef)
   return (
-    <main className={`h-[100%] flex flex-col overflow-auto relative pb-[100px]`} ref={scrollRef}>
-      <Breadcrumb title={title} />
-      <section className={``}>{children}</section>
-    </main>
+    <Suspense fallback={<LoadingLine num={12} />}>
+      <SaveScroll>
+        <main>
+          <Breadcrumb title={title} />
+          <section className={``}>{children}</section>
+        </main>
+      </SaveScroll>
+    </Suspense>
   )
 }
