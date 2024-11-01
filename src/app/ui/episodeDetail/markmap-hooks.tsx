@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useRef, useEffect } from 'react'
 import { Markmap } from 'markmap-view'
-import { transformer } from '@/app/lib/markMap'
+import { transformer, loadAssets } from '@/app/lib/markMap'
 import { Toolbar } from 'markmap-toolbar'
 import 'markmap-toolbar/dist/style.css'
 
@@ -41,6 +41,7 @@ export default function MarkmapHooks({ mindmapInMd }: { mindmapInMd: any }) {
   }
   // 初始化 Markmap，并设置默认折叠
   useEffect(() => {
+    if (!window) return
     // Create markmap and save to refMm
     if (refMm.current) return
     const mm = Markmap.create(refSvg.current)
@@ -52,6 +53,7 @@ export default function MarkmapHooks({ mindmapInMd }: { mindmapInMd: any }) {
     // Update data for markmap once value is changed
     const mm = refMm.current
     if (!mm) return
+    loadAssets()
     const { root } = transformer.transform(value || '')
     // 设置最大展开层级，例如：只展开到第二层
     setFoldedByLevel(root, 2)

@@ -4,5 +4,8 @@ import * as markmap from 'markmap-view'
 
 export const transformer = new Transformer()
 const { scripts, styles }: any = transformer.getAssets()
-loadCSS(styles)
-loadJS(scripts, { getMarkmap: () => markmap })
+export const loadAssets: any = () => {
+  return Promise.all([loadCSS(styles), loadJS(scripts, { getMarkmap: () => markmap })])
+}
+// loadCSS(styles)
+// loadJS(scripts, { getMarkmap: () => markmap })
