@@ -20,12 +20,10 @@ export default async function Page({
 }) {
   const pageSize = searchParams?.pageSize || 50
   const pageNum = searchParams?.page || 1
-  console.time()
   const {
     data: { resultList, total },
   } = await getPodShow({ pageSize, pageNum, sortBy: POPULARITY })
   const totalPages = Math.ceil(+total / +pageSize)
-  console.timeEnd()
   return (
     <main className={`flex flex-col`}>
       <div className={`sticky top-[57px] bg-white dark:bg-black pb-[22px]`}>

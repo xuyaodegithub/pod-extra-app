@@ -34,9 +34,9 @@ export default async function Page({
   const totalPages = Math.ceil(+total / +pageSize)
   console.log({ pageSize, pageNum, sortBy: PUB_DATE, categoryId }, resultList[0], '---')
   return (
-    <main className={`flex flex-col overflow-hidden h-[100%]`}>
+    <main className={`flex flex-col`}>
       <Pagination totalPages={totalPages} total={total} />
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] mt-[22px] overflow-auto pb-[100px]`}>
+      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] mt-[22px]`}>
         {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate }: any) => {
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           return (

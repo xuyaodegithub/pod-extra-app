@@ -52,7 +52,7 @@ export default function MarkmapHooks({ mindmapInMd }: { mindmapInMd: any }) {
     // Update data for markmap once value is changed
     const mm = refMm.current
     if (!mm) return
-    const { root } = transformer.transform(value)
+    const { root } = transformer.transform(value || '')
     // 设置最大展开层级，例如：只展开到第二层
     setFoldedByLevel(root, 2)
     console.log('---', root)
