@@ -1,12 +1,9 @@
 'use client'
-import Breadcrumb from '@/app/ui/breadcrumb'
-import { useSearchParams, usePathname, useRouter } from 'next/navigation'
-import { links } from '@/app/ui/home/nav-links'
+import { usePathname } from 'next/navigation'
 import { useRef } from 'react'
 import useScrollRestoration from '@/hooks/useScrollRestoration'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
   const scrollRef = useRef(null)
   useScrollRestoration(scrollRef)
   return (

@@ -1,6 +1,6 @@
 'use client'
 import Breadcrumb from '@/app/ui/breadcrumb'
-import { useSearchParams, usePathname, useRouter, useParams } from 'next/navigation'
+import { usePathname, useParams } from 'next/navigation'
 import { links } from '@/app/ui/home/nav-links'
 import { capitalizeFirstLetter } from '@/app/lib/utils'
 import { useRef } from 'react'

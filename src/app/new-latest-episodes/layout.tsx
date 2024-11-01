@@ -1,6 +1,6 @@
 'use client'
 import Breadcrumb from '@/app/ui/breadcrumb'
-import { useSearchParams, usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { links } from '@/app/ui/home/nav-links'
 import { useRef } from 'react'
 import useScrollRestoration from '@/hooks/useScrollRestoration'
