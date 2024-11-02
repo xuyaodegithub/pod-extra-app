@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 const scrollPositions: any = {}
-const SaveScroll = ({ children }: { children: React.ReactNode }) => {
+const SaveScroll = ({ children, className }: { children: React.ReactNode; className?: string }) => {
   const ref = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -33,7 +33,7 @@ const SaveScroll = ({ children }: { children: React.ReactNode }) => {
   }, [pathname, searchParams])
 
   return (
-    <div ref={ref} className={`h-[100%] flex flex-col overflow-auto relative pb-[100px]`}>
+    <div ref={ref} className={`h-[100%] flex flex-col overflow-auto relative pb-[100px] ${className}`}>
       {children}
     </div>
   )

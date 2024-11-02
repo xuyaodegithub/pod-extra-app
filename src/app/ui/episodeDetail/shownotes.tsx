@@ -36,10 +36,10 @@ export function Shownotes({ data, goThisTime }: { data: any; goThisTime?: any })
   }
   useEffect(() => {
     const box: any = document.querySelector('.ShownotesBox')
-    box.innerHTML = showNotes.replace(
-      /\b(\d{1,2}):(\d{2})(?::(\d{2}))?\b/g,
-      `<span class="clickable cursor-pointer text-play" data-val="$&">$&</span>`
-    )
+    box.innerHTML = showNotes
+      .replace(/\b(\d{1,2}):(\d{2})(?::(\d{2}))?\b/g, `<span class="clickable cursor-pointer text-play" data-val="$&">$&</span>`)
+      .replace(/(https?:\/\/[^\s/$.?#].[^\s]*)/g, (str: string) => `<a href="${str}" target="_blank" class="text-play">${str}</a>`)
+      .replace(/\n/g, '<br />')
   }, [showNotes])
   return (
     <div key="Shownotes">
