@@ -4,12 +4,8 @@ import { useEffect } from 'react'
 import '@/app/ui/global.css'
 import SideNav from '@/app/ui/home/sidenav'
 import Audio from '@/app/ui/home/audio'
-import { Suspense } from 'react'
-import { LoadingLine } from '@/app/ui/skeletons'
-import SearchInput from '@/app/ui/home/searchInput'
 import { MyProvider } from '@/context/MyContext'
 import { usePathname } from 'next/navigation'
-import Link from 'next/link'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -35,10 +31,10 @@ export default function RootLayout({
 
   return (
     <MyProvider>
-      <html lang="en" className={`h-100`}>
-        <body className={`antialiased h-100 dark:bg-black dark:text-darkTheme-900`}>
+      <html lang="en" className={`h-[100%]`}>
+        <body className={`antialiased h-[100%] dark:bg-black dark:text-darkTheme-900`}>
           {!isLanding ? (
-            <div className="flex w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-100">
+            <div className="flex w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-[100%]">
               <SideNav />
               <main className={`flex-1 overflow-hidden flex flex-col`}>
                 <div className={`mb-[20px] h-[40px]`}>
@@ -52,7 +48,7 @@ export default function RootLayout({
           ) : (
             <section className={``}>{children}</section>
           )}
-          <Audio />
+          {!isLanding && <Audio />}
         </body>
       </html>
     </MyProvider>

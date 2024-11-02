@@ -10,7 +10,6 @@ export function Transcript({ data }: { data: any }) {
   const { enclosureUrl = '', showTitle = '', showNotes = '', coverUrl = '', episodeTitle = '', episodeId = '' } = data || {}
   const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
   const { setData, setIsPlaying, isPlaying, time, setStepTime, isDark } = useMyContext()
-  let listInd = 0
   function playCurrTime(t: number, e: any) {
     if (t === 0) t = t + 0.1
     e.stopPropagation()
@@ -25,9 +24,6 @@ export function Transcript({ data }: { data: any }) {
       {paragraphs?.map((item: any, ind: number) => {
         const { speakerIndex = 0 } = item
         const isSame = item.speaker === paragraphs[ind - 1]?.speaker
-        if (!isSame) {
-          listInd += 1
-        }
         const speaker = speakerList[speakerIndex] || speakerList[0]
         return (
           <div className={`mb-[16px] pb-[12px] border-b-[1px] border-e8e dark:border-fontGry-600`} key={`${item.start}-${ind}`}>
@@ -42,7 +38,7 @@ export function Transcript({ data }: { data: any }) {
                   className={`w-[50px] h-[50px] mr-[8px] text-max leading-[50px] text-center rounded-[6px]`}
                   style={{ background: speaker.bg }}
                 >
-                  {listInd > 9 ? listInd : `0${listInd}`}
+                  <img src={speaker.head} alt="" className={`w-[50px] h-[50px] object-cover`} />
                 </div>
               )}
               <div className={`flex flex-col justify-between`}>
@@ -63,8 +59,8 @@ export function Transcript({ data }: { data: any }) {
                     <g id="fa-play">
                       <path
                         id="play"
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M2.24738 9.86849L9.12236 5.806C9.73563 5.44467 9.7376 4.55406 9.12236 4.19273L2.24738 0.128275C1.68878 -0.201791 0.833313 0.118509 0.833313 0.934929V9.06185C0.833313 9.79427 1.62824 10.2357 2.24738 9.86849Z"
                         fill={speaker.color}
                       />

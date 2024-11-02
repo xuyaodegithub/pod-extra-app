@@ -35,8 +35,10 @@ export default async function Page({
   // console.log({ pageSize, pageNum, sortBy: PUB_DATE, categoryId }, resultList[0], '---')
   return (
     <main className={`flex flex-col`}>
-      <Pagination totalPages={totalPages} total={total} />
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] mt-[22px]`}>
+      <div className={`sticky top-[57px] bg-white dark:bg-black pb-[22px]`}>
+        <Pagination totalPages={totalPages} total={total} title="podcasts" />
+      </div>
+      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px]`}>
         {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate }: any) => {
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           return (

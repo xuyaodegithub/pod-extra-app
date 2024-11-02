@@ -35,7 +35,7 @@ export function Highlights({ data }: { data: any }) {
               </div>
               <div className={`flex flex-col justify-between`}>
                 <div
-                  className={`text-min rounded-[8px] pl-[16px] pr-[5px] inline-block cursor-pointer`}
+                  className={`text-min rounded-[8px] pl-[16px] pr-[5px] inline-block cursor-pointer  self-start`}
                   onClick={(e: any) => playCurrTime(item.start, e)}
                   style={{ background: speaker.bg }}
                 >
