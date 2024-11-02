@@ -9,10 +9,19 @@ import { useMyContext } from '@/context/MyContext'
 import { getNoTagText, timeFormat } from '@/app/lib/utils'
 import { useRouter } from 'next/navigation'
 import { Loading } from '@/app/ui/home/loading'
+import { audio_info } from '@/app/lib/config'
 
 export default function Audio() {
   const { data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime } = useMyContext()
-  const { enclosureUrl = '', showTitle = '', showNotes = '', coverUrl = '', episodeTitle = '', episodeId = '' }: any = data || {}
+  const {
+    enclosureUrl = '',
+    showTitle = '',
+    showNotes = '',
+    coverUrl = '',
+    episodeTitle = '',
+    episodeId = '',
+    playTime = 0,
+  }: any = data || {}
   const [allTime, setAllTime] = useState(0)
   const [playbackRate, setPlaybackRate] = useState(1)
   const [voice, setVoice] = useState(1)
@@ -24,6 +33,12 @@ export default function Audio() {
   const funs: any = { canplaythrough, timeupdate, loadstart, error, ended }
   // const newUrlAudio = enclosureUrl.includes('?') ? `${enclosureUrl}&t=${Date.now()}` : `${enclosureUrl}?t=${Date.now()}`
   useEffect(() => {
+    const audioInfo = JSON.parse(localStorage.getItem(audio_info) || '{}')
+    if (audioInfo?.episodeId) {
+      setData(audioInfo)
+    }
+  }, [])
+  useEffect(() => {
     if (!enclosureUrl) return
     if (isAudio.current) {
       removeEvent()
@@ -31,8 +46,13 @@ export default function Audio() {
       isAudio.current = null
     }
     isAudio.current = new (window.Audio as any)(enclosureUrl)
+    if (playTime > 0) {
+      isAudio.current.currentTime = playTime
+    }
     addEvent()
-    if (isPlaying) isAudio.current.play()
+    if (isPlaying) {
+      isAudio.current.play()
+    }
     return () => {
       if (isAudio.current) {
         // console.log('removeEvent', isPlaying)
@@ -124,11 +144,12 @@ export default function Audio() {
   function timeupdate() {
     const t = isAudio.current.currentTime
     setTime(t)
+    localStorage.setItem(audio_info, JSON.stringify({ ...data, playTime: t }))
     // loadRead()
   }
   return enclosureUrl ? (
     <div
-      className={`w-[1200px] fixed left-[50%] translate-x-[-50%] bottom-0 w-[100%] bg-bgGray py-[6px] px-[35px] dark:bg-bgDark dark:text-gray-200 rounded-[10px] dark:border-[1px] dark:border-fontGry-600`}
+      className={`w-[1200px] fixed left-[50%] translate-x-[-50%] bottom-0 bg-bgGray py-[6px] px-[35px] dark:bg-bgDark dark:text-gray-200 rounded-[10px] dark:border-[1px] dark:border-fontGry-600`}
     >
       <div className={`flex items-center`}>
         {/*<audio*/}

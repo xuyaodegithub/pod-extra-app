@@ -1,4 +1,4 @@
-import { loadJS, loadCSS } from 'markmap-common'
+import { loadJS, loadCSS, walkTree } from 'markmap-common'
 import { Transformer } from 'markmap-lib'
 import * as markmap from 'markmap-view'
 

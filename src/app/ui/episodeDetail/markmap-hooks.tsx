@@ -22,7 +22,7 @@ function renderToolbar(mm: Markmap, wrapper: HTMLElement) {
   }
 }
 
-export default function MarkmapHooks({ mindmapInMd }: { mindmapInMd: any }) {
+export default function MarkmapHooks({ mindmapInMd, fullScreen }: { mindmapInMd: any; fullScreen?: boolean }) {
   const [value, setValue] = useState(mindmapInMd)
   // Ref for SVG element
   const refSvg = useRef<any>(null)
@@ -44,7 +44,7 @@ export default function MarkmapHooks({ mindmapInMd }: { mindmapInMd: any }) {
     if (!window) return
     // Create markmap and save to refMm
     if (refMm.current) return
-    const mm = Markmap.create(refSvg.current)
+    const mm = Markmap.create(refSvg.current, { layout: 'tree' })
     refMm.current = mm
     renderToolbar(refMm.current, refToolbar.current)
   }, [refSvg.current])
@@ -55,12 +55,15 @@ export default function MarkmapHooks({ mindmapInMd }: { mindmapInMd: any }) {
     if (!mm) return
     loadAssets()
     const { root } = transformer.transform(value || '')
+    console.log(root, '-=-=-')
     // 设置最大展开层级，例如：只展开到第二层
     setFoldedByLevel(root, 2)
-    console.log('---', root)
     mm.setData(root)
     mm.fit()
-  }, [refMm.current, value])
+    if (fullScreen) {
+      mm.fit()
+    }
+  }, [refMm.current, value, fullScreen])
 
   const handleChange = (e: any) => {
     setValue(e.target.value)

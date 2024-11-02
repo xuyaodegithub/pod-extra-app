@@ -48,7 +48,7 @@ export default function RootLayout({
           ) : (
             <section className={``}>{children}</section>
           )}
-          <Audio />
+          {!isLanding && <Audio />}
         </body>
       </html>
     </MyProvider>
