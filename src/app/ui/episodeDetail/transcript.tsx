@@ -34,10 +34,7 @@ export function Transcript({ data }: { data: any }) {
               {isSame ? (
                 <div className={`w-[10px] h-[30px] rounded-[6px] mr-[48px]`} style={{ background: speaker.bg }}></div>
               ) : (
-                <div
-                  className={`w-[50px] h-[50px] mr-[8px] text-max leading-[50px] text-center rounded-[6px]`}
-                  style={{ background: speaker.bg }}
-                >
+                <div className={`w-[50px] h-[50px] mr-[8px] text-max leading-[50px] text-center rounded-[6px]`}>
                   <img src={speaker.head} alt="" className={`w-[50px] h-[50px] object-cover`} />
                 </div>
               )}
