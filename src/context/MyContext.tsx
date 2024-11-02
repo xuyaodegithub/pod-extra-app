@@ -26,6 +26,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [stepTime, setStepTime] = useState(0)
   const [isDark, setIsDark] = useState(false)
   useEffect(() => {
+    if (!window) return
     const dark = localStorage?.theme ? localStorage.theme === 'dark' : window?.matchMedia('(prefers-color-scheme: dark)').matches
     setIsDark(dark)
   }, [])

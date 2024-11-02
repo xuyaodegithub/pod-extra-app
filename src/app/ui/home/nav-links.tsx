@@ -86,7 +86,7 @@ export default function NavLinks() {
             </Link>
           )
         })}
-        <div className={`px-[14px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
+        <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
       </div>
       <div>
         <div className={`font-bold text-md mb-[9px] px-[24px]`}>Setting</div>

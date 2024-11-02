@@ -15,15 +15,15 @@ export const tabList = [
   { title: 'Shownotes', key: 'SHOWNOTES', top: 0, com: Shownotes },
 ]
 export const speakerList = [
-  { bg: '#FFE1D3', color: '#FF5A0F' },
-  { bg: '#C0E1FF', color: '#00527C' },
-  { bg: '#FBCFFB', color: '#791A79' },
-  { bg: '#38FAA3', color: '#0C5132' },
-  { bg: '#92EDDE', color: '#095346' },
-  { bg: '#FED1DD', color: '#8D0448' },
-  { bg: '#FFFC58', color: '#7D7A00' },
-  { bg: '#D3FED1', color: '#046200' },
-  { bg: '#FFC0C1', color: '#BC0005' },
+  { bg: '#FFE1D3', color: '#FF5A0F', head: '/images/speakBox/Lavender1.svg' },
+  { bg: '#C0E1FF', color: '#00527C', head: '/images/speakBox/Lavender2.svg' },
+  { bg: '#FBCFFB', color: '#791A79', head: '/images/speakBox/Lavender3.svg' },
+  { bg: '#38FAA3', color: '#0C5132', head: '/images/speakBox/Lavender4.svg' },
+  { bg: '#92EDDE', color: '#095346', head: '/images/speakBox/Lavender5.svg' },
+  { bg: '#FED1DD', color: '#8D0448', head: '/images/speakBox/Lavender6.svg' },
+  { bg: '#FFFC58', color: '#7D7A00', head: '/images/speakBox/Lavender7.svg' },
+  { bg: '#D3FED1', color: '#046200', head: '/images/speakBox/Lavender8.svg' },
+  { bg: '#FFC0C1', color: '#BC0005', head: '/images/speakBox/Lavender9.svg' },
 ]
 export function generateUuidV4(): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -33,3 +33,4 @@ export function generateUuidV4(): string {
   })
 }
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+export const audio_info = 'AUDIO_INFO'

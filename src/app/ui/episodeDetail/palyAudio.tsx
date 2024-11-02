@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useMyContext } from '@/context/MyContext'
+import { audio_info } from '@/app/lib/config'
 
 export function PlayAudio({ audioInfo, classStyle }: { audioInfo: any; classStyle?: string }) {
   const { data, setData, isPlaying, setIsPlaying } = useMyContext()
@@ -14,6 +15,7 @@ export function PlayAudio({ audioInfo, classStyle }: { audioInfo: any; classStyl
       setData(audioInfo)
       setTimeout(() => {
         setIsPlaying(true)
+        localStorage.setItem(audio_info, JSON.stringify({ ...audioInfo, playTime: 0 }))
       }, 500)
     } else setIsPlaying(!isPlaying)
   }

@@ -257,7 +257,7 @@ export default function IndexPage() {
             })}
           </div>
         </div>
-        <div className={`relative flex flex-wrap mb-[240px]`}>
+        <div className={`relative flex flex-wrap mb-[348px]`}>
           <div className={`w-[50%] mb-[146px]`}>
             <h2 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black font-bold dark:text-white`}>
               Summarize podcasts with AI
@@ -322,7 +322,7 @@ export default function IndexPage() {
       <div>
         <div className={`w-1280 mx-auto text-center text-[30px] leading-[45px] mb-[30px]`}>
           <h1 className={`text-[80px] leading-[1] text-play font-bold`}>10x Speed</h1>
-          <h3 className={`text-[60px] leading-[80px] font-bold space-x-[-2px]`}>Gain knowledge from your favorite podcasts</h3>
+          <h3 className={`text-[56px] leading-[80px] font-bold space-x-[-2px]`}>Gain knowledge from your favorite podcasts</h3>
           <p>Podcast fans, on average, consume over 8 episodes per week. </p>
           <p>However, globally there are more than 4 million shows available.</p>
         </div>
@@ -353,7 +353,7 @@ export default function IndexPage() {
                 {it.map((item, ind) => {
                   return (
                     <div
-                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[480px] rounded-[5px] shadow-cardShow mr-[20px] mb-[20px] dark:bg-bgDark dark:text-homehbg`}
+                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[480px] rounded-[5px] mr-[20px] mb-[20px] dark:bg-bgDark dark:text-homehbg`}
                       key={index + '-' + ind}
                     >
                       <div className={`text-md leading-[30px] mb-[15px]`}>{item.message}</div>
@@ -380,7 +380,7 @@ export default function IndexPage() {
                 {it.map((item, ind) => {
                   return (
                     <div
-                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[480px] rounded-[5px] shadow-cardShow mr-[20px] mb-[20px] dark:bg-bgDark dark:text-homehbg`}
+                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[480px] rounded-[5px] mr-[20px] mb-[20px] dark:bg-bgDark dark:text-homehbg`}
                       key={index + '-' + ind}
                     >
                       <div className={`text-md leading-[30px] mb-[15px]`}>{item.message}</div>

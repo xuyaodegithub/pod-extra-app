@@ -166,12 +166,14 @@ export const getNoTagText = (val: string) => {
 export function capitalizeFirstLetter(str: string) {
   return str.replace(/\b\w/g, (char) => char.toUpperCase())
 }
-export function timeFormat(t: number) {
+export function timeFormat(t: number, hash?: boolean) {
   const h = Math.floor(t / 3600)
   const m = Math.floor((t % 3600) / 60)
   const s = Math.floor(t % 60)
   const hh = h > 9 ? h : h === 0 ? '' : '0' + h
-  return `${hh ? `${hh}:` : ''}${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
+  return !hash
+    ? `${hh ? `${hh}:` : ''}${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
+    : `${hh ? `${hh}:` : '00:'}${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
 }
 export function getMetaData(data?: any) {
   return {

@@ -54,6 +54,7 @@ export default function Pagination({ totalPages, total, title }: { totalPages: n
 
             return (
               <PaginationNumber
+                isLast={index === allPages.length - 1}
                 key={`${page}-${index}`}
                 href={createPageURL(page)}
                 page={page}
@@ -66,7 +67,7 @@ export default function Pagination({ totalPages, total, title }: { totalPages: n
 
         <PaginationArrow direction="right" href={createPageURL(currentPage + 1)} isDisabled={currentPage >= totalPages} />
         <Select onValueChange={(e: any) => selectChange(e)} defaultValue={`${pageSize}`}>
-          <SelectTrigger className="w-auto bg-transparent rounded-[10px] border shadow-none focus:ring-0 focus:ring-offset-0 mx-[10px]">
+          <SelectTrigger className="w-auto bg-transparent rounded-[10px] border shadow-none focus:ring-0 focus:ring-offset-0 ml-[20px]">
             <span className={` py-[2px] text-min rounded-10px cursor-pointer`}>{pageSize || 50} / page</span>
           </SelectTrigger>
           <SelectContent>
@@ -101,18 +102,21 @@ function PaginationNumber({
   href,
   isActive,
   position,
+  isLast = false,
 }: {
   page: number | string
   href: string
   position?: 'first' | 'last' | 'middle' | 'single'
   isActive: boolean
+  isLast: boolean
 }) {
   const className = clsx('flex h-10 w-10 items-center justify-center text-sm border', {
-    'rounded-[10px] mr-[10px]': true,
+    'rounded-[10px] mr-[8px]': true,
     'z-10 bg-blue-600 border-active text-active': isActive,
     'hover:bg-gray-1000': !isActive && position !== 'middle',
     'border-none': page === '...',
     'text-gray-300': position === 'middle',
+    'mr-0': isLast,
   })
 
   return isActive || position === 'middle' ? (
