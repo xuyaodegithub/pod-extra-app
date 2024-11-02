@@ -44,7 +44,7 @@ export default function MarkmapHooks({ mindmapInMd, fullScreen }: { mindmapInMd:
     if (!window) return
     // Create markmap and save to refMm
     if (refMm.current) return
-    const mm = Markmap.create(refSvg.current, { layout: 'tree' })
+    const mm = Markmap.create(refSvg.current)
     refMm.current = mm
     renderToolbar(refMm.current, refToolbar.current)
   }, [refSvg.current])
@@ -55,7 +55,6 @@ export default function MarkmapHooks({ mindmapInMd, fullScreen }: { mindmapInMd:
     if (!mm) return
     loadAssets()
     const { root } = transformer.transform(value || '')
-    console.log(root, '-=-=-')
     // 设置最大展开层级，例如：只展开到第二层
     setFoldedByLevel(root, 2)
     mm.setData(root)
