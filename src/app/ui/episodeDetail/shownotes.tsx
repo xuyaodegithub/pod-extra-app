@@ -38,7 +38,11 @@ export function Shownotes({ data, goThisTime }: { data: any; goThisTime?: any })
     const box: any = document.querySelector('.ShownotesBox')
     box.innerHTML = showNotes
       .replace(/\b(\d{1,2}):(\d{2})(?::(\d{2}))?\b/g, `<span class="clickable cursor-pointer text-play" data-val="$&">$&</span>`)
-      .replace(/(https?:\/\/[^\s/$.?#].[^\s]*)/g, (str: string) => `<a href="${str}" target="_blank" class="text-play">${str}</a>`)
+      .replace(/(?<!<a\s+[^>]*?>)(https?:\/\/[^\s<]+)(?![^<]*<\/a>)/g, (str: string) => `<a href="${str}" target="_blank" class="text-play">${str}</a>`)
+      .replace(
+        /<a\s+([^>]*href=["'][^"']*["'][^>]*)(?!target=["']_blank["'])>/g,
+        '<a $1 target="_blank" class="text-play">'
+      )
       .replace(/\n/g, '<br />')
   }, [showNotes])
   return (
