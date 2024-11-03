@@ -37,7 +37,7 @@ export function Outlines({ data }: { data: any }) {
         // </div>
         <Accordion type="single" collapsible key={`${item.start}-${ind}`}>
           <AccordionItem value="item-1">
-            <AccordionTrigger className={`text-left`}>
+            <AccordionTrigger className={`text-left ${ind === 0 ? 'pt-0' : ''}`}>
               <div>
                 <div
                   className={`text-min rounded-[8px] bg-bgGray text-play pl-[16px] pr-[5px] inline-block mb-[8px] cursor-pointer dark:bg-darkHomeBg dark:text-homehbg`}

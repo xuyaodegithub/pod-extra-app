@@ -147,6 +147,20 @@ export default function Audio() {
     localStorage.setItem(audio_info, JSON.stringify({ ...data, playTime: t }))
     // loadRead()
   }
+  function renderVoice() {
+    const urlObj: any = {
+      max: '/icons/volume-max.svg',
+      medium: '/icons/volume-medium.svg',
+      mute: '/icons/volume-mute.svg',
+    }
+    let type = 'medium'
+    if (!voice) {
+      type = 'mute'
+    } else if (voice > 0.6) {
+      type = 'max'
+    } else type = 'medium'
+    return <img src={urlObj[type]} alt="" className={`w-[24px] h-[24px] mr-[12px]`} />
+  }
   return enclosureUrl ? (
     <div
       className={`w-[1200px] fixed left-[50%] translate-x-[-50%] bottom-0 bg-bgGray py-[6px] px-[35px] dark:bg-bgDark dark:text-gray-200 rounded-[10px] dark:border-[1px] dark:border-fontGry-600`}
@@ -177,42 +191,40 @@ export default function Audio() {
           className={`mr-[10px] cursor-pointer`}
           onClick={palyAudio}
         />
-        <span className={`mr-[10px] text-min`}>{timeFormat(time)}</span>
-        <Slider
-          value={[time]}
-          defaultValue={[time]}
-          step={1}
-          max={allTime}
-          className={`w-[309px] mr-[18px] h-[32px] p-0`}
-          onValueChange={(e: any) => changeProgress(e)}
-        />
-        <span className={`mr-[20px] text-min`}>
-          {loading ? (
-            <img src="/images/loading.png" className={`w-[24px] h-[24px] animate-spin`} alt="" />
-          ) : !!allTime ? (
-            timeFormat(allTime)
-          ) : (
-            '--:--'
-          )}
-        </span>
-        {voice > 0 ? (
-          <SpeakerWaveIcon className={`w-[24px] h-[24px] text-gray-200 mr-[12px]`} onClick={closeViose} />
-        ) : (
-          <SpeakerXMarkIcon className={`w-[24px] h-[24px] text-gray-200 mr-[12px]`} onClick={closeViose} />
-        )}
+        <div className={`w-[400px] flex items-center`}>
+          <span className={`mr-[10px] text-min`}>{timeFormat(time)}</span>
+          <Slider
+            value={[time]}
+            defaultValue={[time]}
+            step={1}
+            max={allTime}
+            className={`flex-1 mr-[18px] h-[32px] p-0`}
+            onValueChange={(e: any) => changeProgress(e)}
+          />
+          <span className={`mr-[20px] text-min`}>
+            {loading ? (
+              <img src="/images/loading.png" className={`w-[24px] h-[24px] animate-spin`} alt="" />
+            ) : !!allTime ? (
+              timeFormat(allTime)
+            ) : (
+              '--:--'
+            )}
+          </span>
+        </div>
+        {renderVoice()}
         <Slider
           max={1}
           min={0}
           step={0.01}
-          className={`mr-[25px] w-[50px] h-[32px] p-0`}
+          className={`mr-[25px] w-[55px] h-[32px] p-0 shrink-0`}
           value={[voice]}
           defaultValue={[voice]}
           onValueChange={(e: any) => changeVoice(e)}
         />
         <Select onValueChange={(e: any) => selectChange(e)} defaultValue={`${playbackRate}`} value={`${playbackRate}`}>
-          <SelectTrigger className="w-auto bg-transparent border-0 shadow-none focus:ring-0 focus:ring-offset-0">
+          <SelectTrigger className="w-auto bg-transparent border-0 p-0 shadow-none focus:ring-0 focus:ring-offset-0">
             <span
-              className={`font-bold bg-gray-300 px-[8px] py-[2px] text-white text-min rounded-10px cursor-pointer dark:bg-fontGry-600 dark:text-homehbg`}
+              className={`font-bold bg-gray-300 w-[82px] px-[8px] py-[2px] text-white text-min rounded-10px cursor-pointer dark:bg-fontGry-600 dark:text-homehbg`}
             >
               Speed {playbackRate}X
             </span>

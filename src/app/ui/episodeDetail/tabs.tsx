@@ -43,7 +43,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
     <div className={`flex flex-col`}>
       <Tabs value={activeTab} className={``}>
         <TabsList
-          className={`flex sticky top-[57px] bg-white mb-[22px] z-10 dark:bg-black border-b-[1px] border-[#FFE1D3] dark:border-play rounded-[0px]`}
+          className={`flex sticky top-[57px] bg-white mb-[20px] z-10 dark:bg-black border-b-[1px] border-[#FFE1D3] dark:border-play rounded-[0px]`}
         >
           {tabList.map((item: any) => (
             <TabsTrigger value={item.key} key={item.key} className={`flex-1`} onClick={() => tabChange(item.key)}>
