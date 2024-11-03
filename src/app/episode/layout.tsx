@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [title, id] = decodeURIComponent(episodeId).split('-')
   return (
     <Suspense fallback={<LoadingLine num={12} />}>
-      <SaveScroll>
+      <SaveScroll className={`episode-item`}>
         <main>
           <Breadcrumb title={title} />
           <section className={``}>{children}</section>

@@ -26,12 +26,12 @@ export function CardDes({ maxLine = 4, des, lineHeight = 18 }: { maxLine?: numbe
         {showMore && <div className={`absolute bottom-[5px] right-0 text-sm bg-white px-[5px]`}>......</div>}
       </div>
       {showMoreBtn && (
-        <Button
-          className={`bg-white text-min px-10px text-fontGry-c8 rounded-5px border border-fontGry-c8`}
+        <div
+          className={`bg-white text-min px-[10px] py-[2px] text-fontGry-c8 rounded-[8px] border border-fontGry-c8 cursor-pointer inline-block`}
           onClick={() => setShowMore(!showMore)}
         >
           {showMore ? 'show more' : 'show less'}
-        </Button>
+        </div>
       )}
     </div>
   )

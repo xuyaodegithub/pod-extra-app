@@ -32,12 +32,14 @@ export default async function Page({
         <Pagination totalPages={totalPages} total={total} title="podcasts" />
       </div>
       <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
-        {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate }: any) => {
+        {resultList.map((item: any, ind: number) => {
+          const { coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate } = item
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
+          const noMb = ind >= resultList.length - 2
           return (
             <Link href={`/podcast/${encodeURIComponent(showTitle)}-podcast-${showId}`} key={showId} className={`w-[50%]`}>
               <div
-                className={`flex cursor-pointer overflow-hidden  hover:bg-hbg dark:hover:bg-darkHomeBg transition-all p-[10px] rounded-10px`}
+                className={`flex cursor-pointer ${noMb ? '' : 'mb-[5px]'} overflow-hidden  hover:bg-hbg dark:hover:bg-darkHomeBg transition-all p-[10px] rounded-10px`}
               >
                 <img src={coverUrl} alt="" className={`w-[110px] h-[110px] object-cover rounded-10px`} />
                 <div className={`flex-1 ml-[10px] overflow-hidden`}>

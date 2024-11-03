@@ -36,7 +36,7 @@ export function Card({
   return (
     <Link href={`/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`} className={` w-[50%]`}>
       <div
-        className={`flex rounded-[5px] p-[10px] ${noMb ? '' : 'mb-[15px]'} overflow-hidden cursor-pointer ${isHome ? 'hover:bg-homehbg' : 'hover:bg-hbg'} dark:hover:bg-darkHomeBg transition-all`}
+        className={`flex rounded-[5px] p-[10px] ${noMb ? '' : 'mb-[5px]'} overflow-hidden cursor-pointer ${isHome ? 'hover:bg-homehbg' : 'hover:bg-hbg'} dark:hover:bg-darkHomeBg transition-all`}
       >
         <img
           src={coverUrl}

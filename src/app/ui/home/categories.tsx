@@ -66,7 +66,7 @@ export default async function Categories({ title }: { title: string }) {
       </div>
       <div className={`flex flex-wrap`}>
         {resultList?.map((item: any, index: number) => (
-          <Cate key={item.categoryId} {...item} ind={index} noMd={index >= resultList.length - 3} noMr={(index + 1) % 5 === 0} />
+          <Cate key={item.categoryId} {...item} ind={index} noMd={index >= resultList.length - 4} noMr={(index + 1) % 5 === 0} />
         ))}
       </div>
     </div>

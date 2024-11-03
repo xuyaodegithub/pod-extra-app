@@ -14,23 +14,23 @@ export function Mindmap({ data, isMindMap, goThisTime }: { data: any; isMindMap?
       const val = el.getAttribute('data-val')
       goThisTime(val)
     }
-    console.log(e.target, '--')
   }
 
   useEffect(() => {
     if (isMindMap) {
+      ;(document.querySelector('.episode-item') as HTMLElement).scrollTop = 160
       setShowOnce(true)
     }
-  }, [isMindMap])
+  }, [showOnce, isMindMap, fullScreen])
   return (
-    <div key="Mindmap" className={`p-[12px] pb-[100px]`}>
+    <div key="Mindmap" className={`h-[100%]`}>
       <div
         id="mindMap"
-        className={`bg-hbg ${fullScreen ? 'fixed w-[100%] h-[100%] top-0 left-0 z-[1111]' : 'relative h-[500px]'}`}
+        className={`bg-hbg ${fullScreen ? 'fixed w-[100%] h-[100%] top-0 left-0 z-[1111]' : 'relative custom-height'}`}
         onClick={clickSpan}
       >
         {/*<div className={`absolute top-[10px] left-[10px] z-100`}>11</div>*/}
-        <div className={`absolute top-[10px] right-[10px] z-100 cursor-pointer`} onClick={() => setFullScreen(!fullScreen)}>
+        <div className={`absolute top-[10px] right-[30px] z-100 cursor-pointer`} onClick={() => setFullScreen(!fullScreen)}>
           {fullScreen ? (
             <ArrowsPointingInIcon className={`w-[20px] h-[20px]`} />
           ) : (

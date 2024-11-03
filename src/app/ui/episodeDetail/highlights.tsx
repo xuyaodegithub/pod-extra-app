@@ -46,7 +46,8 @@ export function Highlights({ data }: { data: any }) {
               </div>
             </div>
             <div className={`text-md text-fontGry-600 py-[10px] px-[15px] bg-hbg rounded-10px dark:bg-bgDark dark:text-homehbg`}>
-              {item.description}
+              {item?.sentences?.map((item: any, ind: number) => <span key={ind}>{item?.description || ''}</span>)}
+              {/*{item.description}*/}
             </div>
           </div>
         )
