@@ -6,11 +6,10 @@ import { getPodEpisode } from '@/app/lib/service'
 import { Card } from '@/app/ui/home/episodes-card'
 import Link from 'next/link'
 import { POPULARITY, PUB_DATE, SUMMARIZE_TIME, TRANSCRIPT_TIME } from '@/app/lib/utils'
-export default async function LatestEpisodes({ title, type }: { title: string; type: string }) {
+export default async function LatestEpisodes({ title, type, params }: { title: string; type: string; params: any }) {
   const payload = {
     sortBy: type,
-    pageNum: 1,
-    pageSize: 8,
+    ...params,
   }
   const {
     data: { resultList },

@@ -14,21 +14,34 @@ export const metadata: Metadata = getMetaData({
     'PodExtra is your ultimate podcast tool , using AI to transcribe, summarize, and create mind maps for your favorite podcasts, making it easy for you to quickly access structured knowledge and save time.',
   keywords: 'AI transcribe,summarize,AI-processed,mind maps,latest podcasts,Latest Episodes,Popular Podcasts',
 })
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: {
+    pageSize?: string
+    page?: string
+  }
+}) {
+  const pageSize = searchParams?.pageSize || 10
+  const pageNum = searchParams?.page || 1
+  const params = {
+    pageNum,
+    pageSize,
+  }
   return (
     <main>
       <div className={`mb-24px`}>
         <Suspense fallback={<LoadingLine />}>
-          <PopularPodcasts title={`Popular Podcasts`} type={POPULARITY} key={POPULARITY} />
+          <PopularPodcasts title={`Popular Podcasts`} type={POPULARITY} key={POPULARITY} params={params} />
         </Suspense>
         <Suspense fallback={<LoadingLine />}>
-          <PopularPodcasts title={`Latest Podcasts`} type={PUB_DATE} key={PUB_DATE} />
+          <PopularPodcasts title={`Latest Podcasts`} type={PUB_DATE} key={PUB_DATE} params={params} />
         </Suspense>
         <Suspense fallback={<LoadingLine />}>
-          <LatestEpisodes title={`Latest Episodes`} type={PUB_DATE} />
+          <LatestEpisodes title={`Latest Episodes`} type={PUB_DATE} params={{ ...params, pageSize: 8 }} />
         </Suspense>
         <Suspense fallback={<LoadingLine />}>
-          <LatestEpisodes title={`Latest AI-processed`} type={SUMMARIZE_TIME} />
+          <LatestEpisodes title={`Latest AI-processed`} type={SUMMARIZE_TIME} params={{ ...params, pageSize: 8 }} />
         </Suspense>
         <Suspense fallback={<LoadingLine />}>
           <Categories title={`Categories`} />
