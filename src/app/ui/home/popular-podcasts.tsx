@@ -22,12 +22,11 @@ import Link from 'next/link'
 // const list: any[] = Array.from({ length: 10 }, () => cardItem)
 // export async function getServerSideProps(){}
 
-export default async function PopularPodcasts({ title, type }: { title: string; type: string }) {
+export default async function PopularPodcasts({ title, type, params }: { title: string; type: string; params: any }) {
   const isPopularity = POPULARITY === type
   const payload = {
     sortBy: type,
-    pageNum: 1,
-    pageSize: 10,
+    ...params,
   }
   const {
     data: { resultList },
