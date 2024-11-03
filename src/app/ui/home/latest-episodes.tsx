@@ -28,8 +28,8 @@ export default async function LatestEpisodes({ title, type }: { title: string; t
         <ChevronRightIcon className={`ml-[10px] w-[20px] dark:text-white`} />
       </div>
       <div className={`flex flex-wrap`}>
-        {resultList.map((item: any) => {
-          return <Card key={item?.episodeId} {...item} isHome={true} />
+        {resultList.map((item: any, ind: number) => {
+          return <Card key={item?.episodeId} {...item} isHome={true} noMb={ind >= resultList.length - 2} />
         })}
       </div>
     </div>

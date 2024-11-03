@@ -12,6 +12,9 @@
 .mm-toolbar .mm-toolbar-brand{
   display: none;
 }
+.custom-height {
+  height: calc(100vh - 280px);
+}
 body {
   font-family: 'Open Sans',sans-serif;
   font-style: Normal;

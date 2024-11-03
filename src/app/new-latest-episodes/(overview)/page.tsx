@@ -29,8 +29,8 @@ export default async function Page({
         <Pagination totalPages={totalPages} total={total} />
       </div>
       <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
-        {resultList.map((item: any) => {
-          return <Card key={item?.episodeId} {...item} />
+        {resultList.map((item: any, ind: number) => {
+          return <Card key={item?.episodeId} {...item} noMb={ind >= resultList.length - 2} />
         })}
       </div>
     </main>
