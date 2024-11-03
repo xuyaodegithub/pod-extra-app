@@ -159,7 +159,7 @@ export default function Audio() {
     } else if (voice > 0.6) {
       type = 'max'
     } else type = 'medium'
-    return <img src={urlObj[type]} alt="" className={`w-[24px] h-[24px] mr-[12px]`} />
+    return <img src={urlObj[type]} alt="" className={`w-[24px] h-[24px] mr-[12px]`} onClick={closeViose} />
   }
   return enclosureUrl ? (
     <div
