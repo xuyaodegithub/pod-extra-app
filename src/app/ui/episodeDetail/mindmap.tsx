@@ -17,8 +17,8 @@ export function Mindmap({ data, isMindMap, goThisTime }: { data: any; isMindMap?
   }
 
   useEffect(() => {
-    ;(document.querySelector('.episode-item') as HTMLElement).scrollTop = 160
     if (isMindMap) {
+      ;(document.querySelector('.episode-item') as HTMLElement).scrollTop = 160
       setShowOnce(true)
     }
   }, [showOnce, isMindMap, fullScreen])
