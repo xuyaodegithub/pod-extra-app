@@ -3,9 +3,12 @@ import { useRouter } from 'next/navigation'
 import { speakerList } from '@/app/lib/config'
 import { timeFormat } from '@/app/lib/utils'
 import { useMyContext } from '@/context/MyContext'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useThrottledCallback } from 'use-debounce'
 
-export function Transcript({ data }: { data: any }) {
+export function Transcript({ data, activeTab }: { data: any; activeTab: string }) {
+  const [autoMove, setAutoMove] = useState(true)
+  const isTranscript = activeTab === 'TRANSCRIPT'
   const { paragraphs = [] } = data || {}
   const { enclosureUrl = '', showTitle = '', showNotes = '', coverUrl = '', episodeTitle = '', episodeId = '' } = data || {}
   const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
@@ -18,6 +21,43 @@ export function Transcript({ data }: { data: any }) {
       setIsPlaying(true)
       setStepTime(t)
     }, 500)
+  }
+  const handleScroll = () => {
+    const scrollBox = document.querySelector('.episode-item')
+    const activeDom = document.querySelector('.activeSpan')
+
+    if (activeDom) {
+      const activeDom: any = document.querySelector('.activeSpan')
+      const tab: any = document.querySelector('.tab_scroll')
+      const { bottom: tabB }: any = tab?.getBoundingClientRect()
+      const top: any = activeDom?.offsetTop
+      const h = top - tabB
+      scrollBox?.scrollTo(0, 84 + h - 120)
+    }
+  }
+  const throttledHandleScroll = useThrottledCallback(handleScroll, 300)
+  useEffect(() => {
+    if (isTranscript && autoMove && isPlaying) {
+      throttledHandleScroll()
+    }
+    return () => {
+      throttledHandleScroll.cancel()
+    }
+  }, [throttledHandleScroll, isTranscript, autoMove, isPlaying, time])
+  useEffect(() => {
+    if (!isTranscript) {
+      setAutoMove(true)
+    }
+  }, [isTranscript])
+  useEffect(() => {
+    if (isTranscript) {
+      document.addEventListener('wheel', handleAutoMove)
+    } else {
+      document.removeEventListener('wheel', handleAutoMove)
+    }
+  }, [isTranscript])
+  function handleAutoMove(e: any) {
+    setAutoMove(false)
   }
   return (
     <div key="Transcript">
@@ -69,12 +109,13 @@ export function Transcript({ data }: { data: any }) {
             </div>
             <div className={`text-md text-fontGry-600`}>
               {item.sentences.map((it: any, ind: number) => {
+                const { start, end } = it
                 const isactive = isPlaying && time >= it.start && time <= it.end
                 const bg = isDark ? '#404040' : speaker.bg
                 const color = isDark ? speaker.bg : speaker.color
                 return (
                   <span
-                    className={`hover:bg-bgGray cursor-pointer dark:hover:bg-darkHomeBg dark:text-homehbg active_${((it.start || '') + '').replace(/\./g, '_')}`}
+                    className={`${isactive ? 'activeSpan' : ''} hover:bg-bgGray cursor-pointer dark:hover:bg-darkHomeBg dark:text-homehbg active_${((it.start || '') + '').replace(/\./g, '_')}`}
                     style={{ background: isactive ? bg : '', color: isactive ? color : '' }}
                     key={`${it.start}-${ind}`}
                     onClick={(e: any) => playCurrTime(it.start, e)}

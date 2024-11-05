@@ -15,7 +15,7 @@ export function PlayAudio({ audioInfo, classStyle }: { audioInfo: any; classStyl
       setData(audioInfo)
       setTimeout(() => {
         setIsPlaying(true)
-        localStorage.setItem(audio_info, JSON.stringify({ ...audioInfo, playTime: 0 }))
+        sessionStorage.setItem(audio_info, JSON.stringify({ ...audioInfo, playTime: 0 }))
       }, 500)
     } else setIsPlaying(!isPlaying)
   }

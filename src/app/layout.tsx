@@ -27,12 +27,14 @@ export default function RootLayout({
     } else {
       document.body.classList.remove('dark')
     }
+    //避免刷新时 模式闪烁
+    document.body.classList.add('opacity-100')
   }, [isLanding])
 
   return (
     <MyProvider>
       <html lang="en" className={`h-[100%]`}>
-        <body className={`antialiased h-[100%] dark:bg-black dark:text-darkTheme-900`}>
+        <body className={`opacity-0 antialiased h-[100%] dark:bg-black dark:text-darkTheme-900`}>
           {!isLanding ? (
             <div className="flex w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-[100%]">
               <SideNav />
@@ -42,7 +44,7 @@ export default function RootLayout({
                   {/*  <SearchInput />*/}
                   {/*</Suspense>*/}
                 </div>
-                <section className={`flex-1 overflow-auto pr-[20px]`}>{children}</section>
+                <section className={`flex-1 overflow-hidden pr-[20px]`}>{children}</section>
               </main>
             </div>
           ) : (

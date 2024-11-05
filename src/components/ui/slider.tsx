@@ -19,7 +19,7 @@ const Slider = React.forwardRef<React.ElementRef<typeof SliderPrimitive.Root>, R
           <SliderPrimitive.Range className="absolute h-full bg-[#aaaaaa] shadow-md" />
         </SliderPrimitive.Track>
         <SliderPrimitive.Thumb
-          className={`${isMaxValue ? 'ml-[15px]' : ''} group-hover:block hidden h-5 w-5 rounded-full border-2 shadow-md border-white bg-white ring-offset-background focus-visible:outline-none focus-visible:ring-2  focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50`}
+          className={`${isMaxValue ? 'ml-[50%]' : ''} group-hover:opacity-100 opacity-0 align-middle inline-block animate-none transition-none h-[18px] w-[18px] rounded-full shadow-md border-white bg-white ring-offset-background focus-visible:outline-0 focus-visible:border-0 focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50`}
         />
       </SliderPrimitive.Root>
     )

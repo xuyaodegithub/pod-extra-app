@@ -11,7 +11,7 @@ const SaveScroll = ({ children, className }: { children: React.ReactNode; classN
     const savedScrollY = scrollPositions[currentUrl] || 0
 
     if (ref.current) {
-      ref.current.scrollTo(0, savedScrollY > 109 ? savedScrollY + 109 : savedScrollY)
+      ref.current.scrollTo(0, savedScrollY)
     }
 
     const handleScroll = () => {

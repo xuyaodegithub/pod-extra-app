@@ -50,7 +50,7 @@ export default async function Page({
           <div className={`flex text-sm text-fontGry-100 overflow-hidden w-[100%]`}>
             <ClockIcon className={`w-[14px] mr-[4px]`} />
             <span className={`mr-24px`}>{timeFormat(duration)}</span>
-            <span>Update: {getCurrentLocalTime(duration, false)}</span>
+            <span>Update: {getCurrentLocalTime(gmtPubDate, false)}</span>
           </div>
           <div>
             <PlayAudio audioInfo={data} classStyle={`mt-0 mb-0`} />

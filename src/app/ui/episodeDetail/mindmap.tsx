@@ -4,7 +4,8 @@ import { timeFormat } from '@/app/lib/utils'
 import { useEffect, useState } from 'react'
 import { ArrowsPointingOutIcon, ArrowsPointingInIcon } from '@heroicons/react/24/outline'
 
-export function Mindmap({ data, isMindMap, goThisTime }: { data: any; isMindMap?: boolean; goThisTime?: any }) {
+export function Mindmap({ data, activeTab, goThisTime }: { data: any; activeTab?: string; goThisTime?: any }) {
+  const isMindMap = activeTab === 'MINDMAP'
   const { mindmapInMd = {}, episodeTitle } = data || {}
   const [showOnce, setShowOnce] = useState(false)
   const [fullScreen, setFullScreen] = useState(false)
