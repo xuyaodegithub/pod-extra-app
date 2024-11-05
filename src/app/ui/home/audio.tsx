@@ -198,6 +198,7 @@ export default function Audio() {
             defaultValue={[time]}
             step={1}
             max={allTime}
+            min={0}
             className={`flex-1 mr-[18px] h-[18px] p-0`}
             onValueChange={(e: any) => changeProgress(e)}
           />

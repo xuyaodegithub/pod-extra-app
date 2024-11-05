@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 const Slider = React.forwardRef<React.ElementRef<typeof SliderPrimitive.Root>, React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>>(
   ({ className, ...props }: any, ref) => {
     const isMaxValue = parseInt(String(props?.value[0] || '0')) === props.max
-    // const isMinValue = parseInt(String(props?.value[0] || '0')) === props.min
+    const isMinValue = parseInt(String(props?.value[0] || '0')) === props.min
     return (
       <SliderPrimitive.Root
         ref={ref}
@@ -19,7 +19,7 @@ const Slider = React.forwardRef<React.ElementRef<typeof SliderPrimitive.Root>, R
           <SliderPrimitive.Range className="absolute h-full bg-[#aaaaaa] shadow-md" />
         </SliderPrimitive.Track>
         <SliderPrimitive.Thumb
-          className={`${isMaxValue ? 'ml-[50%]' : ''} group-hover:opacity-100 opacity-0 align-middle inline-block animate-none transition-none h-[18px] w-[18px] rounded-full shadow-md border-white bg-white ring-offset-background focus-visible:outline-0 focus-visible:border-0 focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50`}
+          className={`${isMinValue ? 'ml-[-50%]' : ''} ${isMaxValue ? 'ml-[50%]' : ''} mt-[2.5px] group-hover:opacity-100 opacity-0 inline-block animate-none transition-none h-[18px] w-[18px] rounded-full shadow-md border-white bg-white ring-offset-background focus-visible:outline-0 focus-visible:border-0 focus-visible:ring-offset-0 disabled:pointer-events-none disabled:opacity-50`}
         />
       </SliderPrimitive.Root>
     )
