@@ -20,6 +20,7 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
     setTimeout(() => {
       setIsPlaying(true)
       setStepTime(t)
+      setAutoMove(true)
     }, 500)
   }
   const handleScroll = () => {
@@ -32,13 +33,20 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
       const { bottom: tabB }: any = tab?.getBoundingClientRect()
       const top: any = activeDom?.offsetTop
       const h = top - tabB
-      scrollBox?.scrollTo(0, 84 + h - 120)
+      // scrollBox?.scrollTo(0, 84 + h - 120)
+      scrollBox?.scrollTo({
+        top: 84 + h - 120, // 目标高度，可以根据需求更改
+        behavior: 'smooth', // 平滑滚动
+      })
     }
   }
   const throttledHandleScroll = useThrottledCallback(handleScroll, 300)
   useEffect(() => {
     if (isTranscript && autoMove && isPlaying) {
       throttledHandleScroll()
+    }
+    if (!isPlaying) {
+      setAutoMove(true)
     }
     return () => {
       throttledHandleScroll.cancel()
