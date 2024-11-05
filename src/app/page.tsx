@@ -12,6 +12,17 @@ import OtherLogo from '@/app/ui/other-logo'
 export default function IndexPage() {
   const imagesDirectory = path.join(process.cwd(), 'public/images/imgWall')
   const filenames = fs.readdirSync(imagesDirectory).sort((a: string, b: string) => +a.split('.')[0] - +b.split('.')[0])
+  function chunkArray(array: any[], size: number): any[][] {
+    // 创建一个空数组用于存储结果
+    const result: any[][] = []
+    // 遍历原数组
+    for (let i = 0; i < array.length; i += size) {
+      // 使用slice方法截取数组的一部分，并将其添加到结果数组中
+      result.push(array.slice(i, i + size))
+    }
+    return result
+  }
+  const fileImages = chunkArray(filenames, 11)
   const tools: any[] = [
     {
       img: '/images/overflow.svg',
@@ -336,10 +347,16 @@ export default function IndexPage() {
           <p>Podcast fans, on average, consume over 8 episodes per week. </p>
           <p>However, globally there are more than 4 million shows available.</p>
         </div>
-        <div className={`flex flex-wrap px-[100px]`}>
-          {filenames.map((item: string) => (
-            <img src={`/images/imgWall/${item}`} alt="" key={item} className={`w-[142px]`} />
-          ))}
+        <div className={`mx-auto`}>
+          {fileImages.map((item, ind) => {
+            return (
+              <div key={ind} className={`flex justify-center `}>
+                {item.map((item: string) => (
+                  <img src={`/images/imgWall/${item}`} alt="" key={item} className={`w-[142px] shrink-0`} />
+                ))}
+              </div>
+            )
+          })}
         </div>
       </div>
       <div className={`w-1280 flex items-center mx-auto text-[20px] leading-[60px] mb-[150px]`}>
@@ -350,7 +367,7 @@ export default function IndexPage() {
         <img src="/images/speakBox/Vector.svg" alt="" className={`mr-[14px]`} />
       </div>
       <div className={`w-1280 mx-auto mb-[50px] text-center`}>
-        <h1 className={`text-[65px] leading-[55px] font-bold`}>
+        <h1 className={`text-[68px] leading-[55px]`} style={{ fontFamily: 'Tilt Warp' }}>
           <span className={`text-play`}>Over 40,000</span> podcast lovers are using it
         </h1>
         <div className={`text-[26px] leading-[30px] mt-[10px]`}>Less time, more gains</div>
@@ -414,7 +431,9 @@ export default function IndexPage() {
         </div>
       </div>
       <div className={`w-1280 mx-auto mb-[190px]`}>
-        <h1 className={`text-black text-[68px] text-center font-black mb-[65px] dark:text-white`}>Frequently Asked Questions</h1>
+        <h1 className={`text-black text-[60px] text-center mb-[65px] dark:text-white`} style={{ fontFamily: 'Tilt Warp' }}>
+          Frequently Asked Questions
+        </h1>
         <div className={`w-[880px] mx-auto`}>
           <Accordion type="single" collapsible defaultValue={'item-1'} className={`dark:bg-bgDark`}>
             {QAList.map((it, index) => (
