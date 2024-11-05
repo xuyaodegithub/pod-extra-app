@@ -67,7 +67,7 @@ export default function Pagination({ totalPages, total, title }: { totalPages: n
 
         <PaginationArrow direction="right" href={createPageURL(currentPage + 1)} isDisabled={currentPage >= totalPages} />
         <Select onValueChange={(e: any) => selectChange(e)} defaultValue={`${pageSize}`}>
-          <SelectTrigger className="w-auto bg-transparent rounded-[10px] border shadow-none focus:ring-0 focus:ring-offset-0 ml-[20px]">
+          <SelectTrigger className="w-auto h-[32px] bg-transparent rounded-[10px] border shadow-none focus:ring-0 focus:ring-offset-0 ml-[16px]">
             <span className={` py-[2px] text-min rounded-10px cursor-pointer`}>{pageSize || 50} / page</span>
           </SelectTrigger>
           <SelectContent>
@@ -84,7 +84,7 @@ export default function Pagination({ totalPages, total, title }: { totalPages: n
           <div className={`flex items-center`}>
             <span className={`mx-[10px] inline-block leading-[30px]`}> Go to </span>
             <Input
-              className={`w-[60px] h-[30px] rounded-[10px]`}
+              className={`w-[60px] h-[32px] rounded-[10px]`}
               value={searchParams.get('query')?.toString()}
               placeholder=""
               onBlur={(e: any) => inputBlur(e.target?.value || '')}
@@ -110,13 +110,14 @@ function PaginationNumber({
   isActive: boolean
   isLast: boolean
 }) {
-  const className = clsx('flex h-10 w-10 items-center justify-center text-sm border', {
-    'rounded-[10px] mr-[8px]': true,
+  const className = clsx('flex h-10 w-10 items-center justify-center text-sm border w-[32px] h-[32px]', {
+    'rounded-[10px]': true,
     'z-10 bg-blue-600 border-active text-active': isActive,
     'hover:bg-gray-1000': !isActive && position !== 'middle',
     'border-none': page === '...',
     'text-gray-300': position === 'middle',
     'mr-0': isLast,
+    'mr-[8px]': !isLast,
   })
 
   return isActive || position === 'middle' ? (
@@ -129,11 +130,11 @@ function PaginationNumber({
 }
 
 function PaginationArrow({ href, direction, isDisabled }: { href: string; direction: 'left' | 'right'; isDisabled?: boolean }) {
-  const className = clsx('flex h-10 w-10 items-center justify-center rounded-md border', {
+  const className = clsx('flex h-10 w-10 items-center justify-center border w-[32px] h-[32px] rounded-[10px]', {
     'pointer-events-none text-gray-300': isDisabled,
     'hover:bg-gray-1000': !isDisabled,
-    'mr-2 md:mr-4': direction === 'left',
-    'ml-2 md:ml-4': direction === 'right',
+    'mr-[8px] ': direction === 'left',
+    'ml-[8px] ': direction === 'right',
   })
 
   const icon = direction === 'left' ? <ChevronLeftIcon className="w-4" /> : <ChevronRightIcon className="w-4" />

@@ -12,6 +12,17 @@ import OtherLogo from '@/app/ui/other-logo'
 export default function IndexPage() {
   const imagesDirectory = path.join(process.cwd(), 'public/images/imgWall')
   const filenames = fs.readdirSync(imagesDirectory).sort((a: string, b: string) => +a.split('.')[0] - +b.split('.')[0])
+  function chunkArray(array: any[], size: number): any[][] {
+    // 创建一个空数组用于存储结果
+    const result: any[][] = []
+    // 遍历原数组
+    for (let i = 0; i < array.length; i += size) {
+      // 使用slice方法截取数组的一部分，并将其添加到结果数组中
+      result.push(array.slice(i, i + size))
+    }
+    return result
+  }
+  const fileImages = chunkArray(filenames, 11)
   const tools: any[] = [
     {
       img: '/images/overflow.svg',
@@ -209,7 +220,7 @@ export default function IndexPage() {
         </div>
         <div className={`relative mb-[146px]`}>
           <h1
-            className={`text-[65px] font-bold space-x-[-3px] text-[#02073E] w-[753px] mb-[30px] leading-[80px] dark:text-white`}
+            className={`text-[80px] tracking-[-3px] text-[#02073E] w-[753px] mb-[30px] leading-[80px] dark:text-white`}
             style={{ fontFamily: 'Tilt Warp' }}
           >
             Unleash the power of podcast with AI
@@ -235,9 +246,9 @@ export default function IndexPage() {
           </div>
         </div>
         <div className={`mb-[84px]`}>
-          <div className={`text-center text-[60px] font-extrabold leading-[80px] mb-[80px] space-x-[-3px]`}>
+          <div className={`text-center text-[80px] leading-[80px] mb-[80px] tracking-[-3px]`} style={{ fontFamily: 'Tilt Warp' }}>
             <span className={`text-play`}>An advanced AI tool </span>for
-            <br /> podcast listening and knowledge acquisition
+            <div className={`text-[65px]`}>podcast listening and knowledge acquisition</div>
           </div>
           <div className={`flex flex-wrap justify-between`}>
             {tools.map((item: any, ind: number) => {
@@ -259,7 +270,10 @@ export default function IndexPage() {
         </div>
         <div className={`relative flex flex-wrap mb-[348px]`}>
           <div className={`w-[50%] mb-[146px]`}>
-            <h2 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black font-bold dark:text-white`}>
+            <h2
+              className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black dark:text-white tracking-[-1.5px]`}
+              style={{ fontFamily: 'Tilt Warp' }}
+            >
               Summarize podcasts with AI
             </h2>
             <div className={`text-[30px] leading-[45px] dark:text-homehbg`}>
@@ -309,7 +323,10 @@ export default function IndexPage() {
             </div>
           </div>
           <div className={`w-[50%] relative mt-[386px]`}>
-            <h3 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black font-bold dark:text-white`}>
+            <h3
+              className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black dark:text-white`}
+              style={{ fontFamily: 'Tilt Warp' }}
+            >
               AI Podcast Transcript
             </h3>
             <div className={`text-[30px] leading-[45px] dark:text-homehbg`}>
@@ -321,15 +338,25 @@ export default function IndexPage() {
       </div>
       <div>
         <div className={`w-1280 mx-auto text-center text-[30px] leading-[45px] mb-[30px]`}>
-          <h1 className={`text-[80px] leading-[1] text-play font-bold`}>10x Speed</h1>
-          <h3 className={`text-[56px] leading-[80px] font-bold space-x-[-2px]`}>Gain knowledge from your favorite podcasts</h3>
+          <h1 className={`text-[80px] leading-[1] text-play tracking-[-2px]`} style={{ fontFamily: 'Tilt Warp' }}>
+            10x Speed
+          </h1>
+          <h3 className={`text-[65px] leading-[80px] tracking-[-2px]`} style={{ fontFamily: 'Tilt Warp' }}>
+            Gain knowledge from your favorite podcasts
+          </h3>
           <p>Podcast fans, on average, consume over 8 episodes per week. </p>
           <p>However, globally there are more than 4 million shows available.</p>
         </div>
-        <div className={`flex flex-wrap px-[100px]`}>
-          {filenames.map((item: string) => (
-            <img src={`/images/imgWall/${item}`} alt="" key={item} className={`w-[142px]`} />
-          ))}
+        <div className={`mx-auto`}>
+          {fileImages.map((item, ind) => {
+            return (
+              <div key={ind} className={`flex justify-center `}>
+                {item.map((item: string) => (
+                  <img src={`/images/imgWall/${item}`} alt="" key={item} className={`w-[142px] shrink-0`} />
+                ))}
+              </div>
+            )
+          })}
         </div>
       </div>
       <div className={`w-1280 flex items-center mx-auto text-[20px] leading-[60px] mb-[150px]`}>
@@ -340,7 +367,7 @@ export default function IndexPage() {
         <img src="/images/speakBox/Vector.svg" alt="" className={`mr-[14px]`} />
       </div>
       <div className={`w-1280 mx-auto mb-[50px] text-center`}>
-        <h1 className={`text-[65px] leading-[55px] font-bold`}>
+        <h1 className={`text-[68px] leading-[55px]`} style={{ fontFamily: 'Tilt Warp' }}>
           <span className={`text-play`}>Over 40,000</span> podcast lovers are using it
         </h1>
         <div className={`text-[26px] leading-[30px] mt-[10px]`}>Less time, more gains</div>
@@ -404,7 +431,9 @@ export default function IndexPage() {
         </div>
       </div>
       <div className={`w-1280 mx-auto mb-[190px]`}>
-        <h1 className={`text-black text-[68px] text-center font-black mb-[65px] dark:text-white`}>Frequently Asked Questions</h1>
+        <h1 className={`text-black text-[60px] text-center mb-[65px] dark:text-white`} style={{ fontFamily: 'Tilt Warp' }}>
+          Frequently Asked Questions
+        </h1>
         <div className={`w-[880px] mx-auto`}>
           <Accordion type="single" collapsible defaultValue={'item-1'} className={`dark:bg-bgDark`}>
             {QAList.map((it, index) => (
