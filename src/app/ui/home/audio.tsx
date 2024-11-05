@@ -33,7 +33,7 @@ export default function Audio() {
   const funs: any = { canplaythrough, timeupdate, loadstart, error, ended }
   // const newUrlAudio = enclosureUrl.includes('?') ? `${enclosureUrl}&t=${Date.now()}` : `${enclosureUrl}?t=${Date.now()}`
   useEffect(() => {
-    const audioInfo = JSON.parse(localStorage.getItem(audio_info) || '{}')
+    const audioInfo = JSON.parse(sessionStorage.getItem(audio_info) || '{}')
     if (audioInfo?.episodeId) {
       setData(audioInfo)
     }
@@ -144,7 +144,7 @@ export default function Audio() {
   function timeupdate() {
     const t = isAudio.current.currentTime
     setTime(t)
-    localStorage.setItem(audio_info, JSON.stringify({ ...data, playTime: t }))
+    sessionStorage.setItem(audio_info, JSON.stringify({ ...data, playTime: t }))
     // loadRead()
   }
   function renderVoice() {
@@ -198,7 +198,7 @@ export default function Audio() {
             defaultValue={[time]}
             step={1}
             max={allTime}
-            className={`flex-1 mr-[18px] h-[32px] p-0`}
+            className={`flex-1 mr-[18px] h-[18px] p-0`}
             onValueChange={(e: any) => changeProgress(e)}
           />
           <span className={`mr-[20px] text-min`}>
@@ -216,7 +216,7 @@ export default function Audio() {
           max={1}
           min={0}
           step={0.01}
-          className={`mr-[25px] w-[55px] h-[32px] p-0 shrink-0`}
+          className={`mr-[25px] w-[55px] h-[18px] p-0 shrink-0`}
           value={[voice]}
           defaultValue={[voice]}
           onValueChange={(e: any) => changeVoice(e)}
