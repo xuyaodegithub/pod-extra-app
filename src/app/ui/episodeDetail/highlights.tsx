@@ -23,7 +23,7 @@ export function Highlights({ data }: { data: any }) {
       {highlights?.map((item: any, ind: number) => {
         const { speaker: speakerItem, speakerIndex } = item
         // const i = ind > speakerList.length - 1 ? ind % speakerList.length : ind
-        const speaker = speakerList[speakerIndex]
+        const speaker = speakerList[speakerIndex] || speakerList[0]
         return (
           <div className={`mb-[16px] pb-[12px] border-b-[1px] border-e8e dark:border-fontGry-600`} key={`${item.start}-${ind}`}>
             <div className={`flex mb-[9px]`} style={{ color: speaker.color }}>
