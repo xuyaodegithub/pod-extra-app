@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 import { PHASE_DEVELOPMENT_SERVER } from 'next/constants.js'
-
+import createMDX from '@next/mdx'
 const nextConfig = (phase) => {
   const isDev = phase === PHASE_DEVELOPMENT_SERVER
   /**
@@ -25,6 +25,8 @@ const nextConfig = (phase) => {
     env: {
       customKey: 'my-value',
     },
+    // 配置 `pageExtensions` 以包含 markdown 和 MDX 文件
+    pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
     // distDir: '.next',
     // exportPathMap: async function (
     //   defaultPathMap,
@@ -76,7 +78,10 @@ const nextConfig = (phase) => {
     //   ],
     // },
   }
-  return nextConfig
+  const withMDX = createMDX({
+    // 在这里添加 markdown 插件，根据需要
+  })
+  return withMDX(nextConfig) //nextConfig
   // experimental: {//最新版next才能使用ppr
   //   ppr: 'incremental',
   // },

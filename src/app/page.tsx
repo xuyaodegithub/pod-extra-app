@@ -219,10 +219,7 @@ export default function IndexPage() {
           </Link>
         </div>
         <div className={`relative mb-[146px]`}>
-          <h1
-            className={`text-[80px] tracking-[-3px] text-[#02073E] w-[753px] mb-[30px] leading-[80px] dark:text-white`}
-            style={{ fontFamily: 'Tilt Warp' }}
-          >
+          <h1 className={`text-[80px] tracking-[-3px] text-[#02073E] w-[753px] mb-[30px] leading-[80px] dark:text-white font-Tilt`}>
             Unleash the power of podcast with AI
           </h1>
           <div className={`text-[30px] leading-[45px] mb-[30px] dark:text-homehbg`}>
@@ -246,7 +243,7 @@ export default function IndexPage() {
           </div>
         </div>
         <div className={`mb-[84px]`}>
-          <div className={`text-center text-[80px] leading-[80px] mb-[80px] tracking-[-3px]`} style={{ fontFamily: 'Tilt Warp' }}>
+          <div className={`text-center text-[80px] leading-[80px] mb-[80px] tracking-[-3px] font-Tilt`}>
             <span className={`text-play`}>An advanced AI tool </span>for
             <div className={`text-[65px]`}>podcast listening and knowledge acquisition</div>
           </div>
@@ -270,10 +267,7 @@ export default function IndexPage() {
         </div>
         <div className={`relative flex flex-wrap mb-[348px]`}>
           <div className={`w-[50%] mb-[146px]`}>
-            <h2
-              className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black dark:text-white tracking-[-1.5px]`}
-              style={{ fontFamily: 'Tilt Warp' }}
-            >
+            <h2 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black dark:text-white tracking-[-1.5px] font-Tilt`}>
               Summarize podcasts with AI
             </h2>
             <div className={`text-[30px] leading-[45px] dark:text-homehbg`}>
@@ -323,10 +317,7 @@ export default function IndexPage() {
             </div>
           </div>
           <div className={`w-[50%] relative mt-[386px]`}>
-            <h3
-              className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black dark:text-white`}
-              style={{ fontFamily: 'Tilt Warp' }}
-            >
+            <h3 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black dark:text-white font-Tilt`}>
               AI Podcast Transcript
             </h3>
             <div className={`text-[30px] leading-[45px] dark:text-homehbg`}>
@@ -338,12 +329,8 @@ export default function IndexPage() {
       </div>
       <div>
         <div className={`w-1280 mx-auto text-center text-[30px] leading-[45px] mb-[30px]`}>
-          <h1 className={`text-[80px] leading-[1] text-play tracking-[-2px]`} style={{ fontFamily: 'Tilt Warp' }}>
-            10x Speed
-          </h1>
-          <h3 className={`text-[65px] leading-[80px] tracking-[-2px]`} style={{ fontFamily: 'Tilt Warp' }}>
-            Gain knowledge from your favorite podcasts
-          </h3>
+          <h1 className={`text-[80px] leading-[1] text-play tracking-[-2px] font-Tilt`}>10x Speed</h1>
+          <h3 className={`text-[65px] leading-[80px] tracking-[-2px] font-Tilt`}>Gain knowledge from your favorite podcasts</h3>
           <p>Podcast fans, on average, consume over 8 episodes per week. </p>
           <p>However, globally there are more than 4 million shows available.</p>
         </div>
@@ -367,7 +354,7 @@ export default function IndexPage() {
         <img src="/images/speakBox/Vector.svg" alt="" className={`mr-[14px]`} />
       </div>
       <div className={`w-1280 mx-auto mb-[50px] text-center`}>
-        <h1 className={`text-[68px] leading-[55px]`} style={{ fontFamily: 'Tilt Warp' }}>
+        <h1 className={`text-[68px] leading-[55px] font-Tilt`}>
           <span className={`text-play`}>Over 40,000</span> podcast lovers are using it
         </h1>
         <div className={`text-[26px] leading-[30px] mt-[10px]`}>Less time, more gains</div>
@@ -431,9 +418,7 @@ export default function IndexPage() {
         </div>
       </div>
       <div className={`w-1280 mx-auto mb-[190px]`}>
-        <h1 className={`text-black text-[60px] text-center mb-[65px] dark:text-white`} style={{ fontFamily: 'Tilt Warp' }}>
-          Frequently Asked Questions
-        </h1>
+        <h1 className={`text-black text-[60px] text-center mb-[65px] dark:text-white font-Tilt`}>Frequently Asked Questions</h1>
         <div className={`w-[880px] mx-auto`}>
           <Accordion type="single" collapsible defaultValue={'item-1'} className={`dark:bg-bgDark`}>
             {QAList.map((it, index) => (

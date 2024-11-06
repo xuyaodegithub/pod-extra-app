@@ -10,6 +10,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
   const [activeTab, setActiveTab] = useState(tabList[0].key)
   const [activeTime, setActiveTime] = useState(0)
   const { setData, setIsPlaying, setStepTime } = useMyContext()
+  const [topNum, setTopNum] = useState(57)
   function tabChange(key: string) {
     if (activeTab === key) return
     const box: any = document.querySelector('.episode-item')
@@ -32,8 +33,13 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
 
   useEffect(() => {
     const box: any = document.querySelector('.episode-item')
+    const titleBar: any = document.querySelector('.episodeDetail')
     const cTop = tabList.find((i) => i.key === activeTab)?.top || 0
+    const tNum = titleBar?.offsetHeight || 0
     box.scrollTop = cTop
+    if (tNum > topNum) {
+      setTopNum(tNum)
+    }
   }, [activeTab])
   // useEffect(() => {
   //   const box: any = document.querySelector('.episode-item')
@@ -52,7 +58,8 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
     <div className={`flex flex-col`}>
       <Tabs value={activeTab} className={``}>
         <TabsList
-          className={`flex tab_scroll sticky top-[57px] bg-white mb-[20px] z-10 dark:bg-black border-b-[1px] border-[#FFE1D3] dark:border-play rounded-[0px]`}
+          className={`flex tab_scroll sticky bg-white mb-[20px] z-10 dark:bg-black border-b-[1px] border-[#FFE1D3] dark:border-play rounded-[0px]`}
+          style={{ top: `${topNum}px` }}
         >
           {tabList.map((item: any) => (
             <TabsTrigger value={item.key} key={item.key} className={`flex-1`} onClick={() => tabChange(item.key)}>
