@@ -8,6 +8,7 @@ import { useThrottledCallback } from 'use-debounce'
 
 export function Transcript({ data, activeTab }: { data: any; activeTab: string }) {
   const [autoMove, setAutoMove] = useState(true)
+  const [stopTime, setStopTime] = useState(0)
   const isTranscript = activeTab === 'TRANSCRIPT'
   const { paragraphs = [] } = data || {}
   const { enclosureUrl = '', showTitle = '', showNotes = '', coverUrl = '', episodeTitle = '', episodeId = '' } = data || {}
@@ -47,6 +48,7 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
     }
     if (!isPlaying) {
       setAutoMove(true)
+      setStopTime(time)
     }
     return () => {
       throttledHandleScroll.cancel()
@@ -117,14 +119,16 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
             </div>
             <div className={`text-md text-fontGry-600`}>
               {item.sentences.map((it: any, ind: number) => {
-                const { start, end } = it
+                // const { start, end } = it
                 const isactive = isPlaying && time >= it.start && time <= it.end
+                const stopActive = !isPlaying && stopTime > 0 && stopTime >= it.start && stopTime <= it.end
+                const isActiveBg = isactive || stopActive
                 const bg = isDark ? '#404040' : speaker.bg
                 const color = isDark ? speaker.bg : speaker.color
                 return (
                   <span
                     className={`${isactive ? 'activeSpan' : ''} hover:bg-bgGray cursor-pointer dark:hover:bg-darkHomeBg dark:text-homehbg active_${((it.start || '') + '').replace(/\./g, '_')}`}
-                    style={{ background: isactive ? bg : '', color: isactive ? color : '' }}
+                    style={{ background: isActiveBg ? bg : '', color: isActiveBg ? color : '' }}
                     key={`${it.start}-${ind}`}
                     onClick={(e: any) => playCurrTime(it.start, e)}
                   >
