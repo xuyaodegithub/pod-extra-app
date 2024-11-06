@@ -1,7 +1,7 @@
 'use client'
 import { PlayCircleIcon, PauseIcon, SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/react/24/outline'
 import { useEffect, useState, useRef } from 'react'
-import { Slider } from '@/components/ui/slider'
+// import { Slider } from '@/components/ui/slider'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
 import Image from 'next/image'
 const volumeList: number[] = [0.5, 0.8, 1, 1.1, 1.2, 1.3, 1.5, 1.8, 2.0, 3.0]
@@ -10,7 +10,7 @@ import { getNoTagText, timeFormat } from '@/app/lib/utils'
 import { useRouter } from 'next/navigation'
 import { Loading } from '@/app/ui/home/loading'
 import { audio_info } from '@/app/lib/config'
-
+import { Slider } from 'antd'
 export default function Audio() {
   const { data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime } = useMyContext()
   const {
@@ -99,12 +99,12 @@ export default function Audio() {
   }
 
   function changeProgress(val: any) {
-    setTime(val[0])
-    isAudio.current.currentTime = val[0]
+    setTime(val)
+    isAudio.current.currentTime = val
   }
   function changeVoice(val: any) {
-    setVoice(val[0])
-    isAudio.current.volume = val[0]
+    setVoice(val)
+    isAudio.current.volume = val
   }
   function selectChange(val: number) {
     setPlaybackRate(val)
@@ -194,13 +194,15 @@ export default function Audio() {
         <div className={`w-[400px] flex items-center`}>
           <span className={`mr-[10px] text-min`}>{timeFormat(time)}</span>
           <Slider
-            value={[time]}
-            defaultValue={[time]}
+            tooltip={{ open: false }}
+            value={time}
+            defaultValue={time}
             step={1}
             max={allTime}
             min={0}
-            className={`flex-1 mr-[18px] h-[18px] p-0`}
-            onValueChange={(e: any) => changeProgress(e)}
+            className={`relative flex-1 flex items-center mr-[18px] m-0 p-0`}
+            onChange={(e: any) => changeProgress(e)}
+            range={false}
           />
           <span className={`mr-[20px] text-min`}>
             {loading ? (
@@ -214,13 +216,14 @@ export default function Audio() {
         </div>
         {renderVoice()}
         <Slider
+          tooltip={{ open: false }}
           max={1}
           min={0}
           step={0.01}
-          className={`mr-[25px] w-[55px] h-[18px] p-0 shrink-0`}
-          value={[voice]}
-          defaultValue={[voice]}
-          onValueChange={(e: any) => changeVoice(e)}
+          className={`mr-[25px] w-[55px] flex items-center m-0 p-0 shrink-0`}
+          value={voice}
+          defaultValue={voice}
+          onChange={(e: any) => changeVoice(e)}
         />
         <Select onValueChange={(e: any) => selectChange(e)} defaultValue={`${playbackRate}`} value={`${playbackRate}`}>
           <SelectTrigger className="w-auto bg-transparent border-0 p-0 shadow-none focus:ring-0 focus:ring-offset-0">

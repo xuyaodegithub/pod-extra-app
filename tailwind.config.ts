@@ -222,6 +222,10 @@ const config: Config = {
         'scroll-x': 'linear scroll-x 60s infinite',
         spin: 'spin 1s linear infinite',
       },
+      fontFamily: {
+        sans: ['var(--font-OpenSans)'],
+        Tilt: ['var(--font-TiltWarp)'],
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
