@@ -1,5 +1,3 @@
-// import { Card } from '@/app/ui/dashboard/cards'
-// import { fetchRevenue, fetchLatestInvoices, fetchCardData } from '@/app/lib/data'
 import { Suspense, lazy } from 'react'
 import { LoadingLine } from '@/app/ui/skeletons'
 // import SearchInput from '@/app/ui/home/searchInput'
