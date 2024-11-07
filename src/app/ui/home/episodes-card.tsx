@@ -47,13 +47,13 @@ export function Card({
           height={110}
         />
         <div className={`flex-1 flex flex-col overflow-hidden`}>
-          <div
+          <h3
             ref={elementARef}
             className={`text-md overflow-hidden text-ellipsis line-clamp-2 text-fontGry-600 dark:text-white`}
             title={episodeTitle}
           >
             {episodeTitle}
-          </div>
+          </h3>
           <div
             className={`text-sm overflow-hidden text-ellipsis ${oneline ? 'line-clamp-2' : 'line-clamp-3'} text-fontGry-100`}
             title={getNoTagText(showNotes)}
