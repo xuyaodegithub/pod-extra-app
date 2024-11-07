@@ -2,7 +2,6 @@
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import styles from '@/app/ui/home.module.scss'
 import { getPodEpisode } from '@/app/lib/service'
-// import { formatDateToLocal } from '@/app/lib/utils'
 import { Card } from '@/app/ui/home/episodes-card'
 import Link from 'next/link'
 import { POPULARITY, PUB_DATE, SUMMARIZE_TIME, TRANSCRIPT_TIME } from '@/app/lib/utils'

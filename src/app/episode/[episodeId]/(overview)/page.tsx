@@ -61,7 +61,7 @@ export default async function Page({
           >
             <span className={`shrink-0`}>from podcast</span>
             <img src={showCoverUrl} alt="" className={`w-[25px] h-[25px] rounded-5px mx-[6px]`} />
-            <span className={`max-w-[710px] overflow-hidden text-ellipsis whitespace-nowrap`}>{showTitle}</span>
+            <h2 className={`max-w-[710px] overflow-hidden text-ellipsis whitespace-nowrap`}>{showTitle}</h2>
           </Link>
         </div>
       </div>

@@ -63,7 +63,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
         >
           {tabList.map((item: any) => (
             <TabsTrigger value={item.key} key={item.key} className={`flex-1`} onClick={() => tabChange(item.key)}>
-              {item.title}
+              <h2>{item.title}</h2>
             </TabsTrigger>
           ))}
         </TabsList>
