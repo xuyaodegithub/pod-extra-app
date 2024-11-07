@@ -200,13 +200,23 @@ export default function IndexPage() {
     {
       title: 'COMPANY',
       list: [
-        // { name: 'Blog', href: '/' },
-        // { name: 'Privacy policy', href: '/' },
-        // { name: 'Sitemap', href: '/' },
+        { name: 'Privacy', href: 'https://www.podextra.ai/privacy.html' },
+        { name: 'Terms', href: 'https://www.podextra.ai/terms.html' },
+        { name: 'support@podextra.ai', href: 'mailto:support@podextra.ai' },
         // { name: 'Email', href: '/' },
       ],
     },
-    { title: 'FRIENDS', list: [] },
+    {
+      title: 'FRIENDS',
+      list: [
+        { name: 'Creati.ai AI Tools Directory', href: 'https://creati.ai', title: 'Creati.ai AI Tools Directory' },
+        { name: 'iuu AI', href: 'https://iuu.ai/', title: '' },
+        { name: 'Flux AI Pro', href: 'https://fluxai.pro/', title: 'Flux AI Pro' },
+        { name: 'AI With Me', href: 'https://aiwith.me/', title: 'AI With Me: Discover thousands of AI Tools' },
+        { name: 'AI Tool Trek', href: 'https://aitooltrek.com', title: 'AI Tool Trek' },
+        { name: 'more', href: '/more-friends', title: '' },
+      ],
+    },
   ]
   // redirect('/home') // 重定向到 /home
   return (
@@ -444,11 +454,13 @@ export default function IndexPage() {
         <OtherLogo />
         {otherLinks.map((item: any) =>
           !!item.list.length ? (
-            <div className={`w-[260px] text-md`}>
+            <div className={`w-[260px] text-md`} key={item.title}>
               <h3 className={` font-bold mb-[30px] dark:text-homehbg`}>{item.title}</h3>
               {item.list.map((item: any) => (
-                <div className={`mb-[15px] dark:text-fontGry-100`}>
-                  <Link href={item.href}>{item.name}</Link>
+                <div className={`mb-[15px] dark:text-fontGry-100`} key={item.href}>
+                  <Link href={item.href} target="_blank" title={item.title || ''}>
+                    {item.name}
+                  </Link>
                 </div>
               ))}
             </div>
