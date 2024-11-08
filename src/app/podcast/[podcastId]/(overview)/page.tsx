@@ -17,7 +17,7 @@ export async function generateMetadata({ params, searchParams }: any, parent: Re
   } = await getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
 
   return getMetaData({
-    title: `${podcastName} all Episodes with AI Transcript｜PodExtra.AI`,
+    title: `${podcastName} all Episodes with AI Transcript | PodExtra.AI`,
     description: `Dive into all ${total} episodes of ${itunesAuthor}'s '${podcastName}' podcast, enhanced with AI-powered transcription and episode summaries. Discover the latest episode from ${getCurrentLocalTime(resultList[0]?.gmtPubDate)}.`,
   })
 }

@@ -5,7 +5,7 @@ import { Card } from '@/app/ui/home/episodes-card'
 import { Metadata } from 'next'
 const y = new Date().getFullYear()
 export const metadata: Metadata = getMetaData({
-  title: `The Latest AI-processed episodes of  ${y - 1}-${y} ｜PodExtra.AI`,
+  title: `The Latest AI-processed episodes of  ${y - 1}-${y} | PodExtra.AI`,
   description: `PodExtra uses AI to transcribe and summarize the latest popular podcasts content for you, helping you quickly skim through podcast material, saving time and increasing efficiency.`,
   keywords: '',
 })
