@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { getMetaData } from '@/app/lib/utils'
 const y = new Date().getFullYear()
 export const metadata: Metadata = getMetaData({
-  title: `Discover all the best podcasts of ${y - 1}-${y} ｜PodExtra.AI`,
+  title: `Discover all the best podcasts of ${y - 1}-${y} | PodExtra.AI`,
   description: `Discover all the best podcasts of ${y - 1}-${y}  on PodExtra, covering Society & Culture, True Crime, Comedy, History, News, Business, Education, Health & Fitness, Technology, etc.`,
   keywords: '',
 })
