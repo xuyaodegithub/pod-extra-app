@@ -5,7 +5,10 @@ import '@/app/ui/global.css'
 import SideNav from '@/app/ui/home/sidenav'
 import Audio from '@/app/ui/home/audio'
 import { MyProvider } from '@/context/MyContext'
+import { UserProvider } from '@/context/UserInfo'
 import { usePathname } from 'next/navigation'
+import SearchInput from '@/app/ui/home/searchInput'
+import UserInfo from '@/app/ui/home/userInfo'
 import Script from 'next/script'
 import { ConfigProvider } from 'antd'
 //字体
@@ -60,43 +63,44 @@ export default function RootLayout({
         },
       }}
     >
-      <MyProvider>
-        <html lang="en" className={`h-[100%] ${TiltWarp.variable} ${OpenSans.variable}`}>
-          <head>
-            {/* Use React.Fragment or an array to wrap multiple elements */}
-            <>
-              <Script async src="https://www.googletagmanager.com/gtag/js?id=G-1442PR33N8" strategy="beforeInteractive"></Script>
-              <Script
-                dangerouslySetInnerHTML={{
-                  __html: ` window.dataLayer = window.dataLayer || [];
+      <UserProvider>
+        <MyProvider>
+          <html lang="en" className={`h-[100%] ${TiltWarp.variable} ${OpenSans.variable}`}>
+            <head>
+              {/* Use React.Fragment or an array to wrap multiple elements */}
+              <>
+                <Script async src="https://www.googletagmanager.com/gtag/js?id=G-1442PR33N8" strategy="beforeInteractive"></Script>
+                <Script
+                  dangerouslySetInnerHTML={{
+                    __html: ` window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments)};
           gtag('js', new Date());
           gtag('config', 'G-1442PR33N8');`,
-                }}
-                strategy="beforeInteractive"
-              ></Script>
-            </>
-          </head>
-          <body className={`opacity-0 antialiased h-[100%] dark:bg-black dark:text-darkTheme-900 font-sans`}>
-            {!isLanding ? (
-              <div className="flex w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-[100%]">
-                <SideNav />
-                <main className={`flex-1 overflow-hidden flex flex-col`}>
-                  <div className={`mb-[20px] h-[40px]`}>
-                    {/*<Suspense fallback={<LoadingLine />}>*/}
-                    {/*  <SearchInput />*/}
-                    {/*</Suspense>*/}
-                  </div>
-                  <section className={`flex-1 overflow-hidden pr-[20px]`}>{children}</section>
-                </main>
-              </div>
-            ) : (
-              <section className={``}>{children}</section>
-            )}
-            {!isLanding && <Audio />}
-          </body>
-        </html>
-      </MyProvider>
+                  }}
+                  strategy="beforeInteractive"
+                ></Script>
+              </>
+            </head>
+            <body className={`opacity-0 antialiased h-[100%] dark:bg-black dark:text-darkTheme-900 font-sans`}>
+              {!isLanding ? (
+                <div className="flex w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-[100%]">
+                  <SideNav />
+                  <main className={`flex-1 overflow-hidden flex flex-col`}>
+                    <div className={`mb-[24px] flex justify-between items-center pr-[20px]`}>
+                      <SearchInput />
+                      <UserInfo />
+                    </div>
+                    <section className={`flex-1 overflow-hidden pr-[20px]`}>{children}</section>
+                  </main>
+                </div>
+              ) : (
+                <section className={``}>{children}</section>
+              )}
+              {!isLanding && <Audio />}
+            </body>
+          </html>
+        </MyProvider>
+      </UserProvider>
     </ConfigProvider>
   )
 }

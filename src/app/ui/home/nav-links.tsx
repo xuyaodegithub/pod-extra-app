@@ -1,23 +1,22 @@
 'use client'
-import {
-  HomeIcon,
-  SignalIcon,
-  MicrophoneIcon,
-  NewspaperIcon,
-  StarIcon,
-  Squares2X2Icon,
-  ChevronRightIcon,
-  MoonIcon,
-  SunIcon,
-} from '@heroicons/react/24/outline'
+import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 // import { clsx } from 'clsx'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useMyContext } from '@/context/MyContext'
 import { useEffect, useState } from 'react'
+const home = { name: 'Home', href: '/home', icon: '/images/home.svg', darkIcon: '/images/darkHome.svg' }
+const signIn = {
+  name: 'Sign in',
+  href: '',
+  icon: '/images/login.svg',
+  darkIcon: '/images/darkLogin.svg',
+  rightIcon: '/images/rightIcon.svg',
+  darkRightIcon: '/images/darkRightIcon.svg',
+}
+
 export const links = [
-  { name: 'Home', href: '/home', icon: '/images/home.svg', darkIcon: '/images/darkHome.svg' },
   {
     name: 'Popular Podcasts',
     href: '/popular-top-best-podcasts',
@@ -71,14 +70,37 @@ export default function NavLinks() {
   }
   return (
     <div>
+      {/*home */}
+      <div className={` px-[10px]  mb-[15px]`}>
+        <Link
+          href={home.href}
+          className={`flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md ${home.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}
+        >
+          <img src={isDark ? home.darkIcon : home.icon} className="w-[20px] mr-[10px]" />
+          <p>{home.name}</p>
+        </Link>
+        <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
+      </div>
+      {/*sigIn*/}
       <div className={`pb-[18px] px-[10px]  mb-[15px]`}>
-        {links.map((link) => {
+        <div className={`text-[17px] tracking-0.5px text-[#3C3C3C] mb-[9px] font-bold`}>You</div>
+        <div
+          className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md bg-accent ext-accent-foreground hover:bg-accent hover:text-accent-foreground`}
+        >
+          <img src={isDark ? signIn.darkIcon : signIn.icon} className="w-[20px] mr-[10px]" />
+          <p>{signIn.name}</p>
+          <img src={isDark ? signIn.darkRightIcon : signIn.rightIcon} className="w-[20px] ml-auto mr-[10px]" />
+        </div>
+        <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
+      </div>
+      <div className={`pb-[18px] px-[10px]  mb-[15px]`}>
+        {links.map((link, ind: number) => {
           const LinkIcon = !isDark ? link.icon : link.darkIcon
           return (
             <Link
               key={link.name}
               href={link.href}
-              className={`flex px-[14px] mb-[10px] h-[40px] items-center transition duration-200 rounded-md text-md ${link.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}
+              className={`flex px-[14px] ${ind === links.length - 1 ? 'mb-[16px]' : 'mb-[10px]'} h-[40px] items-center transition duration-200 rounded-md text-md ${link.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}
             >
               <img src={LinkIcon} className="w-[20px] mr-[10px]" />
               <p>{link.name}</p>
