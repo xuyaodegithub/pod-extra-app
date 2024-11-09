@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: any, parent: ResolvingMetadat
     .map((i: string) => capitalizeFirstLetter(i))
     .join(' ')
   return getMetaData({
-    title: `The best ${realCategoryName} podcasts of ${y - 1}-${y} ｜PodExtra.AI`,
+    title: `The best ${realCategoryName} podcasts of ${y - 1}-${y} | PodExtra.AI`,
     description: `Discover the best ${realCategoryName} podcasts with PodExtra. With AI-powered transcription and summarization, it elevates your listening experience.`,
   })
 }
