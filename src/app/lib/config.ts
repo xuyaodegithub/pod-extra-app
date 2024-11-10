@@ -34,3 +34,4 @@ export function generateUuidV4(): string {
 }
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 export const audio_info = 'AUDIO_INFO'
+export const googleAccessToken = 'GOOGLEACCESSTOKEN'

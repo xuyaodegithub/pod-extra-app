@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 // import { clsx } from 'clsx'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useMyContext } from '@/context/MyContext'
+import { useUserInfo } from '@/context/UserInfo'
 import { useEffect, useState } from 'react'
 const home = { name: 'Home', href: '/home', icon: '/images/home.svg', darkIcon: '/images/darkHome.svg' }
 const signIn = {
@@ -38,6 +39,7 @@ const selectItemList = [
   { label: 'Dark Mode', icon: '/icons/Shape-moon-1.svg', darkIcon: '/icons/Shape-moon-2.svg', value: 'dark' },
 ]
 export default function NavLinks() {
+  const { userInfo, setShowDialog } = useUserInfo()
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const { isDark, setIsDark } = useMyContext()
@@ -82,17 +84,19 @@ export default function NavLinks() {
         <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
       </div>
       {/*sigIn*/}
-      <div className={`pb-[18px] px-[10px]  mb-[15px]`}>
-        <div className={`text-[17px] tracking-0.5px text-[#3C3C3C] mb-[9px] font-bold`}>You</div>
-        <div
-          className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md bg-accent ext-accent-foreground hover:bg-accent hover:text-accent-foreground`}
-        >
-          <img src={isDark ? signIn.darkIcon : signIn.icon} className="w-[20px] mr-[10px]" />
-          <p>{signIn.name}</p>
-          <img src={isDark ? signIn.darkRightIcon : signIn.rightIcon} className="w-[20px] ml-auto mr-[10px]" />
+      {!userInfo?.id && (
+        <div className={`pb-[18px] px-[10px]  mb-[15px]`} onClick={() => setShowDialog(true)}>
+          <div className={`text-[17px] tracking-0.5px text-[#3C3C3C] mb-[9px] font-bold`}>You</div>
+          <div
+            className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md bg-accent ext-accent-foreground hover:bg-accent hover:text-accent-foreground`}
+          >
+            <img src={isDark ? signIn.darkIcon : signIn.icon} className="w-[20px] mr-[10px]" />
+            <p>{signIn.name}</p>
+            <img src={isDark ? signIn.darkRightIcon : signIn.rightIcon} className="w-[20px] ml-auto mr-[10px]" />
+          </div>
+          <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
         </div>
-        <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
-      </div>
+      )}
       <div className={`pb-[18px] px-[10px]  mb-[15px]`}>
         {links.map((link, ind: number) => {
           const LinkIcon = !isDark ? link.icon : link.darkIcon

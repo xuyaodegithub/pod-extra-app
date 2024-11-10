@@ -24,6 +24,7 @@ const nextConfig = (phase) => {
     },
     env: {
       customKey: 'my-value',
+      NEXTAUTH_TIMEOUT: 7000,
     },
     // 配置 `pageExtensions` 以包含 markdown 和 MDX 文件
     pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
