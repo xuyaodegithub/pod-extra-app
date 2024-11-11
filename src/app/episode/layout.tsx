@@ -10,9 +10,9 @@ import { useMyContext } from '@/context/MyContext'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { title } = useMyContext()
-
-  // const { episodeId }: { episodeId: string } = useParams()
-  // const [title, id] = splitStringFromLastDash(decodeURIComponent(episodeId))
+  //这个代码不能去
+  const { episodeId }: { episodeId: string } = useParams()
+  const [name, id] = splitStringFromLastDash(decodeURIComponent(episodeId))
   return (
     <Suspense fallback={<LoadingLine num={12} />}>
       <SaveScroll className={`episode-item`}>

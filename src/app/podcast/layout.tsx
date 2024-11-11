@@ -9,9 +9,10 @@ import SaveScroll from '@/app/ui/save-scroll'
 import { splitStringFromLastDash } from '@/app/lib/utils'
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { title } = useMyContext()
-  // const pathname = usePathname()
-  // const { podcastId }: { podcastId: string } = useParams()
-  // const [podcastName, showId] = splitStringFromLastDash(decodeURIComponent(podcastId))
+  //这个代码不能去
+  const pathname = usePathname()
+  const { podcastId }: { podcastId: string } = useParams()
+  const [podcastName, showId] = splitStringFromLastDash(decodeURIComponent(podcastId))
   return (
     <Suspense fallback={<LoadingLine num={12} />}>
       <SaveScroll>

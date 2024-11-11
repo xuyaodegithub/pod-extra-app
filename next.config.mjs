@@ -33,6 +33,18 @@ const nextConfig = (phase) => {
           source: '/blog/:path*',
           destination: 'https://blog.podextra.ai/:path*',
         },
+        {
+          source: '/robot.txt',
+          destination: 'https://api.podextra.ai/robot.txt',
+        },
+        {
+          source: '/sitemap_index.xml',
+          destination: 'https://api.podextra.ai/sitemap_index.xml',
+        },
+        {
+          source: '/sitemap{n}.xml.gz',
+          destination: 'https://api.podextra.ai/sitemap{n}.xml.gz',
+        },
       ]
     },
     // distDir: '.next',
