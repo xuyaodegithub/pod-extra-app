@@ -6,6 +6,7 @@ import axios from 'axios'
 const instance: any = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   // timeout: 10000,
+  withCredentials: true,
   headers: {
     // 'Content-Type': 'application/json',
     // 'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
