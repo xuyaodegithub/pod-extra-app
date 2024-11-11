@@ -5,10 +5,11 @@ import Breadcrumb from '@/app/ui/breadcrumb'
 import { Suspense, useRef } from 'react'
 import SaveScroll from '@/app/ui/save-scroll'
 import { LoadingLine } from '@/app/ui/skeletons'
+import { splitStringFromLastDash } from '@/app/lib/utils'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { episodeId }: { episodeId: string } = useParams()
-  const [title, id] = decodeURIComponent(episodeId).split('-')
+  const [title, id] = splitStringFromLastDash(decodeURIComponent(episodeId))
   return (
     <Suspense fallback={<LoadingLine num={12} />}>
       <SaveScroll className={`episode-item`}>

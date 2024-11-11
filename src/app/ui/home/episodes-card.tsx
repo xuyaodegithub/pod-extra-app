@@ -15,6 +15,7 @@ export function Card({
   duration,
   isShowTitle = true,
   noMb = false,
+  episodeUrl = '',
 }: {
   coverUrl: string
   episodeTitle: string
@@ -26,6 +27,7 @@ export function Card({
   isShowTitle?: boolean
   duration: number
   noMb: boolean
+  episodeUrl: string
 }) {
   const elementARef = useRef(null)
   const [oneline, setOneLine] = useState(false)
@@ -34,7 +36,7 @@ export function Card({
     setOneLine(elA.offsetHeight > 24)
   }, [])
   return (
-    <Link href={`/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`} className={` w-[50%]`}>
+    <Link href={episodeUrl} className={` w-[50%]`}>
       <div
         className={`flex rounded-[5px] p-[10px] ${noMb ? '' : 'mb-[5px]'} overflow-hidden cursor-pointer ${isHome ? 'hover:bg-homehbg' : 'hover:bg-hbg'} dark:hover:bg-darkHomeBg transition-all`}
       >

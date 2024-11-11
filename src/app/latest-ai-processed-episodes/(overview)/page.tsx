@@ -30,7 +30,18 @@ export default async function Page({
       </div>
       <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
         {resultList.map((item: any, ind: number) => {
-          return <Card key={item?.episodeId} {...item} noMb={ind >= resultList.length - 2} />
+          const { coverUrl, episodeTitle, gmtPubDate, showTitle, showNotes, episodeId, duration, episodeUrl = '' } = item
+          const cardItem = {
+            coverUrl,
+            episodeTitle,
+            gmtPubDate,
+            showTitle,
+            showNotes,
+            episodeId,
+            duration,
+            episodeUrl,
+          }
+          return <Card key={item?.episodeId} {...cardItem} noMb={ind >= resultList.length - 2} />
         })}
       </div>
     </main>

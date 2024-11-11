@@ -45,10 +45,10 @@ export default async function PopularPodcasts({ title, type, params }: { title: 
       </div>
       <div className={`flex flex-wrap`}>
         {resultList.map((item: any, ind: number) => {
-          const { showId, showTitle } = item
+          const { showId, showTitle, showUrl, coverUrl, itunesAuthor, gmtLastUpdate } = item
           return (
-            <Link href={`/podcast/${encodeURIComponent(showTitle)}-podcast-${showId}`} key={item.showId}>
-              <Card {...item} isPopularity={isPopularity} noMr={(ind + 1) % 5 === 0} />
+            <Link href={showUrl} key={showId}>
+              <Card {...{ showTitle, coverUrl, itunesAuthor, gmtLastUpdate }} isPopularity={isPopularity} noMr={(ind + 1) % 5 === 0} />
             </Link>
           )
         })}

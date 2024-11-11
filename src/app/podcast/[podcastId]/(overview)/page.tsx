@@ -1,6 +1,6 @@
 import Pagination from '@/app/ui/pagination'
 import { getEpisodeDetail, getPodcastsDetail, getPodEpisode } from '@/app/lib/service'
-import { getCurrentLocalTime, getMetaData, getNoTagText, PUB_DATE, timeFormat } from '@/app/lib/utils'
+import { getCurrentLocalTime, getMetaData, getNoTagText, PUB_DATE, timeFormat, splitStringFromLastDash } from '@/app/lib/utils'
 import { CardDes } from '@/app/ui/podcastsDetail/cardDes'
 import Link from 'next/link'
 import { Metadata, ResolvingMetadata } from 'next'
@@ -8,8 +8,9 @@ import CateItem from '@/app/ui/categories/cateItem'
 import { MicrophoneIcon } from '@heroicons/react/24/outline'
 import { Card } from '@/app/ui/home/episodes-card'
 export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
-  const [podcastName, showId] = decodeURIComponent(params.podcastId).split('-podcast-')
+  const [podcastName, showId] = splitStringFromLastDash(decodeURIComponent(params.podcastId))
   const { data = {} } = await getPodcastsDetail(showId)
+  console.log(showId, 'sssssssss', data)
   const { itunesAuthor } = data || {}
   const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
   const {
@@ -33,7 +34,7 @@ export default async function Page({
     podcastId: string
   }
 }) {
-  const [podcastName, showId] = decodeURIComponent(params.podcastId).split('-podcast-')
+  const [podcastName, showId] = splitStringFromLastDash(decodeURIComponent(params.podcastId))
   const { data } = await getPodcastsDetail(showId)
   const { coverUrl, itunesAuthor, showDescription, categoryList } = data || {}
   const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
@@ -65,7 +66,18 @@ export default async function Page({
       </div>
       <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
         {resultList.map((item: any, ind: number) => {
-          return <Card key={item?.episodeId} {...item} isShowTitle={false} noMb={ind >= resultList.length - 2} />
+          const { coverUrl, episodeTitle, gmtPubDate, showTitle, showNotes, episodeId, duration, episodeUrl = '' } = item
+          const cardItem = {
+            coverUrl,
+            episodeTitle,
+            gmtPubDate,
+            showTitle,
+            showNotes,
+            episodeId,
+            duration,
+            episodeUrl,
+          }
+          return <Card key={item?.episodeId} {...cardItem} isShowTitle={false} noMb={ind >= resultList.length - 2} />
         })}
       </div>
     </main>

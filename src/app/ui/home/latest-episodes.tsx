@@ -27,7 +27,18 @@ export default async function LatestEpisodes({ title, type, params }: { title: s
       </div>
       <div className={`flex flex-wrap`}>
         {resultList.map((item: any, ind: number) => {
-          return <Card key={item?.episodeId} {...item} isHome={true} noMb={ind >= resultList.length - 2} />
+          const { coverUrl, episodeTitle, gmtPubDate, showTitle, showNotes, episodeId, duration, episodeUrl = '' } = item
+          const cardItem = {
+            coverUrl,
+            episodeTitle,
+            gmtPubDate,
+            showTitle,
+            showNotes,
+            episodeId,
+            duration,
+            episodeUrl,
+          }
+          return <Card key={item?.episodeId} {...cardItem} isHome={true} noMb={ind >= resultList.length - 2} />
         })}
       </div>
     </div>
