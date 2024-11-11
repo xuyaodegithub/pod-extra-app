@@ -6,10 +6,13 @@ import { Suspense, useRef } from 'react'
 import SaveScroll from '@/app/ui/save-scroll'
 import { LoadingLine } from '@/app/ui/skeletons'
 import { splitStringFromLastDash } from '@/app/lib/utils'
+import { useMyContext } from '@/context/MyContext'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { episodeId }: { episodeId: string } = useParams()
-  const [title, id] = splitStringFromLastDash(decodeURIComponent(episodeId))
+  const { title } = useMyContext()
+
+  // const { episodeId }: { episodeId: string } = useParams()
+  // const [title, id] = splitStringFromLastDash(decodeURIComponent(episodeId))
   return (
     <Suspense fallback={<LoadingLine num={12} />}>
       <SaveScroll className={`episode-item`}>

@@ -7,11 +7,11 @@ import { Metadata, ResolvingMetadata } from 'next'
 import CateItem from '@/app/ui/categories/cateItem'
 import { MicrophoneIcon } from '@heroicons/react/24/outline'
 import { Card } from '@/app/ui/home/episodes-card'
+import { ClientSub } from '@/app/ui/clientDispatch'
 export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
-  const [podcastName, showId] = splitStringFromLastDash(decodeURIComponent(params.podcastId))
+  const [title, showId] = splitStringFromLastDash(decodeURIComponent(params.podcastId))
   const { data = {} } = await getPodcastsDetail(showId)
-  console.log(showId, 'sssssssss', data)
-  const { itunesAuthor } = data || {}
+  const { itunesAuthor, podcastName } = data || {}
   const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
   const {
     data: { resultList, total },
@@ -34,9 +34,9 @@ export default async function Page({
     podcastId: string
   }
 }) {
-  const [podcastName, showId] = splitStringFromLastDash(decodeURIComponent(params.podcastId))
+  const [title, showId] = splitStringFromLastDash(decodeURIComponent(params.podcastId))
   const { data } = await getPodcastsDetail(showId)
-  const { coverUrl, itunesAuthor, showDescription, categoryList } = data || {}
+  const { coverUrl, itunesAuthor, showDescription, categoryList, showTitle = '' } = data || {}
   const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
   const {
     data: { resultList, total },
@@ -44,6 +44,7 @@ export default async function Page({
   const totalPages = Math.ceil(+total / +pageSize)
   return (
     <main className={`flex flex-col`}>
+      <ClientSub val={showTitle} />
       <div className={`flex `}>
         <img src={coverUrl} alt="" className={`w-[250px] h-[250px] mr-[17px] rounded-10px`} />
         <div className={`flex flex-1 flex-col`}>

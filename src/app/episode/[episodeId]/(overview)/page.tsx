@@ -8,6 +8,7 @@ const y = new Date().getFullYear()
 import { Tab } from '@/app/ui/episodeDetail/tabs'
 import { tabList } from '@/app/lib/config'
 import { PlayAudio } from '@/app/ui/episodeDetail/palyAudio'
+import { ClientSub } from '@/app/ui/clientDispatch'
 export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [episodeName, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
@@ -31,13 +32,14 @@ export default async function Page({
 }) {
   const [episodeName, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
-  const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, showId } = data || {}
+  const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, showId, episodeTitle } = data || {}
   const [res1, res2] = await Promise.all([getEpisodeSummarize(episodeId), getEpisodeTranscript(episodeId)])
   const summery = res1.data
   const paragraphs = res2.data?.paragraphs || []
 
   return (
     <main className={`flex flex-col episode-item`}>
+      <ClientSub val={episodeTitle} />
       <div className={`flex `}>
         <img src={coverUrl} alt="" className={`w-[160px] h-[160px] mr-[17px] rounded-10px object-cover`} />
         <div className={`flex flex-1 flex-col overflow-hidden items-start`}>

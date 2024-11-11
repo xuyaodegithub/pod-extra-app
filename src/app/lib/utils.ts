@@ -155,7 +155,7 @@ export function getMetaData(data?: any) {
 export function splitStringFromLastDash(input: string): [string, string] {
   const lastDashIndex = input.lastIndexOf('-')
   if (lastDashIndex === -1) {
-    return [input, ''] // 如果没有找到 '-', 返回原字符串和空字符串
+    return ['', input] // 如果没有找到 '-', 返回原字符串和空字符串
   }
   const part1 = input.substring(0, lastDashIndex)
   const part2 = input.substring(lastDashIndex + 1)
