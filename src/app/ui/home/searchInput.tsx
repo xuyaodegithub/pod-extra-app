@@ -10,17 +10,17 @@ export default function SearchInput({ ...props }: {}) {
   const { isDark } = useMyContext()
   const searchParams = useSearchParams()
   const pathname = usePathname()
-  const { replace, back } = useRouter()
+  const { replace, back, push } = useRouter()
   const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams)
     params.set('page', '1')
-    params.set('pageNum', '10')
+    params.set('pageSize', '10')
     if (term) {
       params.set('query', term)
     } else {
       params.delete('query')
     }
-    replace(`${pathname}?${params.toString()}`)
+    push(`/search?${params.toString()}`)
     console.log(term, params.toString(), back)
   }, 100)
   return (
