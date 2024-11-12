@@ -64,9 +64,18 @@ export default async function Categories({ title }: { title: string }) {
         <ChevronRightIcon className={`ml-[10px] w-[20px] dark:text-white`} />
       </div>
       <div className={`flex flex-wrap`}>
-        {resultList?.map((item: any, index: number) => (
-          <Cate key={item.categoryId} {...item} ind={index} noMd={index >= resultList.length - 4} noMr={(index + 1) % 5 === 0} />
-        ))}
+        {resultList?.map((item: any, index: number) => {
+          const { categoryName, categoryId, categoryUrl = '' } = item
+          return (
+            <Cate
+              key={item.categoryId}
+              {...{ categoryName, categoryId, categoryUrl }}
+              ind={index}
+              noMd={index >= resultList.length - 4}
+              noMr={(index + 1) % 5 === 0}
+            />
+          )
+        })}
       </div>
     </div>
   )
@@ -78,17 +87,19 @@ export function Cate({
   categoryId,
   noMd,
   noMr,
+  categoryUrl = '',
 }: {
   categoryName: string
   ind: number
   categoryId: string
   noMd: boolean
   noMr: boolean
+  categoryUrl: string
 }) {
   const color = iconMap[ind]
   const url = iconList[ind]
   return (
-    <Link href={`/podcasts-categories/${encodeURIComponent(categoryName)}-podcasts?categoryId=${categoryId}`}>
+    <Link href={categoryUrl}>
       <div
         className={`hover:opacity-80 relative transition-all rounded-5px ${noMd ? '' : 'mb-24px'} cursor-pointer ${noMr ? '' : 'mr-24px'} w-[170px] h-[100px] leading-[100px] text-white`}
         style={{ backgroundColor: color }}

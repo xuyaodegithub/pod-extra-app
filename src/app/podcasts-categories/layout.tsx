@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     .split('-')
     .map((i: string) => capitalizeFirstLetter(i))
     .join(' ')
-  const realName = `${realCategoryName} ${realCateName ? '/ ' + realCateName : ''}`
+  const realName = `${realCategoryName} ${realCateName ? '/ ' + realCateName : ''} Podcasts`
   const title = links.find((link) => link.href === pathname)?.name || realName || '-'
   return (
     <Suspense fallback={<LoadingLine num={12} />}>

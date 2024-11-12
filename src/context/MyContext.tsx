@@ -14,6 +14,8 @@ interface MyContextType {
   setStepTime: (stepTime: number) => void
   isDark: boolean
   setIsDark: (isDark: boolean) => void
+  title: string
+  setTitle: (title: string) => void
 }
 
 // 创建上下文，指定默认值
@@ -25,6 +27,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [time, setTime] = useState(0)
   const [stepTime, setStepTime] = useState(0)
   const [isDark, setIsDark] = useState(false)
+  const [title, setTitle] = useState('')
   useEffect(() => {
     if (!window) return
     const dark = localStorage?.theme ? localStorage.theme === 'dark' : window?.matchMedia('(prefers-color-scheme: dark)').matches
@@ -32,7 +35,9 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   }, [])
 
   return (
-    <MyContext.Provider value={{ data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime, isDark, setIsDark }}>
+    <MyContext.Provider
+      value={{ data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime, isDark, setIsDark, title, setTitle }}
+    >
       {children}
     </MyContext.Provider>
   )
