@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: any, parent: ResolvingMetadat
     .map((i: string) => capitalizeFirstLetter(i))
     .join(' ')
   return getMetaData({
-    title: `The best ${realCateName} podcasts of ${y - 1}-${y} | PodExtra.AI`,
-    description: `Discover the best ${realCateName} podcasts with PodExtra. With AI-powered transcription and summarization, it elevates your listening experience.`,
+    title: `The best ${realCateName} of ${y - 1}-${y} | PodExtra.AI`,
+    description: `Discover the best ${realCateName} with PodExtra. With AI-powered transcription and summarization, it elevates your listening experience.`,
   })
 }
 export default async function Page({
@@ -39,10 +39,10 @@ export default async function Page({
         <Pagination totalPages={totalPages} total={total} title="podcasts" />
       </div>
       <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px]`}>
-        {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate }: any) => {
+        {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl }: any) => {
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           return (
-            <Link href={`/podcast/${encodeURIComponent(title)}-podcast-${showId}`} key={showId} className={` w-[50%]`}>
+            <Link href={showUrl} key={showId} className={` w-[50%]`}>
               <div
                 className={`flex mb-4px cursor-pointer overflow-hidden hover:bg-hbg transition-all p-[10px] rounded-10px dark:hover:bg-darkHomeBg`}
               >

@@ -27,6 +27,26 @@ const nextConfig = (phase) => {
     },
     // 配置 `pageExtensions` 以包含 markdown 和 MDX 文件
     pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+    async rewrites() {
+      return [
+        {
+          source: '/blog/:path*',
+          destination: 'https://blog.podextra.ai/:path*',
+        },
+        {
+          source: '/robot.txt',
+          destination: 'https://api.podextra.ai/robot.txt',
+        },
+        {
+          source: '/sitemap_index.xml',
+          destination: 'https://api.podextra.ai/sitemap_index.xml',
+        },
+        {
+          source: '/sitemap{n}.xml.gz',
+          destination: 'https://api.podextra.ai/sitemap{n}.xml.gz',
+        },
+      ]
+    },
     // distDir: '.next',
     // exportPathMap: async function (
     //   defaultPathMap,
