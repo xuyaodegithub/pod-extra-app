@@ -2,11 +2,11 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-export default function Page({ categoryName, categoryId }: { categoryName: string; categoryId: string }) {
+export default function Page({ categoryName, categoryId, categoryUrl }: { categoryName: string; categoryId: string; categoryUrl: string }) {
   const { push } = useRouter()
   function goCaategory(e: any) {
     e.preventDefault()
-    push(`/podcasts-categories/${encodeURIComponent(categoryName)}-podcasts?categoryId=${categoryId}`)
+    push(categoryUrl)
   }
   return (
     <div

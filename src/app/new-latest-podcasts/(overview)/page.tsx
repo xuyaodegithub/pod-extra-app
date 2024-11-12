@@ -7,7 +7,7 @@ import CateItem from '@/app/ui/categories/cateItem'
 import { Metadata } from 'next'
 const y = new Date().getFullYear()
 export const metadata: Metadata = getMetaData({
-  title: `The Latest Podcasts episodes of ${y - 1}-${y} ｜PodExtra.AI`,
+  title: `The Latest Podcasts episodes of ${y - 1}-${y} | PodExtra.AI`,
   description:
     'PodExtra keeps you up-to-date with the latest podcasts from across the web in real-time, offering comprehensive tools like transcripts, mind maps, summaries, keywords, highlights, and shownotes to enrich your listening experience.',
   keywords: '',
@@ -33,11 +33,11 @@ export default async function Page({
       </div>
       <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
         {resultList.map((item: any, ind: number) => {
-          const { coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate } = item
+          const { coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl } = item
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           const noMb = ind >= resultList.length - 2
           return (
-            <Link href={`/podcast/${encodeURIComponent(showTitle)}-podcast-${showId}`} key={showId} className={`w-[50%]`}>
+            <Link href={showUrl} key={showId} className={`w-[50%]`}>
               <div
                 className={`flex cursor-pointer ${noMb ? '' : 'mb-[5px]'} overflow-hidden  hover:bg-hbg dark:hover:bg-darkHomeBg transition-all p-[10px] rounded-10px`}
               >
