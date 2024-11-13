@@ -17,9 +17,9 @@ export default function SearchInput({ ...props }: {}) {
     params.set('page', '1')
     params.set('pageSize', '10')
     if (term) {
-      params.set('query', term)
+      params.set('word', term)
     } else {
-      params.delete('query')
+      params.delete('word')
     }
     push(`/search?${params.toString()}`)
     console.log(term, params.toString(), back)

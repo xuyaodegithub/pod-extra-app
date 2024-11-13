@@ -6,13 +6,9 @@ import Breadcrumb from '@/app/ui/breadcrumb'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <Suspense fallback={<LoadingLine num={12} />}>
-      <SaveScroll>
-        <main>
-          {/*<Breadcrumb title="More Friends" />*/}
-          <section>{children}</section>
-        </main>
-      </SaveScroll>
-    </Suspense>
+    <main className={`h-[100%] overflow-auto`}>
+      {/*<Breadcrumb title="More Friends" />*/}
+      <section>{children}</section>
+    </main>
   )
 }
