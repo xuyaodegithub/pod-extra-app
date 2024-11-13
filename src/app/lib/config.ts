@@ -37,6 +37,6 @@ export const audio_info = 'AUDIO_INFO'
 export const googleAccessToken = 'GOOGLEACCESSTOKEN'
 export const searchTabs = [
   { label: 'ALL', key: 'ALL' },
-  { label: 'Podcasts', key: 'Podcasts' },
-  { label: 'Episodes', key: 'Episodes' },
+  { label: 'Podcasts', key: 'PODCASTS' },
+  { label: 'Episodes', key: 'EPISODES' },
 ]

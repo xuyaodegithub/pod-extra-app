@@ -1,7 +1,10 @@
 import { POPULARITY, PUB_DATE, SUMMARIZE_TIME, TRANSCRIPT_TIME, getMetaData } from '@/app/lib/utils'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import SearchContent from '@/app/ui/search/searchContent'
+import SearchTabs from '@/app/ui/search/search-tabs'
+import { searchTabs } from '@/app/lib/config'
+import SearchPodcasts from '@/app/ui/search/search-podcasts'
+import SearchEpisodes from '@/app/ui/search/search-episodes'
 
 export const metadata: Metadata = getMetaData({
   title: 'Search | PodExtra.AI',
@@ -15,9 +18,10 @@ export default async function Search({
     pageSize?: string
     page?: string
     word?: string
+    tab?: string
   }
 }) {
-  const { pageSize, page, word } = searchParams || {}
+  const { pageSize, page, word, tab = searchTabs[0].key } = searchParams || {}
   console.log(pageSize, page, word, '-----')
   const podcasts = [
     {
@@ -214,7 +218,9 @@ export default async function Search({
 
   return (
     <main className={`flex flex-col`}>
-      <SearchContent data={{ podcasts, episodes }} />
+      <SearchTabs className={``} tab={tab} />
+      {tab !== searchTabs[2].key && <SearchPodcasts podcasts={podcasts} tab={tab} />}
+      {tab !== searchTabs[1].key && <SearchEpisodes episodes={episodes} tab={tab} />}
     </main>
   )
 }

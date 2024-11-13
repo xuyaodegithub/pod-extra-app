@@ -8,18 +8,7 @@ import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 const volumeList: any[] = [50, 100, 150, 200]
-//client 表示不走服务端  不通过改变路径去请求数据 而是每次都把page 和 pageSize 透出去
-export default function Pagination({
-  totalPages,
-  total,
-  title,
-  client,
-}: {
-  totalPages: number
-  total: number
-  title?: string
-  client?: boolean
-}) {
+export default function Pagination({ totalPages, total, title }: { totalPages: number; total: number; title?: string }) {
   // NOTE: Uncomment this code in Chapter 11
   // const [pageSize, setPageSize] = useState(50)
   const { replace, back, push } = useRouter()

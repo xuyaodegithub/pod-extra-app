@@ -5,19 +5,28 @@ import styles from '@/app/ui/home.module.scss'
 import SearchEpisodesCard from '@/app/ui/search/search-episodes-card'
 import { searchTabs } from '@/app/lib/config'
 import Pagination from '@/app/ui/pagination'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-export default function SearchEpisodes({ episodes, activeTab, setActiveTab }: { episodes: any; activeTab: string; setActiveTab: any }) {
+export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: string }) {
   const { isDark } = useMyContext()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const { push } = useRouter()
+  function changeTab(key: string) {
+    const params = new URLSearchParams(searchParams)
+    params.set('tab', key)
+    push(`${pathname}?${params.toString()}`)
+  }
   return (
     <div>
-      {activeTab === searchTabs[2].key ? (
+      {tab === searchTabs[2].key ? (
         <div className={`pb-[20px] pt-[22px] sticky top-[36px] dark:bg-darkBody z-[99]`}>
           <Pagination totalPages={episodes.length} total={episodes.length} />
         </div>
       ) : (
         <div
           className={`mt-[22px] flex items-center mb-[12px] text-lg text-fontGry-600 ml-[24px] font-bold cursor-pointer`}
-          onClick={() => setActiveTab(searchTabs[2].key)}
+          onClick={() => changeTab(searchTabs[2].key)}
         >
           <div className={`${styles.hoverBBorder} dark:text-white`}>Episodes</div>
           <ChevronRightIcon className={`ml-[10px] w-[20px] dark:text-white`} />
@@ -46,10 +55,10 @@ export default function SearchEpisodes({ episodes, activeTab, setActiveTab }: { 
           )
         })}
       </div>
-      {episodes.length > 4 && activeTab === searchTabs[0].key && (
+      {episodes.length > 4 && tab === searchTabs[0].key && (
         <div
           className="border-[1px] border-bgGray dark:border-fontGry-600 rounded-[6px] w-[160px] flex items-center justify-center text-sm text-fontGry-600 py-[6px] px-[10px] mt-[20px] mx-auto cursor-pointer dark:text-white"
-          onClick={() => setActiveTab(searchTabs[2].key)}
+          onClick={() => changeTab(searchTabs[2].key)}
         >
           <span>show all podcasts</span>
           <ChevronRightIcon className={`w-[14px] dark:text-white`} />
