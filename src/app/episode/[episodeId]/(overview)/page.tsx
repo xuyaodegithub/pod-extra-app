@@ -12,10 +12,10 @@ import { ClientSub } from '@/app/ui/clientDispatch'
 export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [episodeName, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
-  const { coverUrl, itunesAuthor, gmtPubDate, showTitle, duration } = data || {}
+  const { coverUrl, itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle } = data || {}
   return getMetaData({
-    title: `${episodeName} | PodExtra.AI`,
-    description: `Hosted by ${itunesAuthor}, the '${showTitle}' episode titled '${episodeName}' runs for ${timeFormat(duration)} and features AI-generated transcripts and summaries. Updated on ${getCurrentLocalTime(gmtPubDate)}.`,
+    title: `${episodeTitle} | PodExtra.AI`,
+    description: `Hosted by ${itunesAuthor}, the '${showTitle}' episode titled '${episodeTitle}' runs for ${timeFormat(duration)} and features AI-generated transcripts and summaries. Updated on ${getCurrentLocalTime(gmtPubDate)}.`,
   })
 }
 export default async function Page({
