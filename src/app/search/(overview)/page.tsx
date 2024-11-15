@@ -125,22 +125,27 @@ export default async function Search({
   ]
   const episodes = [
     {
-      episodeId: '53aqaqijz5',
-      episodeUrl: '/episode/the-spongebob-letters-tuesday-november-53aqaqijz5',
-      episodeTitle: 'The SpongeBob Letters: Tuesday, November 5th, 2024',
-      showId: '5qnoqpnck4',
-      showTitle: 'The Toast',
+      episodeId: 'zfoo3vyaqi',
+      episodeUrl: '/episode/the-interview-nancy-pelosi-insists-the-zfoo3vyaqi',
+      episodeTitle: "'The Interview': Nancy Pelosi Insists the Election Was Not a Rebuke of the Democrats",
+      showId: 'vm54pq4vwn',
+      showTitle: 'The Daily',
       showCoverUrl:
-        'https://content.production.cdn.art19.com/images/8d/7b/69/8b/8d7b698b-1ac7-44aa-bcaa-c1526fdcad17/6d119d4df6a303ecba95a4499d3849174b569a358f97a0760ad22fde95887c674d4ffdabba7ef02c4de059db1d9f5d7a15e26251b3c851b0b96b0e992b1cb9b8.jpeg',
-      showUrl: '/podcast/the-toast-5qnoqpnck4',
+        'https://image.simplecastcdn.com/images/7f2f4c05-9c2f-4deb-82b7-b538062bc22d/73549bf1-94b3-40ff-8aeb-b4054848ec1b/3000x3000/the-daily-album-art-original.jpg?aid=rss_feed',
+      showUrl: '/podcast/the-daily-vm54pq4vwn',
       coverUrl:
-        'https://content.production.cdn.art19.com/images/8d/7b/69/8b/8d7b698b-1ac7-44aa-bcaa-c1526fdcad17/6d119d4df6a303ecba95a4499d3849174b569a358f97a0760ad22fde95887c674d4ffdabba7ef02c4de059db1d9f5d7a15e26251b3c851b0b96b0e992b1cb9b8.jpeg',
-      duration: 4168,
-      gmtPubDate: 1730826129000,
+        'https://image.simplecastcdn.com/images/89dbd88c-2405-42ec-ac2f-5f0877183f6d/eb941d91-6c09-439a-816c-7752de87acde/3000x3000/09interview-pelosi-applespotify-small.jpg?aid=rss_feed',
+      duration: 2376,
+      gmtPubDate: 1731150000000,
       showNotes:
-        '\n        <ol><li>Jason Kelce expresses remorse over \'heated\' moment he slammed student\'s phone to the ground (Page Six) (31:27)</li><li>Taylor Swift attends Chiefs game after final leg of US Eras (34:54)</li><li>Ariana Grande and Ethan Slater go Instagram official in Australia (Daily Mail) (44:46)</li><li>Bethenny Frankel Says Martha Stewart Once Called Her a "Pest" (InStyle) (56:17)</li><li>Queen Elizabeth II Appears in \'Paddington in Peru\' (Yahoo Entertainment) (1:02:04)</li></ol><p><br></p><p>The Toast with Jackie&nbsp;(<a href="http://www.instagram.com/jackieoshry" rel="noopener noreferrer" target="_blank">@JackieOshry</a>) and Claudia Oshry&nbsp;(<a href="http://www.instagram.com/girlwithnojob" rel="noopener noreferrer" target="_blank">@girlwithnojob</a>)&nbsp;</p><p><a href="https://www.amazon.com/Claudia-Oshry-Lean/dp/B0CKRXW484/ref=sr_1_1?crid=2NCK174FF3RJ2&amp;keywords=lean+in+claudia+oshry&amp;qid=1704386833&amp;s=instant-video&amp;sprefix=lean+in%2Cinstant-video%2C69&amp;sr=1-1" rel="noopener noreferrer" target="_blank">Lean In</a></p><p><a href="https://www.flowcode.com/page/jackieobook" rel="noopener noreferrer" target="_blank">The Camper and The Counselor by Jackie Oshry</a></p><p><a href="http://shoptoastmerch.com/" rel="noopener noreferrer" target="_blank">Merch</a></p><p><a href="https://www.patreon.com/themorningtoast" rel="noopener noreferrer" target="_blank">The Toast Patreon</a></p><p><a href="https://www.girlwithnojob.com/book" rel="noopener noreferrer" target="_blank">Girl With No Job by Claudia Oshry</a></p><p>See Privacy Policy at <a href="https://art19.com/privacy" rel="noopener noreferrer" target="_blank">https://art19.com/privacy</a> and California Privacy Notice at <a href="https://art19.com/privacy#do-not-sell-my-info" rel="noopener noreferrer" target="_blank">https://art19.com/privacy#do-not-sell-my-info</a>.</p>\n      ',
+        'The former House Speaker reflects on Donald Trump’s victory, Kamala Harris’s candidacy and the future of the Democratic Party.Unlock full access to New York Times podcasts and explore everything\nfrom politics to pop culture. Subscribe today at nytimes.com/podcasts or\non Apple Podcasts and Spotify.\n',
       summary: null,
       explicit: 0,
+      enclosureUrl:
+        'https://nyt.simplecastaudio.com/03d8b493-87fc-4bd1-931f-8a8e9b945d8a/episodes/2e984fdc-fbca-4e81-9322-308c3279bafa/audio/128/default.mp3?aid=rss_feed&awCollectionId=03d8b493-87fc-4bd1-931f-8a8e9b945d8a&awEpisodeId=2e984fdc-fbca-4e81-9322-308c3279bafa&feed=Sl5CSM3S',
+      enclosureLength: 38018136,
+      enclosureType: 'audio/mpeg',
+      itunesAuthor: 'The New York Times',
     },
     {
       episodeId: '1foatsirbh',
