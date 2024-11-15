@@ -86,7 +86,7 @@ export default function NavLinks() {
       {/*sigIn*/}
       {!userInfo?.id && (
         <div className={`pb-[18px] px-[10px]  mb-[15px]`} onClick={() => setShowDialog(true)}>
-          <div className={`text-[17px] tracking-0.5px text-[#3C3C3C] mb-[9px] font-bold`}>You</div>
+          <div className={`text-[17px] tracking-0.5px text-[#3C3C3C] mb-[9px] font-bold dark:text-darkText`}>You</div>
           <div
             className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md bg-accent ext-accent-foreground hover:bg-accent hover:text-accent-foreground`}
           >

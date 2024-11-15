@@ -75,6 +75,7 @@ const config: Config = {
       e8e: '#E8EDF1',
       646410: 'rgba(100, 100, 100, 0.1)',
       darkBody: '#0a0a0a',
+      darkText: '#fafafa',
     },
     borderRadius: {
       none: '0',
