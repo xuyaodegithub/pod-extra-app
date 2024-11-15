@@ -31,7 +31,7 @@ const nextConfig = (phase) => {
       return [
         {
           source: '/blog/:path*',
-          destination: '/api/proxy/:path*',
+          destination: 'https://blog.podextra.ai/blog/:path*',
         },
         {
           source: '/robots.txt',
