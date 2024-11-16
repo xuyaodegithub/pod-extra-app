@@ -34,9 +34,14 @@ export function generateUuidV4(): string {
 }
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 export const audio_info = 'AUDIO_INFO'
+//google那边的accessToken
 export const googleAccessToken = 'GOOGLEACCESSTOKEN'
+//google那边的idToken
+export const googleIdToken = 'GOOGLEIDTOKEN'
+//我们自己这边的token
+export const BearerToken = 'BEARERTOKEN'
 export const searchTabs = [
   { label: 'ALL', key: 'ALL' },
-  { label: 'Podcasts', key: 'PODCASTS' },
-  { label: 'Episodes', key: 'EPISODES' },
+  { label: 'Podcasts', key: 'PODCAST' },
+  { label: 'Episodes', key: 'EPISODE' },
 ]

@@ -2,12 +2,15 @@
 import axios from 'axios'
 // import { useRouter } from 'next/navigation'
 // const { replace } = useRouter()
+import cookies from 'js-cookie'
+import { BearerToken } from '@/app/lib/config'
 
 const instance: any = axios.create({
-  baseURL: 'https://api.podextra.ai/', //process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   // timeout: 10000,
   withCredentials: true,
   headers: {
+    Authorization: cookies.get(BearerToken) ? `Bearer ${cookies.get(BearerToken)}` : '',
     // 'Content-Type': 'application/json',
     // 'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
   },
@@ -17,6 +20,9 @@ const instance: any = axios.create({
 instance.interceptors.request.use(
   (config: any) => {
     // 在发送请求之前做些什么
+    if (config.url.startsWith('/api/proxy/')) {
+      config.baseURL = ''
+    }
     return config
   },
   (error: any) => {

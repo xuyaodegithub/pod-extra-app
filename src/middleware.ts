@@ -15,7 +15,6 @@ async function generateEtag(request: NextRequest) {
 export async function middleware(request: NextRequest) {
   // return NextResponse.redirect(new URL('/home', request.url))
   const res: any = NextResponse.next()
-  // console.log(request, '----')
   // 假设您有一个生成 Etag 的方法
   const etag = await generateEtag(request)
 

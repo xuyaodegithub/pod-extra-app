@@ -23,3 +23,23 @@ export function getEpisodeSummarize(episodeId: string) {
 export function getEpisodeTranscript(episodeId: string) {
   return fetchGet(`v1/podEpisode/${episodeId}/transcript`, {})
 }
+//登录
+export function userLogin(data: any) {
+  return fetchPost(`/api/proxy/v1/account/auth`, data)
+}
+//登录
+export function userLoginOut() {
+  return fetchPost(`/api/proxy/v1/account/signOut`, {})
+}
+//获取用户信息
+export function getUerInfo() {
+  return fetchGet(`/api/proxy/v1/account/info`, {})
+}
+//刷新token
+export function refreshIdToken() {
+  return fetchGet(`/api/proxy/v1/account/refreshIdToken`, {})
+}
+//获取搜索数据
+export function getSearchList(data: any) {
+  return fetchGet(`/api/proxy/v1/search`, data)
+}

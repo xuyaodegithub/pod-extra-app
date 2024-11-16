@@ -5,6 +5,7 @@ import SearchTabs from '@/app/ui/search/search-tabs'
 import { searchTabs } from '@/app/lib/config'
 import SearchPodcasts from '@/app/ui/search/search-podcasts'
 import SearchEpisodes from '@/app/ui/search/search-episodes'
+import { getSearchList } from '@/app/lib/service'
 
 export const metadata: Metadata = getMetaData({
   title: 'Search | PodExtra.AI',
@@ -23,6 +24,10 @@ export default async function Search({
 }) {
   const { pageSize, page, word, tab = searchTabs[0].key } = searchParams || {}
   console.log(pageSize, page, word, '-----')
+  const payload = {
+    keyword: word,
+    searchType: tab,
+  }
   const podcasts = [
     {
       showId: 'vm54pq4vwn',

@@ -1,6 +1,8 @@
 export const client_id = '177611048095-egpeo6uvi016s4qeeep1tafckf9n0ph0.apps.googleusercontent.com'
 export const redirect_uri = 'http://localhost:3000'
-import { googleAccessToken } from '@/app/lib/config'
+import { googleIdToken, googleAccessToken } from '@/app/lib/config'
+import cookies from 'js-cookie'
+import { usePathname } from 'next/navigation'
 /*
  * Create form to request access token from Google's OAuth 2.0 server.
  */
@@ -40,9 +42,13 @@ export const oauthSignIn = () => {
 }
 
 export const googleLoginPopup = () => {
+  const redirectPath = encodeURIComponent(window.location.pathname)
+  const state = `${redirectPath}`
+  const redirectUri = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/callback`
+  console.log(redirectUri, 'redirectUri')
   // 设置 OAuth 2.0 授权 URL
   const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth'
-  const authUrl = `${oauth2Endpoint}?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=token&scope=https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&state=pass-through value`
+  const authUrl = `${oauth2Endpoint}?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=id_token token&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid&include_granted_scopes=true&state=${encodeURIComponent(state)}&nonce=${Date.now()}`
 
   // 打开小窗口
   const width = 500
@@ -64,7 +70,7 @@ export const googleLoginPopup = () => {
 }
 
 // export const revokeAccess = () => {
-//   const accessToken: any = localStorage.getItem(googleAccessToken)
+//   const accessToken: any = localStorage.getItem(googleIdToken)
 //   if (!accessToken) return
 //   // Google's OAuth 2.0 endpoint for revoking access tokens.
 //   const revokeTokenEndpoint = 'https://oauth2.googleapis.com/revoke'
@@ -86,11 +92,11 @@ export const googleLoginPopup = () => {
 //   // Add form to page and submit it to actually revoke the token.
 //   document.body.appendChild(form)
 //   form.submit()
-//   localStorage.removeItem(googleAccessToken)
+//   localStorage.removeItem(googleIdToken)
 //   // window.location.href = window.location.href
 // }
 export const revokeAccess2 = async (redirectUrl = location.href) => {
-  const accessToken = localStorage.getItem(googleAccessToken)
+  const accessToken = cookies.get(googleAccessToken) || ''
   if (!accessToken) return
 
   try {
@@ -108,14 +114,14 @@ export const revokeAccess2 = async (redirectUrl = location.href) => {
 
     if (response.ok) {
       // Remove access token from local storage
-      localStorage.removeItem(googleAccessToken)
+      cookies.remove(googleAccessToken)
 
       // Redirect to the specified page (default to home page)
       window.location.href = redirectUrl
     } else {
-      console.error('Failed to revoke token', await response.text())
+      // console.error('Failed to revoke token', await response.text())
     }
   } catch (error) {
-    console.error('Error revoking token:', error)
+    // console.error('Error revoking token:', error)
   }
 }
