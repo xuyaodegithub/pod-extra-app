@@ -1,0 +1,8 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="play-circle">
+<g id="Icon">
+<path d="M8.75 6.75L13.25 10L8.75 13.25V6.75Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M18.25 10C18.25 14.5563 14.5563 18.25 10 18.25C5.44365 18.25 1.75 14.5563 1.75 10C1.75 5.44365 5.44365 1.75 10 1.75C14.5563 1.75 18.25 5.44365 18.25 10Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+</g>
+</g>
+</svg>

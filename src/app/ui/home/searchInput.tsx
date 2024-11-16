@@ -41,10 +41,12 @@ export default function SearchInput({ ...props }: {}) {
           e.key === 'Enter' && handleSearch(e.currentTarget.value)
         }}
       />
-      <XMarkIcon
-        className={`w-[20px] h-[20px] absolute top-[50%] right-[66px] translate-y-[-50%] cursor-pointer`}
-        onClick={(e) => clearInput(e)}
-      />
+      {refInput?.current?.value && (
+        <XMarkIcon
+          className={`w-[20px] h-[20px] absolute top-[50%] right-[66px] translate-y-[-50%] cursor-pointer`}
+          onClick={(e) => clearInput(e)}
+        />
+      )}
       <div
         className={`border-l-[1px] border-[#D9D9D9] flex items-center justify-center pl-[15px] cursor-pointer  dark:border-darkHomeBg`}
         onClick={(e) => handleSearch(refInput.current.value)}

@@ -38,6 +38,22 @@ const selectItemList = [
   { label: 'Light Mode', icon: '/icons/Shape-sun-1.svg', darkIcon: '/icons/Shape-sun-1.svg', value: 'light' },
   { label: 'Dark Mode', icon: '/icons/Shape-moon-1.svg', darkIcon: '/icons/Shape-moon-2.svg', value: 'dark' },
 ]
+export const loginAfterLogin = [
+  {
+    name: 'Followed podcasts',
+    href: '/followed-podcasts-updated',
+    icon: '/icons/followed-podcasts.svg',
+    darkIcon: '/icons/followed-podcasts-dark.svg',
+  },
+  { name: 'Playlist', href: '/playlist', icon: '/icons/play-circle.svg', darkIcon: '/icons/play-circle-dark.svg' },
+  { name: 'Stared Episodes', href: '/stared-episodes', icon: '/icons/stared-episodes.svg', darkIcon: '/icons/stared-episodes-dark.svg' },
+]
+export const planPrice = {
+  name: 'Plan & pricing',
+  href: '/plan-pricing',
+  icon: '/icons/card.svg',
+  darkIcon: '/icons/card-dark.svg',
+}
 export default function NavLinks() {
   const { userInfo, setShowDialog } = useUserInfo()
   const pathname = usePathname()
@@ -70,6 +86,10 @@ export default function NavLinks() {
     e.stopPropagation()
     setOpen(!open)
   }
+  function titleCase(str: string) {
+    return <div className={`px-[14px] text-[17px] tracking-0.5px text-[#3C3C3C] mb-[9px] font-bold dark:text-darkText`}>{str}</div>
+  }
+
   return (
     <div>
       {/*home */}
@@ -86,7 +106,7 @@ export default function NavLinks() {
       {/*sigIn*/}
       {!userInfo?.id && (
         <div className={`pb-[18px] px-[10px]  mb-[15px]`} onClick={() => setShowDialog(true)}>
-          <div className={`text-[17px] tracking-0.5px text-[#3C3C3C] mb-[9px] font-bold dark:text-darkText`}>You</div>
+          {titleCase('You')}
           <div
             className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md bg-accent ext-accent-foreground hover:bg-accent hover:text-accent-foreground`}
           >
@@ -97,7 +117,36 @@ export default function NavLinks() {
           <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
         </div>
       )}
-      <div className={`pb-[18px] px-[10px]  mb-[15px]`}>
+      {/*loginafter*/}
+      {!userInfo?.id && (
+        <div className={` px-[10px]  mb-[10px]`}>
+          {titleCase('You')}
+          {loginAfterLogin.map((link, ind: number) => (
+            <Link
+              key={ind}
+              href={link.href}
+              className={`cursor-pointer flex px-[14px] ${ind === loginAfterLogin.length - 1 ? 'mb-[16px]' : 'mb-[10px]'} h-[40px] items-center transition duration-200 rounded-md text-md ${link.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}
+            >
+              <img src={isDark ? link.darkIcon : link.icon} className="w-[20px] mr-[10px]" />
+              <p>{link.name}</p>
+            </Link>
+          ))}
+          <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
+        </div>
+      )}
+      {/*Plan & pricing*/}
+      <div className={`px-[10px]  mb-[20px]`}>
+        <Link
+          href={planPrice.href}
+          className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md ${planPrice.href === pathname ? 'bg-accent ext-accent-foreground' : ''}  hover:bg-accent hover:text-accent-foreground`}
+        >
+          <img src={isDark ? planPrice.darkIcon : planPrice.icon} className="w-[20px] mr-[10px]" />
+          <p>{planPrice.name}</p>
+        </Link>
+        <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
+      </div>
+      <div className={`px-[10px]  mb-[20px]`}>
+        {titleCase('Explore')}
         {links.map((link, ind: number) => {
           const LinkIcon = !isDark ? link.icon : link.darkIcon
           return (

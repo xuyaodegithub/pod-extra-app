@@ -20,7 +20,7 @@ export default function SearchPodcasts({ podcasts, tab }: { podcasts: any; tab: 
   return (
     <div className={`mb-[20px]`}>
       {tab === searchTabs[1].key ? (
-        <div className={`pb-[20px] pt-[22px] sticky top-[36px] dark:bg-darkBody z-[99]`}>
+        <div className={`pb-[20px] pt-[22px] sticky top-[36px] bg-white dark:bg-darkBody z-[99]`}>
           <Pagination totalPages={podcasts.length} total={podcasts.length} title="podcasts" />
         </div>
       ) : (

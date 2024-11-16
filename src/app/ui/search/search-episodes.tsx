@@ -20,7 +20,7 @@ export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: 
   return (
     <div>
       {tab === searchTabs[2].key ? (
-        <div className={`pb-[20px] pt-[22px] sticky top-[36px] dark:bg-darkBody z-[99]`}>
+        <div className={`pb-[20px] pt-[22px] sticky top-[36px] bg-white dark:bg-darkBody z-[99]`}>
           <Pagination totalPages={episodes.length} total={episodes.length} />
         </div>
       ) : (

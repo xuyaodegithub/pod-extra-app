@@ -13,7 +13,7 @@ import Script from 'next/script'
 import { ConfigProvider } from 'antd'
 import { Suspense } from 'react'
 import { LoadingLine } from '@/app/ui/skeletons'
-import { SessionProvider } from 'next-auth/react'
+// import { SessionProvider } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { googleAccessToken } from '@/app/lib/config'
 import LoginDialog from '@/app/ui/home/loginDialog'
@@ -57,72 +57,72 @@ export default function RootLayout({
     }
   }, [])
   return (
-    <SessionProvider>
-      <ConfigProvider
-        theme={{
-          components: {
-            Slider: {
-              /* 这里是你的 Slider 组件的自定义 token */
-              handleLineWidth: 0,
-              handleLineWidthHover: 0,
-              handleSize: 18,
-              handleSizeHover: 18,
-              dotActiveBorderColor: '#ffffff',
-              handleActiveOutlineColor: '#ffffff',
-              dotBorderColor: '#ffffff',
-              dotSize: 18,
-              handleActiveColor: '#ffffff', // 自定义滑轨的颜色
-              handleColor: '#ffffff', // 自定义滑轨的颜色
-              railBg: '#dcdcdc',
-              railHoverBg: '#dcdcdc',
-              trackBg: '#aaaaaa',
-              trackHoverBg: '#aaaaaa',
-            },
+    // <SessionProvider>
+    <ConfigProvider
+      theme={{
+        components: {
+          Slider: {
+            /* 这里是你的 Slider 组件的自定义 token */
+            handleLineWidth: 0,
+            handleLineWidthHover: 0,
+            handleSize: 18,
+            handleSizeHover: 18,
+            dotActiveBorderColor: '#ffffff',
+            handleActiveOutlineColor: '#ffffff',
+            dotBorderColor: '#ffffff',
+            dotSize: 18,
+            handleActiveColor: '#ffffff', // 自定义滑轨的颜色
+            handleColor: '#ffffff', // 自定义滑轨的颜色
+            railBg: '#dcdcdc',
+            railHoverBg: '#dcdcdc',
+            trackBg: '#aaaaaa',
+            trackHoverBg: '#aaaaaa',
           },
-        }}
-      >
-        <UserProvider>
-          <MyProvider>
-            <html lang="en" className={`h-[100%] ${TiltWarp.variable} ${OpenSans.variable}`}>
-              <head>
-                {/* Use React.Fragment or an array to wrap multiple elements */}
-                <>
-                  <Script async src="https://www.googletagmanager.com/gtag/js?id=G-1442PR33N8" strategy="beforeInteractive"></Script>
-                  <Script
-                    dangerouslySetInnerHTML={{
-                      __html: ` window.dataLayer = window.dataLayer || [];
+        },
+      }}
+    >
+      <UserProvider>
+        <MyProvider>
+          <html lang="en" className={`h-[100%] ${TiltWarp.variable} ${OpenSans.variable}`}>
+            <head>
+              {/* Use React.Fragment or an array to wrap multiple elements */}
+              <>
+                <Script async src="https://www.googletagmanager.com/gtag/js?id=G-1442PR33N8" strategy="beforeInteractive"></Script>
+                <Script
+                  dangerouslySetInnerHTML={{
+                    __html: ` window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments)};
           gtag('js', new Date());
           gtag('config', 'G-1442PR33N8');`,
-                    }}
-                    strategy="beforeInteractive"
-                  ></Script>
-                </>
-              </head>
-              <body className={`opacity-0 antialiased h-[100%] dark:bg-black dark:text-darkTheme-900 font-sans`}>
-                {!isLanding ? (
-                  <div className="flex w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-[100%]">
-                    <SideNav />
-                    <main className={`flex-1 overflow-hidden flex flex-col`}>
-                      <div className={`mb-[24px] flex justify-between items-center pr-[20px]`}>
-                        <Suspense fallback={<LoadingLine num={1} />}>
-                          <SearchInput />
-                        </Suspense>
-                        <UserInfo />
-                      </div>
-                      <section className={`flex-1 overflow-hidden pr-[20px]`}>{children}</section>
-                    </main>
-                  </div>
-                ) : (
-                  <section className={``}>{children}</section>
-                )}
-                {!isLanding && <Audio />}
-                <LoginDialog />
-              </body>
-            </html>
-          </MyProvider>
-        </UserProvider>
-      </ConfigProvider>
-    </SessionProvider>
+                  }}
+                  strategy="beforeInteractive"
+                ></Script>
+              </>
+            </head>
+            <body className={`opacity-0 antialiased h-[100%] dark:bg-black dark:text-darkTheme-900 font-sans`}>
+              {!isLanding ? (
+                <div className="flex w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-[100%]">
+                  <SideNav />
+                  <main className={`flex-1 overflow-hidden flex flex-col`}>
+                    <div className={`mb-[24px] flex justify-between items-center pr-[20px]`}>
+                      <Suspense fallback={<LoadingLine num={1} />}>
+                        <SearchInput />
+                      </Suspense>
+                      <UserInfo />
+                    </div>
+                    <section className={`flex-1 overflow-hidden pr-[20px]`}>{children}</section>
+                  </main>
+                </div>
+              ) : (
+                <section className={``}>{children}</section>
+              )}
+              {!isLanding && <Audio />}
+              <LoginDialog />
+            </body>
+          </html>
+        </MyProvider>
+      </UserProvider>
+    </ConfigProvider>
+    // </SessionProvider>
   )
 }
