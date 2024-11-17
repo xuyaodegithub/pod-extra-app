@@ -1,25 +1,22 @@
-import Pagination from '@/app/ui/pagination'
 import { getEpisodeDetail, getEpisodeSummarize, getEpisodeTranscript } from '@/app/lib/service'
 import { getCurrentLocalTime, timeFormat, getMetaData, splitStringFromLastDash } from '@/app/lib/utils'
 import Link from 'next/link'
 import { Metadata, ResolvingMetadata } from 'next'
 import { ClockIcon, MicrophoneIcon } from '@heroicons/react/24/outline'
-const y = new Date().getFullYear()
 import { Tab } from '@/app/ui/episodeDetail/tabs'
 import { tabList } from '@/app/lib/config'
 import { PlayAudio } from '@/app/ui/episodeDetail/palyAudio'
 import { ClientSub } from '@/app/ui/clientDispatch'
-export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
-  const [episodeName, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
+export async function generateMetadata({ params }: any, parent: ResolvingMetadata): Promise<Metadata> {
+  const [episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
-  const { coverUrl, itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle } = data || {}
+  const { itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle } = data || {}
   return getMetaData({
     title: `${episodeTitle} | PodExtra.AI`,
     description: `Hosted by ${itunesAuthor}, the '${showTitle}' episode titled '${episodeTitle}' runs for ${timeFormat(duration)} and features AI-generated transcripts and summaries. Updated on ${getCurrentLocalTime(gmtPubDate)}.`,
   })
 }
 export default async function Page({
-  searchParams,
   params,
 }: {
   searchParams?: {
@@ -30,9 +27,9 @@ export default async function Page({
     episodeId: string
   }
 }) {
-  const [episodeName, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
+  const [ episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
-  const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, showId, episodeTitle, showUrl = '' } = data || {}
+  const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle, showUrl = '' } = data || {}
   const [res1, res2] = await Promise.all([getEpisodeSummarize(episodeId), getEpisodeTranscript(episodeId)])
   const summery = res1.data
   const paragraphs = res2.data?.paragraphs || []
