@@ -42,8 +42,20 @@ export const googleIdToken = 'GOOGLEIDTOKEN'
 export const BearerToken = 'BEARERTOKEN'
 //过期时间
 export const expiresIn = 'EXPIRES_IN'
+//refresh
+export const refreshToken = 'REFRESHTOKEN'
+//loginTime
+export const loginTime = 'LOGINTIME'
 export const searchTabs = [
   { label: 'ALL', key: 'ALL' },
   { label: 'Podcasts', key: 'PODCAST' },
   { label: 'Episodes', key: 'EPISODE' },
 ]
+export const cookiesOption=(data?:any)=>{
+  return {
+    ...data,
+    // httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+  }
+}

@@ -15,7 +15,7 @@ import { Suspense } from 'react'
 import { LoadingLine } from '@/app/ui/skeletons'
 // import { SessionProvider } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { googleIdToken, googleAccessToken, expiresIn } from '@/app/lib/config'
+import { googleIdToken, googleAccessToken, expiresIn,cookiesOption,loginTime } from '@/app/lib/config'
 import LoginDialog from '@/app/ui/home/loginDialog'
 //字体
 import { Tilt_Warp, Open_Sans } from 'next/font/google'
@@ -45,21 +45,13 @@ export default function RootLayout({
     const state = urlParams.get('state')
     if (idToken) {
       // 将 access_token 存储在 cookie
-      cookies.set(googleAccessToken, accessToken, {
-        // httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-      })
-      cookies.set(googleIdToken, idToken, {
-        // httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-      })
-      cookies.set(expiresIn, String(+expires_in * 1000 + Date.now()), {
-        // httpOnly: true,
-        secure: true,
-        sameSite: 'strict',
-      })
+      cookies.set(googleAccessToken, accessToken, cookiesOption())
+      //idToken
+      cookies.set(googleIdToken, idToken, cookiesOption())
+      //expires_in
+      cookies.set(expiresIn, String(+expires_in*1000), cookiesOption())
+      //登录时间
+      cookies.set(loginTime, String(Date.now()), cookiesOption())
       const url = state ? decodeURIComponent(state) : pathname
       // 调用函数获取用户信息
       replace(url)

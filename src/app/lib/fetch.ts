@@ -3,14 +3,15 @@ import axios from 'axios'
 // import { useRouter } from 'next/navigation'
 // const { replace } = useRouter()
 import cookies from 'js-cookie'
-import { BearerToken, expiresIn } from '@/app/lib/config'
+import { BearerToken, expiresIn,loginTime } from '@/app/lib/config'
 import { useUserInfo } from '@/context/UserInfo'
 // 检查 token 是否过期
 function isTokenExpired(): boolean {
   try {
     const t = cookies.get(expiresIn) || 0
+    const l = cookies.get(loginTime) || 0
     const now = Date.now() // 当前时间
-    return +t < now // 比较 exp（过期时间）
+    return +t+(+l) < now // 比较 exp（过期时间）
   } catch (e) {
     return true // 如果解析失败，认为 token 已过期
   }
@@ -23,8 +24,9 @@ async function refreshToken(): Promise<string> {
     {},
     { headers: { Authorization: `Bearer ${cookies.get(BearerToken)}` } }
   )
-  const idToken = response.data.idToken
-  cookies.set(BearerToken, idToken) // 更新本地存储
+  const idToken = response.data?.data?.idToken || ''
+  cookies.set(BearerToken, idToken) // 更新本地idToken
+  cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
   return idToken
 }
 
