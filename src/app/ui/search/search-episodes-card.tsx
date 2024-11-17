@@ -28,6 +28,9 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
       }, 500)
     } else setIsPlaying(!isPlaying)
   }
+  function followEpiosde(e: any) {
+    e.preventDefault()
+  }
   return (
     <div className={` relative ${noMb ? '' : 'pb-[5px] mb-[5px]'}`}>
       <Link href={episodeUrl} key={episodeId} className={``}>
@@ -62,7 +65,7 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
                 </div>
                 <span>{getTimeWithHoursMin(96 * 60)}</span>
               </div>
-              <div className={`bg-hbg dark:bg-bgDark rounded-[50%] p-[5px]`}>
+              <div className={`bg-hbg dark:bg-bgDark rounded-[50%] p-[5px]`} onClick={(e: any) => followEpiosde(e)}>
                 <img src="/icons/star-filled.svg" alt="" />
               </div>
             </div>

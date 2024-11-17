@@ -6,7 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import { useState, useEffect } from 'react'
 import UserHead from '@/app/ui/home/userHead'
-import { googleLoginPopup, revokeAccess2 } from '@/app/lib/login'
+import { googleLoginPopup, revokeAccess2, client_id } from '@/app/lib/login'
 // import { signIn, signOut, useSession } from 'next-auth/react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog'
 import { googleIdToken, BearerToken } from '@/app/lib/config'
@@ -93,8 +93,42 @@ export default function UserInfo() {
     darkIcon: '/images/darkLogin.svg',
   }
   function login() {
-    googleLoginPopup()
+    // googleLoginPopup()
     // signIn('google')
+    // 加载 Google Identity Services
+    const script = document.createElement('script')
+    script.src = 'https://accounts.google.com/gsi/client'
+    script.async = true
+    script.onload = () => {
+      console.log('Google Identity Services loaded')
+      // 初始化 Google 登录按钮
+      window.google.accounts.id.initialize({
+        client_id: client_id,
+        callback: handleCredentialResponse,
+        auto_select: true,
+        context: 'signin',
+        prompt_parent_id: 'prompt-parent',
+        type_id: 'standard',
+        type: 'standard',
+        ux_mode: 'popup',
+        login_uri: 'http://localhost:3000/api/auth/callback',
+        nonce: 'nonce',
+        cancel_on_tap_outside: true,
+        cancel_callback: () => {
+          // 用户点击了取消按钮，可以执行一些操作，例如记录取消登录的日志
+        },
+      })
+
+      // 渲染弹框式按钮
+      window.google.accounts.id.prompt()
+    }
+
+    document.body.appendChild(script)
+  }
+  function handleCredentialResponse(response: any) {
+    const { credential } = response
+    console.log(credential)
+    // fetchGoogleUserInfo(credential)
   }
   async function signOut() {
     await userLoginOut()
