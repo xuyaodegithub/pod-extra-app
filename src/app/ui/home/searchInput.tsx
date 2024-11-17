@@ -17,7 +17,7 @@ export default function SearchInput({ ...props }: {}) {
     params.set('page', '1')
     params.set('pageSize', '10')
     if (term) {
-      params.set('word', term)
+      params.set('word', encodeURIComponent(term))
     } else {
       params.delete('word')
     }
@@ -34,7 +34,7 @@ export default function SearchInput({ ...props }: {}) {
       <Input
         ref={refInput}
         className={`w-[280px] h-[40px] border-none flex-1 dark:bg-bgDark`}
-        defaultValue={searchParams.get('query')?.toString()}
+        defaultValue={decodeURIComponent(searchParams.get('word') || '')}
         {...props}
         placeholder="Search"
         onKeyPress={(e) => {

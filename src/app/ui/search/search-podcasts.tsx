@@ -8,20 +8,27 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import Pagination from '@/app/ui/pagination'
 
 export default function SearchPodcasts({ podcasts, tab }: { podcasts: any; tab: string }) {
-  const { isDark } = useMyContext()
+  const { isDark, tabsPage, setTabsPage } = useMyContext()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const currentPage = Number(searchParams.get('page')) || 1
   const { push } = useRouter()
+  const { resultList, total } = podcasts
+  const pageSize = searchParams.get('pageSize') || 10
+  const totalPages = Math.ceil(+total / +pageSize)
   function changeTab(key: string) {
     const params = new URLSearchParams(searchParams)
+    const page = tabsPage.get(key) || 1
     params.set('tab', key)
+    params.set('page', page)
+    setTabsPage(tabsPage.set(tab, currentPage))
     push(`${pathname}?${params.toString()}`)
   }
   return (
     <div className={`mb-[20px]`}>
       {tab === searchTabs[1].key ? (
         <div className={`pb-[20px] pt-[22px] sticky top-[36px] bg-white dark:bg-darkBody z-[99]`}>
-          <Pagination totalPages={podcasts.length} total={podcasts.length} title="podcasts" />
+          <Pagination totalPages={totalPages} total={total} title="podcasts" />
         </div>
       ) : (
         <div
@@ -34,7 +41,7 @@ export default function SearchPodcasts({ podcasts, tab }: { podcasts: any; tab: 
       )}
 
       <div className={`border-[1px] border-bgGray rounded-[10px] p-[14px] dark:border-fontGry-600`}>
-        {podcasts.map((item: any, ind: number) => {
+        {resultList.map((item: any, ind: number) => {
           const { coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl } = item
           const noMb = ind >= podcasts.length - 1
           return (
@@ -46,7 +53,7 @@ export default function SearchPodcasts({ podcasts, tab }: { podcasts: any; tab: 
           )
         })}
       </div>
-      {podcasts.length > 4 && tab === searchTabs[0].key && (
+      {total > 10 && tab === searchTabs[0].key && (
         <div
           className="border-[1px] border-bgGray dark:border-fontGry-600 rounded-[6px] w-[160px] flex items-center justify-center text-sm text-fontGry-600 py-[6px] px-[10px] mt-[20px] mx-auto cursor-pointer dark:text-white"
           onClick={() => changeTab(searchTabs[1].key)}

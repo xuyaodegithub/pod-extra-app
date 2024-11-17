@@ -40,6 +40,8 @@ export const googleAccessToken = 'GOOGLEACCESSTOKEN'
 export const googleIdToken = 'GOOGLEIDTOKEN'
 //我们自己这边的token
 export const BearerToken = 'BEARERTOKEN'
+//过期时间
+export const expiresIn = 'EXPIRES_IN'
 export const searchTabs = [
   { label: 'ALL', key: 'ALL' },
   { label: 'Podcasts', key: 'PODCAST' },

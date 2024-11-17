@@ -15,7 +15,7 @@ import { Suspense } from 'react'
 import { LoadingLine } from '@/app/ui/skeletons'
 // import { SessionProvider } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { googleIdToken, googleAccessToken } from '@/app/lib/config'
+import { googleIdToken, googleAccessToken, expiresIn } from '@/app/lib/config'
 import LoginDialog from '@/app/ui/home/loginDialog'
 //字体
 import { Tilt_Warp, Open_Sans } from 'next/font/google'
@@ -41,18 +41,21 @@ export default function RootLayout({
     const urlParams = new URLSearchParams(window.location.hash.substring(1))
     const accessToken = urlParams.get('access_token') || ''
     const idToken = urlParams.get('id_token')
-    const expires_in = urlParams.get('expires_in')
+    const expires_in = urlParams.get('expires_in') || ''
     const state = urlParams.get('state')
-    console.log(state, '-')
     if (idToken) {
       // 将 access_token 存储在 cookie
       cookies.set(googleAccessToken, accessToken, {
         // httpOnly: true,
         secure: true,
         sameSite: 'strict',
-        expires: Number(expires_in) / 3600 / 24,
       })
       cookies.set(googleIdToken, idToken, {
+        // httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+      })
+      cookies.set(expiresIn, String(+expires_in * 1000 + Date.now()), {
         // httpOnly: true,
         secure: true,
         sameSite: 'strict',

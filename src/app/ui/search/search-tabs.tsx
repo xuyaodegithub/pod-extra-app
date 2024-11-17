@@ -6,13 +6,17 @@ import { clsx } from 'clsx'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export default function SearchTabs({ className, tab }: { className?: string; tab: string }) {
-  const { isDark } = useMyContext()
+  const { isDark, tabsPage, setTabsPage } = useMyContext()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const currentPage = Number(searchParams.get('page')) || 1
   const { push } = useRouter()
   function changeTab(key: string) {
     const params = new URLSearchParams(searchParams)
+    const page = tabsPage.get(key) || 1
     params.set('tab', key)
+    params.set('page', page)
+    setTabsPage(tabsPage.set(tab, currentPage))
     push(`${pathname}?${params.toString()}`)
   }
   return (

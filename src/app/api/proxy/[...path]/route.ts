@@ -7,7 +7,8 @@ export async function POST(req: NextRequest, { params }: { params: { path: strin
   const targetUrl = `${process.env.NEXT_PUBLIC_API_URL}${params.path.join('/')}`
   const cookieStore = cookies()
   const body = await req.json()
-  const t = cookieStore.get(BearerToken)?.value || ''
+  const t = cookieStore.get(googleIdToken)?.value || cookieStore.get(BearerToken)?.value || ''
+  console.log(t, 'token', body, targetUrl, '================')
   // @ts-ignore
   const response: any = await axios({
     url: targetUrl,
@@ -17,6 +18,7 @@ export async function POST(req: NextRequest, { params }: { params: { path: strin
     headers: {
       ...req.headers,
       Authorization: `Bearer ${t.trim()}`,
+      Cookie: `refreshToken=${t}`,
     },
     data: body,
   })

@@ -45,7 +45,7 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
               className={`flex items-center overflow-hidden text-ellipsis whitespace-nowrap text-fontGry-600 text-md dark:text-white`}
               title={episodeTitle}
             >
-              <FireIcon className={`h-[20px] mr-[5px]`} />
+              <img src="/icons/ai-ready-icon.svg" className={`h-[20px] mr-[5px]`} />
               {episodeTitle}
             </h3>
             <div className={`text-sm overflow-hidden text-ellipsis line-clamp-2 text-fontGry-100`} title={des}>
@@ -62,7 +62,9 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
                 </div>
                 <span>{getTimeWithHoursMin(96 * 60)}</span>
               </div>
-              <img src="/icons/star-filled.svg" alt="" />
+              <div className={`bg-hbg dark:bg-bgDark rounded-[50%] p-[5px]`}>
+                <img src="/icons/star-filled.svg" alt="" />
+              </div>
             </div>
           </div>
         </div>
