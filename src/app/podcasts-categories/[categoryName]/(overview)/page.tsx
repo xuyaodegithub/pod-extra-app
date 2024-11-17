@@ -5,6 +5,7 @@ import { Metadata, ResolvingMetadata } from 'next'
 const y = new Date().getFullYear()
 import Link from 'next/link'
 import CateItem from '@/app/ui/categories/cateItem'
+import {ClientSub} from "@/app/ui/clientDispatch";
 export async function generateMetadata({ params }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const { categoryName = '' } = params
   const realCategoryName = decodeURIComponent(categoryName)
@@ -29,12 +30,13 @@ export default async function Page({
   const pageNum = searchParams?.page || 1
   const categoryId = searchParams?.categoryId || ''
   const {
-    data: { resultList, total },
+    data: {pageQueryResponse:{ resultList=[], total=0 },requestCategoryList},
   } = await getPodShow({ pageSize, pageNum, sortBy: PUB_DATE, categoryId })
   const totalPages = Math.ceil(+total / +pageSize)
-  console.log({ pageSize, pageNum, sortBy: PUB_DATE, categoryId }, resultList[0], '---')
+  const breadcrumbsTitle = requestCategoryList.map(({ categoryName}: any) => categoryName || '-').join(' / ') + ' Podcasts'
   return (
     <main className={`flex flex-col`}>
+      <ClientSub val={breadcrumbsTitle} />
       <div className={`sticky top-[57px] bg-white dark:bg-black pb-[22px]`}>
         <Pagination totalPages={totalPages} total={total} title="podcasts" />
       </div>

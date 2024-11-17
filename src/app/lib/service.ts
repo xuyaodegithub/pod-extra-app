@@ -1,6 +1,7 @@
 import { fetchPost, fetchGet, upPost, fetchPut } from './fetch'
 export function getPodShow(payload: any) {
-  return fetchGet('v1/podShow/pageQuery', payload)
+  const isV2 = payload?.categoryId || false
+  return fetchGet(`${isV2 ? 'v2' : 'v1'}/podShow/pageQuery`, payload)
 }
 export function getPodEpisode(payload: any) {
   return fetchGet('v1/podEpisode/pageQuery', payload)
