@@ -35,16 +35,16 @@ const nextConfig = (phase) => {
           destination: 'https://blog.podextra.ai/:path*',
         },
         {
-          source: '/robot.txt',
-          destination: 'https://api.podextra.ai/robot.txt',
+          source: '/robots.txt',
+          destination: 'https://api.podextra.ai/robots.txt',
         },
         {
           source: '/sitemap_index.xml',
           destination: 'https://api.podextra.ai/sitemap_index.xml',
         },
         {
-          source: '/sitemap{n}.xml.gz',
-          destination: 'https://api.podextra.ai/sitemap{n}.xml.gz',
+          source: '/sitemap:version(\\d+).xml', // 匹配 `sitemap` 后的数字部分
+          destination: 'https://api.podextra.ai/sitemap:version.xml', // 将匹配到的版本号放到目标 URL 中
         },
       ]
     },

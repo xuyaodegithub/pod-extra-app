@@ -12,10 +12,10 @@ import { ClientSub } from '@/app/ui/clientDispatch'
 export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [episodeName, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
-  const { coverUrl, itunesAuthor, gmtPubDate, showTitle, duration } = data || {}
+  const { coverUrl, itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle } = data || {}
   return getMetaData({
-    title: `${episodeName} | PodExtra.AI`,
-    description: `Hosted by ${itunesAuthor}, the '${showTitle}' episode titled '${episodeName}' runs for ${timeFormat(duration)} and features AI-generated transcripts and summaries. Updated on ${getCurrentLocalTime(gmtPubDate)}.`,
+    title: `${episodeTitle} | PodExtra.AI`,
+    description: `Hosted by ${itunesAuthor}, the '${showTitle}' episode titled '${episodeTitle}' runs for ${timeFormat(duration)} and features AI-generated transcripts and summaries. Updated on ${getCurrentLocalTime(gmtPubDate)}.`,
   })
 }
 export default async function Page({
@@ -32,7 +32,7 @@ export default async function Page({
 }) {
   const [episodeName, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
-  const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, showId, episodeTitle } = data || {}
+  const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, showId, episodeTitle, showUrl = '' } = data || {}
   const [res1, res2] = await Promise.all([getEpisodeSummarize(episodeId), getEpisodeTranscript(episodeId)])
   const summery = res1.data
   const paragraphs = res2.data?.paragraphs || []
@@ -58,7 +58,7 @@ export default async function Page({
             <PlayAudio audioInfo={data} classStyle={`mt-0 mb-0`} />
           </div>
           <Link
-            href={`/podcast/${encodeURIComponent(showTitle)}-podcast-${showId}`}
+            href={showUrl}
             className={`border border-gray-1000 rounded-5px text-sm py-[10px] px-[15px] mt-auto flex items-center dark:border-fontGry-600 dark:text-fontGry-100`}
           >
             <span className={`shrink-0`}>from podcast</span>

@@ -5,6 +5,7 @@ import { Metadata, ResolvingMetadata } from 'next'
 const y = new Date().getFullYear()
 import Link from 'next/link'
 import CateItem from '@/app/ui/categories/cateItem'
+import {ClientSub} from "@/app/ui/clientDispatch";
 export async function generateMetadata({ params }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const { cateName = '' } = params
   const realCateName = decodeURIComponent(cateName)
@@ -12,8 +13,8 @@ export async function generateMetadata({ params }: any, parent: ResolvingMetadat
     .map((i: string) => capitalizeFirstLetter(i))
     .join(' ')
   return getMetaData({
-    title: `The best ${realCateName} of ${y - 1}-${y} | PodExtra.AI`,
-    description: `Discover the best ${realCateName} with PodExtra. With AI-powered transcription and summarization, it elevates your listening experience.`,
+    title: `The best ${realCateName} podcasts of ${y - 1}-${y} | PodExtra.AI`,
+    description: `Discover the best ${realCateName} podcasts with PodExtra. With AI-powered transcription and summarization, it elevates your listening experience.`,
   })
 }
 export default async function Page({
@@ -29,17 +30,19 @@ export default async function Page({
   const pageNum = searchParams?.page || 1
   const categoryId = searchParams?.childId || ''
   const {
-    data: { resultList, total },
+    data: {pageQueryResponse:{ resultList=[], total=0 },requestCategoryList},
   } = await getPodShow({ pageSize, pageNum, sortBy: PUB_DATE, categoryId })
   const totalPages = Math.ceil(+total / +pageSize)
-  // console.log({ pageSize, pageNum, sortBy: PUB_DATE, categoryId }, resultList[0], '---')
+  const breadcrumbsTitle = requestCategoryList.map(({ categoryName}: any) => categoryName || '-').join(' / ') + ' Podcasts'
+
   return (
     <main className={`flex flex-col`}>
+      <ClientSub val={breadcrumbsTitle} />
       <div className={`sticky top-[57px] bg-white dark:bg-black pb-[22px]`}>
         <Pagination totalPages={totalPages} total={total} title="podcasts" />
       </div>
       <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px]`}>
-        {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl }: any) => {
+        {resultList?.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl }: any) => {
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           return (
             <Link href={showUrl} key={showId} className={` w-[50%]`}>
