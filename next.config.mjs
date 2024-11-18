@@ -24,6 +24,7 @@ const nextConfig = (phase) => {
     },
     env: {
       customKey: 'my-value',
+      NEXTAUTH_TIMEOUT: '7000',
     },
     // 配置 `pageExtensions` 以包含 markdown 和 MDX 文件
     pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
@@ -81,21 +82,6 @@ const nextConfig = (phase) => {
     // keepAlive: false,
     // devIndicators: {
     //   autoPrerender: false,
-    // },
-    // server: {
-    //   // 代理配置
-    //   dev: [
-    //     {
-    //       // 匹配所有以 /api 开头的请求
-    //       path: '/api/*',
-    //       // 目标服务器地址
-    //       target: 'http://localhost:3001',
-    //       // 是否转发主机头
-    //       changeOrigin: true,
-    //       // 是否忽略路径
-    //       pathRewrite: { '^/api': '' },
-    //     },
-    //   ],
     // },
   }
   const withMDX = createMDX({

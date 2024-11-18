@@ -9,7 +9,7 @@ export async function GET(req: NextRequest): Promise<Response> {
     console.log('Proxying request to:', req.nextUrl.pathname);
     const targetUrl = req.nextUrl.pathname.replace('/api/proxy/', 'https://blog.podextra.ai/');
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve:any, reject:any) => {
       // @ts-ignore
       proxy.web(req, NextResponse, { target: targetUrl }, (error) => {
         console.error('Proxy error:', error); // 添加调试信息

@@ -16,6 +16,7 @@ export function Card({
   isShowTitle = true,
   noMb = false,
   episodeUrl = '',
+  episodeStatus = '',
 }: {
   coverUrl: string
   episodeTitle: string
@@ -28,6 +29,7 @@ export function Card({
   duration: number
   noMb: boolean
   episodeUrl: string
+  episodeStatus?: string
 }) {
   const elementARef = useRef(null)
   const [oneline, setOneLine] = useState(false)

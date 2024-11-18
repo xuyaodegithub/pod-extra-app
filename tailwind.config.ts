@@ -41,6 +41,7 @@ const config: Config = {
     },
     boxShadow: {
       cardShow: '0px 13px 40px 0px rgba(75, 102, 135, 0.10);',
+      popoverShow: '2px 2px 8px 0px rgba(100, 100, 100, 0.20);',
     },
     colors: {
       transparent: 'transparent',
@@ -73,6 +74,8 @@ const config: Config = {
       darkHomeBg: '#404040',
       e8e: '#E8EDF1',
       646410: 'rgba(100, 100, 100, 0.1)',
+      darkBody: '#0a0a0a',
+      darkText: '#fafafa',
     },
     borderRadius: {
       none: '0',

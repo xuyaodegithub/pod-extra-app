@@ -34,3 +34,29 @@ export function generateUuidV4(): string {
 }
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 export const audio_info = 'AUDIO_INFO'
+//google那边的accessToken
+export const googleAccessToken = 'GOOGLEACCESSTOKEN'
+//google那边的idToken
+export const googleIdToken = 'GOOGLEIDTOKEN'
+//我们自己这边的token
+export const BearerToken = 'BEARERTOKEN'
+//过期时间
+export const expiresIn = 'EXPIRES_IN'
+//refresh
+export const refreshToken = 'REFRESHTOKEN'
+//loginTime
+export const loginTime = 'LOGINTIME'
+export const searchTabs = [
+  { label: 'ALL', key: 'ALL' },
+  { label: 'Podcasts', key: 'PODCAST' },
+  { label: 'Episodes', key: 'EPISODE' },
+]
+export const cookiesOption = (data?: any) => {
+  return {
+    ...data,
+    // httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+  }
+}
+export const summarized = 'SUMMARIZED'
