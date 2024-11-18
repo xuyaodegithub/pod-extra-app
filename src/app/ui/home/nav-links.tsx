@@ -1,23 +1,23 @@
 'use client'
-import {
-  HomeIcon,
-  SignalIcon,
-  MicrophoneIcon,
-  NewspaperIcon,
-  StarIcon,
-  Squares2X2Icon,
-  ChevronRightIcon,
-  MoonIcon,
-  SunIcon,
-} from '@heroicons/react/24/outline'
+import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 // import { clsx } from 'clsx'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useMyContext } from '@/context/MyContext'
+import { useUserInfo } from '@/context/UserInfo'
 import { useEffect, useState } from 'react'
+const home = { name: 'Home', href: '/home', icon: '/images/home.svg', darkIcon: '/images/darkHome.svg' }
+const signIn = {
+  name: 'Sign in',
+  href: '',
+  icon: '/images/login.svg',
+  darkIcon: '/images/darkLogin.svg',
+  rightIcon: '/images/rightIcon.svg',
+  darkRightIcon: '/images/darkRightIcon.svg',
+}
+
 export const links = [
-  { name: 'Home', href: '/home', icon: '/images/home.svg', darkIcon: '/images/darkHome.svg' },
   {
     name: 'Popular Podcasts',
     href: '/popular-top-best-podcasts',
@@ -38,7 +38,24 @@ const selectItemList = [
   { label: 'Light Mode', icon: '/icons/Shape-sun-1.svg', darkIcon: '/icons/Shape-sun-1.svg', value: 'light' },
   { label: 'Dark Mode', icon: '/icons/Shape-moon-1.svg', darkIcon: '/icons/Shape-moon-2.svg', value: 'dark' },
 ]
+export const loginAfterLogin = [
+  {
+    name: 'Followed podcasts',
+    href: '/followed-podcasts-updated',
+    icon: '/icons/followed-podcasts.svg',
+    darkIcon: '/icons/followed-podcasts-dark.svg',
+  },
+  { name: 'Playlist', href: '/playlist', icon: '/icons/play-circle.svg', darkIcon: '/icons/play-circle-dark.svg' },
+  { name: 'Stared Episodes', href: '/stared-episodes', icon: '/icons/stared-episodes.svg', darkIcon: '/icons/stared-episodes-dark.svg' },
+]
+export const planPrice = {
+  name: 'Plan & pricing',
+  href: '/plan-pricing',
+  icon: '/icons/card.svg',
+  darkIcon: '/icons/card-dark.svg',
+}
 export default function NavLinks() {
+  const { userInfo, setShowDialog } = useUserInfo()
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const { isDark, setIsDark } = useMyContext()
@@ -69,16 +86,74 @@ export default function NavLinks() {
     e.stopPropagation()
     setOpen(!open)
   }
+  function titleCase(str: string) {
+    return <div className={`px-[14px] text-[17px] tracking-0.5px text-[#3C3C3C] mb-[9px] font-bold dark:text-darkText`}>{str}</div>
+  }
+
   return (
     <div>
-      <div className={`pb-[18px] px-[10px]  mb-[15px]`}>
-        {links.map((link) => {
+      {/*home */}
+      <div className={` px-[10px]  mb-[15px]`}>
+        <Link
+          href={home.href}
+          className={`flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md ${home.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}
+        >
+          <img src={isDark ? home.darkIcon : home.icon} className="w-[20px] mr-[10px]" />
+          <p>{home.name}</p>
+        </Link>
+        <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
+      </div>
+      {/*sigIn*/}
+      {!userInfo?.email && (
+        <div className={`pb-[18px] px-[10px]  mb-[15px]`} onClick={() => setShowDialog(true)}>
+          {titleCase('You')}
+          <div
+            className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md hover:bg-accent hover:text-accent-foreground`}
+          >
+            <img src={isDark ? signIn.darkIcon : signIn.icon} className="w-[20px] mr-[10px]" />
+            <p>{signIn.name}</p>
+            <img src={isDark ? signIn.darkRightIcon : signIn.rightIcon} className="w-[20px] ml-auto mr-[10px]" />
+          </div>
+          <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
+        </div>
+      )}
+      {/*loginafter*/}
+      {/*{userInfo?.email && (*/}
+      {/*  <div className={` px-[10px]  mb-[10px]`}>*/}
+      {/*    {titleCase('You')}*/}
+      {/*    {loginAfterLogin.map((link, ind: number) => (*/}
+      {/*      <Link*/}
+      {/*        key={ind}*/}
+      {/*        href={link.href}*/}
+      {/*        className={`cursor-pointer flex px-[14px] ${ind === loginAfterLogin.length - 1 ? 'mb-[16px]' : 'mb-[10px]'} h-[40px] items-center transition duration-200 rounded-md text-md ${link.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}*/}
+      {/*      >*/}
+      {/*        <img src={isDark ? link.darkIcon : link.icon} className="w-[20px] mr-[10px]" />*/}
+      {/*        <p>{link.name}</p>*/}
+      {/*      </Link>*/}
+      {/*    ))}*/}
+      {/*    <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>*/}
+      {/*  </div>*/}
+      {/*)}*/}
+      {/*Plan & pricing*/}
+      {/*<div className={`px-[10px]  mb-[20px]`}>*/}
+      {/*  <Link*/}
+      {/*    href={planPrice.href}*/}
+      {/*    className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md ${planPrice.href === pathname ? 'bg-accent ext-accent-foreground' : ''}  hover:bg-accent hover:text-accent-foreground`}*/}
+      {/*  >*/}
+      {/*    <img src={isDark ? planPrice.darkIcon : planPrice.icon} className="w-[20px] mr-[10px]" />*/}
+      {/*    <p>{planPrice.name}</p>*/}
+      {/*  </Link>*/}
+      {/*  <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>*/}
+      {/*</div>*/}
+      <div className={`px-[10px]  mb-[20px]`}>
+        {titleCase('Explore')}
+        {links.map((link, ind: number) => {
           const LinkIcon = !isDark ? link.icon : link.darkIcon
           return (
             <Link
               key={link.name}
               href={link.href}
-              className={`flex px-[14px] mb-[10px] h-[40px] items-center transition duration-200 rounded-md text-md ${link.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}
+              className={`flex px-[14px] ${ind === links.length - 1 ? 'mb-[16px]' : 'mb-[10px]'} h-[40px] items-center transition duration-200 rounded-md text-md ${link.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}
             >
               <img src={LinkIcon} className="w-[20px] mr-[10px]" />
               <p>{link.name}</p>

@@ -16,6 +16,8 @@ interface MyContextType {
   setIsDark: (isDark: boolean) => void
   title: string
   setTitle: (title: string) => void
+  tabsPage: Map<string, any>
+  setTabsPage: (tabsPage: Map<string, any>) => void
 }
 
 // 创建上下文，指定默认值
@@ -28,6 +30,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [stepTime, setStepTime] = useState(0)
   const [isDark, setIsDark] = useState(false)
   const [title, setTitle] = useState('')
+  const [tabsPage, setTabsPage] = useState(new Map())
   useEffect(() => {
     if (!window) return
     const dark = localStorage?.theme ? localStorage.theme === 'dark' : window?.matchMedia('(prefers-color-scheme: dark)').matches
@@ -36,7 +39,22 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <MyContext.Provider
-      value={{ data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime, isDark, setIsDark, title, setTitle }}
+      value={{
+        data,
+        setData,
+        isPlaying,
+        setIsPlaying,
+        time,
+        setTime,
+        stepTime,
+        setStepTime,
+        isDark,
+        setIsDark,
+        title,
+        setTitle,
+        tabsPage,
+        setTabsPage,
+      }}
     >
       {children}
     </MyContext.Provider>

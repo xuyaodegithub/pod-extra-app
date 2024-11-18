@@ -27,7 +27,7 @@ export function Mindmap({ data, activeTab, goThisTime }: { data: any; activeTab?
     <div key="Mindmap" className={`h-[100%]`}>
       <div
         id="mindMap"
-        className={`${fullScreen ? 'fixed w-[100%] h-[100%] top-0 left-0 z-[1111]' : 'relative custom-height'}`}
+        className={`${fullScreen ? 'fixed w-[100%] h-[100%] top-0 left-0 z-[111]' : 'relative custom-height'}`}
         onClick={clickSpan}
       >
         {/*<div className={`absolute top-[10px] left-[10px] z-100`}>11</div>*/}

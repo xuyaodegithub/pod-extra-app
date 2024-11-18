@@ -136,6 +136,11 @@ export function timeFormat(t: number, hash?: boolean) {
     ? `${hh ? `${hh}:` : ''}${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
     : `${hh ? `${hh}:` : '00:'}${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
 }
+export function getTimeWithHoursMin(t: number) {
+  const h = Math.floor(t / 3600)
+  const m = Math.floor((t % 3600) / 60)
+  return `${h > 0 ? h + 'h' : ''} ${m > 0 ? m + 'm' : ''}`
+}
 export function getMetaData(data?: any) {
   return {
     title: {
