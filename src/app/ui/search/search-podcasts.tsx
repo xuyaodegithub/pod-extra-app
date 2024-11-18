@@ -16,6 +16,8 @@ export default function SearchPodcasts({ podcasts, tab }: { podcasts: any; tab: 
   const { resultList, total } = podcasts
   const pageSize = searchParams.get('pageSize') || 10
   const totalPages = Math.ceil(+total / +pageSize)
+  const word = searchParams.get('word') || ''
+
   function changeTab(key: string) {
     const params = new URLSearchParams(searchParams)
     const page = tabsPage.get(key) || 1
@@ -40,19 +42,27 @@ export default function SearchPodcasts({ podcasts, tab }: { podcasts: any; tab: 
         </div>
       )}
 
-      <div className={`border-[1px] border-bgGray rounded-[10px] p-[14px] dark:border-fontGry-600`}>
-        {resultList.map((item: any, ind: number) => {
-          const { coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl } = item
-          const noMb = ind >= resultList.length - 1
-          return (
-            <SearchPodcastCard
-              item={{ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl }}
-              noMb={noMb}
-              key={showId}
-            />
-          )
-        })}
-      </div>
+      {resultList?.length ? (
+        <div className={`border-[1px] border-bgGray rounded-[10px] p-[14px] dark:border-fontGry-600`}>
+          {resultList.map((item: any, ind: number) => {
+            const { coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl } = item
+            const noMb = ind >= resultList.length - 1
+            return (
+              <SearchPodcastCard
+                item={{ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl }}
+                noMb={noMb}
+                key={showId}
+              />
+            )
+          })}
+        </div>
+      ) : (
+        <div
+          className={`text-sm text-fontGry-600 leading-[100px] text-center border-[1px] border-bgGray rounded-[10px] dark:border-fontGry-600 dark:text-fontGry-100`}
+        >
+          No result found for "{decodeURIComponent(word)}"
+        </div>
+      )}
       {total > 10 && tab === searchTabs[0].key && (
         <div
           className="border-[1px] border-bgGray dark:border-fontGry-600 rounded-[6px] w-[160px] flex items-center justify-center text-sm text-fontGry-600 py-[6px] px-[10px] mt-[20px] mx-auto cursor-pointer dark:text-white"

@@ -96,7 +96,6 @@ export default function UserInfo() {
     googleLoginPopup()
     // signIn('google')
     // 加载 Google Identity Services
-
   }
 
   async function signOut() {
@@ -108,9 +107,9 @@ export default function UserInfo() {
 
   return (
     <div className="flex items-center">
-      <Link href="/plan-pricing" className={`mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}>
-        Pricing
-      </Link>
+      {/*<Link href="/plan-pricing" className={`mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}>*/}
+      {/*  Pricing*/}
+      {/*</Link>*/}
       {userInfo?.email ? (
         <div>
           <Popover data-side="left" open={open}>
@@ -168,7 +167,15 @@ export default function UserInfo() {
               <span className={`block text-min text-[#bbbbbb] text-center mt-[112px] pb-[37px] dark:text-fontGry-100`}>
                 By clicking "Continue", you agree
                 <br />
-                to the Privacy Policy and Terms of Service.
+                to the{' '}
+                <Link href="https://www.podextra.ai/terms.html" target="_blank">
+                  Privacy Policy
+                </Link>{' '}
+                and{' '}
+                <Link href="https://www.podextra.ai/terms.html" target="_blank">
+                  Terms
+                </Link>{' '}
+                of Service.
               </span>
             </DialogDescription>
           </DialogHeader>
