@@ -16,7 +16,7 @@ export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: 
   const { resultList, total } = episodes
   const pageSize = searchParams.get('pageSize') || 10
   const totalPages = Math.ceil(+total / +pageSize)
-
+  const word = searchParams.get('word') || ''
   function changeTab(key: string) {
     const params = new URLSearchParams(searchParams)
     const page = tabsPage.get(key) || 1
@@ -41,45 +41,53 @@ export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: 
           <ChevronRightIcon className={`ml-[10px] w-[20px] dark:text-white`} />
         </div>
       )}
-      <div className={`border-[1px] border-bgGray rounded-[10px] p-[14px] dark:border-fontGry-600`}>
-        {resultList.map((item: any, ind: number) => {
-          const {
-            coverUrl,
-            episodeTitle,
-            gmtPubDate,
-            showTitle,
-            showCoverUrl,
-            showNotes,
-            episodeId,
-            duration,
-            episodeUrl,
-            enclosureUrl,
-            episodeStatus,
-            showUrl,
-          } = item
-          const noMb = ind >= resultList.length - 1
-          return (
-            <SearchEpisodesCard
-              item={{
-                coverUrl,
-                episodeTitle,
-                gmtPubDate,
-                showTitle,
-                showCoverUrl,
-                showNotes,
-                episodeId,
-                duration,
-                episodeUrl,
-                enclosureUrl,
-                episodeStatus,
-                showUrl,
-              }}
-              noMb={noMb}
-              key={episodeId}
-            />
-          )
-        })}
-      </div>
+      {resultList?.length ? (
+        <div className={`border-[1px] border-bgGray rounded-[10px] p-[14px] dark:border-fontGry-600`}>
+          {resultList.map((item: any, ind: number) => {
+            const {
+              coverUrl,
+              episodeTitle,
+              gmtPubDate,
+              showTitle,
+              showCoverUrl,
+              showNotes,
+              episodeId,
+              duration,
+              episodeUrl,
+              enclosureUrl,
+              episodeStatus,
+              showUrl,
+            } = item
+            const noMb = ind >= resultList.length - 1
+            return (
+              <SearchEpisodesCard
+                item={{
+                  coverUrl,
+                  episodeTitle,
+                  gmtPubDate,
+                  showTitle,
+                  showCoverUrl,
+                  showNotes,
+                  episodeId,
+                  duration,
+                  episodeUrl,
+                  enclosureUrl,
+                  episodeStatus,
+                  showUrl,
+                }}
+                noMb={noMb}
+                key={episodeId}
+              />
+            )
+          })}
+        </div>
+      ) : (
+        <div
+          className={`text-sm text-fontGry-600 leading-[100px] text-center border-[1px] border-bgGray rounded-[10px] dark:border-fontGry-600 dark:text-fontGry-100`}
+        >
+          No result found for "{decodeURIComponent(word)}"
+        </div>
+      )}
       {total > 10 && tab === searchTabs[0].key && (
         <div
           className="border-[1px] border-bgGray dark:border-fontGry-600 rounded-[6px] w-[160px] flex items-center justify-center text-sm text-fontGry-600 py-[6px] px-[10px] mt-[20px] mx-auto cursor-pointer dark:text-white"

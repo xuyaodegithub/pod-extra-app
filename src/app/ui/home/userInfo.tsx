@@ -96,7 +96,6 @@ export default function UserInfo() {
     googleLoginPopup()
     // signIn('google')
     // 加载 Google Identity Services
-
   }
 
   async function signOut() {
@@ -108,9 +107,9 @@ export default function UserInfo() {
 
   return (
     <div className="flex items-center">
-      <Link href="/plan-pricing" className={`mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}>
-        Pricing
-      </Link>
+      {/*<Link href="/plan-pricing" className={`mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}>*/}
+      {/*  Pricing*/}
+      {/*</Link>*/}
       {userInfo?.email ? (
         <div>
           <Popover data-side="left" open={open}>
