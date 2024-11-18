@@ -12,7 +12,19 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
   const { isDark } = useMyContext()
   const { data, setData, isPlaying, setIsPlaying } = useMyContext()
   const { enclosureUrl: url = '' } = data || {}
-  const { coverUrl, episodeTitle, gmtPubDate, showTitle, showCoverUrl, showNotes, episodeId, duration, episodeUrl, enclosureUrl } = item
+  const {
+    coverUrl,
+    episodeTitle,
+    gmtPubDate,
+    showTitle,
+    showCoverUrl,
+    showNotes,
+    episodeId,
+    duration,
+    episodeUrl,
+    enclosureUrl,
+    summarized,
+  } = item
   const des = getNoTagText(showNotes)
   const play = isPlaying && url && url === enclosureUrl
   function playAuido(e: Event) {
@@ -48,7 +60,7 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
               className={`flex items-center overflow-hidden text-ellipsis whitespace-nowrap text-fontGry-600 text-md dark:text-white`}
               title={episodeTitle}
             >
-              <img src="/icons/ai-ready-icon.svg" className={`h-[20px] mr-[5px]`} />
+              {summarized === summarized && <img src="/icons/ai-ready-icon.svg" className={`h-[20px] mr-[5px]`} />}
               {episodeTitle}
             </h3>
             <div className={`text-sm overflow-hidden text-ellipsis line-clamp-2 text-fontGry-100`} title={des}>
@@ -59,11 +71,11 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
                 className={`text-min text-white flex items-center px-[9px] h-[28px] rounded-[14px] bg-play mr-24px`}
                 onClick={(e: any) => playAuido(e)}
               >
-                <img src={`/icons/${play ? 'playing' : 'pused'}.svg`} alt="" className={`w-[16px] h-[16px] mr-[4px]`} />
+                <img src={`/icons/${play ? 'pused' : 'pused'}.svg`} alt="" className={`w-[16px] h-[16px] mr-[4px]`} />
                 <div className={`h-[4px] bg-white w-[25px] rounded-[2px] relative mr-[8px] overflow-hidden`}>
                   <i className={`absolute w-[50%] h-[100%] bg-[#FF9C70] left-0 top-0`}></i>
                 </div>
-                <span>{getTimeWithHoursMin(96 * 60)}</span>
+                <span>{getTimeWithHoursMin(duration)}</span>
               </div>
               <div className={`bg-hbg dark:bg-bgDark rounded-[50%] p-[5px]`} onClick={(e: any) => followEpiosde(e)}>
                 <img src="/icons/star-filled.svg" alt="" />

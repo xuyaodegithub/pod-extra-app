@@ -15,7 +15,7 @@ import { Suspense } from 'react'
 import { LoadingLine } from '@/app/ui/skeletons'
 // import { SessionProvider } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { googleIdToken, googleAccessToken, expiresIn,cookiesOption,loginTime } from '@/app/lib/config'
+import { googleIdToken, googleAccessToken, expiresIn, cookiesOption, loginTime } from '@/app/lib/config'
 import LoginDialog from '@/app/ui/home/loginDialog'
 //字体
 import { Tilt_Warp, Open_Sans } from 'next/font/google'
@@ -49,7 +49,7 @@ export default function RootLayout({
       //idToken
       cookies.set(googleIdToken, idToken, cookiesOption())
       //expires_in
-      cookies.set(expiresIn, String(+expires_in*1000), cookiesOption())
+      cookies.set(expiresIn, String(+expires_in * 1000), cookiesOption())
       //登录时间
       cookies.set(loginTime, String(Date.now()), cookiesOption())
       const url = state ? decodeURIComponent(state) : pathname
@@ -113,7 +113,7 @@ export default function RootLayout({
             </head>
             <body className={`opacity-0 antialiased h-[100%] dark:bg-black dark:text-darkTheme-900 font-sans`}>
               {!isLanding ? (
-                <div className="flex w-xl xl:py-[24px] sm:py-32 w-1280 mx-auto h-[100%]">
+                <div className="flex w-xl py-[24px] w-1280 mx-auto h-[100%]">
                   <SideNav />
                   <main className={`flex-1 overflow-hidden flex flex-col`}>
                     <div className={`mb-[24px] flex justify-between items-center pr-[20px]`}>

@@ -51,7 +51,7 @@ export const searchTabs = [
   { label: 'Podcasts', key: 'PODCAST' },
   { label: 'Episodes', key: 'EPISODE' },
 ]
-export const cookiesOption=(data?:any)=>{
+export const cookiesOption = (data?: any) => {
   return {
     ...data,
     // httpOnly: true,
@@ -59,3 +59,4 @@ export const cookiesOption=(data?:any)=>{
     sameSite: 'strict',
   }
 }
+export const summarized = 'SUMMARIZED'

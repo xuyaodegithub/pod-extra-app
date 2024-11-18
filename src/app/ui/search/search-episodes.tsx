@@ -43,8 +43,19 @@ export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: 
       )}
       <div className={`border-[1px] border-bgGray rounded-[10px] p-[14px] dark:border-fontGry-600`}>
         {resultList.map((item: any, ind: number) => {
-          const { coverUrl, episodeTitle, gmtPubDate, showTitle, showCoverUrl, showNotes, episodeId, duration, episodeUrl, enclosureUrl } =
-            item
+          const {
+            coverUrl,
+            episodeTitle,
+            gmtPubDate,
+            showTitle,
+            showCoverUrl,
+            showNotes,
+            episodeId,
+            duration,
+            episodeUrl,
+            enclosureUrl,
+            episodeStatus,
+          } = item
           const noMb = ind >= episodes.length - 1
           return (
             <SearchEpisodesCard
@@ -59,6 +70,7 @@ export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: 
                 duration,
                 episodeUrl,
                 enclosureUrl,
+                episodeStatus,
               }}
               noMb={noMb}
               key={episodeId}
