@@ -22,7 +22,7 @@ export default async function Search({
     tab?: string
   }
 }) {
-  const { pageSize, page, word, tab = searchTabs[0].key } = searchParams || {}
+  const { pageSize, page, word = '', tab = searchTabs[0].key } = searchParams || {}
   const payload = {
     keyword: decodeURIComponent(word || ''),
     searchType: tab,

@@ -19,6 +19,7 @@ export default function SearchInput({ ...props }: {}) {
     if (term) {
       params.set('word', encodeURIComponent(term))
     } else {
+      return
       params.delete('word')
     }
     push(`/search?${params.toString()}`)
