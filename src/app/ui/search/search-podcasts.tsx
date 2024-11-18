@@ -27,12 +27,12 @@ export default function SearchPodcasts({ podcasts, tab }: { podcasts: any; tab: 
   return (
     <div className={`mb-[20px]`}>
       {tab === searchTabs[1].key ? (
-        <div className={`pb-[20px] pt-[22px] sticky top-[36px] bg-white dark:bg-darkBody z-[99]`}>
+        <div className={`pb-[20px] pt-[12px] sticky top-[36px] bg-white dark:bg-darkBody z-[99]`}>
           <Pagination totalPages={totalPages} total={total} title="podcasts" />
         </div>
       ) : (
         <div
-          className={`mt-[22px] flex items-center mb-[12px] text-lg text-fontGry-600 ml-[24px] font-bold cursor-pointer`}
+          className={`mt-[12px] flex items-center mb-[12px] text-lg text-fontGry-600 ml-[24px] font-bold cursor-pointer`}
           onClick={() => changeTab(searchTabs[1].key)}
         >
           <div className={`${styles.hoverBBorder} dark:text-white`}>Podcasts</div>
@@ -43,7 +43,7 @@ export default function SearchPodcasts({ podcasts, tab }: { podcasts: any; tab: 
       <div className={`border-[1px] border-bgGray rounded-[10px] p-[14px] dark:border-fontGry-600`}>
         {resultList.map((item: any, ind: number) => {
           const { coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl } = item
-          const noMb = ind >= podcasts.length - 1
+          const noMb = ind >= resultList.length - 1
           return (
             <SearchPodcastCard
               item={{ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl }}

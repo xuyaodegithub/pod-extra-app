@@ -20,7 +20,7 @@ export default function SearchTabs({ className, tab }: { className?: string; tab
     push(`${pathname}?${params.toString()}`)
   }
   return (
-    <div className={`flex items-center sticky top-0 bg-white z-[99] ${className} dark:bg-darkBody`}>
+    <div className={`pb-[10px] flex items-center sticky top-0 bg-white z-[99] ${className} dark:bg-darkBody`}>
       {searchTabs.map((item) => (
         <div
           className={`text-sm px-[10px] py-[8px] bg-bgGray text-fontGry-600 rounded-[10px] mr-[15px] cursor-pointer dark:bg-bgDark dark:text-homehbg ${clsx(tab === item.key && 'bg-play text-white dark:bg-play dark:text-white')}`}

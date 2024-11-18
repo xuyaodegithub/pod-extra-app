@@ -29,7 +29,7 @@ export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: 
   return (
     <div>
       {tab === searchTabs[2].key ? (
-        <div className={`pb-[20px] pt-[22px] sticky top-[36px] bg-white dark:bg-darkBody z-[99]`}>
+        <div className={`pb-[20px] pt-[12px] sticky top-[36px] bg-white dark:bg-darkBody z-[99]`}>
           <Pagination totalPages={totalPages} total={total} />
         </div>
       ) : (
@@ -55,8 +55,9 @@ export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: 
             episodeUrl,
             enclosureUrl,
             episodeStatus,
+            showUrl,
           } = item
-          const noMb = ind >= episodes.length - 1
+          const noMb = ind >= resultList.length - 1
           return (
             <SearchEpisodesCard
               item={{
@@ -71,6 +72,7 @@ export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: 
                 episodeUrl,
                 enclosureUrl,
                 episodeStatus,
+                showUrl,
               }}
               noMb={noMb}
               key={episodeId}
@@ -83,7 +85,7 @@ export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: 
           className="border-[1px] border-bgGray dark:border-fontGry-600 rounded-[6px] w-[160px] flex items-center justify-center text-sm text-fontGry-600 py-[6px] px-[10px] mt-[20px] mx-auto cursor-pointer dark:text-white"
           onClick={() => changeTab(searchTabs[2].key)}
         >
-          <span>show all podcasts</span>
+          <span>show all episodes</span>
           <ChevronRightIcon className={`w-[14px] dark:text-white`} />
         </div>
       )}

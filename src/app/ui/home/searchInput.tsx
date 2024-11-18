@@ -22,6 +22,7 @@ export default function SearchInput({ ...props }: {}) {
       return
       params.delete('word')
     }
+    refInput.current.blur()
     push(`/search?${params.toString()}`)
     console.log(term, params.toString(), back)
   }, 100)

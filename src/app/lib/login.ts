@@ -1,5 +1,5 @@
 export const client_id = '177611048095-egpeo6uvi016s4qeeep1tafckf9n0ph0.apps.googleusercontent.com'
-export const redirect_uri = 'http://localhost:3000'
+export const redirect_uri = process.env.NEXT_PUBLIC_NEXTAUTH_URL
 import { googleIdToken, googleAccessToken } from '@/app/lib/config'
 import cookies from 'js-cookie'
 import { usePathname } from 'next/navigation'
@@ -49,7 +49,7 @@ export const googleLoginPopup = () => {
   console.log(redirectUri, 'redirectUri')
   // 设置 OAuth 2.0 授权 URL
   const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth'
-  const authUrl = `${oauth2Endpoint}?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=id_token token&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid&include_granted_scopes=true&state=${encodeURIComponent(state)}&nonce=${Date.now()}`
+  const authUrl = `${oauth2Endpoint}?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri || '')}&response_type=id_token token&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid&include_granted_scopes=true&state=${encodeURIComponent(state)}&nonce=${Date.now()}`
 
   // 打开小窗口
   const width = 500

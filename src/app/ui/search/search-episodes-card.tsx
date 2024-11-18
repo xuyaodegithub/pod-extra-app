@@ -7,10 +7,12 @@ import { clsx } from 'clsx'
 import CateItem from '@/app/ui/categories/cateItem'
 import { FireIcon } from '@heroicons/react/24/outline'
 import { audio_info } from '@/app/lib/config'
+import { useRouter } from 'next/navigation'
 
 export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boolean }) {
   const { isDark } = useMyContext()
   const { data, setData, isPlaying, setIsPlaying } = useMyContext()
+  const { push } = useRouter()
   const { enclosureUrl: url = '' } = data || {}
   const {
     coverUrl,
@@ -24,6 +26,8 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
     episodeUrl,
     enclosureUrl,
     summarized,
+    showUrl,
+    historyTime = '',
   } = item
   const des = getNoTagText(showNotes)
   const play = isPlaying && url && url === enclosureUrl
@@ -43,6 +47,10 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
   function followEpiosde(e: any) {
     e.preventDefault()
   }
+  function toPodcast(e: Event) {
+    e.preventDefault()
+    push(showUrl)
+  }
   return (
     <div className={` relative ${noMb ? '' : 'pb-[5px] mb-[5px]'}`}>
       <Link href={episodeUrl} key={episodeId} className={``}>
@@ -51,17 +59,14 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
           <div className={`flex-1 ml-[10px] overflow-hidden flex flex-col`}>
             <div className={`flex mb-[5px] text-sm text-fontGry-600 items-center dark:text-fontGry-100`}>
               <div className={`mr-[20px]`}>{getCurrentLocalTime(gmtPubDate)}</div>
-              <div className={`flex items-center flex-1`}>
+              <div className={`flex items-center flex-1`} onClick={(e: any) => toPodcast(e)}>
                 <img src={showCoverUrl} alt="" className={`w-[20px] h-[20px] mr-[5px] rounded-[5px]`} />
                 <span className={`flex-1 overflow-hidden whitespace-nowrap text-ellipsis`}>{showTitle}</span>
               </div>
             </div>
-            <h3
-              className={`flex items-center overflow-hidden text-ellipsis whitespace-nowrap text-fontGry-600 text-md dark:text-white`}
-              title={episodeTitle}
-            >
+            <h3 className={`flex items-center  text-fontGry-600 text-md dark:text-white`} title={episodeTitle}>
               {summarized === summarized && <img src="/icons/ai-ready-icon.svg" className={`h-[20px] mr-[5px]`} />}
-              {episodeTitle}
+              <span className={`flex-1 overflow-hidden text-ellipsis whitespace-nowrap`}>{episodeTitle}</span>
             </h3>
             <div className={`text-sm overflow-hidden text-ellipsis line-clamp-2 text-fontGry-100`} title={des}>
               {des}
@@ -72,13 +77,15 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
                 onClick={(e: any) => playAuido(e)}
               >
                 <img src={`/icons/${play ? 'pused' : 'pused'}.svg`} alt="" className={`w-[16px] h-[16px] mr-[4px]`} />
-                <div className={`h-[4px] bg-white w-[25px] rounded-[2px] relative mr-[8px] overflow-hidden`}>
-                  <i className={`absolute w-[50%] h-[100%] bg-[#FF9C70] left-0 top-0`}></i>
-                </div>
+                {historyTime && (
+                  <div className={`h-[4px] bg-white w-[25px] rounded-[2px] relative mr-[8px] overflow-hidden`}>
+                    <i className={`absolute w-[50%] h-[100%] bg-[#FF9C70] left-0 top-0`}></i>
+                  </div>
+                )}
                 <span>{getTimeWithHoursMin(duration)}</span>
               </div>
               <div className={`bg-hbg dark:bg-bgDark rounded-[50%] p-[5px]`} onClick={(e: any) => followEpiosde(e)}>
-                <img src="/icons/star-filled.svg" alt="" />
+                <img src="/icons/star.svg" alt="" />
               </div>
             </div>
           </div>
