@@ -34,12 +34,12 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
         </div>
       </Link>
       {!noMb && <div className={`border-b-[1px] border-bgGray absolute left-[10px] bottom-0 right-[10px] dark:border-fontGry-600`}></div>}
-      <div
-        className={`text-sm text-white py-[4px] px-[15px] bg-play absolute top-[10px] right-[10px] flex items-center rounded-[14px] cursor-pointer`}
-      >
-        <img src="/icons/plus.svg" alt="" className={`mr-[3px] w-[20px] h-[20px]`} />
-        <span>Follow</span>
-      </div>
+      {/*<div*/}
+      {/*  className={`text-sm text-white py-[4px] px-[15px] bg-play absolute top-[10px] right-[10px] flex items-center rounded-[14px] cursor-pointer`}*/}
+      {/*>*/}
+      {/*  <img src="/icons/plus.svg" alt="" className={`mr-[3px] w-[20px] h-[20px]`} />*/}
+      {/*  <span>Follow</span>*/}
+      {/*</div>*/}
     </div>
   )
 }

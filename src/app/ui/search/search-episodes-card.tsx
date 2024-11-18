@@ -84,9 +84,9 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
                 )}
                 <span>{getTimeWithHoursMin(duration)}</span>
               </div>
-              <div className={`bg-hbg dark:bg-bgDark rounded-[50%] p-[5px]`} onClick={(e: any) => followEpiosde(e)}>
-                <img src="/icons/star.svg" alt="" />
-              </div>
+              {/*<div className={`bg-hbg dark:bg-bgDark rounded-[50%] p-[5px]`} onClick={(e: any) => followEpiosde(e)}>*/}
+              {/*  <img src="/icons/star.svg" alt="" />*/}
+              {/*</div>*/}
             </div>
           </div>
         </div>
