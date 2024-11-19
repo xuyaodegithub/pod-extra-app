@@ -6,7 +6,7 @@ import { getCurrentLocalTime, getNoTagText, getTimeWithHoursMin } from '@/app/li
 import { clsx } from 'clsx'
 import CateItem from '@/app/ui/categories/cateItem'
 import { FireIcon } from '@heroicons/react/24/outline'
-import { audio_info } from '@/app/lib/config'
+import { audio_info, summarized } from '@/app/lib/config'
 import { useRouter } from 'next/navigation'
 
 export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boolean }) {
@@ -25,7 +25,7 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
     duration,
     episodeUrl,
     enclosureUrl,
-    summarized,
+    episodeStatus,
     showUrl,
     historyTime = '',
   } = item
@@ -65,7 +65,7 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
               </div>
             </div>
             <h3 className={`flex items-center  text-fontGry-600 text-md dark:text-white`} title={episodeTitle}>
-              {summarized === summarized && <img src="/icons/ai-ready-icon.svg" className={`h-[20px] mr-[5px]`} />}
+              {episodeStatus === summarized && <img src="/icons/ai-ready-icon.svg" className={`h-[20px] mr-[5px]`} />}
               <span className={`flex-1 overflow-hidden text-ellipsis whitespace-nowrap`}>{episodeTitle}</span>
             </h3>
             <div className={`text-sm overflow-hidden text-ellipsis line-clamp-2 text-fontGry-100`} title={des}>

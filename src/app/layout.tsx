@@ -37,26 +37,26 @@ export default function RootLayout({
   const pathname = usePathname()
   const isLanding = pathname === '/'
   const { replace } = useRouter()
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.hash.substring(1))
-    const accessToken = urlParams.get('access_token') || ''
-    const idToken = urlParams.get('id_token')
-    const expires_in = urlParams.get('expires_in') || ''
-    const state = urlParams.get('state')
-    if (idToken) {
-      // 将 access_token 存储在 cookie
-      cookies.set(googleAccessToken, accessToken, cookiesOption())
-      //idToken
-      cookies.set(googleIdToken, idToken, cookiesOption())
-      //expires_in
-      cookies.set(expiresIn, String(+expires_in * 1000), cookiesOption())
-      //登录时间
-      cookies.set(loginTime, String(Date.now()), cookiesOption())
-      const url = state ? decodeURIComponent(state) : pathname
-      // 调用函数获取用户信息
-      replace(url)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.hash.substring(1))
+  //   const accessToken = urlParams.get('access_token') || ''
+  //   const idToken = urlParams.get('id_token')
+  //   const expires_in = urlParams.get('expires_in') || ''
+  //   const state = urlParams.get('state')
+  //   if (idToken) {
+  //     // 将 access_token 存储在 cookie
+  //     cookies.set(googleAccessToken, accessToken, cookiesOption())
+  //     //idToken
+  //     cookies.set(googleIdToken, idToken, cookiesOption())
+  //     //expires_in
+  //     cookies.set(expiresIn, String(+expires_in * 1000), cookiesOption())
+  //     //登录时间
+  //     cookies.set(loginTime, String(Date.now()), cookiesOption())
+  //     const url = state ? decodeURIComponent(state) : pathname
+  //     // 调用函数获取用户信息
+  //     // replace(url)
+  //   }
+  // }, [])
   useEffect(() => {
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window?.matchMedia('(prefers-color-scheme: dark)').matches)) {
