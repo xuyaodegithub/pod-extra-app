@@ -8,7 +8,7 @@ import { tabList } from '@/app/lib/config'
 import { PlayAudio } from '@/app/ui/episodeDetail/palyAudio'
 import { ClientSub } from '@/app/ui/clientDispatch'
 export async function generateMetadata({ params }: any, parent: ResolvingMetadata): Promise<Metadata> {
-  const [episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
+  const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
   const { itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle } = data || {}
   return getMetaData({
@@ -27,7 +27,7 @@ export default async function Page({
     episodeId: string
   }
 }) {
-  const [ episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
+  const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
   const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle, showUrl = '' } = data || {}
   const [res1, res2] = await Promise.all([getEpisodeSummarize(episodeId), getEpisodeTranscript(episodeId)])
