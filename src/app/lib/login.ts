@@ -1,6 +1,6 @@
 export const client_id = '177611048095-egpeo6uvi016s4qeeep1tafckf9n0ph0.apps.googleusercontent.com'
 export const redirect_uri = process.env.NEXT_PUBLIC_NEXTAUTH_URL
-import { googleIdToken, googleAccessToken } from '@/app/lib/config'
+import { googleIdToken, googleAccessToken, callbackPath } from '@/app/lib/config'
 import cookies from 'js-cookie'
 import { usePathname } from 'next/navigation'
 /*
@@ -42,21 +42,21 @@ export const oauthSignIn = () => {
 }
 
 export const googleLoginPopup = () => {
-  const redirectPath = encodeURIComponent(window.location.pathname + window.location.search)
+  const redirectPath = encodeURIComponent(window.location.href)
   console.log(window.location.pathname + window.location.search, 'redirectPath')
   const state = `${redirectPath}`
   const redirectUri = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/callback`
-  console.log(redirectUri, 'redirectUri')
   // 设置 OAuth 2.0 授权 URL
   const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth'
-  const authUrl = `${oauth2Endpoint}?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirect_uri || '')}&response_type=id_token token&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid&include_granted_scopes=true&state=${encodeURIComponent(state)}&nonce=${Date.now()}`
-
+  const authUrl = `${oauth2Endpoint}?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=id_token token&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid&include_granted_scopes=true&state=${encodeURIComponent(state)}&nonce=${Date.now()}&response_mode=form_post`
+  console.log(authUrl, 'authUrl')
   // 打开小窗口
   const width = 500
   const height = 600
   const left = (window.screen.width - width) / 2
   const top = (window.screen.height - height) / 2
   // const newWindow = window.open(authUrl, 'googleLogin', `width=${width},height=${height},top=${top},left=${left}`)
+  cookies.set(callbackPath, decodeURIComponent(redirectPath))
   window.location.href = authUrl
 
   // 轮询检测窗口是否关闭
@@ -123,6 +123,9 @@ export const revokeAccess2 = async (redirectUrl = location.href) => {
       // console.error('Failed to revoke token', await response.text())
     }
   } catch (error) {
+    cookies.remove(googleAccessToken)
+    // Redirect to the specified page (default to home page)
+    window.location.href = redirectUrl
     // console.error('Error revoking token:', error)
   }
 }

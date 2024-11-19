@@ -14,10 +14,10 @@ export default function SearchPodcasts({ podcasts, tab }: { podcasts: any; tab: 
   const currentPage = Number(searchParams.get('page')) || 1
   const { push } = useRouter()
   const { resultList, total } = podcasts
-  const pageSize = searchParams.get('pageSize') || 10
+  const pageSize = searchParams.get('pageSize') || 50
   const totalPages = Math.ceil(+total / +pageSize)
   const word = searchParams.get('word') || ''
-
+  const list = tab === searchTabs[0].key ? resultList?.slice(0, 10) : resultList
   function changeTab(key: string) {
     const params = new URLSearchParams(searchParams)
     const page = tabsPage.get(key) || 1
@@ -42,11 +42,11 @@ export default function SearchPodcasts({ podcasts, tab }: { podcasts: any; tab: 
         </div>
       )}
 
-      {resultList?.length ? (
+      {list?.length ? (
         <div className={`border-[1px] border-bgGray rounded-[10px] p-[14px] dark:border-fontGry-600`}>
-          {resultList.map((item: any, ind: number) => {
+          {list.map((item: any, ind: number) => {
             const { coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl } = item
-            const noMb = ind >= resultList.length - 1
+            const noMb = ind >= list.length - 1
             return (
               <SearchPodcastCard
                 item={{ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl }}
