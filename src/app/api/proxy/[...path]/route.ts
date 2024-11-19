@@ -9,7 +9,6 @@ export async function POST(req: NextRequest, { params }: { params: { path: strin
   const body = await req.json()
   const t = cookieStore.get(googleIdToken)?.value || cookieStore.get(BearerToken)?.value || ''
   const rToken = cookieStore.get(refreshToken)?.value || ''
-  console.log(targetUrl, body, 'sssssssssssss')
   // @ts-ignore
   const response: any = await axios({
     url: targetUrl,
