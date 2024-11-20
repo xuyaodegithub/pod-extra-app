@@ -29,21 +29,21 @@ export default async function Home({
   return (
     <main>
       <div className={`mb-24px`}>
-        <Suspense fallback={<LoadingLine />}>
-          <PopularPodcasts title={`Popular Podcasts`} type={POPULARITY} key={POPULARITY} params={params} />
-        </Suspense>
-        <Suspense fallback={<LoadingLine />}>
-          <PopularPodcasts title={`Latest Podcasts`} type={PUB_DATE} key={PUB_DATE} params={params} />
-        </Suspense>
-        <Suspense fallback={<LoadingLine />}>
-          <LatestEpisodes title={`Latest Episodes`} type={PUB_DATE} params={{ ...params, pageSize: 8 }} />
-        </Suspense>
-        <Suspense fallback={<LoadingLine />}>
-          <LatestEpisodes title={`Latest AI-processed`} type={SUMMARIZE_TIME} params={{ ...params, pageSize: 8 }} />
-        </Suspense>
-        <Suspense fallback={<LoadingLine />}>
-          <Categories title={`Categories`} />
-        </Suspense>
+        {/*<Suspense fallback={<LoadingLine />}>*/}
+        <PopularPodcasts title={`Popular Podcasts`} type={POPULARITY} key={POPULARITY} params={params} />
+        {/*</Suspense>*/}
+        {/*<Suspense fallback={<LoadingLine />}>*/}
+        <PopularPodcasts title={`Latest Podcasts`} type={PUB_DATE} key={PUB_DATE} params={params} />
+        {/*</Suspense>*/}
+        {/*<Suspense fallback={<LoadingLine />}>*/}
+        <LatestEpisodes title={`Latest Episodes`} type={PUB_DATE} params={{ ...params, pageSize: 8 }} />
+        {/*</Suspense>*/}
+        {/*<Suspense fallback={<LoadingLine />}>*/}
+        <LatestEpisodes title={`Latest AI-processed`} type={SUMMARIZE_TIME} params={{ ...params, pageSize: 8 }} />
+        {/*</Suspense>*/}
+        {/*<Suspense fallback={<LoadingLine />}>*/}
+        <Categories title={`Categories`} />
+        {/*</Suspense>*/}
       </div>
     </main>
   )
