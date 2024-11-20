@@ -36,7 +36,7 @@ export default function UserInfo() {
       data: { idToken },
     } = await userLogin({ idToken: token })
     cookies.set(BearerToken, idToken)
-    cookies.remove(googleIdToken, idToken)
+    cookies.remove(googleIdToken)
     initUserInfo()
   }
   async function initUserInfo() {

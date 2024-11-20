@@ -7,6 +7,7 @@ export async function POST(req: NextRequest, { params }: { params: { path: strin
   const targetUrl = `${process.env.NEXT_PUBLIC_API_URL}${params.path.join('/')}`
   const cookieStore = cookies()
   const body = await req.json()
+  // const isAuthLogin = targetUrl.endsWith('account/auth')
   const t = cookieStore.get(googleIdToken)?.value || cookieStore.get(BearerToken)?.value || ''
   const rToken = cookieStore.get(refreshToken)?.value || ''
   // @ts-ignore
