@@ -14,6 +14,9 @@ export async function generateMetadata({ params }: any, parent: ResolvingMetadat
   return getMetaData({
     title: `${episodeTitle} | PodExtra.AI`,
     description: `Hosted by ${itunesAuthor}, the '${showTitle}' episode titled '${episodeTitle}' runs for ${timeFormat(duration)} and features AI-generated transcripts and summaries. Updated on ${getCurrentLocalTime(gmtPubDate)}.`,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/episode/${params.episodeId}`,
+    },
   })
 }
 export default async function Page({

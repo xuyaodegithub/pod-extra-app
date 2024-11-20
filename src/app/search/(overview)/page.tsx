@@ -11,6 +11,9 @@ export const metadata: Metadata = getMetaData({
   title: 'Search | PodExtra.AI',
   description: '',
   keywords: '',
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/search`,
+  },
 })
 export default async function Search({
   searchParams,

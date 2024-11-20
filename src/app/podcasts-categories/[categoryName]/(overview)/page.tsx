@@ -18,6 +18,9 @@ export async function generateMetadata({ params, searchParams }: any, parent: Re
   return getMetaData({
     title: `The best ${breadcrumbsTitle} of ${y - 1}-${y} | PodExtra.AI`,
     description: `Discover the best ${breadcrumbsTitle} with PodExtra. With AI-powered transcription and summarization, it elevates your listening experience.`,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/podcasts-categories/${categoryName}?categoryId=${categoryId}`,
+    },
   })
 }
 export default async function Page({

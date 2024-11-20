@@ -8,6 +8,9 @@ export const metadata: Metadata = getMetaData({
   title: `The Latest AI-processed episodes of  ${y - 1}-${y} | PodExtra.AI`,
   description: `PodExtra uses AI to transcribe and summarize the latest popular podcasts content for you, helping you quickly skim through podcast material, saving time and increasing efficiency.`,
   keywords: '',
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/latest-ai-processed-episodes`,
+  },
 })
 export default async function Page({
   searchParams,

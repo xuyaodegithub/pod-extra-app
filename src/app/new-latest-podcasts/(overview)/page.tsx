@@ -11,6 +11,9 @@ export const metadata: Metadata = getMetaData({
   description:
     'PodExtra keeps you up-to-date with the latest podcasts from across the web in real-time, offering comprehensive tools like transcripts, mind maps, summaries, keywords, highlights, and shownotes to enrich your listening experience.',
   keywords: '',
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/new-latest-podcasts`,
+  },
 })
 export default async function Page({
   searchParams,
