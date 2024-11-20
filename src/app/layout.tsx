@@ -97,6 +97,7 @@ export default function RootLayout({
         <MyProvider>
           <html lang="en" className={`h-[100%] ${TiltWarp.variable} ${OpenSans.variable}`}>
             <head>
+              <link rel="icon" href="/images/favicon.png" />
               {/* Use React.Fragment or an array to wrap multiple elements */}
               <>
                 <Script async src="https://www.googletagmanager.com/gtag/js?id=G-1442PR33N8" strategy="beforeInteractive"></Script>
