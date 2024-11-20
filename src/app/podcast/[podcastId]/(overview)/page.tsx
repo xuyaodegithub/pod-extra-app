@@ -20,6 +20,9 @@ export async function generateMetadata({ params, searchParams }: any, parent: Re
   return getMetaData({
     title: `${showTitle} all Episodes with AI Transcript | PodExtra.AI`,
     description: `Dive into all ${total} episodes of ${itunesAuthor}'s '${showTitle}' podcast, enhanced with AI-powered transcription and episode summaries. Discover the latest episode from ${getCurrentLocalTime(resultList[0]?.gmtPubDate)}.`,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/podcast/${params.podcastId}`,
+    },
   })
 }
 export default async function Page({

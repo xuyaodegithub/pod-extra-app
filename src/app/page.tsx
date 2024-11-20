@@ -5,7 +5,11 @@ import Link from 'next/link'
 import fs from 'fs'
 import path from 'path'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-export const metadata: Metadata = getMetaData()
+export const metadata: Metadata = getMetaData({
+  alternates: {
+    canonical: process.env.NEXT_PUBLIC_NEXTAUTH_URL,
+  },
+})
 import AcmeLogo from '@/app/ui/acme-logo'
 import OtherLogo from '@/app/ui/other-logo'
 

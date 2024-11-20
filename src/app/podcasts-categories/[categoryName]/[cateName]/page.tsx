@@ -13,11 +13,14 @@ export async function generateMetadata({ params, searchParams }: any, parent: Re
   const { data } = await getPodShow({ pageSize, pageNum, sortBy: PUB_DATE, categoryId })
   const { requestCategoryList } = data || {}
   const breadcrumbsTitle = requestCategoryList?.map(({ categoryName }: any) => categoryName || '-').join(' / ') + ' podcasts'
-  const { categoryName = '' } = params
+  const { categoryName = '', cateName = '' } = params
   const childName = breadcrumbsTitle.split('/')
   return getMetaData({
     title: `The best ${breadcrumbsTitle} of ${y - 1}-${y} | PodExtra.AI`,
     description: `Discover the best ${childName[childName.length - 1]?.trim() || ''} with PodExtra. With AI-powered transcription and summarization, it elevates your listening experience.`,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/podcasts-categories/${categoryName}/${cateName}?childId=${categoryId}`,
+    },
   })
 }
 export default async function Page({
