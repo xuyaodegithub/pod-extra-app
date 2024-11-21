@@ -1,17 +1,23 @@
-import AcmeLogo from '@/app/ui/acme-logo'
-import LoginForm from '@/app/ui/login-form'
+import Pagination from '@/app/ui/pagination'
+import { getPodShow } from '@/app/lib/service'
+import { getMetaData } from '@/app/lib/utils'
+import { Metadata } from 'next'
+import UserHead from '@/app/ui/home/userHead'
+import UserPlan from '@/app/ui/userPlan'
 
-export default function LoginPage() {
+const y = new Date().getFullYear()
+export const metadata: Metadata = getMetaData({
+  title: `The Latest Episodes of  ${y - 1}-${y} | PodExtra.AI`,
+  description: `PodExtra keeps a close eye on Latest Episodes, bringing you updates on popular Episodes as soon as they're available, ensuring that you can transcribe and summarize the content right away.`,
+  keywords: '',
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/plan-pricing`,
+  },
+})
+export default async function Page() {
   return (
-    <main className="flex items-center justify-center md:h-screen">
-      <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
-        <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-36">
-          <div className="w-32 text-white md:w-36">
-            <AcmeLogo />
-          </div>
-        </div>
-        <LoginForm />
-      </div>
+    <main className="">
+      <UserPlan />
     </main>
   )
 }

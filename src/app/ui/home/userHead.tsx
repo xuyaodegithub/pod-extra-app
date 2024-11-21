@@ -1,7 +1,7 @@
-export default function UserHead({ name, open }: { name: string; open?: any }) {
+export default function UserHead({ name, open, className }: { name: string; open?: any; className?: string }) {
   return (
     <div
-      className={`text-md leading-[40px] text-center w-[40px] h-[40px] rounded-[50%] bg-play text-white shrink-0`}
+      className={`text-md leading-[40px] text-center w-[40px] h-[40px] rounded-[50%] bg-play text-white shrink-0 ${className}`}
       onClick={(event) => open && open(event)}
     >
       {name}

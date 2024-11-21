@@ -42,6 +42,7 @@ const config: Config = {
     boxShadow: {
       cardShow: '0px 13px 40px 0px rgba(75, 102, 135, 0.10);',
       popoverShow: '2px 2px 8px 0px rgba(100, 100, 100, 0.20);',
+      planShow: '2px 2px 6px 0px rgba(100, 100, 100, 0.20);',
     },
     colors: {
       transparent: 'transparent',
