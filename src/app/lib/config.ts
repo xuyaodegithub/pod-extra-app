@@ -60,3 +60,4 @@ export const cookiesOption = (data?: any) => {
   }
 }
 export const summarized = 'SUMMARIZED'
+export const callbackPath = 'CALLBACKPATH'

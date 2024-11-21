@@ -15,16 +15,17 @@ export default function SearchInput({ ...props }: {}) {
   const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams)
     params.set('page', '1')
-    params.set('pageSize', '10')
+    params.set('pageSize', '50')
     if (term) {
-      params.set('word', encodeURIComponent(term))
+      params.set('word', term)
+      console.log(params, 'aaaaaa')
     } else {
       return
       params.delete('word')
     }
     refInput.current.blur()
-    push(`/search?${params.toString()}`)
-    console.log(term, params.toString(), back)
+    const searchString = params.toString()?.replace(/\+/g, '%20')
+    push(`/search?${searchString}`)
   }, 100)
   function clearInput(e: any) {
     e.preventDefault()

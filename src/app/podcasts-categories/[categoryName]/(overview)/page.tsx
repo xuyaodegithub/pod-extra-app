@@ -5,16 +5,22 @@ import { Metadata, ResolvingMetadata } from 'next'
 const y = new Date().getFullYear()
 import Link from 'next/link'
 import CateItem from '@/app/ui/categories/cateItem'
-import {ClientSub} from "@/app/ui/clientDispatch";
-export async function generateMetadata({ params }: any, parent: ResolvingMetadata): Promise<Metadata> {
+import { ClientSub } from '@/app/ui/clientDispatch'
+export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
+  const pageSize = searchParams?.pageSize || 5
+  const pageNum = searchParams?.page || 1
+  const categoryId = searchParams?.categoryId || ''
+  const {
+    data: { requestCategoryList },
+  } = await getPodShow({ pageSize, pageNum, sortBy: PUB_DATE, categoryId })
+  const breadcrumbsTitle = requestCategoryList.map(({ categoryName }: any) => categoryName || '-').join(' / ') + ' podcasts'
   const { categoryName = '' } = params
-  const realCategoryName = decodeURIComponent(categoryName)
-    .split('-')
-    .map((i: string) => capitalizeFirstLetter(i))
-    .join(' ')
   return getMetaData({
-    title: `The best ${realCategoryName} podcasts of ${y - 1}-${y} | PodExtra.AI`,
-    description: `Discover the best ${realCategoryName} podcasts with PodExtra. With AI-powered transcription and summarization, it elevates your listening experience.`,
+    title: `The best ${breadcrumbsTitle} of ${y - 1}-${y} | PodExtra.AI`,
+    description: `Discover the best ${breadcrumbsTitle} with PodExtra. With AI-powered transcription and summarization, it elevates your listening experience.`,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/podcasts-categories/${categoryName}?categoryId=${categoryId}`,
+    },
   })
 }
 export default async function Page({
@@ -30,10 +36,13 @@ export default async function Page({
   const pageNum = searchParams?.page || 1
   const categoryId = searchParams?.categoryId || ''
   const {
-    data: {pageQueryResponse:{ resultList=[], total=0 },requestCategoryList},
+    data: {
+      pageQueryResponse: { resultList = [], total = 0 },
+      requestCategoryList,
+    },
   } = await getPodShow({ pageSize, pageNum, sortBy: PUB_DATE, categoryId })
   const totalPages = Math.ceil(+total / +pageSize)
-  const breadcrumbsTitle = requestCategoryList.map(({ categoryName}: any) => categoryName || '-').join(' / ') + ' Podcasts'
+  const breadcrumbsTitle = requestCategoryList.map(({ categoryName }: any) => categoryName || '-').join(' / ') + ' Podcasts'
   return (
     <main className={`flex flex-col`}>
       <ClientSub val={breadcrumbsTitle} />

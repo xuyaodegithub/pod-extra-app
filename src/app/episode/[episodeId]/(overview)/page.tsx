@@ -8,12 +8,15 @@ import { tabList } from '@/app/lib/config'
 import { PlayAudio } from '@/app/ui/episodeDetail/palyAudio'
 import { ClientSub } from '@/app/ui/clientDispatch'
 export async function generateMetadata({ params }: any, parent: ResolvingMetadata): Promise<Metadata> {
-  const [episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
+  const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
-  const { itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle } = data || {}
+  const { itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle, episodeUrl } = data || {}
   return getMetaData({
     title: `${episodeTitle} | PodExtra.AI`,
     description: `Hosted by ${itunesAuthor}, the '${showTitle}' episode titled '${episodeTitle}' runs for ${timeFormat(duration)} and features AI-generated transcripts and summaries. Updated on ${getCurrentLocalTime(gmtPubDate)}.`,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}${episodeUrl}`,
+    },
   })
 }
 export default async function Page({
@@ -27,7 +30,7 @@ export default async function Page({
     episodeId: string
   }
 }) {
-  const [ episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
+  const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
   const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle, showUrl = '' } = data || {}
   const [res1, res2] = await Promise.all([getEpisodeSummarize(episodeId), getEpisodeTranscript(episodeId)])

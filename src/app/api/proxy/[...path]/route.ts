@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
-import { BearerToken, googleIdToken,refreshToken } from '@/app/lib/config'
+import { BearerToken, googleIdToken, refreshToken } from '@/app/lib/config'
 import axios from 'axios'
 
 export async function POST(req: NextRequest, { params }: { params: { path: string[] } }) {
   const targetUrl = `${process.env.NEXT_PUBLIC_API_URL}${params.path.join('/')}`
   const cookieStore = cookies()
   const body = await req.json()
+  // const isAuthLogin = targetUrl.endsWith('account/auth')
   const t = cookieStore.get(googleIdToken)?.value || cookieStore.get(BearerToken)?.value || ''
   const rToken = cookieStore.get(refreshToken)?.value || ''
-  console.log(t, 'token', body, targetUrl, '================')
   // @ts-ignore
   const response: any = await axios({
     url: targetUrl,
@@ -23,10 +23,10 @@ export async function POST(req: NextRequest, { params }: { params: { path: strin
     },
     data: body,
   })
-  const {url} = response.config
-  if(url.endsWith('account/auth')){
+  const { url } = response.config
+  if (url.endsWith('account/auth')) {
     const Cookie = response.headers['set-cookie']
-    cookieStore.set(refreshToken,Cookie[0]||'')
+    cookieStore.set(refreshToken, Cookie[0] || '')
   }
   return new NextResponse(JSON.stringify(response.data), {
     status: response.status,

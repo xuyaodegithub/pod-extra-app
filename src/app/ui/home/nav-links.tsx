@@ -104,19 +104,19 @@ export default function NavLinks() {
         <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
       </div>
       {/*sigIn*/}
-      {!userInfo?.email && (
-        <div className={`pb-[18px] px-[10px]  mb-[15px]`} onClick={() => setShowDialog(true)}>
-          {titleCase('You')}
-          <div
-            className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md hover:bg-accent hover:text-accent-foreground`}
-          >
-            <img src={isDark ? signIn.darkIcon : signIn.icon} className="w-[20px] mr-[10px]" />
-            <p>{signIn.name}</p>
-            <img src={isDark ? signIn.darkRightIcon : signIn.rightIcon} className="w-[20px] ml-auto mr-[10px]" />
-          </div>
-          <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
-        </div>
-      )}
+      {/*{!userInfo?.email && (*/}
+      {/*  <div className={`pb-[18px] px-[10px]  mb-[15px]`} onClick={() => setShowDialog(true)}>*/}
+      {/*    {titleCase('You')}*/}
+      {/*    <div*/}
+      {/*      className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md hover:bg-accent hover:text-accent-foreground`}*/}
+      {/*    >*/}
+      {/*      <img src={isDark ? signIn.darkIcon : signIn.icon} className="w-[20px] mr-[10px]" />*/}
+      {/*      <p>{signIn.name}</p>*/}
+      {/*      <img src={isDark ? signIn.darkRightIcon : signIn.rightIcon} className="w-[20px] ml-auto mr-[10px]" />*/}
+      {/*    </div>*/}
+      {/*    <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>*/}
+      {/*  </div>*/}
+      {/*)}*/}
       {/*loginafter*/}
       {userInfo?.email && (
         <div className={` px-[10px]  mb-[10px]`}>
