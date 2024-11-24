@@ -1,9 +1,8 @@
-import Pagination from '@/app/ui/pagination'
-import { getPodShow } from '@/app/lib/service'
+import { getSkuList } from '@/app/lib/service'
 import { getMetaData } from '@/app/lib/utils'
 import { Metadata } from 'next'
-import UserHead from '@/app/ui/home/userHead'
 import UserPlan from '@/app/ui/userPlan'
+import PlanSku from '@/app/ui/userPlan/planSku'
 
 const y = new Date().getFullYear()
 export const metadata: Metadata = getMetaData({
@@ -14,10 +13,22 @@ export const metadata: Metadata = getMetaData({
     canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/plan-pricing`,
   },
 })
-export default async function Page() {
+export default async function Page({ searchParams }: { searchParams?: { pageSize?: string; page?: string } }) {
+  // const payload = {
+  //   page: searchParams?.page || '1',
+  //   pageSize: searchParams?.pageSize || '10',
+  // }
+  // const {
+  //   data: { memberPlan, quota },
+  // } = await getSkuList(payload)
   return (
     <main className="">
-      <UserPlan />
+      <div className={`mb-[67px]`}>
+        <UserPlan quotaList={[]} />
+      </div>
+      <div className={`text-max3 text-[#c9c9c9] text-center mb-[20px] font-bold`}>Choose the plan you like</div>
+      <PlanSku skuList={[]} />
+      <div className={`flex`}></div>
     </main>
   )
 }

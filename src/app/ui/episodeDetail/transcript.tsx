@@ -84,7 +84,7 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
               {isSame ? (
                 <div className={`w-[10px] h-[30px] rounded-[6px] mr-[48px]`} style={{ background: speaker.bg }}></div>
               ) : (
-                <div className={`w-[50px] h-[50px] mr-[8px] text-max leading-[50px] text-center rounded-[6px]`}>
+                <div className={`w-[50px] h-[50px] mr-[8px] text-max0 leading-[50px] text-center rounded-[6px]`}>
                   <img src={speaker.head} alt="" className={`w-[50px] h-[50px] object-cover`} />
                 </div>
               )}

@@ -14,7 +14,9 @@
 .custom-height {
     height: calc(100vh - 280px);
 }
-
+.text-max0{
+    font-size: 20px !important;
+}
 @layer utilities {
     .text-balance {
         text-wrap: balance;

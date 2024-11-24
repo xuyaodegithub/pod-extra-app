@@ -15,9 +15,10 @@ const config: Config = {
       sm: ['14px', { lineHeight: '20px' }],
       md: ['16px', { lineHeight: '24px' }],
       lg: ['18px', { lineHeight: '28px' }],
-      max: ['20px', { lineHeight: '32px' }],
+      max0: ['20px', { lineHeight: '32px' }],
       max1: ['22px', { lineHeight: '36px' }],
       max2: ['24px', { lineHeight: '40px' }],
+      max3: ['28px', { lineHeight: '40px' }],
     },
     zIndex: {
       '0': '0',
@@ -43,6 +44,8 @@ const config: Config = {
       cardShow: '0px 13px 40px 0px rgba(75, 102, 135, 0.10);',
       popoverShow: '2px 2px 8px 0px rgba(100, 100, 100, 0.20);',
       planShow: '2px 2px 6px 0px rgba(100, 100, 100, 0.20);',
+      skuShadow: ' 0 0 10px #eeeeee',
+      quotaShadow: '0px 0px 2px 0px rgba(100, 100, 100, 0.50);',
     },
     colors: {
       transparent: 'transparent',
@@ -56,6 +59,7 @@ const config: Config = {
       bgGray: '#F0F0F0',
       bgDark: '#242424',
       borderb: '#E8EDF1',
+      he5: '#e5e5e5',
       gray: {
         '100': '#999',
         '200': '#898989',

@@ -44,3 +44,23 @@ export function refreshIdToken() {
 export function getSearchList(data: any) {
   return fetchPost(`/v1/search`, data)
 }
+//获取sku列表
+export function getSkuList(data: any) {
+  return fetchGet(`/v1/sku/list`, data)
+}
+//获取sku列表
+export function cerateOrder(data: any) {
+  return fetchPost(`/v1/order/create`, data)
+}
+//获取订单信息
+export function getOrderInfo(orderId: string) {
+  return fetchGet(`/v1/order/${orderId}/query-status`, {})
+}
+//获取script管理页面
+export function getAdminUrl(data: any) {
+  return fetchGet(`/v1/subscription/get-admin-url`, data)
+}
+//创建summarize任务
+export function createSummarizeTask(data: any) {
+  return fetchPost(`/v1/podEpisode/{episodeId}/create-summarize-task`, data)
+}
