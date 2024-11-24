@@ -197,6 +197,7 @@ export default function IndexPage() {
       darkIcon: '/images/darkLatextAi.svg',
     },
     { name: 'Categories', href: '/podcasts-categories', icon: '/images/cate.svg', darkIcon: '/images/darkCate.svg' },
+    { name: 'Blog', href: '/blog', icon: '/images/cate.svg', darkIcon: '/images/darkCate.svg' },
   ]
 
   const otherLinks = [
