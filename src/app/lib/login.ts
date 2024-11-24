@@ -112,20 +112,10 @@ export const revokeAccess2 = async (redirectUrl = location.href) => {
       },
       body: new URLSearchParams({ token: accessToken }),
     })
-
-    if (response.ok) {
-      // Remove access token from local storage
-      cookies.remove(googleAccessToken)
-
-      // Redirect to the specified page (default to home page)
-      window.location.href = redirectUrl
-    } else {
-      // console.error('Failed to revoke token', await response.text())
-    }
+    cookies.remove(googleAccessToken)
+    window.location.href = redirectUrl
   } catch (error) {
     cookies.remove(googleAccessToken)
-    // Redirect to the specified page (default to home page)
     window.location.href = redirectUrl
-    // console.error('Error revoking token:', error)
   }
 }
