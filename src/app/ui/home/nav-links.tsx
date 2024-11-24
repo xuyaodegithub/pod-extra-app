@@ -134,7 +134,7 @@ export default function NavLinks() {
           <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
         </div>
       )}
-      Plan & pricing
+      {/*Plan & pricing*/}
       <div className={`px-[10px]  mb-[20px]`}>
         <Link
           href={planPrice.href}

@@ -14,20 +14,20 @@ export const metadata: Metadata = getMetaData({
   },
 })
 export default async function Page({ searchParams }: { searchParams?: { pageSize?: string; page?: string } }) {
-  // const payload = {
-  //   page: searchParams?.page || '1',
-  //   pageSize: searchParams?.pageSize || '10',
-  // }
-  // const {
-  //   data: { memberPlan, quota },
-  // } = await getSkuList(payload)
+  const payload = {
+    page: searchParams?.page || '1',
+    pageSize: searchParams?.pageSize || '10',
+  }
+  const {
+    data: { memberPlan, quota },
+  } = await getSkuList(payload)
   return (
     <main className="">
       <div className={`mb-[67px]`}>
-        <UserPlan quotaList={[]} />
+        <UserPlan quotaList={quota} />
       </div>
       <div className={`text-max3 text-[#c9c9c9] text-center mb-[20px] font-bold`}>Choose the plan you like</div>
-      <PlanSku skuList={[]} />
+      <PlanSku skuList={memberPlan} />
       <div className={`flex`}></div>
     </main>
   )

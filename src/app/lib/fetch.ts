@@ -3,15 +3,17 @@ import axios from 'axios'
 // import { useRouter } from 'next/navigation'
 // const { replace } = useRouter()
 import cookies from 'js-cookie'
-import { BearerToken, expiresIn,loginTime } from '@/app/lib/config'
+import { BearerToken, expiresIn, loginTime } from '@/app/lib/config'
 import { useUserInfo } from '@/context/UserInfo'
+import { message } from 'antd'
+
 // 检查 token 是否过期
 function isTokenExpired(): boolean {
   try {
     const t = cookies.get(expiresIn) || 0
     const l = cookies.get(loginTime) || 0
     const now = Date.now() // 当前时间
-    return +t+(+l) < now // 比较 exp（过期时间）
+    return +t + +l < now // 比较 exp（过期时间）
   } catch (e) {
     return true // 如果解析失败，认为 token 已过期
   }
@@ -86,6 +88,11 @@ instance.interceptors.response.use(
       return res
     } else if (res.code === 10001) {
       window.location.host = '/'
+    } else {
+      if (typeof window !== 'undefined') {
+        // Safe to use window here
+        message.error(res.message || '系统异常')
+      }
     }
   },
   (err: any) => {

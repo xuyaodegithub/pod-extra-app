@@ -3,60 +3,95 @@ import UserHead from '@/app/ui/home/userHead'
 import { useUserInfo } from '@/context/UserInfo'
 import { formatDate } from '@/app/lib/utils'
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog'
+import { getOrderInfo, getAdminUrl, createOrder } from '@/app/lib/service'
+import { free, yearly } from '@/app/lib/config'
+import { message } from 'antd'
+import { Loader2 } from 'lucide-react'
 
 export default function UserPlan({ quotaList }: { quotaList: any[] }) {
   const [showQuotas, setShowQuotas] = useState(false)
   const [showOrder, setShowOrder] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [loading2, setLoading2] = useState(false)
   const [quotaId, setQuotaId] = useState('')
   const searchParams = useSearchParams()
+  const pathName = usePathname()
+  const { replace } = useRouter()
   const orderId = searchParams?.get('orderId')
-  const isVip = true
   const { userInfo } = useUserInfo()
-  const list = [
-    {
-      skuId: 'quota-10',
-      unitPrice: 6.9,
-      currency: 'USD',
-      skuName: '10 episodes',
-      tag: '',
-      isDefault: false,
-      billingCycle: 'once',
-    },
-    {
-      skuId: 'quota-20',
-      unitPrice: 9.9,
-      currency: 'USD',
-      skuName: '20 episodes',
-      tag: '',
-      isDefault: true,
-      billingCycle: 'once',
-    },
-    {
-      skuId: 'quota-50',
-      unitPrice: 19.9,
-      currency: 'USD',
-      skuName: '50 episodes',
-      tag: '',
-      isDefault: false,
-      billingCycle: 'once',
-    },
-  ]
+  const {
+    name,
+    email,
+    role,
+    billingCycle,
+    subscriptionStatus,
+    gmtSubscriptionStart,
+    gmtSubscriptionEnd,
+    startQuota,
+    viewQuota,
+    extraStartQuota,
+  } = userInfo || {}
+  const isVip = role !== free
+  const viewQuotaNum = (isVip ? 'Unlimited' : viewQuota) || 0
+  const startNum = startQuota || 0
+  const endNum = extraStartQuota || 0
   function checkQuote(skuId: string) {
     console.log(skuId, 'skuId')
     setQuotaId(skuId)
   }
-  function confirmQuota() {}
+  async function confirmQuota() {
+    if (loading) return
+    setLoading(true)
+    try {
+      const {
+        data: { checkoutUrl },
+      } = await createOrder({ skuId: quotaId })
+      if (checkoutUrl) {
+        setLoading(false)
+        window.location.href = checkoutUrl
+      }
+    } catch (err) {
+      setLoading(false)
+    }
+  }
+  function confirmSuccess() {
+    const params = new URLSearchParams(searchParams)
+    params.delete('orderId')
+    setShowOrder(false)
+    replace(`${pathName}?${params.toString()}`)
+  }
+  async function toAdminManage() {
+    if (loading2) return
+    setLoading2(true)
+    try {
+      const {
+        data: { url },
+      } = await getAdminUrl({ returnUrl: location.href })
+      setLoading2(false)
+      if (url) window.location.href = url
+    } catch (e) {
+      setLoading2(false)
+    }
+  }
   useEffect(() => {
-    const defaultSku = list.find((item) => item.isDefault) || list[0]
+    const defaultSku = quotaList.find((item) => item.isDefault) || quotaList[0]
     setQuotaId(defaultSku?.skuId)
   }, [])
   useEffect(() => {
     if (orderId) {
-      setShowOrder(true)
+      getOrderInfo(orderId).then((res: any) => {
+        const {
+          data: { orderStatus },
+        } = res
+        console.log(orderStatus, 'orderStatus  ')
+        // 取值UNPAID-未付款|PAID-已付款
+        if (orderStatus === 'PAID') setShowOrder(true)
+        else message.error('支付未成功')
+      })
     }
-  }, [orderId])
+  }, [])
   return (
     <div className={`flex justify-between relative`}>
       <div
@@ -65,23 +100,29 @@ export default function UserPlan({ quotaList }: { quotaList: any[] }) {
         <div className={`flex items-center mb-[12px]`}>
           <UserHead name={userInfo?.name?.slice(0, 1)} className={`text-max0 w-[60px] h-[60px] leading-[60px]`} />
           <div className={`text-md text-fontGry-600 leading-[22px] ml-[10px] flex-1 overflow-hidden`}>
-            <div className={`font-semibold overflow-hidden text-ellipsis whitespace-nowrap dark:text-white`}>{userInfo?.name}</div>
-            <div className={`text-sm overflow-hidden text-ellipsis whitespace-nowrap dark:text-homehbg`}>{userInfo?.email}</div>
+            <div className={`font-semibold overflow-hidden text-ellipsis whitespace-nowrap dark:text-white`}>{name}</div>
+            <div className={`text-sm overflow-hidden text-ellipsis whitespace-nowrap dark:text-homehbg`}>{email}</div>
           </div>
         </div>
         {/*Current plan*/}
-        <div className={`font-semibold text-lg mb-[10px]`}>Current plan: Standard (Monthly)</div>
+        <div className={`font-semibold text-lg mb-[10px]`}>
+          Current plan: {role || 'Free'} {billingCycle ? `(${billingCycle})` : ''}
+        </div>
         <div className={`flex items-center text-sm dark:text-fontGry-600`}>
           <img src="/plan/info-circle.svg" alt="" className={`mr-[10px]`} />
           <span className={`text-[#bbbbbb] dark:text-fontGry-600`}>
-            {isVip ? 'Automatically renew on the 15th of each month.' : `Join date: ${formatDate(Date.now())}`}
+            {isVip
+              ? `Automatically renew on ${formatDate(gmtSubscriptionEnd, billingCycle === yearly)}`
+              : `Join date: ${formatDate(Date.now(), true)}`}
           </span>
         </div>
         {/*Manage on Stripe*/}
         {isVip && (
           <div
-            className={`inline-block text-md mt-[15px] leading-[40px] px-[12px] rounded-[5px] bg-[#E5E5E5] font-semibold cursor-pointer dark:bg-darkHomeBg dark:text-fontGry-100`}
+            className={`flex items-center justify-center ${loading2 ? 'w-[200px]' : 'w-[160px]'} text-md mt-[15px] leading-[40px] px-[12px] shadow-planShow rounded-[5px] bg-[#E5E5E5] font-semibold cursor-pointer dark:bg-darkHomeBg dark:text-fontGry-100`}
+            onClick={toAdminManage}
           >
+            {loading2 && <Loader2 className="animate-spin mr-[8px]" />}
             Manage on Stripe
           </div>
         )}
@@ -93,45 +134,49 @@ export default function UserPlan({ quotaList }: { quotaList: any[] }) {
         <div className={'relative mb-[10px] dark:text-homehbg'}>
           <div className={`flex items-center text-md mb-[5px]`}>
             <img src="/plan/eye.svg" alt="" className={`mr-[10px]`} />
-            view： <span className={`text-play font-semibold`}> Unlimited episodes</span>
+            view： <span className={`text-play font-semibold`}> {viewQuotaNum} episodes</span>
           </div>
           <div className={`flex items-center text-sm`}>
             <img src="/plan/info-circle.svg" alt="" className={`mr-[10px] self-start mt-[4px] ml-[3px]`} />
-            <span className={`text-[#bbbbbb] dark:text-fontGry-600`}>
-              Only episodes that have already been AI-processed. Reset to 4 on the 15th of each month.
-            </span>
+            <span className={`text-[#bbbbbb] dark:text-fontGry-600`}>Only episodes that have already been AI-processed.</span>
           </div>
-          <div className={`w-[333px] border-b-[1px] border-homehbg mt-[10px]`}></div>
+          {isVip && <div className={`w-[333px] border-b-[1px] border-homehbg mt-[10px]`}></div>}
         </div>
-        <div className={'relative mb-[10px] dark:text-homehbg'}>
-          <div className={`flex items-center text-md mb-[5px]`}>
-            <img src="/plan/diamond.svg" alt="" className={`mr-[10px]`} />
-            Monthly initiate AI processing：<span className={`text-play font-semibold`}> 20 episodes</span>
+        {isVip && (
+          <div>
+            <div className={'relative mb-[10px] dark:text-homehbg'}>
+              <div className={`flex items-center text-md mb-[5px]`}>
+                <img src="/plan/diamond.svg" alt="" className={`mr-[10px]`} />
+                Monthly initiate AI processing：<span className={`text-play font-semibold`}> {startNum} episodes</span>
+              </div>
+              <div className={`flex items-center text-sm`}>
+                <img src="/plan/info-circle.svg" alt="" className={`mr-[10px] self-start mt-[4px] ml-[3px]`} />
+                <span className={`text-[#bbbbbb] dark:text-fontGry-600`}>
+                  According to the plan. Reset to {startNum} on {formatDate(gmtSubscriptionEnd)}
+                </span>
+              </div>
+              <div className={`w-[333px] border-b-[1px] border-homehbg mt-[10px]`}></div>
+            </div>
+            <div className={'relative mb-[15px] dark:text-homehbg'}>
+              <div className={`flex items-center text-md mb-[5px]`}>
+                <img src="/plan/diamond-play.svg" alt="" className={`mr-[10px]`} />
+                Extra initiate AI processing：<span className={`text-play font-semibold`}> {endNum} episodes</span>
+              </div>
+              <div className={`flex items-center text-sm`}>
+                <img src="/plan/info-circle.svg" alt="" className={`mr-[10px] self-start mt-[4px] ml-[3px]`} />
+                <span className={`text-[#bbbbbb] dark:text-fontGry-600`}>
+                  Never expire. Extra quota consumed only after monthly quota used up.
+                </span>
+              </div>
+            </div>
+            <div
+              className={`inline-block cursor-pointer text-white text-md leading-[40px] px-[18px] bg-play rounded-[5px]`}
+              onClick={() => setShowQuotas(!showQuotas)}
+            >
+              Purchase extra quotas
+            </div>
           </div>
-          <div className={`flex items-center text-sm`}>
-            <img src="/plan/info-circle.svg" alt="" className={`mr-[10px] self-start mt-[4px] ml-[3px]`} />
-            <span className={`text-[#bbbbbb] dark:text-fontGry-600`}>According to the plan. Reset to 20 on the 15th of each month.</span>
-          </div>
-          <div className={`w-[333px] border-b-[1px] border-homehbg mt-[10px]`}></div>
-        </div>
-        <div className={'relative mb-[15px] dark:text-homehbg'}>
-          <div className={`flex items-center text-md mb-[5px]`}>
-            <img src="/plan/diamond-play.svg" alt="" className={`mr-[10px]`} />
-            Extra initiate AI processing：<span className={`text-play font-semibold`}> 0 episodes</span>
-          </div>
-          <div className={`flex items-center text-sm`}>
-            <img src="/plan/info-circle.svg" alt="" className={`mr-[10px] self-start mt-[4px] ml-[3px]`} />
-            <span className={`text-[#bbbbbb] dark:text-fontGry-600`}>
-              Never expire. Extra quota consumed only after monthly quota used up.
-            </span>
-          </div>
-        </div>
-        <div
-          className={`inline-block cursor-pointer text-white text-md leading-[40px] px-[18px] bg-play rounded-[5px]`}
-          onClick={() => setShowQuotas(!showQuotas)}
-        >
-          Purchase extra quotas
-        </div>
+        )}
       </div>
       <Dialog open={showQuotas} onOpenChange={(val: boolean) => setShowQuotas(val)}>
         <DialogContent className={`w-[640px] bg-white dark:bg-bgDark rounded-[20px] pb-[29px]`}>
@@ -141,7 +186,7 @@ export default function UserPlan({ quotaList }: { quotaList: any[] }) {
             </DialogTitle>
             <DialogDescription className={``}>
               <div className={`px-[20px]`}>
-                {list?.map((item) => {
+                {quotaList?.map((item) => {
                   const { skuId, unitPrice, currency, skuName, isDefault, billingCycle } = item
                   const isCheck = item.skuId === quotaId
                   return (
@@ -179,9 +224,10 @@ export default function UserPlan({ quotaList }: { quotaList: any[] }) {
                   Cancel
                 </div>
                 <div
-                  className={`cursor-pointer w-[140px] text-md leading-[40px] text-white text-center bg-play rounded-[5px]`}
+                  className={`flex items-center justify-center cursor-pointer w-[140px] text-md leading-[40px] text-white text-center bg-play rounded-[5px]`}
                   onClick={confirmQuota}
                 >
+                  {loading && <Loader2 className="animate-spin mr-[8px]" />}
                   Purchase
                 </div>
               </div>
@@ -207,7 +253,7 @@ export default function UserPlan({ quotaList }: { quotaList: any[] }) {
               <div className={`flex items-center`}>
                 <div
                   className={`cursor-pointer w-[140px] text-md leading-[40px] text-white text-center bg-play rounded-[5px] ml-auto`}
-                  onClick={confirmQuota}
+                  onClick={confirmSuccess}
                 >
                   OK
                 </div>
