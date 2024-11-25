@@ -1,15 +1,25 @@
 'use client'
 import { useEffect, useState, useRef } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { delay } from '@/app/lib/config'
+import { delay, free, summarized, summarizing } from '@/app/lib/config'
 import { useMyContext } from '@/context/MyContext'
+import { useUserInfo } from '@/context/UserInfo'
 
 export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
-  const { enclosureUrl = '', showTitle = '', showNotes = '', coverUrl = '', episodeTitle = '', episodeId = '' } = data || {}
+  const {
+    enclosureUrl = '',
+    showTitle = '',
+    showNotes = '',
+    coverUrl = '',
+    episodeTitle = '',
+    episodeId = '',
+    episodeStatus = '',
+  } = data || {}
   const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
   const [activeTab, setActiveTab] = useState(tabList[0].key)
   const [activeTime, setActiveTime] = useState(0)
   const { setData, setIsPlaying, setStepTime } = useMyContext()
+  const { userInfo } = useUserInfo()
   const [topNum, setTopNum] = useState(57)
   function tabChange(key: string) {
     if (activeTab === key) return
@@ -41,24 +51,28 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
       setTopNum(tNum)
     }
   }, [activeTab])
-  // useEffect(() => {
-  //   const box: any = document.querySelector('.episode-item')
-  //   if (activeTime > 0) {
-  //     const el: any = document.querySelector(`.active_${((activeTime || '') + '').replace(/\./g, '_')}`)
-  //     // const parseEl: any = el.parentNode
-  //     const top = el?.offsetTop - 100
-  //     console.log('activeTime', activeTime, `.active_${((activeTime || '') + '').replace(/\./g, '_')}`, el, top, activeTab)
-  //     // box.scrollTo({})
-  //     box.scrollTop = top
-  //     el.classList.add('flash')
-  //     setActiveTime(0)
-  //   }
-  // }, [activeTime])
+  const {
+    email = '',
+    role = '',
+    billingCycle = '',
+    viewQuota = 0,
+    startQuota = 0,
+    extraStartQuota = 0,
+    hasBalance = false,
+  } = userInfo || {}
+  //是否已登录
+  const isLogin = !!email
+  //是否免费用户
+  const isFree = role === free
+  //是否爱处理过
+  const isSummarized = episodeStatus === summarized
+  const showNots = tabList.at(-1)
+  // const sortTabList = isSummarized ? tabList
   return (
     <div className={`flex flex-col`}>
       <Tabs value={activeTab} className={``}>
         <TabsList
-          className={`flex tab_scroll sticky bg-white mb-[20px] z-10 dark:bg-black border-b-[1px] border-[#FFE1D3] dark:border-play rounded-[0px]`}
+          className={`flex tab_scroll sticky bg-white mb-[15px] z-10 dark:bg-black border-b-[1px] border-[#FFE1D3] dark:border-play rounded-[0px]`}
           style={{ top: `${topNum}px` }}
         >
           {tabList.map((item: any) => (

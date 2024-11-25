@@ -8,6 +8,8 @@ import CateItem from '@/app/ui/categories/cateItem'
 import { FireIcon } from '@heroicons/react/24/outline'
 import { audio_info, summarized } from '@/app/lib/config'
 import { useRouter } from 'next/navigation'
+import PlayBtn from '@/app/ui/search/play-btn'
+import FlowStart from '@/app/ui/search/flow-start'
 
 export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boolean }) {
   const { isDark } = useMyContext()
@@ -72,21 +74,8 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
               {des}
             </div>
             <div className={`flex items-center mt-auto`}>
-              <div
-                className={`text-min text-white flex items-center px-[9px] h-[28px] rounded-[14px] bg-play mr-24px`}
-                onClick={(e: any) => playAuido(e)}
-              >
-                <img src={`/icons/${play ? 'pused' : 'pused'}.svg`} alt="" className={`w-[16px] h-[16px] mr-[4px]`} />
-                {historyTime && (
-                  <div className={`h-[4px] bg-white w-[25px] rounded-[2px] relative mr-[8px] overflow-hidden`}>
-                    <i className={`absolute w-[50%] h-[100%] bg-[#FF9C70] left-0 top-0`}></i>
-                  </div>
-                )}
-                <span>{getTimeWithHoursMin(duration)}</span>
-              </div>
-              {/*<div className={`bg-hbg dark:bg-bgDark rounded-[50%] p-[5px]`} onClick={(e: any) => followEpiosde(e)}>*/}
-              {/*  <img src="/icons/star.svg" alt="" />*/}
-              {/*</div>*/}
+              <PlayBtn item={item} />
+              {/*<FlowStart item={item} />*/}
             </div>
           </div>
         </div>
