@@ -6,6 +6,8 @@ import { ClockIcon, MicrophoneIcon } from '@heroicons/react/24/outline'
 import { Tab } from '@/app/ui/episodeDetail/tabs'
 import { tabList } from '@/app/lib/config'
 import { PlayAudio } from '@/app/ui/episodeDetail/palyAudio'
+import PlayBtn from '@/app/ui/search/play-btn'
+import FlowStart from '@/app/ui/search/flow-start'
 import { ClientSub } from '@/app/ui/clientDispatch'
 export async function generateMetadata({ params }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
@@ -36,7 +38,9 @@ export default async function Page({
   const [res1, res2] = await Promise.all([getEpisodeSummarize(episodeId), getEpisodeTranscript(episodeId)])
   const summery = res1.data
   const paragraphs = res2.data?.paragraphs || []
-
+  function followEpiosde(e: any) {
+    e.preventDefault()
+  }
   return (
     <main className={`flex flex-col episode-item`}>
       <ClientSub val={episodeTitle} />
@@ -54,12 +58,14 @@ export default async function Page({
             <span className={`mr-24px`}>{timeFormat(duration)}</span>
             <span>Update: {getCurrentLocalTime(gmtPubDate, false)}</span>
           </div>
-          <div>
-            <PlayAudio audioInfo={data} classStyle={`mt-0 mb-0`} />
+          <div className={`mt-[10px] flex items-center`}>
+            {/*<PlayAudio audioInfo={data} classStyle={`mt-0 mb-0`} />*/}
+            <PlayBtn item={data} />
+            {/*<FlowStart item={data} />*/}
           </div>
           <Link
             href={showUrl}
-            className={`border border-gray-1000 rounded-5px text-sm py-[10px] px-[15px] mt-auto flex items-center dark:border-fontGry-600 dark:text-fontGry-100`}
+            className={`border border-gray-1000 rounded-5px text-sm py-[7px] px-[15px] mt-auto flex items-center dark:border-fontGry-600 dark:text-fontGry-100`}
           >
             <span className={`shrink-0`}>from podcast</span>
             <img src={showCoverUrl} alt="" className={`w-[25px] h-[25px] rounded-5px mx-[6px]`} />

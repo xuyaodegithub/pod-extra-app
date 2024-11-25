@@ -9,10 +9,11 @@ import UserHead from '@/app/ui/home/userHead'
 import { googleLoginPopup, revokeAccess2, client_id } from '@/app/lib/login'
 // import { signIn, signOut, useSession } from 'next-auth/react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog'
-import { googleIdToken, BearerToken } from '@/app/lib/config'
+import { googleIdToken, BearerToken, loginExpire } from '@/app/lib/config'
 import cookies from 'js-cookie'
 import { userLogin, getUerInfo, userLoginOut } from '@/app/lib/service'
 import { usePathname } from 'next/navigation'
+import eventBus from '@/app/lib/eventBus'
 
 export default function UserInfo() {
   const { isDark } = useMyContext()
@@ -52,26 +53,6 @@ export default function UserInfo() {
     }
   }, [open])
   //这是直接掉google的api
-  const fetchGoogleUserInfo = async (token: string) => {
-    try {
-      const response = await fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      const { ok = false, status } = response
-      if (ok) {
-        const userInfo = await response.json()
-        setUserInfo(userInfo)
-        // 在这里可以处理用户信息，例如将其存储在状态中
-      } else {
-        //accessToken过期
-        if (status === 401) {
-          cookies.remove(googleIdToken)
-        }
-      }
-    } catch (error) {}
-  }
   useEffect(() => {
     const accessToken = cookies.get(googleIdToken) || ''
     const token = cookies.get(BearerToken) || ''
@@ -83,7 +64,16 @@ export default function UserInfo() {
       initUserInfo()
     }
   }, [])
-
+  useEffect(() => {
+    const handleUnauthorized = () => {
+      setShowDialog(true)
+      setUserInfo({})
+    }
+    eventBus.on(loginExpire, handleUnauthorized)
+    return () => {
+      eventBus.off(loginExpire, handleUnauthorized)
+    }
+  }, [setShowDialog, setUserInfo])
   const loginBtn = {
     text: 'Sign in',
     icon: '/images/login.svg',
