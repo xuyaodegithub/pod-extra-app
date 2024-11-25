@@ -3,9 +3,10 @@ import axios from 'axios'
 // import { useRouter } from 'next/navigation'
 // const { replace } = useRouter()
 import cookies from 'js-cookie'
-import { BearerToken, expiresIn, loginTime } from '@/app/lib/config'
+import { BearerToken, expiresIn, googleAccessToken, loginTime, refreshToken as rToken, loginExpire } from '@/app/lib/config'
 import { useUserInfo } from '@/context/UserInfo'
 import { message } from 'antd'
+import eventBus from '@/app/lib/eventBus'
 
 // 检查 token 是否过期
 function isTokenExpired(): boolean {
@@ -76,12 +77,6 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response: any) => {
     const res = response.data
-    if (response.status === 401) {
-      const { setShowDialog, setUserInfo } = useUserInfo()
-      setShowDialog(true)
-      setUserInfo({})
-      return Promise.reject(response)
-    }
     // 对响应数据做点什么
     if (res.code === 0) {
       // Promise.resolve(res)
@@ -96,12 +91,18 @@ instance.interceptors.response.use(
     }
   },
   (err: any) => {
+    if (err.status === 401) {
+      cookies.remove(BearerToken)
+      cookies.remove(rToken)
+      cookies.remove(googleAccessToken)
+      eventBus.emit(loginExpire)
+    }
     // 根据你设置的timeout/真的请求超时 判断请求现在超时了，你可以在这里加入超时的处理方案
     if (err.code === 'ECONNABORTED' && err.message.indexOf('timeout') !== -1) {
       // return axios.request(originalRequest) // 再重复请求一次
       return 'timeout'
     }
-    return Promise.reject(err)
+    return Promise.resolve(err)
   }
 )
 

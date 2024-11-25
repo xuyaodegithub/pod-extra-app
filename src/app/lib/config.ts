@@ -60,6 +60,7 @@ export const cookiesOption = (data?: any) => {
   }
 }
 export const summarized = 'SUMMARIZED'
+export const summarizing = 'SUMMARIZING'
 export const callbackPath = 'CALLBACKPATH'
 export const monthly = 'MONTHLY'
 export const yearly = 'YEARLY'
@@ -76,3 +77,4 @@ export const planTab = [
     val: yearly,
   },
 ]
+export const loginExpire = 'LOGINEXPIRE'
