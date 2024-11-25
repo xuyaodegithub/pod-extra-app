@@ -14,22 +14,22 @@ async function generateEtag(request: NextRequest) {
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   // return NextResponse.redirect(new URL('/home', request.url))
-  const res: any = NextResponse.next()
+  // const res: any = NextResponse.next()
   // 假设您有一个生成 Etag 的方法
-  const etag = await generateEtag(request)
+  // const etag = await generateEtag(request)
 
-  if (request.headers.get('If-None-Match') === etag) {
-    // 如果匹配，返回 304 响应，结束函数
-    return new NextResponse(null, {
-      status: 304,
-    })
-  }
+  // if (request.headers.get('If-None-Match') === etag) {
+  //   // 如果匹配，返回 304 响应，结束函数
+  //   return new NextResponse(null, {
+  //     status: 304,
+  //   })
+  // }
 
-  res.headers.set('Etag', etag)
-  res.headers.set('Last-Modified', new Date().toUTCString())
+  // res.headers.set('Etag', etag)
+  // res.headers.set('Last-Modified', new Date().toUTCString())
 
-  return res
-  // return NextResponse.next()
+  // return res
+  return NextResponse.next()
 }
 
 // export const config = {
