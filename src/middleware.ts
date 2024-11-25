@@ -14,6 +14,9 @@ async function generateEtag(request: NextRequest) {
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   // return NextResponse.redirect(new URL('/home', request.url))
+  //   const { pathname } = new URL(request.url);
+  // 想要缓存的接口
+  //   if (pathname.startsWith('/api/some-endpoint')) {
   // const res: any = NextResponse.next()
   // 假设您有一个生成 Etag 的方法
   // const etag = await generateEtag(request)
