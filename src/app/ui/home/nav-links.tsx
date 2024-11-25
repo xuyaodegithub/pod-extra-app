@@ -135,16 +135,16 @@ export default function NavLinks() {
       {/*  </div>*/}
       {/*)}*/}
       {/*Plan & pricing*/}
-      {/*<div className={`px-[10px]  mb-[20px]`}>*/}
-      {/*  <Link*/}
-      {/*    href={planPrice.href}*/}
-      {/*    className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md ${planPrice.href === pathname ? 'bg-accent ext-accent-foreground' : ''}  hover:bg-accent hover:text-accent-foreground`}*/}
-      {/*  >*/}
-      {/*    <img src={isDark ? planPrice.darkIcon : planPrice.icon} className="w-[20px] mr-[10px]" />*/}
-      {/*    <p>{planPrice.name}</p>*/}
-      {/*  </Link>*/}
-      {/*  <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>*/}
-      {/*</div>*/}
+      <div className={`px-[10px]  mb-[20px]`}>
+        <Link
+          href={planPrice.href}
+          className={`cursor-pointer flex px-[14px] mb-[16px] h-[40px] items-center transition duration-200 rounded-md text-md ${planPrice.href === pathname ? 'bg-accent ext-accent-foreground' : ''}  hover:bg-accent hover:text-accent-foreground`}
+        >
+          <img src={isDark ? planPrice.darkIcon : planPrice.icon} className="w-[20px] mr-[10px]" />
+          <p>{planPrice.name}</p>
+        </Link>
+        <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
+      </div>
       <div className={`px-[10px]  mb-[20px]`}>
         {titleCase('Explore')}
         {links.map((link, ind: number) => {

@@ -10,6 +10,7 @@ const nextConfig = (phase) => {
     // images: {
     //   domains: ['*'],
     // },
+    reactStrictMode: true,
     sassOptions: {
       additionalData: `$var: red;`,
     },

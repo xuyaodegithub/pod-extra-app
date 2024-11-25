@@ -39,6 +39,14 @@ export async function POST(req: NextRequest, { params }: { params: { path: strin
 export async function GET(req: NextRequest, { params }: { params: { path: string[] } }) {
   const targetUrl = `${process.env.NEXT_PUBLIC_API_URL}${params.path.join('/')}`
   const cookieStore = cookies()
+  const playLoad = req.nextUrl.searchParams
+  const paramsObject = Array.from(playLoad.entries()).reduce(
+    (acc, [key, value]) => {
+      acc[key] = value
+      return acc
+    },
+    {} as Record<string, string>
+  )
   try {
     // @ts-ignore
     const response: any = await axios({
@@ -51,9 +59,8 @@ export async function GET(req: NextRequest, { params }: { params: { path: string
         'Content-Type': 'application/json',
         Authorization: `Bearer ${cookieStore.get(BearerToken)?.value || ''}`,
       },
-      params: {},
+      params: paramsObject,
     })
-
     return new NextResponse(JSON.stringify(response.data), {
       status: response.status,
       headers: {
@@ -62,7 +69,6 @@ export async function GET(req: NextRequest, { params }: { params: { path: string
       },
     })
   } catch (e) {
-    console.log(e)
     return new NextResponse(JSON.stringify({}), {})
   }
 }

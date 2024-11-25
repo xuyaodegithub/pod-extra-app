@@ -12,11 +12,13 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { googleIdToken, BearerToken } from '@/app/lib/config'
 import cookies from 'js-cookie'
 import { userLogin, getUerInfo, userLoginOut } from '@/app/lib/service'
+import { usePathname } from 'next/navigation'
 
 export default function UserInfo() {
   const { isDark } = useMyContext()
   const { userInfo, setUserInfo, showDialog, setShowDialog, showLoginDialog, setShowLoginDialog } = useUserInfo()
   const [open, setOpen] = useState(false)
+  const pathname = usePathname()
   // const { data: session } = useSession()
   function openPopover(e: any) {
     e.stopPropagation()
@@ -102,14 +104,19 @@ export default function UserInfo() {
     await userLoginOut()
     cookies.remove(BearerToken)
     cookies.remove(googleIdToken)
-    revokeAccess2()
+    //需要返回首页的页面
+    const shouldBack = ['/plan-pricing']
+    const backUrl = shouldBack.some((item) => pathname.endsWith(item)) ? '/home' : location.href
+    revokeAccess2(backUrl)
   }
 
   return (
     <div className="flex items-center">
-      {/*<Link href="/plan-pricing" className={`mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}>*/}
-      {/*  Pricing*/}
-      {/*</Link>*/}
+      {userInfo?.email && (
+        <Link href="/plan-pricing" className={`mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}>
+          Pricing
+        </Link>
+      )}
       {userInfo?.email ? (
         <div>
           <Popover data-side="left" open={open}>

@@ -166,3 +166,14 @@ export function splitStringFromLastDash(input: string): [string, string] {
   const part2 = input.substring(lastDashIndex + 1)
   return [part1, part2]
 }
+export function formatDate(timestamp: number, needY: boolean = false): string {
+  const date = new Date(timestamp)
+
+  const monthNames = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May.', 'Jun.', 'Jul.', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.']
+
+  const day = date.getDate()
+  const ordinal = day === 1 || day === 21 || day === 31 ? 'st' : day === 2 || day === 22 ? 'nd' : day === 3 || day === 23 ? 'rd' : 'th'
+
+  const formattedDate = `${monthNames[date.getMonth()]} ${day}${ordinal}` + (needY ? `, ${date.getFullYear()}` : '')
+  return formattedDate
+}

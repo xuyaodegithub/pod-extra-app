@@ -27,7 +27,7 @@ export function Highlights({ data }: { data: any }) {
         return (
           <div className={`mb-[16px] pb-[12px] border-b-[1px] border-e8e dark:border-fontGry-600`} key={`${item.start}-${ind}`}>
             <div className={`flex mb-[9px]`} style={{ color: speaker.color }}>
-              <div className={`w-[50px] h-[50px] mr-[8px] text-max leading-[50px] text-center rounded-[6px]`}>
+              <div className={`w-[50px] h-[50px] mr-[8px] text-max0 leading-[50px] text-center rounded-[6px]`}>
                 <img src={speaker.head} alt="" className={`w-[50px] h-[50px] object-cover`} />
               </div>
               <div className={`flex flex-col justify-between`}>
