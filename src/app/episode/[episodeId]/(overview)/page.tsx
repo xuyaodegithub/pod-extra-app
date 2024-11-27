@@ -35,9 +35,6 @@ export default async function Page({
   const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
   const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle, showUrl = '' } = data || {}
-  const [res1, res2] = await Promise.all([getEpisodeSummarize(episodeId), getEpisodeTranscript(episodeId)])
-  const summery = res1.data
-  const paragraphs = res2.data?.paragraphs || []
   function followEpiosde(e: any) {
     e.preventDefault()
   }
@@ -74,7 +71,7 @@ export default async function Page({
         </div>
       </div>
       <div className={`mt-[13px]`}>
-        <Tab tabList={tabList} data={{ ...data, ...summery, paragraphs }} />
+        <Tab tabList={tabList} data={{ ...data }} />
       </div>
     </main>
   )

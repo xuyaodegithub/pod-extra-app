@@ -13,6 +13,7 @@ async function generateEtag(request: NextRequest) {
 }
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
+  // const token = request.cookies.get('BEARERTOKEN')
   // return NextResponse.redirect(new URL('/home', request.url))
   //   const { pathname } = new URL(request.url);
   // 想要缓存的接口
