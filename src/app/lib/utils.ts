@@ -177,3 +177,16 @@ export function formatDate(timestamp: number, needY: boolean = false): string {
   const formattedDate = `${monthNames[date.getMonth()]} ${day}${ordinal}` + (needY ? `, ${date.getFullYear()}` : '')
   return formattedDate
 }
+export function monthsUntilEnd(endTimestamp: number): number {
+  const now = new Date().getTime()
+  const end = new Date(endTimestamp).getTime()
+
+  if (end < now) {
+    return 0 // 如果结束时间已经过去，返回0
+  }
+
+  const diffInMs = end - now
+  const diffInMonths = diffInMs / (1000 * 60 * 60 * 24 * 30.44) // 平均每月天数约为30.44天
+
+  return Math.ceil(diffInMonths)
+}

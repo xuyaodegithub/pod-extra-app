@@ -27,7 +27,7 @@ export default function PlayBtn({ item }: { item: any }) {
       className={`text-min text-white flex items-center px-[9px] h-[28px] rounded-[14px] bg-play mr-24px cursor-pointer`}
       onClick={(e: any) => playAuido(e)}
     >
-      <img src={`/icons/${play ? 'pused' : 'pused'}.svg`} alt="" className={`w-[16px] h-[16px] mr-[4px]`} />
+      <img src={`/icons/${play ? 'play-white' : 'pused'}.svg`} alt="" className={`w-[16px] h-[16px] mr-[4px]`} />
       {historyTime && (
         <div className={`h-[4px] bg-white w-[25px] rounded-[2px] relative mr-[8px] overflow-hidden`}>
           <i className={`absolute w-[50%] h-[100%] bg-[#FF9C70] left-0 top-0`}></i>

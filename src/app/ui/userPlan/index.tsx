@@ -33,7 +33,7 @@ export default function UserPlan({ quotaList }: { quotaList: any[] }) {
     viewQuota,
     extraStartQuota,
   } = userInfo || {}
-  const isVip = role !== free
+  const isVip = role !== free && role
   const viewQuotaNum = (isVip ? 'Unlimited' : viewQuota) || 0
   const startNum = startQuota || 0
   const endNum = extraStartQuota || 0

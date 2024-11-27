@@ -19,10 +19,10 @@ export function getEpisodeDetail(episodeId: string) {
   return fetchGet(`v1/podEpisode/${episodeId}`, {})
 }
 export function getEpisodeSummarize(episodeId: string) {
-  return fetchGet(`v1/podEpisode/${episodeId}/summarize`, {})
+  return fetchGet(`/api/proxy/v1/podEpisode/${episodeId}/summarize`, {})
 }
 export function getEpisodeTranscript(episodeId: string) {
-  return fetchGet(`v1/podEpisode/${episodeId}/transcript`, {})
+  return fetchGet(`/api/proxy/v1/podEpisode/${episodeId}/transcript`, {})
 }
 //登录
 export function userLogin(data: any) {
@@ -61,6 +61,6 @@ export function getAdminUrl(data: any) {
   return fetchPost(`/api/proxy/v1/subscription/get-admin-url`, data)
 }
 //创建summarize任务
-export function createSummarizeTask(data: any) {
-  return fetchPost(`/v1/podEpisode/{episodeId}/create-summarize-task`, data)
+export function createSummarizeTask(episodeId: string) {
+  return fetchPost(`/api/proxy/v1/podEpisode/${episodeId}/create-summarize-task`, {})
 }

@@ -17,7 +17,7 @@ import eventBus from '@/app/lib/eventBus'
 
 export default function UserInfo() {
   const { isDark } = useMyContext()
-  const { userInfo, setUserInfo, showDialog, setShowDialog, showLoginDialog, setShowLoginDialog } = useUserInfo()
+  const { userInfo, setUserInfo, showDialog, setShowDialog, setLoading } = useUserInfo()
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   // const { data: session } = useSession()
@@ -34,17 +34,23 @@ export default function UserInfo() {
     }
   }
   async function useTokenToLogin() {
-    const token = cookies.get(googleIdToken)
-    const {
-      data: { idToken },
-    } = await userLogin({ idToken: token })
-    cookies.set(BearerToken, idToken)
-    cookies.remove(googleIdToken)
+    try {
+      const token = cookies.get(googleIdToken)
+      const {
+        data: { idToken },
+      } = await userLogin({ idToken: token })
+      cookies.set(BearerToken, idToken)
+      cookies.remove(googleIdToken)
+    } catch (e) {}
     initUserInfo()
   }
   async function initUserInfo() {
-    const { data } = await getUerInfo()
-    setUserInfo(data)
+    try {
+      const { data } = await getUerInfo()
+      setUserInfo(data)
+    } catch (e) {}
+
+    setLoading(false)
   }
   useEffect(() => {
     if (open) document.addEventListener('click', hiddenPopover)
@@ -57,10 +63,12 @@ export default function UserInfo() {
     const accessToken = cookies.get(googleIdToken) || ''
     const token = cookies.get(BearerToken) || ''
     if (accessToken && !token) {
+      setLoading(true)
       // 登录获取idToken
       useTokenToLogin()
       // revokeAccess(accessToken)
     } else if (token) {
+      setLoading(true)
       initUserInfo()
     }
   }, [])
