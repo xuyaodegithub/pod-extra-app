@@ -9,7 +9,7 @@ import { message } from 'antd'
 import eventBus from '@/app/lib/eventBus'
 
 // 检查 token 是否过期
-function isTokenExpired(): boolean {
+export function isTokenExpired(): boolean {
   try {
     const t = cookies.get(expiresIn) || 0
     const l = cookies.get(loginTime) || 0
@@ -21,7 +21,7 @@ function isTokenExpired(): boolean {
 }
 
 // 刷新 token 函数
-async function refreshToken(): Promise<string> {
+export async function refreshToken(): Promise<string> {
   const response = await axios.post(
     '/api/proxy/v1/account/refreshIdToken',
     {},
@@ -116,7 +116,10 @@ const fetchPost = (url: string, data: any) => {
     data: data,
   })
 }
-const fetchGet = (url: string, data: any) => {
+const fetchGet = (url: string, data: any, token?: any) => {
+  if (token) {
+    instance.defaults.headers['Authorization'] = `Bearer ${token}`
+  } else instance.defaults.headers['Authorization'] = ''
   //post请求
   return instance({
     method: 'get',

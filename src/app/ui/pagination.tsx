@@ -67,8 +67,8 @@ export default function Pagination({ totalPages, total, title }: { totalPages: n
 
         <PaginationArrow direction="right" href={createPageURL(currentPage + 1)} isDisabled={currentPage >= totalPages} />
         <Select onValueChange={(e: any) => selectChange(e)} defaultValue={`${pageSize}`} disabled>
-          <SelectTrigger className="w-auto h-[32px] bg-transparent rounded-[10px] border shadow-none focus:ring-0 focus:ring-offset-0 ml-[16px]">
-            <span className={` py-[2px] text-min rounded-10px cursor-pointer`}>{pageSize || 50} / page</span>
+          <SelectTrigger className="w-auto h-[32px] bg-transparent rounded-[10px] border shadow-none focus:ring-0 focus:ring-offset-0 ml-[16px] cursor-not-allowed">
+            <span className={` py-[2px] text-min rounded-10px  cursor-not-allowed`}>{pageSize || 50} / page</span>
           </SelectTrigger>
           <SelectContent>
             {volumeList.map((item: number) => {

@@ -10,6 +10,8 @@ interface MyContextType {
   setIsPlaying: (isPlaying: boolean) => void
   time: number
   setTime: (time: number) => void
+  allTime: number
+  setAllTime: (time: number) => void
   stepTime: number
   setStepTime: (stepTime: number) => void
   isDark: boolean
@@ -27,6 +29,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [data, setData] = useState<any | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [time, setTime] = useState(0)
+  const [allTime, setAllTime] = useState(0)
   const [stepTime, setStepTime] = useState(0)
   const [isDark, setIsDark] = useState(false)
   const [title, setTitle] = useState('')
@@ -54,6 +57,8 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setTitle,
         tabsPage,
         setTabsPage,
+        allTime,
+        setAllTime,
       }}
     >
       {children}

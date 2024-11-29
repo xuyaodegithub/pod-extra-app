@@ -6,7 +6,7 @@ import { ArrowsPointingOutIcon, ArrowsPointingInIcon } from '@heroicons/react/24
 
 export function Mindmap({ data, activeTab, goThisTime }: { data: any; activeTab?: string; goThisTime?: any }) {
   const isMindMap = activeTab === 'MINDMAP'
-  const { mindmapInMd = {}, episodeTitle } = data || {}
+  const { mindmapInMd = '', episodeTitle } = data || {}
   const [showOnce, setShowOnce] = useState(false)
   const [fullScreen, setFullScreen] = useState(false)
   function clickSpan(e: any) {
@@ -22,7 +22,7 @@ export function Mindmap({ data, activeTab, goThisTime }: { data: any; activeTab?
       ;(document.querySelector('.episode-item') as HTMLElement).scrollTop = 160
       setShowOnce(true)
     }
-  }, [showOnce, isMindMap, fullScreen])
+  }, [showOnce, isMindMap, fullScreen, mindmapInMd])
   return (
     <div key="Mindmap" className={`h-[100%]`}>
       <div
@@ -38,7 +38,7 @@ export function Mindmap({ data, activeTab, goThisTime }: { data: any; activeTab?
             <ArrowsPointingOutIcon className={`w-[20px] h-[20px]`} />
           )}
         </div>
-        {showOnce && (
+        {showOnce && mindmapInMd && (
           <MarkmapHooks
             fullScreen={fullScreen}
             mindmapInMd={mindmapInMd?.replace(/\((\d+\.\d+)\)/g, (match: any, p1: any) => {

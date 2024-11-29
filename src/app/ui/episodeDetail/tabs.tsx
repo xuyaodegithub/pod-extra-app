@@ -10,6 +10,7 @@ import { getEpisodeSummarize, getEpisodeTranscript, createSummarizeTask } from '
 import { Spin } from 'antd'
 import { Loader2 } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { getNextResetTimeString } from '@/lib/utils'
 
 export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
   const {
@@ -27,7 +28,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
   const [activeTab, setActiveTab] = useState(tabList[0].key)
   const [tabs, setTabs] = useState(tabList)
   const { setData, setIsPlaying, setStepTime, isDark } = useMyContext()
-  const { userInfo, setShowDialog, loading } = useUserInfo()
+  const { userInfo, setShowDialog, loading, initUserInfo } = useUserInfo()
   const [dataWithAi, setDataWithAi] = useState({})
   const [topNum, setTopNum] = useState(57)
   const [loadData, setLoadData] = useState(false)
@@ -80,6 +81,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
     hasBalance = false,
     gmtSubscriptionEnd,
     gmtSubscriptionStart,
+    gmtSignUp,
   } = userInfo || {}
   //是否已登录
   const isLogin = !!email
@@ -104,18 +106,23 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
       setDataWithAi({ ...summery, paragraphs })
     } catch (e) {}
     setLoadData(false)
+    if (isFree && !hasViewed) {
+      initUserInfo()
+    }
     setHasViewed(true)
   }
   useEffect(() => {
     if (isSummarized) {
       if (isFree && !hasViewed) {
         setTabs(sortArray([...tabList], 1))
+      } else {
+        setTabs(tabList)
       }
     } else {
       setTabs(sortArray([...tabList], 0))
       setActiveTab(tabList.at(-1)?.key)
     }
-  }, [setTabs, isSummarized, hasViewed, setActiveTab])
+  }, [setTabs, isSummarized, hasViewed, setActiveTab, isFree])
   useEffect(() => {
     console.log(hasViewed, 'hasViewed', data)
     if (isSummarized && isLogin && hasViewed) {
@@ -146,6 +153,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
       setConfirmLoading(false)
       setSummarizedByMe(true)
       setEpisodeStatus(summarizing)
+      initUserInfo()
     } catch (e) {
       setConfirmLoading(false)
     }
@@ -185,9 +193,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
               <div className={`text-sm text-fontGry-100 mb-[16px] dark:text-homehbg`}>
                 <p>Free users can view 4 episodes that have already been processed by AI.</p>
                 <p>
-                  {isLogin
-                    ? `${viewQuota} episodes left. Reset to 4 on ${formatDate(Date.now(), billingCycle === yearly)}.`
-                    : 'Please sign in to view.'}
+                  {isLogin ? `${viewQuota} episodes left. Reset to 4 on ${getNextResetTimeString(gmtSignUp)}` : 'Please sign in to view.'}
                 </p>
               </div>
               <div
@@ -270,10 +276,10 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
                         </span>
                       </div>
                       <div className={`text-fontGry-100 mb-[10px]`}>
-                        {monthsUntilEnd(gmtSubscriptionEnd)} monthly quotas left. Reset to {role === standard ? 20 : 50} on{' '}
-                        {formatDate(gmtSubscriptionEnd, billingCycle === yearly)}.
+                        {startQuota || 0} monthly quotas left. Reset to {role === standard ? 20 : 50} on{' '}
+                        {getNextResetTimeString(gmtSubscriptionStart)}
                         <br />
-                        {extraStartQuota} extra quotas left.
+                        {extraStartQuota || 0} extra quotas left.
                       </div>
                       <div
                         className={`mb-[10px] cursor-pointer text-sm leading-[28px] w-[200px] text-center rounded-[5px] text-white ${!hasBalance ? 'bg-[#c8c8c8]' : 'bg-play'}`}
@@ -310,7 +316,8 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
             </DialogTitle>
             <DialogDescription className={``}>
               <div className={`text-md text-fontGry-600 mb-[40px] px-[20px] dark:text-homehbg font-normal`}>
-                One monthly quota will be deducted after the AI-process of the episode is completed. Click "run" to start the process.
+                One {startQuota > 0 ? 'monthly' : 'extra'} quota will be deducted after the AI-process of the episode is completed. Click
+                "run" to start the process.
               </div>
               <div className={`flex items-center justify-between px-[20px]`}>
                 <div
