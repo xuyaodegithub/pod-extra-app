@@ -12,10 +12,6 @@ import { ClientSub } from '@/app/ui/clientDispatch'
 import { cookies } from 'next/headers'
 import Icon from '@/app/ui/episodeDetail/Icon'
 // 在目标页面处理 Action
-export async function getTokenAction(data: { token: string }) {
-  console.log('Received token:', data.token)
-  return data.token
-}
 export async function generateMetadata({ params }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
