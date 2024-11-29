@@ -32,6 +32,7 @@ export default function UserPlan({ quotaList }: { quotaList: any[] }) {
     startQuota,
     viewQuota,
     extraStartQuota,
+    gmtSignUp,
   } = userInfo || {}
   const isVip = role !== free && role
   const viewQuotaNum = (isVip ? 'Unlimited' : viewQuota) || 0
@@ -70,7 +71,7 @@ export default function UserPlan({ quotaList }: { quotaList: any[] }) {
         data: { url },
       } = await getAdminUrl({ returnUrl: location.href })
       setLoading2(false)
-      if (url) window.location.href = url
+      if (url) window.open(url)
     } catch (e) {
       setLoading2(false)
     }
@@ -113,7 +114,7 @@ export default function UserPlan({ quotaList }: { quotaList: any[] }) {
           <span className={`text-[#bbbbbb] dark:text-fontGry-600`}>
             {isVip
               ? `Automatically renew on ${formatDate(gmtSubscriptionEnd, billingCycle === yearly)}`
-              : `Join date: ${formatDate(Date.now(), true)}`}
+              : `Join date: ${formatDate(gmtSignUp, true)}`}
           </span>
         </div>
         {/*Manage on Stripe*/}

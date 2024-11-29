@@ -4,11 +4,18 @@ import Link from 'next/link'
 import { Metadata, ResolvingMetadata } from 'next'
 import { ClockIcon, MicrophoneIcon } from '@heroicons/react/24/outline'
 import { Tab } from '@/app/ui/episodeDetail/tabs'
-import { tabList } from '@/app/lib/config'
+import { BearerToken, tabList } from '@/app/lib/config'
 import { PlayAudio } from '@/app/ui/episodeDetail/palyAudio'
 import PlayBtn from '@/app/ui/search/play-btn'
 import FlowStart from '@/app/ui/search/flow-start'
 import { ClientSub } from '@/app/ui/clientDispatch'
+import { cookies } from 'next/headers'
+import Icon from '@/app/ui/episodeDetail/Icon'
+// 在目标页面处理 Action
+export async function getTokenAction(data: { token: string }) {
+  console.log('Received token:', data.token)
+  return data.token
+}
 export async function generateMetadata({ params }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   const { data } = await getEpisodeDetail(episodeId)
@@ -22,6 +29,7 @@ export async function generateMetadata({ params }: any, parent: ResolvingMetadat
   })
 }
 export default async function Page({
+  searchParams,
   params,
 }: {
   searchParams?: {
@@ -32,26 +40,30 @@ export default async function Page({
     episodeId: string
   }
 }) {
+  const pageSize = searchParams?.pageSize || 50
+  const pageNum = searchParams?.page || 1
+  const cookieStore = cookies()
+  const token = cookieStore.get(BearerToken)?.value || ''
   const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
-  const { data } = await getEpisodeDetail(episodeId)
+  const { data } = await getEpisodeDetail(episodeId, token, { pageNum, pageSize })
   const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle, showUrl = '' } = data || {}
   function followEpiosde(e: any) {
     e.preventDefault()
   }
   return (
     <main className={`flex flex-col episode-item`}>
-      <ClientSub val={episodeTitle} />
+      <ClientSub val={episodeTitle} param={{ pageSize, pageNum }} />
       <div className={`flex `}>
         <img src={coverUrl} alt="" className={`w-[160px] h-[160px] mr-[17px] rounded-10px object-cover`} />
-        <div className={`flex flex-1 flex-col overflow-hidden items-start`}>
-          <div className={`text-lg font-semibold flex items-center mb-[5px]`}>
-            <MicrophoneIcon className={`mr-[5px] w-[20px] h-[28px]`} />
+        <div className={`flex flex-1 flex-col overflow-hidden items-start text-md`}>
+          <div className={`text-lg font-normal flex items-center mb-[10px] leading-[22px]`}>
+            <Icon path="mic" />
             <div className={`flex-1 text-fontGry-600 overflow-hidden text-ellipsis whitespace-nowrap dark:text-homehbg`}>
               {itunesAuthor}
             </div>
           </div>
-          <div className={`flex text-sm text-fontGry-100 overflow-hidden w-[100%]`}>
-            <ClockIcon className={`w-[14px] mr-[4px]`} />
+          <div className={`flex text-fontGry-600 dark:text-fontGry-100 overflow-hidden w-[100%] text-md leading-[22px]`}>
+            <Icon path="time-clock" />
             <span className={`mr-24px`}>{timeFormat(duration)}</span>
             <span>Update: {getCurrentLocalTime(gmtPubDate, false)}</span>
           </div>

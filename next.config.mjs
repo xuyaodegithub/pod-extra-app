@@ -22,6 +22,7 @@ const nextConfig = (phase) => {
     crossOrigin: 'anonymous',
     experimental: {
       cssChunking: 'loose', // default
+      serverActions: true,
     },
     env: {
       customKey: 'my-value',

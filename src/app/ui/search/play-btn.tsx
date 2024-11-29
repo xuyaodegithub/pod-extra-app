@@ -5,10 +5,11 @@ import { audio_info } from '@/app/lib/config'
 import { useMyContext } from '@/context/MyContext'
 
 export default function PlayBtn({ item }: { item: any }) {
-  const { data, setData, isPlaying, setIsPlaying } = useMyContext()
+  const { data, setData, isPlaying, setIsPlaying, time, allTime } = useMyContext()
   const { enclosureUrl: url = '' } = data || {}
   const { coverUrl, episodeTitle, showTitle, showNotes, episodeId, duration, enclosureUrl, historyTime = '' } = item
   const play = isPlaying && url && url === enclosureUrl
+  const remainingTime = data?.episodeId === episodeId ? allTime - time : allTime
   function playAuido(e: Event) {
     e.preventDefault()
     const { episodeId: id = '' } = data || {}
@@ -28,12 +29,13 @@ export default function PlayBtn({ item }: { item: any }) {
       onClick={(e: any) => playAuido(e)}
     >
       <img src={`/icons/${play ? 'play-white' : 'pused'}.svg`} alt="" className={`w-[16px] h-[16px] mr-[4px]`} />
-      {historyTime && (
-        <div className={`h-[4px] bg-white w-[25px] rounded-[2px] relative mr-[8px] overflow-hidden`}>
-          <i className={`absolute w-[50%] h-[100%] bg-[#FF9C70] left-0 top-0`}></i>
-        </div>
-      )}
-      <span>{getTimeWithHoursMin(duration)}</span>
+      <div className={`h-[4px] bg-white w-[25px] rounded-[2px] relative mr-[8px] overflow-hidden`}>
+        <i
+          className={`absolute w-[50%] h-[100%] bg-[#FF9C70] left-0 top-0`}
+          style={{ width: `${allTime > 0 ? (time / allTime) * 100 : 0}%` }}
+        ></i>
+      </div>
+      <span>{getTimeWithHoursMin(remainingTime)}</span>
     </div>
   )
 }

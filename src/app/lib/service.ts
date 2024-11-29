@@ -15,8 +15,8 @@ export function getPopularPodcasts(payload: any) {
 export function getPodcastsDetail(showId: string) {
   return fetchGet(`v1/podShow/${showId}`, {})
 }
-export function getEpisodeDetail(episodeId: string) {
-  return fetchGet(`v1/podEpisode/${episodeId}`, {})
+export function getEpisodeDetail(episodeId: string, token?: any, params?: any) {
+  return fetchGet(`v1/podEpisode/${episodeId}`, {}, token)
 }
 export function getEpisodeSummarize(episodeId: string) {
   return fetchGet(`/api/proxy/v1/podEpisode/${episodeId}/summarize`, {})
@@ -26,7 +26,7 @@ export function getEpisodeTranscript(episodeId: string) {
 }
 //登录
 export function userLogin(data: any) {
-  return fetchPost(`/api/proxy/v1/account/auth`, data)
+  return fetchPost(`/v1/account/auth`, data)
 }
 //登录 客户端
 export function userLoginOut() {

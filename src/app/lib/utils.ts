@@ -137,6 +137,8 @@ export function timeFormat(t: number, hash?: boolean) {
     : `${hh ? `${hh}:` : '00:'}${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
 }
 export function getTimeWithHoursMin(t: number) {
+  if (0 < t && t < 60) return '1m'
+  if (t <= 0) return '0m'
   const h = Math.floor(t / 3600)
   const m = Math.floor((t % 3600) / 60)
   return `${h > 0 ? h + 'h' : ''} ${m > 0 ? m + 'm' : ''}`

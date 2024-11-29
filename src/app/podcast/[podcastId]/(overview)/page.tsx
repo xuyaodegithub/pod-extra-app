@@ -104,6 +104,7 @@ export default async function Page({
               }}
               noMb={noMb}
               key={episodeId}
+              hiddenPodcast={true}
             />
           )
         })}

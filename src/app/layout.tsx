@@ -117,7 +117,7 @@ export default function RootLayout({
                 <div className="flex w-xl py-[24px] w-1280 mx-auto h-[100%]">
                   <SideNav />
                   <main className={`flex-1 overflow-hidden flex flex-col`}>
-                    <div className={`mb-[24px] flex justify-between items-center pr-[20px]`}>
+                    <div className={`mb-[22px] flex justify-between items-center pr-[20px]`}>
                       <Suspense fallback={<LoadingLine num={1} />}>
                         <SearchInput />
                       </Suspense>
