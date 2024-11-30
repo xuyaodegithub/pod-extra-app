@@ -34,16 +34,53 @@ export function Shownotes({ data, goThisTime }: { data: any; goThisTime?: any })
       }, 500)
     }
   }
+  function replaceLinksWithAnchors(text: string) {
+    // 1. 临时替换所有已经存在的 <a> 标签为占位符
+    const placeholders: any = {}
+    let placeholderCounter = 0
+
+    // 替换所有现有的 <a> 标签为占位符，并保留 href、class、target 等属性
+    text = text.replace(/<a\s+([^>]*href=["'][^"']*["'][^>]*?)>/g, (match, p1) => {
+      const placeholder = `{{link${placeholderCounter++}}}`
+      placeholders[placeholder] = match // 保存占位符对应的原始链接
+      return placeholder
+    })
+
+    // 2. 将未被 <a> 标签包裹的 URL 转换为 <a> 标签
+    // 确保未包裹的 URL 被替换为 <a> 标签，并加上 target="_blank" 和 class="text-play"
+    text = text.replace(/(?<!<a\s+[^>]*?>)(https?:\/\/[^\s<]+)(?![^<]*<\/a>)/g, (url) => {
+      return `<a href="${url}" target="_blank" class="text-play">${url}</a>`
+    })
+
+    // 3. 处理 mailto 链接，确保它们也有 target="_blank" 和 class="text-play"
+    text = text.replace(
+      /<a\s+([^>]*href=["']mailto:[^"']*["'][^>]*)(?!target=["']_blank["'])>/g,
+      '<a $1 target="_blank" class="text-play">'
+    )
+
+    // 4. 将时间格式替换为带有点击效果的 span 标签
+    text = text.replace(/\b(\d{1,2}):(\d{2})(?::(\d{2}))?\b/g, `<span class="clickable cursor-pointer text-play" data-val="$&">$&</span>`)
+
+    // 5. 将换行符 (\n) 替换为 <br /> 标签
+    text = text.replace(/\n/g, '<br />')
+
+    // 6. 恢复占位符为原始的 <a> 标签
+    for (const placeholder in placeholders) {
+      text = text.replace(placeholder, placeholders[placeholder])
+    }
+
+    return text
+  }
   useEffect(() => {
     const box: any = document.querySelector('.ShownotesBox')
-    box.innerHTML = showNotes
-      .replace(/\b(\d{1,2}):(\d{2})(?::(\d{2}))?\b/g, `<span class="clickable cursor-pointer text-play" data-val="$&">$&</span>`)
-      .replace(/(?<!<a\s+[^>]*?>)(https?:\/\/[^\s<]+)(?![^<]*<\/a>)/g, (str: string) => `<a href="${str}" target="_blank" class="text-play">${str}</a>`)
-      .replace(
-        /<a\s+([^>]*href=["'][^"']*["'][^>]*)(?!target=["']_blank["'])>/g,
-        '<a $1 target="_blank" class="text-play">'
-      )
-      .replace(/\n/g, '<br />')
+    console.log(showNotes)
+    box.innerHTML = replaceLinksWithAnchors(showNotes).replace(
+      /<a\s+([^>]*?href=["'][^"']*["'][^>]*)(?<!target=["']_blank["'][^>]*)(?<!class=["'][^"']*text-play["'][^>]*)([^>]*?)>/g,
+      (match, attrs, existingAttrs) => {
+        // 确保每个<a>标签都加上 target="_blank" 和 class="text-play"
+        return `<a ${attrs} target="_blank" class="text-play"${existingAttrs}>`
+      }
+    )
   }, [showNotes])
   return (
     <div key="Shownotes">

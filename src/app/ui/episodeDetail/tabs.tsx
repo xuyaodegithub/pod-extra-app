@@ -37,7 +37,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
   const [hasViewed, setHasViewed] = useState(data?.hasViewed || false)
   const [summarizedByMe, setSummarizedByMe] = useState(data?.summarizedByMe || false)
   const [episodeStatus, setEpisodeStatus] = useState(data?.episodeStatus || '')
-  const { push } = useRouter()
+  const { push, refresh } = useRouter()
   function tabChange(key: string) {
     if (activeTab === key) return
     const box: any = document.querySelector('.episode-item')
@@ -154,6 +154,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
       setSummarizedByMe(true)
       setEpisodeStatus(summarizing)
       initUserInfo()
+      refresh()
     } catch (e) {
       setConfirmLoading(false)
     }

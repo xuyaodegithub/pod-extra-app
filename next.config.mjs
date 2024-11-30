@@ -71,15 +71,11 @@ const nextConfig = (phase) => {
     // async headers() {
     //   return [
     //     {
-    //       source: '/about',
+    //       source: '/episode',
     //       headers: [
     //         {
-    //           key: 'x-custom-header',
-    //           value: 'my custom header value',
-    //         },
-    //         {
-    //           key: 'x-another-custom-header',
-    //           value: 'my other custom header value',
+    //           key: 'Cache-Control',
+    //           value: 'no-store, max-age=0, must-revalidate',
     //         },
     //       ],
     //     },

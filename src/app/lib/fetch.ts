@@ -40,7 +40,8 @@ const instance: any = axios.create({
   headers: {
     Authorization: cookies.get(BearerToken) ? `Bearer ${cookies.get(BearerToken)}` : '',
     // 'Content-Type': 'application/json',
-    // 'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+    'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+    Pragma: 'no-cache',
   },
 })
 
