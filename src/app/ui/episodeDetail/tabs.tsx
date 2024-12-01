@@ -133,6 +133,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
     if (isFreeNoViewNum) return
     if (isLogin) {
       fetchData()
+      refresh()
     } else {
       setShowDialog(true)
     }

@@ -14,7 +14,7 @@ export function isTokenExpired(): boolean {
     const t = cookies.get(expiresIn) || 0
     const l = cookies.get(loginTime) || 0
     const now = Date.now() // 当前时间
-    return +t + +l < now // 比较 exp（过期时间）
+    return +t + +l < now && !!t // 比较 exp（过期时间）
   } catch (e) {
     return true // 如果解析失败，认为 token 已过期
   }
@@ -22,11 +22,7 @@ export function isTokenExpired(): boolean {
 
 // 刷新 token 函数
 export async function refreshToken(): Promise<string> {
-  const response = await axios.post(
-    '/api/proxy/v1/account/refreshIdToken',
-    {},
-    { headers: { Authorization: `Bearer ${cookies.get(BearerToken)}` } }
-  )
+  const response = await axios.post('/api/proxy/v1/account/refreshIdToken', {}, { headers: { Cookie: `${cookies.get(rToken)}` } })
   const idToken = response.data?.data?.idToken || ''
   cookies.set(BearerToken, idToken) // 更新本地idToken
   cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
@@ -78,6 +74,12 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response: any) => {
     const res = response.data
+    if (response?.config?.url.endsWith('account/auth')) {
+      const cookieString = response.headers['set-cookie'] || ''
+      // const match = cookieString.match(/refreshToken=([^;]+)/)
+      // const t = match ? match[1] : null
+      res.data.rToken = cookieString
+    }
     // 对响应数据做点什么
     if (res.code === 0) {
       // Promise.resolve(res)

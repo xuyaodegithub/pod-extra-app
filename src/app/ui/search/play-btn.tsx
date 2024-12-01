@@ -9,7 +9,8 @@ export default function PlayBtn({ item }: { item: any }) {
   const { enclosureUrl: url = '' } = data || {}
   const { coverUrl, episodeTitle, showTitle, showNotes, episodeId, duration, enclosureUrl, historyTime = '' } = item
   const play = isPlaying && url && url === enclosureUrl
-  const remainingTime = data?.episodeId === episodeId ? allTime - time : duration
+  const t = allTime || duration
+  const remainingTime = data?.episodeId === episodeId ? t - time : duration
   function playAuido(e: Event) {
     e.preventDefault()
     const { episodeId: id = '' } = data || {}
@@ -32,7 +33,7 @@ export default function PlayBtn({ item }: { item: any }) {
       <div className={`h-[4px] bg-white w-[25px] rounded-[2px] relative mr-[8px] overflow-hidden`}>
         <i
           className={`absolute w-[50%] h-[100%] bg-[#FF9C70] left-0 top-0`}
-          style={{ width: `${allTime > 0 && data?.episodeId === episodeId ? (time / allTime) * 100 : 0}%` }}
+          style={{ width: `${t > 0 && data?.episodeId === episodeId ? (time / t) * 100 : 0}%` }}
         ></i>
       </div>
       <span className={`font-semibold`}>{getTimeWithHoursMin(remainingTime)}</span>

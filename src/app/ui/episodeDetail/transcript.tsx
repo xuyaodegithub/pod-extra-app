@@ -116,7 +116,7 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
                   </svg>
                 </div>
                 {!isSame && (
-                  <div className={`text-md leading-[20px]`} style={{ color: speaker.bg }}>
+                  <div className={`text-md leading-[20px]`} style={{ color: isDark ? speaker.bg : speaker.color }}>
                     {item.speaker}
                   </div>
                 )}
@@ -132,7 +132,7 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
                 const color = isDark ? speaker.bg : speaker.color
                 return (
                   <span
-                    className={`${isactive ? 'activeSpan' : ''} hover:bg-bgGray cursor-pointer dark:hover:bg-darkHomeBg dark:text-homehbg active_${((it.start || '') + '').replace(/\./g, '_')}`}
+                    className={`${isactive ? 'activeSpan' : ''} hover:bg-bgGray hover:rounded-[4px] cursor-pointer dark:hover:bg-darkHomeBg dark:text-homehbg active_${((it.start || '') + '').replace(/\./g, '_')}`}
                     style={{ background: isActiveBg ? bg : '', color: isActiveBg ? color : '', borderRadius: isActiveBg ? '4px' : '' }}
                     key={`${it.start}-${ind}`}
                     onClick={(e: any) => playCurrTime(it.start, e)}

@@ -64,3 +64,27 @@ export function getAdminUrl(data: any) {
 export function createSummarizeTask(episodeId: string) {
   return fetchPost(`/api/proxy/v1/podEpisode/${episodeId}/create-summarize-task`, {})
 }
+//收藏的节目
+export function getFlowPodcast(data: any) {
+  return fetchGet(`/v1/podcast/my-favorite`, data)
+}
+//收藏节目
+export function flowPodcast(podcastId: string) {
+  return fetchPost(`/api/proxy/v1/podcast/${podcastId}/add-favorite`, {})
+}
+//取消收藏节目
+export function unFlowPodcast(podcastId: string) {
+  return fetchPost(`/api/proxy/v1/podcast/${podcastId}/remove-favorite`, {})
+}
+//我收藏的单集
+export function getFlowEpisode(data: any) {
+  return fetchGet(`/v1/episode/my-favorite`, data)
+}
+//收藏单集
+export function flowEpisode(episodeId: any) {
+  return fetchPost(`/api/proxy/v1/episode/${episodeId}/add-favorite`, {})
+}
+//取消收藏单集
+export function unFlowEpisode(episodeId: any) {
+  return fetchPost(`/api/proxy/v1/episode/${episodeId}/remove-favorite`, {})
+}
