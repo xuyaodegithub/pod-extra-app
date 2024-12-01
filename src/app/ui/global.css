@@ -10,7 +10,10 @@
 .mm-toolbar .mm-toolbar-brand {
     display: none;
 }
-
+.mm-toolbar{
+    background-color: rgba(0,0,0,0) !important;
+    border: none!important;
+}
 .custom-height {
     height: calc(100vh - 280px);
 }
