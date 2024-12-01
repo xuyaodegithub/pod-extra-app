@@ -195,7 +195,9 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
               <div className={`text-sm text-fontGry-100 mb-[16px] dark:text-homehbg`}>
                 <p>Free users can view 4 episodes that have already been processed by AI.</p>
                 <p>
-                  {isLogin ? `${viewQuota} episodes left. Reset to 4 on ${getNextResetTimeString(gmtSignUp)}` : 'Please sign in to view.'}
+                  {isLogin
+                    ? `${viewQuota || 0} episodes left. Reset to 4 on ${getNextResetTimeString(gmtSignUp)}`
+                    : 'Please sign in to view.'}
                 </p>
               </div>
               <div
@@ -205,7 +207,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
                 {isLogin ? 'View AI-processed content' : 'Sign in'}
               </div>
               <div
-                className={`cursor-pointer inline-block text-sm text-fontGry-600 border-b-[1px] underline dark:text-fontGry-600`}
+                className={`cursor-pointer inline-block text-sm text-fontGry-100 border-b-[1px] dark:text-fontGry-600`}
                 onClick={toPringPage}
               >
                 Want unlimited viewing? Subscribe &nbsp;
@@ -222,10 +224,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
                       This episode isn't AI-processed yet.
                       <br />
                       Free users can view 4 episodes that have already been processed by AI.
-                      <p
-                        className={`mb-[15px] mt-[16px] text-fontGry-100 dark:text-fontGry-600 underline cursor-pointer`}
-                        onClick={toPringPage}
-                      >
+                      <p className={`mb-[15px] mt-[16px] text-fontGry-100 dark:text-fontGry-600 cursor-pointer`} onClick={toPringPage}>
                         Want to initiate AI processing of episodes, or view unlimited AI contents?
                       </p>
                     </div>
@@ -244,7 +243,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
                   </div>
                   {!isLogin && (
                     <div
-                      className={`cursor-pointer inline-block text-sm text-fontGry-600 border-b-[1px] underline dark:text-fontGry-100`}
+                      className={`cursor-pointer inline-block text-sm text-fontGry-100 border-b-[1px] dark:text-fontGry-100`}
                       onClick={toPringPage}
                     >
                       Want unlimited viewing? Subscribe &nbsp;
@@ -289,10 +288,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
                       >
                         Initiate AI processing
                       </div>
-                      <div
-                        className={`cursor-pointer inline-block text-sm text-fontGry-600 border-b-[1px] underline`}
-                        onClick={toPringPage}
-                      >
+                      <div className={`cursor-pointer inline-block text-sm text-fontGry-100 border-b-[1px]`} onClick={toPringPage}>
                         Want more quotas? Purchase &nbsp;
                       </div>
                     </div>
