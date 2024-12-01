@@ -118,22 +118,22 @@ export default function NavLinks() {
         </div>
       )}
       {/*loginafter*/}
-      {userInfo?.role && (
-        <div className={` px-[10px]  mb-[10px]`}>
-          {titleCase('You')}
-          {loginAfterLogin.map((link, ind: number) => (
-            <Link
-              key={ind}
-              href={link.href}
-              className={`cursor-pointer flex px-[14px] ${ind === loginAfterLogin.length - 1 ? 'mb-[16px]' : 'mb-[10px]'} h-[40px] items-center transition duration-200 rounded-md text-md ${link.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}
-            >
-              <img src={isDark ? link.darkIcon : link.icon} className="w-[20px] mr-[10px]" />
-              <p>{link.name}</p>
-            </Link>
-          ))}
-          <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
-        </div>
-      )}
+      {/*{userInfo?.role && (*/}
+      {/*  <div className={` px-[10px]  mb-[10px]`}>*/}
+      {/*    {titleCase('You')}*/}
+      {/*    {loginAfterLogin.map((link, ind: number) => (*/}
+      {/*      <Link*/}
+      {/*        key={ind}*/}
+      {/*        href={link.href}*/}
+      {/*        className={`cursor-pointer flex px-[14px] ${ind === loginAfterLogin.length - 1 ? 'mb-[16px]' : 'mb-[10px]'} h-[40px] items-center transition duration-200 rounded-md text-md ${link.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}*/}
+      {/*      >*/}
+      {/*        <img src={isDark ? link.darkIcon : link.icon} className="w-[20px] mr-[10px]" />*/}
+      {/*        <p>{link.name}</p>*/}
+      {/*      </Link>*/}
+      {/*    ))}*/}
+      {/*    <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>*/}
+      {/*  </div>*/}
+      {/*)}*/}
       {/*Plan & pricing*/}
       {userInfo?.email && (
         <div className={`px-[10px]  mb-[20px]`}>
