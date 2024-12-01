@@ -40,7 +40,7 @@ export async function createServerAxios() {
   const cookieStore = await cookies()
   let token = cookieStore.get(BearerToken)?.value
   const isExpired = await isTokenExpired()
-  const needUpdate = !isExpired && token
+  const needUpdate = isExpired && token
   if (needUpdate) {
     token = await refreshToken()
     // const { newtToken } = await response.json()
