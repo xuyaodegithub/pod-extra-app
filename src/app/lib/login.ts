@@ -41,8 +41,8 @@ export const oauthSignIn = () => {
   form.submit()
 }
 
-export const googleLoginPopup = () => {
-  const redirectPath = encodeURIComponent(window.location.href)
+export const googleLoginPopup = (url: string = '') => {
+  const redirectPath = encodeURIComponent(url || window.location.href)
   console.log(window.location.pathname + window.location.search, 'redirectPath')
   const state = `${redirectPath}`
   const redirectUri = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/callback`

@@ -12,7 +12,7 @@ import { Loading } from '@/app/ui/home/loading'
 import { audio_info } from '@/app/lib/config'
 import { Slider } from 'antd'
 export default function Audio() {
-  const { data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime } = useMyContext()
+  const { data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime, allTime, setAllTime } = useMyContext()
   const {
     enclosureUrl = '',
     showTitle = '',
@@ -22,11 +22,11 @@ export default function Audio() {
     episodeId = '',
     playTime = 0,
   }: any = data || {}
-  const [allTime, setAllTime] = useState(0)
   const [playbackRate, setPlaybackRate] = useState(1)
   const [voice, setVoice] = useState(1)
   const [oldVoice, setOldVoice] = useState(1)
   const [loading, setLoading] = useState(false)
+  const [hiddenNotes, setHiddenNotes] = useState(true)
   // const [isAudio, setIsAudio] = useState(null)
   let isAudio: any = useRef(null)
   const { push } = useRouter()
@@ -36,6 +36,7 @@ export default function Audio() {
     const audioInfo = JSON.parse(sessionStorage.getItem(audio_info) || '{}')
     if (audioInfo?.episodeId) {
       setData(audioInfo)
+      setTime(audioInfo?.playTime)
     }
   }, [])
   useEffect(() => {
@@ -161,6 +162,12 @@ export default function Audio() {
     } else type = 'medium'
     return <img src={urlObj[type]} alt="" className={`w-[24px] h-[24px] mr-[12px]`} onClick={closeViose} />
   }
+
+  useEffect(() => {
+    const domH: any = document.querySelector('.episodeTitle-line')
+    const h = domH?.offsetHeight || 0
+    setHiddenNotes(h > 20)
+  }, [])
   return enclosureUrl ? (
     <div
       className={`w-[1200px] fixed left-[50%] translate-x-[-50%] bottom-0 bg-bgGray py-[6px] px-[35px] dark:bg-bgDark dark:text-gray-200 rounded-[10px] dark:border-[1px] dark:border-fontGry-600`}
@@ -249,14 +256,20 @@ export default function Audio() {
         </Select>
         <div className={`flex ml-auto items-center cursor-pointer`} onClick={toEpisodeDetail}>
           <img src={coverUrl} title={''} alt={''} className={`mr-[15px] rounded-[5px] w-[38px] h-[38px] object-cover`} />
-          {/*<div className={`w-[390px]`}>*/}
-          {/*  <div className={`text-[14px] text-fontGry-100 leading-normal dark:text-white`}>{showTitle}</div>*/}
-          <div
-            className={`flex-1 w-[380px] text-[14px] text-fontGry-600 leading-[19px] overflow-hidden text-ellipsis line-clamp-2 dark:text-fontGry-100`}
-          >
-            {getNoTagText(showNotes)}
+          <div className={`flex-1`}>
+            <div
+              className={`episodeTitle-line w-[380px] text-[14px] text-fontGry-600 leading-[19px] overflow-hidden text-ellipsis line-clamp-2 dark:text-fontGry-100`}
+            >
+              {episodeTitle}
+            </div>
+            {!hiddenNotes && (
+              <div
+                className={`w-[380px] text-[14px] text-fontGry-600 leading-[19px] overflow-hidden text-ellipsis whitespace-nowrap dark:text-fontGry-100`}
+              >
+                {getNoTagText(showNotes)}
+              </div>
+            )}
           </div>
-          {/*</div>*/}
         </div>
       </div>
     </div>

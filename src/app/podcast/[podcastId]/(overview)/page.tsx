@@ -8,6 +8,7 @@ import CateItem from '@/app/ui/categories/cateItem'
 import { MicrophoneIcon } from '@heroicons/react/24/outline'
 import { Card } from '@/app/ui/home/episodes-card'
 import { ClientSub } from '@/app/ui/clientDispatch'
+import SearchEpisodesCard from '@/app/ui/search/search-episodes-card'
 export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [title, showId] = splitStringFromLastDash(decodeURIComponent(params.podcastId))
   const { data = {} } = await getPodcastsDetail(showId)
@@ -65,24 +66,47 @@ export default async function Page({
           <CardDes des={getNoTagText(showDescription)} maxLine={8} />
         </div>
       </div>
-      <div className={`py-[20px] sticky top-[57px] bg-white dark:bg-black`}>
+      <div className={`py-[20px] sticky top-[57px] bg-white dark:bg-black z-[66]`}>
         <Pagination totalPages={totalPages} total={total} />
       </div>
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
+      <div className={`border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
         {resultList.map((item: any, ind: number) => {
-          const { coverUrl, episodeTitle, gmtPubDate, showTitle, showNotes, episodeId, duration, episodeUrl = '', episodeStatus } = item
-          const cardItem = {
+          const {
             coverUrl,
             episodeTitle,
             gmtPubDate,
             showTitle,
+            showCoverUrl,
             showNotes,
             episodeId,
             duration,
             episodeUrl,
+            enclosureUrl,
             episodeStatus,
-          }
-          return <Card key={item?.episodeId} {...cardItem} isShowTitle={false} noMb={ind >= resultList.length - 2} />
+            showUrl,
+          } = item
+          const noMb = ind >= resultList.length - 1
+          return (
+            <SearchEpisodesCard
+              item={{
+                coverUrl,
+                episodeTitle,
+                gmtPubDate,
+                showTitle,
+                showCoverUrl,
+                showNotes,
+                episodeId,
+                duration,
+                episodeUrl,
+                enclosureUrl,
+                episodeStatus,
+                showUrl,
+              }}
+              noMb={noMb}
+              key={episodeId}
+              hiddenPodcast={true}
+            />
+          )
         })}
       </div>
     </main>

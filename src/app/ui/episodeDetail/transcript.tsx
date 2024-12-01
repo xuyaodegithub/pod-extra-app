@@ -13,7 +13,8 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
   const { paragraphs = [] } = data || {}
   const { enclosureUrl = '', showTitle = '', showNotes = '', coverUrl = '', episodeTitle = '', episodeId = '' } = data || {}
   const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
-  const { setData, setIsPlaying, isPlaying, time, setStepTime, isDark } = useMyContext()
+  const { setData, setIsPlaying, isPlaying, time, setStepTime, isDark, data: audioData } = useMyContext()
+  const isPlayEpisode = audioData?.episodeId === episodeId
   function playCurrTime(t: number, e: any) {
     if (t === 0) t = t + 0.1
     e.stopPropagation()
@@ -43,7 +44,7 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
   }
   const throttledHandleScroll = useThrottledCallback(handleScroll, 300)
   useEffect(() => {
-    if (isTranscript && autoMove && isPlaying) {
+    if (isTranscript && autoMove && isPlaying && isPlayEpisode) {
       throttledHandleScroll()
     }
     if (!isPlaying) {
@@ -84,7 +85,7 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
               {isSame ? (
                 <div className={`w-[10px] h-[30px] rounded-[6px] mr-[48px]`} style={{ background: speaker.bg }}></div>
               ) : (
-                <div className={`w-[50px] h-[50px] mr-[8px] text-max leading-[50px] text-center rounded-[6px]`}>
+                <div className={`w-[50px] h-[50px] mr-[8px] text-max0 leading-[50px] text-center rounded-[6px]`}>
                   <img src={speaker.head} alt="" className={`w-[50px] h-[50px] object-cover`} />
                 </div>
               )}
@@ -114,21 +115,25 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
                     </g>
                   </svg>
                 </div>
-                {!isSame && <div className={`text-md leading-[20px]`}>{item.speaker}</div>}
+                {!isSame && (
+                  <div className={`text-md leading-[20px]`} style={{ color: isDark ? speaker.bg : speaker.color }}>
+                    {item.speaker}
+                  </div>
+                )}
               </div>
             </div>
             <div className={`text-md text-fontGry-600`}>
               {item.sentences.map((it: any, ind: number) => {
                 // const { start, end } = it
-                const isactive = isPlaying && time >= it.start && time <= it.end
-                const stopActive = !isPlaying && stopTime > 0 && stopTime >= it.start && stopTime <= it.end
+                const isactive = isPlaying && time >= it.start && time <= it.end && isPlayEpisode
+                const stopActive = !isPlaying && stopTime > 0 && stopTime >= it.start && stopTime <= it.end && isPlayEpisode
                 const isActiveBg = isactive || stopActive
                 const bg = isDark ? '#404040' : speaker.bg
                 const color = isDark ? speaker.bg : speaker.color
                 return (
                   <span
-                    className={`${isactive ? 'activeSpan' : ''} hover:bg-bgGray cursor-pointer dark:hover:bg-darkHomeBg dark:text-homehbg active_${((it.start || '') + '').replace(/\./g, '_')}`}
-                    style={{ background: isActiveBg ? bg : '', color: isActiveBg ? color : '' }}
+                    className={`${isactive ? 'activeSpan' : ''} hover:bg-bgGray hover:rounded-[4px] cursor-pointer dark:hover:bg-darkHomeBg dark:text-homehbg active_${((it.start || '') + '').replace(/\./g, '_')}`}
+                    style={{ background: isActiveBg ? bg : '', color: isActiveBg ? color : '', borderRadius: isActiveBg ? '4px' : '' }}
                     key={`${it.start}-${ind}`}
                     onClick={(e: any) => playCurrTime(it.start, e)}
                   >

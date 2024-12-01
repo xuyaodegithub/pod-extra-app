@@ -10,6 +10,7 @@ const nextConfig = (phase) => {
     // images: {
     //   domains: ['*'],
     // },
+    reactStrictMode: true,
     sassOptions: {
       additionalData: `$var: red;`,
     },
@@ -21,6 +22,7 @@ const nextConfig = (phase) => {
     crossOrigin: 'anonymous',
     experimental: {
       cssChunking: 'loose', // default
+      serverActions: true,
     },
     env: {
       customKey: 'my-value',
@@ -33,6 +35,10 @@ const nextConfig = (phase) => {
         {
           source: '/blog/:path*',
           destination: 'https://blog.podextra.ai/:path*',
+        },
+        {
+          source: '/blog/',
+          destination: 'https://www.podextra.ai/blog',
         },
         {
           source: '/robots.txt',
@@ -65,15 +71,11 @@ const nextConfig = (phase) => {
     // async headers() {
     //   return [
     //     {
-    //       source: '/about',
+    //       source: '/episode',
     //       headers: [
     //         {
-    //           key: 'x-custom-header',
-    //           value: 'my custom header value',
-    //         },
-    //         {
-    //           key: 'x-another-custom-header',
-    //           value: 'my other custom header value',
+    //           key: 'Cache-Control',
+    //           value: 'no-store, max-age=0, must-revalidate',
     //         },
     //       ],
     //     },

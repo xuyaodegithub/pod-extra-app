@@ -37,7 +37,7 @@ export default async function PopularPodcasts({ title, type, params }: { title: 
   }
   return (
     <div className={`bg-gray-1000 dark:bg-bgDark rounded-10px py-[11px] px-[15px] mb-24px`}>
-      <div className={`mb-[16px] text-max text-fontGry-600 ml-[10px] flex pt-[8px] items-center font-bold cursor-pointer`}>
+      <div className={`mb-[16px] text-max0 text-fontGry-600 ml-[10px] flex pt-[8px] items-center font-bold cursor-pointer`}>
         <Link href={urlObj[type]} className={`${styles.hoverBBorder} dark:text-white`}>
           {title}
         </Link>

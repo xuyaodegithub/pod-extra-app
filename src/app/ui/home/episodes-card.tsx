@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 import { getCurrentLocalTime, getNoTagText, timeFormat } from '@/app/lib/utils'
 import { ClockIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import { summarized } from '@/app/lib/config'
 export function Card({
   coverUrl,
   episodeTitle,
@@ -56,7 +57,12 @@ export function Card({
             className={`text-md overflow-hidden text-ellipsis line-clamp-2 text-fontGry-600 dark:text-white`}
             title={episodeTitle}
           >
+            {episodeStatus === summarized && (
+              <img src="/icons/ai-ready-icon.svg" className={`inline-block h-[20px] mr-[5px] align-text-bottom`} />
+            )}
             {episodeTitle}
+            {/*{episodeStatus === summarized && <img src="/icons/ai-ready-icon.svg" className={`h-[20px] mr-[5px]`} />}*/}
+            {/*<span className={`flex-1 overflow-hidden text-ellipsis whitespace-nowrap`}>{episodeTitle}</span>*/}
           </h3>
           <div
             className={`text-sm overflow-hidden text-ellipsis ${oneline ? 'line-clamp-2' : 'line-clamp-3'} text-fontGry-100`}

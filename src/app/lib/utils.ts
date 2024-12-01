@@ -137,6 +137,8 @@ export function timeFormat(t: number, hash?: boolean) {
     : `${hh ? `${hh}:` : '00:'}${m > 9 ? m : '0' + m}:${s > 9 ? s : '0' + s}`
 }
 export function getTimeWithHoursMin(t: number) {
+  if (0 < t && t < 60) return '1m'
+  if (t <= 0) return '0m'
   const h = Math.floor(t / 3600)
   const m = Math.floor((t % 3600) / 60)
   return `${h > 0 ? h + 'h' : ''} ${m > 0 ? m + 'm' : ''}`
@@ -165,4 +167,28 @@ export function splitStringFromLastDash(input: string): [string, string] {
   const part1 = input.substring(0, lastDashIndex)
   const part2 = input.substring(lastDashIndex + 1)
   return [part1, part2]
+}
+export function formatDate(timestamp: number, needY: boolean = false): string {
+  const date = new Date(timestamp)
+
+  const monthNames = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May.', 'Jun.', 'Jul.', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.']
+
+  const day = date.getDate()
+  const ordinal = day === 1 || day === 21 || day === 31 ? 'st' : day === 2 || day === 22 ? 'nd' : day === 3 || day === 23 ? 'rd' : 'th'
+
+  const formattedDate = `${monthNames[date.getMonth()]} ${day}${ordinal}` + (needY ? `, ${date.getFullYear()}` : '')
+  return formattedDate
+}
+export function monthsUntilEnd(endTimestamp: number): number {
+  const now = new Date().getTime()
+  const end = new Date(endTimestamp).getTime()
+
+  if (end < now) {
+    return 0 // 如果结束时间已经过去，返回0
+  }
+
+  const diffInMs = end - now
+  const diffInMonths = diffInMs / (1000 * 60 * 60 * 24 * 30.44) // 平均每月天数约为30.44天
+
+  return Math.ceil(diffInMonths)
 }

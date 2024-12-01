@@ -16,7 +16,7 @@ export function CardDes({ maxLine = 4, des, lineHeight = 18 }: { maxLine?: numbe
     // return () => {}
   }, [lineHeight, maxLine])
   return (
-    <div className={``}>
+    <div className={`relative`}>
       <div
         className={`overflow-hidden text-fontGry-600 text-sm mb-[5px] relative transition-all dark:text-homehbg`}
         style={{ height: showMore ? `${maxLine * lineHeight}px` : `${initHeight || 'auto'}px` }}
@@ -33,6 +33,10 @@ export function CardDes({ maxLine = 4, des, lineHeight = 18 }: { maxLine?: numbe
           {showMore ? 'show more' : 'show less'}
         </div>
       )}
+      {/*<div className={`w-[100px] text-sm mt-[10px] text-white py-[4px] px-[15px] bg-play flex items-center rounded-[14px] cursor-pointer`}>*/}
+      {/*  <img src="/icons/plus.svg" alt="" className={`mr-[3px] w-[20px] h-[20px]`} />*/}
+      {/*  <span>Follow</span>*/}
+      {/*</div>*/}
     </div>
   )
 }

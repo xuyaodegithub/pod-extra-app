@@ -57,7 +57,7 @@ export default async function Categories({ title }: { title: string }) {
   } = await getPodCategory(payload)
   return (
     <div className={`bg-gray-1000 rounded-10px py-[25px] px-[25px] pt-[19px] mb-[100px] dark:bg-bgDark`}>
-      <div className={`mb-[22px] text-max text-fontGry-600 flex items-center font-bold cursor-pointer`}>
+      <div className={`mb-[22px] text-max0 text-fontGry-600 flex items-center font-bold cursor-pointer`}>
         <Link href={`/podcasts-categories`} className={`${styles.hoverBBorder} dark:text-white`}>
           {title}
         </Link>

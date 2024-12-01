@@ -3,20 +3,27 @@ import Link from 'next/link'
 import { useMyContext } from '@/context/MyContext'
 import { useUserInfo } from '@/context/UserInfo'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import { useState, useEffect } from 'react'
 import UserHead from '@/app/ui/home/userHead'
 import { googleLoginPopup, revokeAccess2, client_id } from '@/app/lib/login'
-// import { signIn, signOut, useSession } from 'next-auth/react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog'
-import { googleIdToken, BearerToken } from '@/app/lib/config'
+import { googleIdToken, BearerToken, loginExpire, free } from '@/app/lib/config'
 import cookies from 'js-cookie'
 import { userLogin, getUerInfo, userLoginOut } from '@/app/lib/service'
+import { usePathname, useRouter } from 'next/navigation'
+import eventBus from '@/app/lib/eventBus'
 
 export default function UserInfo() {
   const { isDark } = useMyContext()
-  const { userInfo, setUserInfo, showDialog, setShowDialog, showLoginDialog, setShowLoginDialog } = useUserInfo()
+  const { userInfo, setUserInfo, showDialog, setShowDialog, setLoading, initUserInfo } = useUserInfo()
   const [open, setOpen] = useState(false)
+  const [showLogin, setShowLogin] = useState(false)
+  const [backUrl, setBackUrl] = useState('')
+  const pathname = usePathname()
+  const { push } = useRouter()
+  const { role = '' } = userInfo || {}
+  //付费用户
+  const isVip = role !== free && role
   // const { data: session } = useSession()
   function openPopover(e: any) {
     e.stopPropagation()
@@ -30,19 +37,7 @@ export default function UserInfo() {
       if (!(clientY > top && clientY < top + height && clientX > left && clientX < left + width) && open) setOpen(false)
     }
   }
-  async function useTokenToLogin() {
-    const token = cookies.get(googleIdToken)
-    const {
-      data: { idToken },
-    } = await userLogin({ idToken: token })
-    cookies.set(BearerToken, idToken)
-    cookies.remove(googleIdToken)
-    initUserInfo()
-  }
-  async function initUserInfo() {
-    const { data } = await getUerInfo()
-    setUserInfo(data)
-  }
+
   useEffect(() => {
     if (open) document.addEventListener('click', hiddenPopover)
     return () => {
@@ -50,38 +45,33 @@ export default function UserInfo() {
     }
   }, [open])
   //这是直接掉google的api
-  const fetchGoogleUserInfo = async (token: string) => {
-    try {
-      const response = await fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      const { ok = false, status } = response
-      if (ok) {
-        const userInfo = await response.json()
-        setUserInfo(userInfo)
-        // 在这里可以处理用户信息，例如将其存储在状态中
-      } else {
-        //accessToken过期
-        if (status === 401) {
-          cookies.remove(googleIdToken)
-        }
-      }
-    } catch (error) {}
-  }
   useEffect(() => {
-    const accessToken = cookies.get(googleIdToken) || ''
     const token = cookies.get(BearerToken) || ''
-    if (accessToken && !token) {
-      // 登录获取idToken
-      useTokenToLogin()
-      // revokeAccess(accessToken)
-    } else if (token) {
-      initUserInfo()
+    const fetchUserInfo = async () => {
+      try {
+        setLoading(true)
+        await initUserInfo()
+        setShowLogin(true)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    if (token) {
+      fetchUserInfo()
+    } else {
+      setShowLogin(true)
     }
   }, [])
-
+  useEffect(() => {
+    const handleUnauthorized = () => {
+      setShowDialog(true)
+      setUserInfo({})
+    }
+    eventBus.on(loginExpire, handleUnauthorized)
+    return () => {
+      eventBus.off(loginExpire, handleUnauthorized)
+    }
+  }, [setShowDialog, setUserInfo])
   const loginBtn = {
     text: 'Sign in',
     icon: '/images/login.svg',
@@ -93,7 +83,7 @@ export default function UserInfo() {
     darkIcon: '/images/darkLogin.svg',
   }
   function login() {
-    googleLoginPopup()
+    googleLoginPopup(backUrl)
     // signIn('google')
     // 加载 Google Identity Services
   }
@@ -102,15 +92,32 @@ export default function UserInfo() {
     await userLoginOut()
     cookies.remove(BearerToken)
     cookies.remove(googleIdToken)
-    revokeAccess2()
+    //需要返回首页的页面
+    const shouldBack = ['/plan-pricing']
+    const backUrl = shouldBack.some((item) => pathname.endsWith(item)) ? '/home' : location.href
+    revokeAccess2(backUrl)
   }
-
+  function toPricePage() {
+    if (role) {
+      push('/plan-pricing')
+    } else {
+      setBackUrl(`${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/plan-pricing`)
+      setShowDialog(true)
+    }
+  }
+  function onlyToLogin() {
+    setBackUrl(``)
+    setShowDialog(true)
+  }
   return (
     <div className="flex items-center">
-      {/*<Link href="/plan-pricing" className={`mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}>*/}
-      {/*  Pricing*/}
-      {/*</Link>*/}
-      {userInfo?.email ? (
+      {/*付费用户隐藏price入口*/}
+      {!isVip && showLogin && (
+        <div onClick={toPricePage} className={`cursor-pointer mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}>
+          Pricing
+        </div>
+      )}
+      {userInfo?.email && showLogin && (
         <div>
           <Popover data-side="left" open={open}>
             <PopoverTrigger className={``}>
@@ -138,10 +145,11 @@ export default function UserInfo() {
             </PopoverContent>
           </Popover>
         </div>
-      ) : (
+      )}
+      {showLogin && !userInfo?.role && (
         <div
           className={`cursor-pointer flex items-center py-[8px] px-[11px] bg-play font-bold text-md text-white dark:bg-bgDark rounded-[10px] dark:text-homehbg`}
-          onClick={() => setShowDialog(true)}
+          onClick={onlyToLogin}
         >
           <img src={loginBtn.darkIcon} alt="" className={`mr-[6px]`} />
           <span>{loginBtn.text}</span>
@@ -156,13 +164,13 @@ export default function UserInfo() {
               Let's get started!
             </DialogTitle>
             <DialogDescription className={`mt-[63px]`}>
-              <button
+              <div
                 className={`cursor-pointer mx-auto w-[400px] h-[50px] flex items-center text-md text-fontGry-600 justify-center rounded-[10px] bg-white shadow-popoverShow dark:text-homehbg dark:bg-darkHomeBg`}
                 onClick={() => login()}
               >
                 <img src="/icons/google.svg" alt="" className={`mr-[11px]`} />
                 <span>Continue with Google</span>
-              </button>
+              </div>
               <span className={`block text-min mt-[25px] text-center dark:text-fontGry-100`}>More Sign in methods are on the way...</span>
               <span className={`block text-min text-[#bbbbbb] text-center mt-[112px] pb-[37px] dark:text-fontGry-100`}>
                 By clicking "Continue", you agree

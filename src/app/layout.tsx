@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation'
 import SearchInput from '@/app/ui/home/searchInput'
 import UserInfo from '@/app/ui/home/userInfo'
 import Script from 'next/script'
-import { ConfigProvider } from 'antd'
+import { ConfigProvider, Spin } from 'antd'
 import { Suspense } from 'react'
 import { LoadingLine } from '@/app/ui/skeletons'
 // import { SessionProvider } from 'next-auth/react'
@@ -117,7 +117,7 @@ export default function RootLayout({
                 <div className="flex w-xl py-[24px] w-1280 mx-auto h-[100%]">
                   <SideNav />
                   <main className={`flex-1 overflow-hidden flex flex-col`}>
-                    <div className={`mb-[24px] flex justify-between items-center pr-[20px]`}>
+                    <div className={`mb-[22px] flex justify-between items-center pr-[20px]`}>
                       <Suspense fallback={<LoadingLine num={1} />}>
                         <SearchInput />
                       </Suspense>
