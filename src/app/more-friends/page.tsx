@@ -13,6 +13,11 @@ export const metadata: Metadata = getMetaData({
 })
 export default async function Home() {
   const resultList = [
+    { name: 'ToolsDar', href: 'https://toolsdar.cn/', title: 'ToolsDar' },
+    { name: 'AI Tools Show - Find the Latest and Most Advanced AI Tools', href: 'https://aitools.show', title: 'ZJNav' },
+    { name: 'LookAITools', href: 'https://lookaitools.com/', title: 'LookAITools' },
+    { name: 'wanzhan', href: 'https://wanzhan.cc/', title: 'wanzhan' },
+    { name: 'Perchance AI', href: 'https://perchance-ai.net', title: 'Perchance AI' },
     { name: 'ZJNav', href: 'https://www.zjnav.com/', title: 'ZJNav' },
     { name: 'ToolPilot AI', href: 'https://www.toolpilot.ai/', title: 'ToolPilot AI' },
     {
