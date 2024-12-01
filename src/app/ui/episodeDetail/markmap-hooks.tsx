@@ -81,7 +81,7 @@ export default function MarkmapHooks({ mindmapInMd, fullScreen }: { mindmapInMd:
   return (
     <React.Fragment>
       <svg className="w-100 h-[100%] bg-hbg dark:bg-bgDark dark:text-homehbg" ref={refSvg} />
-      <div className="absolute top-[10px] left-[10px] " ref={refToolbar}></div>
+      <div className="absolute top-[10px] left-[10px] dark:bg-bgDark dark:border-[1px] dark:border-fontGry-600" ref={refToolbar}></div>
     </React.Fragment>
   )
 }
