@@ -113,7 +113,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
   }
   useEffect(() => {
     if (isSummarized) {
-      if (isFree && !hasViewed) {
+      if ((isFree && !hasViewed) || !isLogin) {
         setTabs(sortArray([...tabList], 1))
       } else {
         setTabs(tabList)
