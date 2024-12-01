@@ -20,12 +20,12 @@ export default async function Page({
   }
 }) {
   const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
-  const axiosInstance = await createServerAxios()
+  const { instance, refresh, token } = await createServerAxios()
   const {
     data: {
       data: { resultList = [], total = 0 },
     },
-  } = await axiosInstance.get(`v1/episode/my-favorite`, { params: { pageSize, pageNum, tagType: 'STAR' } })
+  } = await instance.get(`v1/episode/my-favorite`, { params: { pageSize, pageNum, tagType: 'STAR' } })
   // const {
   //   data: { resultList = [], total = 0 },
   // } = await getPodEpisode({ pageSize, pageNum, sortBy: 'PUB_DATE' })
