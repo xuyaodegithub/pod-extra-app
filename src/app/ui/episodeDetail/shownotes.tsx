@@ -78,7 +78,7 @@ export function Shownotes({ data, goThisTime }: { data: any; goThisTime?: any })
       /<a\s+([^>]*?href=["'][^"']*["'][^>]*)(?<!target=["']_blank["'][^>]*)(?<!class=["'][^"']*text-play["'][^>]*)([^>]*?)>/g,
       (match, attrs, existingAttrs) => {
         // 确保每个<a>标签都加上 target="_blank" 和 class="text-play"
-        return `<a ${attrs} target="_blank" class="text-play"${existingAttrs}>`
+        return `<a ${attrs} target="_blank" rel="nofollow" class="text-play"${existingAttrs}>`
       }
     )
   }, [showNotes])

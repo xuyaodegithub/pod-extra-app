@@ -17,7 +17,7 @@ export default function UserInfo() {
   const { isDark } = useMyContext()
   const { userInfo, setUserInfo, showDialog, setShowDialog, setLoading, initUserInfo } = useUserInfo()
   const [open, setOpen] = useState(false)
-  const [showLogin, setShowLogin] = useState(true)
+  const [showLogin, setShowLogin] = useState(false)
   const [backUrl, setBackUrl] = useState('')
   const pathname = usePathname()
   const { push } = useRouter()
@@ -47,11 +47,19 @@ export default function UserInfo() {
   //这是直接掉google的api
   useEffect(() => {
     const token = cookies.get(BearerToken) || ''
+    const fetchUserInfo = async () => {
+      try {
+        setLoading(true)
+        await initUserInfo()
+        setShowLogin(true)
+      } catch (e) {
+        console.log(e)
+      }
+    }
     if (token) {
-      setLoading(true)
-      initUserInfo()
+      fetchUserInfo()
     } else {
-      setShowLogin(false)
+      setShowLogin(true)
     }
   }, [])
   useEffect(() => {
@@ -104,7 +112,7 @@ export default function UserInfo() {
   return (
     <div className="flex items-center">
       {/*付费用户隐藏price入口*/}
-      {!isVip && (
+      {!isVip && showLogin && (
         <div onClick={toPricePage} className={`cursor-pointer mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}>
           Pricing
         </div>
@@ -138,7 +146,7 @@ export default function UserInfo() {
           </Popover>
         </div>
       )}
-      {!showLogin && (
+      {showLogin && !userInfo?.role && (
         <div
           className={`cursor-pointer flex items-center py-[8px] px-[11px] bg-play font-bold text-md text-white dark:bg-bgDark rounded-[10px] dark:text-homehbg`}
           onClick={onlyToLogin}

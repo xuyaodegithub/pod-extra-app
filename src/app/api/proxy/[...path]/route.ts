@@ -57,7 +57,6 @@ export async function GET(req: NextRequest, { params }: { params: { path: string
     },
     {} as Record<string, string>
   )
-  console.log(paramsObject, 'paramsObject', targetUrl)
   try {
     // @ts-ignore
     const response: any = await axios({

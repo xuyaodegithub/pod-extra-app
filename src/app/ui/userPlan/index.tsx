@@ -217,7 +217,7 @@ export default function UserPlan({ quotaList }: { quotaList: any[] }) {
                   Extra quotas never expire. Extra quotas consumed only after monthly quotas used up.
                 </span>
               </div>
-              <div className={`flex items-center justify-between`}>
+              <div className={`flex items-center justify-between px-[20px]`}>
                 <div
                   className={`cursor-pointer w-[140px] text-md leading-[40px] text-[#bbbbbb] text-center bg-hbg rounded-[5px] dark:text-fontGry-100 dark:bg-darkHomeBg`}
                   onClick={() => setShowQuotas(false)}

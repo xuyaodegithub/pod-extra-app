@@ -36,6 +36,7 @@ export default function Audio() {
     const audioInfo = JSON.parse(sessionStorage.getItem(audio_info) || '{}')
     if (audioInfo?.episodeId) {
       setData(audioInfo)
+      setTime(audioInfo?.playTime)
     }
   }, [])
   useEffect(() => {
