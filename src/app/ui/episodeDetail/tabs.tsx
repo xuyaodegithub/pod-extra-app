@@ -122,7 +122,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
       setTabs(sortArray([...tabList], 0))
       setActiveTab(tabList.at(-1)?.key)
     }
-  }, [setTabs, isSummarized, hasViewed, setActiveTab, isFree])
+  }, [setTabs, isSummarized, hasViewed, setActiveTab, isFree, isLogin])
   useEffect(() => {
     console.log(hasViewed, 'hasViewed', data)
     if (isSummarized && isLogin && hasViewed) {
