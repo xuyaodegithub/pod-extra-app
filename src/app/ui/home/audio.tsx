@@ -167,7 +167,7 @@ export default function Audio() {
     const domH: any = document.querySelector('.episodeTitle-line')
     const h = domH?.offsetHeight || 0
     setHiddenNotes(h > 20)
-  }, [])
+  }, [episodeTitle])
   return enclosureUrl ? (
     <div
       className={`w-[1200px] fixed left-[50%] translate-x-[-50%] bottom-0 bg-bgGray py-[6px] px-[35px] dark:bg-bgDark dark:text-gray-200 rounded-[10px] dark:border-[1px] dark:border-fontGry-600`}

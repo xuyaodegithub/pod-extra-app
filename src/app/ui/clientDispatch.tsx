@@ -9,14 +9,16 @@ export function ClientSub({ val, param, cookie }: { val: any; param?: any; cooki
   const { setTitle } = useMyContext()
   const { replace } = useRouter()
   const { refresh, token } = cookie || {}
-  if (refresh) {
+  console.log('refresh', refresh, token)
+  if (!!refresh) {
     if (token) {
       cookies.set(BearerToken, token)
       cookies.set(loginTime, `${Date.now()}`)
     } else {
+      console.log('token is empty', '失效了')
       cookies.remove(BearerToken)
       cookies.remove(refreshToken)
-      replace('/')
+      replace('/home')
     }
   }
   useEffect(() => {
