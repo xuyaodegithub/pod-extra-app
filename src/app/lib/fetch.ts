@@ -21,12 +21,21 @@ export function isTokenExpired(): boolean {
 }
 
 // 刷新 token 函数
+// @ts-ignore
 export async function refreshToken(): Promise<string> {
-  const response = await axios.post('/api/proxy/v1/account/refreshIdToken', {}, { headers: { Cookie: `${cookies.get(rToken)}` } })
-  const idToken = response.data?.data?.idToken || ''
-  cookies.set(BearerToken, idToken) // 更新本地idToken
-  cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
-  return idToken
+  try {
+    const response = await axios.post('/api/proxy/v1/account/refreshIdToken', {}, { headers: { Cookie: `${cookies.get(rToken)}` } })
+    const idToken = response.data?.data?.idToken || ''
+    cookies.set(BearerToken, idToken) // 更新本地idToken
+    cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
+    return idToken
+  } catch (e: any) {
+    if (e.status === 401) {
+      cookies.remove(BearerToken)
+      cookies.remove(rToken)
+      return ''
+    }
+  }
 }
 
 const instance: any = axios.create({
@@ -85,7 +94,7 @@ instance.interceptors.response.use(
       // Promise.resolve(res)
       return res
     } else if (res.code === 10001) {
-      window.location.host = '/'
+      window.location.href = '/'
     } else {
       if (typeof window !== 'undefined') {
         // Safe to use window here
