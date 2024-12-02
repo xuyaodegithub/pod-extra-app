@@ -13,6 +13,7 @@ import { cookies } from 'next/headers'
 import Icon from '@/app/ui/episodeDetail/Icon'
 import { createServerAxios } from '@/app/lib/serveFetch'
 import { redirect } from 'next/navigation'
+import Image from '@/app/ui/Image'
 // 在目标页面处理 Action
 export async function generateMetadata({ params }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
@@ -56,7 +57,7 @@ export default async function Page({
     <main className={`flex flex-col episode-item`}>
       <ClientSub val={episodeTitle} param={{ pageSize, pageNum }} cookie={{ refresh, token }} />
       <div className={`flex `}>
-        <img src={coverUrl} alt="" className={`w-[160px] h-[160px] mr-[17px] rounded-10px object-cover`} />
+        <Image src={coverUrl} alt="" className={`w-[160px] h-[160px] mr-[17px] rounded-10px object-cover`} />
         <div className={`flex flex-1 flex-col overflow-hidden items-start text-md`}>
           <div className={`text-lg font-normal flex items-center mb-[10px] leading-[22px]`}>
             <Icon path="mic" />
@@ -79,7 +80,7 @@ export default async function Page({
             className={`border border-gray-1000 rounded-5px text-sm py-[7px] px-[15px] mt-auto flex items-center dark:border-fontGry-600 dark:text-fontGry-100`}
           >
             <span className={`shrink-0`}>from podcast</span>
-            <img src={showCoverUrl} alt="" className={`w-[25px] h-[25px] rounded-5px mx-[6px]`} />
+            <Image src={showCoverUrl} alt="" className={`w-[25px] h-[25px] rounded-5px mx-[6px]`} />
             <h2 className={`max-w-[710px] overflow-hidden text-ellipsis whitespace-nowrap`}>{showTitle}</h2>
           </Link>
         </div>

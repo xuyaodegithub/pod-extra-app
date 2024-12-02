@@ -9,6 +9,7 @@ import { MicrophoneIcon } from '@heroicons/react/24/outline'
 import { Card } from '@/app/ui/home/episodes-card'
 import { ClientSub } from '@/app/ui/clientDispatch'
 import SearchEpisodesCard from '@/app/ui/search/search-episodes-card'
+import Image from '@/app/ui/Image'
 export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [title, showId] = splitStringFromLastDash(decodeURIComponent(params.podcastId))
   const { data = {} } = await getPodcastsDetail(showId)
@@ -50,7 +51,7 @@ export default async function Page({
     <main className={`flex flex-col`}>
       <ClientSub val={showTitle} />
       <div className={`flex `}>
-        <img src={coverUrl} alt="" className={`w-[250px] h-[250px] mr-[17px] rounded-10px`} />
+        <Image src={coverUrl} alt="" className={`w-[250px] h-[250px] mr-[17px] rounded-10px`} />
         <div className={`flex flex-1 flex-col`}>
           <div className={`flex items-center mb-[10px]`}>
             {categoryList.map((item: any) => (

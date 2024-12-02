@@ -7,6 +7,7 @@ import { clsx } from 'clsx'
 import CateItem from '@/app/ui/categories/cateItem'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Loader2 } from 'lucide-react'
+import Image from '@/app/ui/Image'
 
 export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boolean }) {
   const { isDark } = useMyContext()
@@ -22,7 +23,7 @@ export default function SearchPodcastCard({ item, noMb }: { item: any; noMb: boo
     <div className={` relative ${noMb ? '' : 'pb-[5px] mb-[5px]'} w-[100%]`}>
       <Link href={showUrl} key={showId} className={`w-[100%] inline-block`}>
         <div className={`flex cursor-pointer overflow-hidden  hover:bg-hbg dark:hover:bg-darkHomeBg transition-all p-[10px] rounded-10px`}>
-          <img src={coverUrl} alt="" className={`w-[120px] h-[120px] object-cover rounded-10px`} />
+          <Image src={coverUrl} alt="" className={`w-[120px] h-[120px] object-cover rounded-10px`} />
           <div className={`flex-1 ml-[10px] overflow-hidden`}>
             <div className={`flex mb-[6px]`}>{categoryList?.map((item: any) => <CateItem {...item} key={item.categoryId} />)}</div>
             <div className={`overflow-hidden text-ellipsis whitespace-nowrap text-fontGry-600 text-md dark:text-white`} title={title}>
