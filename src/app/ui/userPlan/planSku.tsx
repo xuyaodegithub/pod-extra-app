@@ -2,13 +2,16 @@
 import { planTab, monthly, yearly, free, standard, pro } from '@/app/lib/config'
 import { useState, useEffect } from 'react'
 import { useUserInfo } from '@/context/UserInfo'
+import { useMyContext } from '@/context/MyContext'
 import { createOrder } from '@/app/lib/service'
 import { Loader2 } from 'lucide-react'
+import Link from 'next/link'
 
 export default function PlanSku({ skuList }: { skuList: any[] }) {
   const { userInfo } = useUserInfo()
   const [activeTab, setActiveTab] = useState(yearly)
   const [loadingSkuId, setLoadingSkuId] = useState('')
+  const { isDark } = useMyContext()
   //FREE|STANDARD｜PRO  付费周期MONTHLY|YEAYLY
   let { role = free, billingCycle = monthly, gmtSubscriptionStart, gmtSubscriptionEnd } = userInfo || {}
 
@@ -122,15 +125,21 @@ export default function PlanSku({ skuList }: { skuList: any[] }) {
           )
         })}
       </div>
-      <div className={`text-[15px] leading-[25px] text-[#C3C3C3] px-[20px]`}>
-        <div>* Only episodes that have already been AI-processed.</div>
+      <div className={`text-[15px] leading-[25px] text-[#C3C3C3] px-[20px] dark:text-fontGry-600`}>
+        <div>
+          <span className={`inline-block mr-[8px]`}>*</span> Only episodes that have already been AI-processed.
+        </div>
         <div className={`flex items-center`}>
-          <img src="/plan/robot.svg" alt="" className={`mr-[8px]`} />
+          <img src={`/plan/${isDark ? 'robot-white' : 'robot'}.svg`} alt="" className={`mr-[8px]`} />
           We will automatically process the episodes of top podcasts with AI.
         </div>
         <div className={`flex items-center`}>
-          <img src="/plan/emoji-smile.svg" alt="" className={`mr-[8px]`} />
-          We offer a 7-day no-reason full refund service. For details, see our refund policy.
+          <img src={`/plan/emoji-smile${isDark ? '-dark' : ''}.svg`} alt="" className={`mr-[8px]`} />
+          We offer a 7-day full refund service. For details, see our{' '}
+          <Link className={`ml-[4px]`} href="/refund-policy.html" target="_blank">
+            {' '}
+            refund policy.
+          </Link>
         </div>
       </div>
     </div>

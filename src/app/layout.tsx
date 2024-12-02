@@ -15,11 +15,12 @@ import { Suspense } from 'react'
 import { LoadingLine } from '@/app/ui/skeletons'
 // import { SessionProvider } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { googleIdToken, googleAccessToken, expiresIn, cookiesOption, loginTime } from '@/app/lib/config'
+import { BearerToken, refreshToken as rToken, loginTime } from '@/app/lib/config'
 import LoginDialog from '@/app/ui/home/loginDialog'
 //字体
 import { Tilt_Warp, Open_Sans } from 'next/font/google'
 import cookies from 'js-cookie'
+import { isTokenExpired, refreshToken as getNewToken } from '@/app/lib/fetch'
 
 const TiltWarp = Tilt_Warp({ subsets: ['latin'], display: 'swap', variable: '--font-TiltWarp' })
 const OpenSans = Open_Sans({ subsets: ['latin'], display: 'swap', variable: '--font-OpenSans' })
@@ -37,26 +38,36 @@ export default function RootLayout({
   const pathname = usePathname()
   const isLanding = pathname === '/'
   const { replace } = useRouter()
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(window.location.hash.substring(1))
-  //   const accessToken = urlParams.get('access_token') || ''
-  //   const idToken = urlParams.get('id_token')
-  //   const expires_in = urlParams.get('expires_in') || ''
-  //   const state = urlParams.get('state')
-  //   if (idToken) {
-  //     // 将 access_token 存储在 cookie
-  //     cookies.set(googleAccessToken, accessToken, cookiesOption())
-  //     //idToken
-  //     cookies.set(googleIdToken, idToken, cookiesOption())
-  //     //expires_in
-  //     cookies.set(expiresIn, String(+expires_in * 1000), cookiesOption())
-  //     //登录时间
-  //     cookies.set(loginTime, String(Date.now()), cookiesOption())
-  //     const url = state ? decodeURIComponent(state) : pathname
-  //     // 调用函数获取用户信息
-  //     // replace(url)
-  //   }
-  // }, [])
+
+  useEffect(() => {
+    const refreshToken = async () => {
+      try {
+        const isExpired = isTokenExpired()
+        let token = cookies.get(BearerToken)
+        console.log('token', token, isExpired)
+        if (isExpired && token) {
+          const token = await getNewToken()
+          if (token) {
+            cookies.set(BearerToken, token)
+            cookies.set(loginTime, String(Date.now()))
+          } else {
+            cookies.remove(BearerToken)
+            cookies.remove(rToken)
+          }
+        }
+      } catch (error) {
+        console.error('Failed to refresh token:', error)
+      }
+    }
+    // 初始化调用
+    refreshToken()
+    const interval = setInterval(refreshToken, 5 * 60 * 1000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
   useEffect(() => {
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window?.matchMedia('(prefers-color-scheme: dark)').matches)) {

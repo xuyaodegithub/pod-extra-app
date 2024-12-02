@@ -43,15 +43,6 @@ export async function createServerAxios() {
   const needUpdate = isExpired && token
   if (needUpdate) {
     token = await refreshToken()
-    // const { newtToken } = await response.json()
-    // if (token) {
-    //   cookieStore.set(BearerToken, token, cookiesOption()) // 更新本地idToken
-    //   cookieStore.set(loginTime, String(Date.now()), cookiesOption()) // 更新本地loginTime
-    // } else {
-    //   cookieStore.delete(BearerToken) // 更新本地idToken
-    //   cookieStore.delete(rToken) // 更新本地loginTime
-    //   redirect('/home')
-    // }
   }
   return {
     instance: axios.create({
@@ -63,7 +54,7 @@ export async function createServerAxios() {
         Pragma: 'no-cache',
       },
     }),
-    refresh: needUpdate,
+    refresh: needUpdate ? 1 : 0,
     token,
   }
 }

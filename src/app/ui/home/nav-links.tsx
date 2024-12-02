@@ -49,10 +49,16 @@ export const loginAfterLogin = [
   { name: 'Stared Episodes', href: '/stared-episodes', icon: '/icons/stared-episodes.svg', darkIcon: '/icons/stared-episodes-dark.svg' },
 ]
 export const planPrice = {
-  name: 'Plan & pricing',
+  name: 'Plan & Pricing',
   href: '/plan-pricing',
   icon: '/icons/card.svg',
   darkIcon: '/icons/card-dark.svg',
+}
+export const ContactUs = {
+  name: 'Contact Us',
+  href: 'https://tally.so/r/mOj6v7',
+  icon: '/images/message.svg',
+  darkIcon: '/images/message-dark.svg',
 }
 export default function NavLinks() {
   const { userInfo, setShowDialog } = useUserInfo()
@@ -166,7 +172,7 @@ export default function NavLinks() {
         <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
       </div>
       <div>
-        <div className={`font-bold text-md mb-[9px] px-[24px]`}>Setting</div>
+        <div className={`font-bold text-md mb-[9px] px-[24px]`}>Others</div>
         {/*open={open}*/}
         <Popover data-side="right" open={open}>
           <PopoverTrigger className={`px-[10px]`}>
@@ -204,6 +210,19 @@ export default function NavLinks() {
             </div>
           </PopoverContent>
         </Popover>
+        <div className={`px-[10px]  mt-[10px]`}>
+          <Link
+            key={ContactUs.name}
+            href={ContactUs.href}
+            target="_blank"
+            rel={`nofollow`}
+            className={`flex px-[14px] mb-[10px] h-[40px] items-center transition duration-200 rounded-md text-md ${ContactUs.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}
+          >
+            <img src={isDark ? ContactUs.darkIcon : ContactUs.icon} className="w-[20px] mr-[10px]" />
+            <p>{ContactUs.name}</p>
+            {/*<ChevronRightIcon className={`ml-auto w-[20px]`} />*/}
+          </Link>
+        </div>
       </div>
     </div>
   )
