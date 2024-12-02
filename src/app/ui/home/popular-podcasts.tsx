@@ -4,23 +4,7 @@ import styles from '@/app/ui/home.module.scss'
 import { getPodShow } from '@/app/lib/service'
 import { POPULARITY, PUB_DATE, getCurrentLocalTime } from '@/app/lib/utils'
 import Link from 'next/link'
-
-// {
-//   title,
-//     list,
-//     type,
-// }: {
-//   title: string
-//   list: any[]
-//   type: 'invoices' | 'customers' | 'pending' | 'collected'
-// }
-// const cardItem: any = {
-//   imgUrl: '/woman-9009013_1280.png',
-//   title: 'A beautiful and respected teacher',
-//   des: 'A beautiful and respected teacher, she comes from the beautiful city of Hangzhou, China, and her name is Little Cute,',
-// }
-// const list: any[] = Array.from({ length: 10 }, () => cardItem)
-// export async function getServerSideProps(){}
+import Image from '@/app/ui/Image'
 
 export default async function PopularPodcasts({ title, type, params }: { title: string; type: string; params: any }) {
   const isPopularity = POPULARITY === type
@@ -76,14 +60,7 @@ export function Card({
     <div
       className={`rounded-10px w-[190px] box-border p-[10px] ${noMr ? '' : 'mr-[5px]'} overflow-hidden cursor-pointer hover:bg-homehbg dark:hover:bg-darkHomeBg transition-all`}
     >
-      <img
-        src={coverUrl}
-        title={showTitle}
-        alt={showTitle}
-        className={`mb-[8px] rounded-10px w-[170px] h-[170px] object-cover`}
-        width={170}
-        height={170}
-      />
+      <Image src={coverUrl} title={showTitle} alt={showTitle} className={`mb-[8px] rounded-10px w-[170px] h-[170px] object-cover`} />
       {!isPopularity && (
         <div className={`text-sm whitespace-nowrap overflow-hidden text-ellipsis text-fontGry-100`}>
           Update {getCurrentLocalTime(gmtLastUpdate)}

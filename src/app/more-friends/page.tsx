@@ -1,6 +1,7 @@
 import { POPULARITY, PUB_DATE, SUMMARIZE_TIME, TRANSCRIPT_TIME, getMetaData } from '@/app/lib/utils'
 import { Metadata } from 'next'
 import Link from 'next/link'
+import Image from '@/app/ui/Image'
 
 export const metadata: Metadata = getMetaData({
   title: 'PodExtra.AI - Best Podcast Tool With AI Podcast Transcript and Summary',
@@ -39,7 +40,7 @@ export default async function Home() {
             <div className={`mb-[25px]`} key={href}>
               <h3 className={`inline-block cursor-pointer text-max1 mb-[4px] relative group`}>
                 <Link href={href} target="_blank" title={title || ''}>
-                  {isImg ? <img src={name} alt="" className={`w-[150px] h-[54px]`} /> : <span>{name}</span>}
+                  {isImg ? <Image src={name} alt="" className={`w-[150px] h-[54px]`} /> : <span>{name}</span>}
                 </Link>
               </h3>
             </div>

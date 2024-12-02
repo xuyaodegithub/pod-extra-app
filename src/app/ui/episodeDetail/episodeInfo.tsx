@@ -7,6 +7,7 @@ import { getCurrentLocalTime, splitStringFromLastDash, timeFormat } from '@/app/
 import PlayBtn from '@/app/ui/search/play-btn'
 import Link from 'next/link'
 import { getEpisodeDetail } from '@/app/lib/service'
+import Image from '@/app/ui/Image'
 
 export async function EpisodeInfo({ episodeId }: { episodeId: string }) {
   const [res, setRes]: any = useState({})
@@ -24,7 +25,7 @@ export async function EpisodeInfo({ episodeId }: { episodeId: string }) {
 
   return (
     <div className={`flex `}>
-      <img src={coverUrl} alt="" className={`w-[160px] h-[160px] mr-[17px] rounded-10px object-cover`} />
+      <Image src={coverUrl} alt="" className={`w-[160px] h-[160px] mr-[17px] rounded-10px object-cover`} />
       <div className={`flex flex-1 flex-col overflow-hidden items-start`}>
         <div className={`text-lg font-semibold flex items-center mb-[5px]`}>
           <MicrophoneIcon className={`mr-[5px] w-[20px] h-[28px]`} />
@@ -45,7 +46,7 @@ export async function EpisodeInfo({ episodeId }: { episodeId: string }) {
           className={`border border-gray-1000 rounded-5px text-sm py-[7px] px-[15px] mt-auto flex items-center dark:border-fontGry-600 dark:text-fontGry-100`}
         >
           <span className={`shrink-0`}>from podcast</span>
-          <img src={showCoverUrl} alt="" className={`w-[25px] h-[25px] rounded-5px mx-[6px]`} />
+          <Image src={showCoverUrl} alt="" className={`w-[25px] h-[25px] rounded-5px mx-[6px]`} />
           <h2 className={`max-w-[710px] overflow-hidden text-ellipsis whitespace-nowrap`}>{showTitle}</h2>
         </Link>
       </div>
