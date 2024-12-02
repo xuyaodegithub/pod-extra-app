@@ -5,6 +5,7 @@ import { getCurrentLocalTime, getNoTagText, timeFormat } from '@/app/lib/utils'
 import { ClockIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { summarized } from '@/app/lib/config'
+import Image from '@/app/ui/Image'
 export function Card({
   coverUrl,
   episodeTitle,
@@ -43,13 +44,11 @@ export function Card({
       <div
         className={`flex rounded-[5px] p-[10px] ${noMb ? '' : 'mb-[5px]'} overflow-hidden cursor-pointer ${isHome ? 'hover:bg-homehbg' : 'hover:bg-hbg'} dark:hover:bg-darkHomeBg transition-all`}
       >
-        <img
+        <Image
           src={coverUrl}
           title={episodeTitle}
           alt={episodeTitle}
           className={`mr-[6px] rounded-[10px] w-[110px] h-[110px] object-cover`}
-          width={110}
-          height={110}
         />
         <div className={`flex-1 flex flex-col overflow-hidden`}>
           <h3

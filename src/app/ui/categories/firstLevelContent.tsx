@@ -3,6 +3,7 @@ import { getPodShow } from '@/app/lib/service'
 import { getNoTagText, PUB_DATE, getCurrentLocalTime } from '@/app/lib/utils'
 import { Metadata } from 'next'
 const y = new Date().getFullYear()
+import Image from '@/app/ui/Image'
 export const metadata: Metadata = {
   title: `The Latest Podcasts episodes of ${y - 1}-${y} | PodExtra.AI`,
   description:
@@ -31,7 +32,7 @@ export default async function Page({
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           return (
             <div className={`flex mb-24px cursor-pointer w-[50%] pr-[14px] overflow-hidden`} key={showId}>
-              <img src={coverUrl} alt="" className={`w-[110px] h-[110px] object-cover rounded-10px`} />
+              <Image src={coverUrl} alt="" className={`w-[110px] h-[110px] object-cover rounded-10px`} />
               <div className={`flex-1 ml-[10px] overflow-hidden`}>
                 <div className={`flex mb-[6px]`}>
                   {categoryList?.map(({ categoryName, categoryId }: any) => (

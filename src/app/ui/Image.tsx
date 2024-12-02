@@ -1,18 +1,30 @@
 'use client'
-import Image from 'next/image'
 import { useMyContext } from '@/context/MyContext'
+import { useState, useEffect } from 'react'
 
-export default function AcmeLogo() {
+export default function Image({
+  src,
+  className,
+  alt,
+  title,
+}: {
+  src: string
+  className?: string
+  alt?: string
+  title?: string
+  props?: any
+}) {
+  const [url, setUrl] = useState(src)
+  const [hasError, setHasError] = useState(false)
   const { isDark } = useMyContext()
-  return (
-    <div className={`ml-24px mt-[6px]`}>
-      <Image
-        src={`/images/${isDark ? 'darkLogo' : 'logo'}.svg`}
-        width={188}
-        height={26}
-        className="hidden md:block"
-        alt="pod-extra-front_logo"
-      />
-    </div>
-  )
+  useEffect(() => {
+    setUrl(src)
+  }, [src])
+  function errorHandler() {
+    if (!hasError) {
+      setUrl(`/images/${isDark ? 'no-picture-dark-mode' : 'no-picture-light-mode'}.jpg`)
+      setHasError(true)
+    }
+  }
+  return <img src={url} alt={alt} title={title} onError={errorHandler} className={`object-cover ${className}`} />
 }

@@ -10,6 +10,7 @@ import { audio_info, summarized } from '@/app/lib/config'
 import { useRouter } from 'next/navigation'
 import PlayBtn from '@/app/ui/search/play-btn'
 import FlowStart from '@/app/ui/search/flow-start'
+import Image from '@/app/ui/Image'
 
 export default function SearchPodcastCard({ item, noMb, hiddenPodcast }: { item: any; noMb: boolean; hiddenPodcast?: boolean }) {
   const { isDark } = useMyContext()
@@ -57,13 +58,13 @@ export default function SearchPodcastCard({ item, noMb, hiddenPodcast }: { item:
     <div className={` relative ${noMb ? '' : 'pb-[5px] mb-[5px]'}`}>
       <Link href={episodeUrl} key={episodeId} className={``}>
         <div className={`flex cursor-pointer overflow-hidden  hover:bg-hbg dark:hover:bg-darkHomeBg transition-all p-[10px] rounded-10px`}>
-          <img src={coverUrl} alt="" className={`w-[130px] h-[130px] object-cover rounded-10px`} />
+          <Image src={coverUrl} alt="" className={`w-[130px] h-[130px] object-cover rounded-10px`} />
           <div className={`flex-1 ml-[10px] overflow-hidden flex flex-col`}>
             <div className={`flex mb-[5px] text-sm text-fontGry-600 items-center dark:text-fontGry-100`}>
               <div className={`mr-[20px]`}>{getCurrentLocalTime(gmtPubDate)}</div>
               {!hiddenPodcast && (
                 <div className={`flex items-center flex-1`} onClick={(e: any) => toPodcast(e)}>
-                  <img src={showCoverUrl} alt="" className={`w-[20px] h-[20px] mr-[5px] rounded-[5px]`} />
+                  <Image src={showCoverUrl} alt="" className={`w-[20px] h-[20px] mr-[5px] rounded-[5px]`} />
                   <span className={`flex-1 overflow-hidden whitespace-nowrap text-ellipsis`}>{showTitle}</span>
                 </div>
               )}

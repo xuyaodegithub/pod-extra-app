@@ -3,7 +3,7 @@ import { PlayCircleIcon, PauseIcon, SpeakerWaveIcon, SpeakerXMarkIcon } from '@h
 import { useEffect, useState, useRef } from 'react'
 // import { Slider } from '@/components/ui/slider'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
-import Image from 'next/image'
+import Image from '@/app/ui/Image'
 const volumeList: number[] = [0.5, 0.8, 1, 1.1, 1.2, 1.3, 1.5, 1.8, 2.0, 3.0]
 import { useMyContext } from '@/context/MyContext'
 import { getNoTagText, timeFormat } from '@/app/lib/utils'
@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import { Loading } from '@/app/ui/home/loading'
 import { audio_info } from '@/app/lib/config'
 import { Slider } from 'antd'
+
 export default function Audio() {
   const { data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime, allTime, setAllTime } = useMyContext()
   const {
@@ -189,13 +190,11 @@ export default function Audio() {
         {/*  <source src={`/17193_1461772397.mp3`} type={'audio/ogg'} />*/}
         {/*  your browser does not support the audio element*/}
         {/*</audio>*/}
-        <Image
+        <img
           src={`/images/${isPlaying ? 'playing' : 'paused'}.svg`}
-          width={34}
-          height={34}
           alt={'play'}
           title={'play'}
-          className={`mr-[10px] cursor-pointer`}
+          className={`mr-[10px] cursor-pointer w-[34px] h-[34px]`}
           onClick={palyAudio}
         />
         <div className={`w-[400px] flex items-center`}>
@@ -255,7 +254,7 @@ export default function Audio() {
           </SelectContent>
         </Select>
         <div className={`flex ml-auto items-center cursor-pointer`} onClick={toEpisodeDetail}>
-          <img src={coverUrl} title={''} alt={''} className={`mr-[15px] rounded-[5px] w-[38px] h-[38px] object-cover`} />
+          <Image src={coverUrl} title={''} alt={''} className={`mr-[15px] rounded-[5px] w-[38px] h-[38px] object-cover`} />
           <div className={`flex-1`}>
             <div
               className={`episodeTitle-line w-[380px] text-[14px] text-fontGry-600 leading-[19px] overflow-hidden text-ellipsis line-clamp-2 dark:text-fontGry-100`}
