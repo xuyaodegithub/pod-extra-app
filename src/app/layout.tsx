@@ -42,7 +42,8 @@ export default function RootLayout({
   useEffect(() => {
     const refreshToken = async () => {
       try {
-        const isExpired = isTokenExpired()
+        // 检查是否过期  提前十分钟
+        const isExpired = isTokenExpired(10)
         let token = cookies.get(BearerToken)
         console.log('token', token, isExpired)
         if (isExpired && token) {
