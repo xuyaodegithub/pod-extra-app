@@ -6,6 +6,7 @@ const y = new Date().getFullYear()
 import Link from 'next/link'
 import CateItem from '@/app/ui/categories/cateItem'
 import { ClientSub } from '@/app/ui/clientDispatch'
+import Image from '@/app/ui/Image'
 export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const pageSize = searchParams?.pageSize || 5
   const pageNum = searchParams?.page || 1
@@ -50,7 +51,7 @@ export default async function Page({
       <div className={`sticky top-[57px] bg-white dark:bg-black pb-[22px]`}>
         <Pagination totalPages={totalPages} total={total} title="podcasts" />
       </div>
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px]`}>
+      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
         {resultList.map(({ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl }: any) => {
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           return (
@@ -58,7 +59,7 @@ export default async function Page({
               <div
                 className={`flex mb-4px cursor-pointer overflow-hidden hover:bg-hbg transition-all p-[10px] rounded-10px dark:hover:bg-darkHomeBg`}
               >
-                <img src={coverUrl} alt="" className={`w-[110px] h-[110px] object-cover rounded-10px`} />
+                <Image src={coverUrl} alt="" className={`w-[110px] h-[110px] object-cover rounded-10px`} />
                 <div className={`flex-1 ml-[10px] overflow-hidden`}>
                   <div className={`flex mb-[6px]`}>{categoryList?.map((item: any) => <CateItem {...item} key={item.categoryId} />)}</div>
                   <div className={`overflow-hidden text-ellipsis whitespace-nowrap text-fontGry-600 text-md dark:text-white`} title={title}>

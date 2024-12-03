@@ -3,6 +3,7 @@ import styles from '@/app/ui/home.module.scss'
 import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import { getPodCategory } from '@/app/lib/service'
 import Link from 'next/link'
+import Image from '@/app/ui/Image'
 
 const iconMap = [
   'rgb(132,183,57)',
@@ -105,7 +106,7 @@ export function Cate({
         style={{ backgroundColor: color }}
       >
         <span className={`absolute top-[10px] left-[10px] text-sm`}>{categoryName}</span>
-        <img src={url} alt="" className={`absolute top-[50%] right-[10px] translate-y-[-50%]`} />
+        <Image src={url} alt="" className={`absolute top-[50%] right-[10px] translate-y-[-50%]`} />
       </div>
     </Link>
   )

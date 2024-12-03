@@ -9,24 +9,33 @@ import { message } from 'antd'
 import eventBus from '@/app/lib/eventBus'
 
 // 检查 token 是否过期
-export function isTokenExpired(): boolean {
+export function isTokenExpired(min: number = 0): boolean {
   try {
     const t = cookies.get(expiresIn) || 0
     const l = cookies.get(loginTime) || 0
     const now = Date.now() // 当前时间
-    return +t + +l < now && !!t // 比较 exp（过期时间）
+    return +t + +l < now - min * 60 * 1000 && !!t // 比较 exp（过期时间）
   } catch (e) {
     return true // 如果解析失败，认为 token 已过期
   }
 }
 
 // 刷新 token 函数
+// @ts-ignore
 export async function refreshToken(): Promise<string> {
-  const response = await axios.post('/api/proxy/v1/account/refreshIdToken', {}, { headers: { Cookie: `${cookies.get(rToken)}` } })
-  const idToken = response.data?.data?.idToken || ''
-  cookies.set(BearerToken, idToken) // 更新本地idToken
-  cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
-  return idToken
+  try {
+    const response = await axios.post('/api/proxy/v1/account/refreshIdToken', {}, { headers: { Cookie: `${cookies.get(rToken)}` } })
+    const idToken = response.data?.data?.idToken || ''
+    cookies.set(BearerToken, idToken) // 更新本地idToken
+    cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
+    return idToken
+  } catch (e: any) {
+    if (e.status === 401) {
+      cookies.remove(BearerToken)
+      cookies.remove(rToken)
+      return ''
+    }
+  }
 }
 
 const instance: any = axios.create({
@@ -85,7 +94,7 @@ instance.interceptors.response.use(
       // Promise.resolve(res)
       return res
     } else if (res.code === 10001) {
-      window.location.host = '/'
+      window.location.href = '/'
     } else {
       if (typeof window !== 'undefined') {
         // Safe to use window here

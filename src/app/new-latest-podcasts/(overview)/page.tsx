@@ -3,6 +3,7 @@ import { getPodShow } from '@/app/lib/service'
 import { getNoTagText, PUB_DATE, getCurrentLocalTime, getMetaData } from '@/app/lib/utils'
 import Link from 'next/link'
 import CateItem from '@/app/ui/categories/cateItem'
+import Image from '@/app/ui/Image'
 
 import { Metadata } from 'next'
 const y = new Date().getFullYear()
@@ -44,7 +45,7 @@ export default async function Page({
               <div
                 className={`flex cursor-pointer ${noMb ? '' : 'mb-[5px]'} overflow-hidden  hover:bg-hbg dark:hover:bg-darkHomeBg transition-all p-[10px] rounded-10px`}
               >
-                <img src={coverUrl} alt="" className={`w-[110px] h-[110px] object-cover rounded-10px`} />
+                <Image src={coverUrl} alt="" className={`w-[110px] h-[110px] object-cover rounded-10px`} />
                 <div className={`flex-1 ml-[10px] overflow-hidden`}>
                   <div className={`flex mb-[6px]`}>{categoryList?.map((item: any) => <CateItem {...item} key={item.categoryId} />)}</div>
                   <div className={`overflow-hidden text-ellipsis whitespace-nowrap text-fontGry-600 text-md dark:text-white`} title={title}>

@@ -5,6 +5,7 @@ import CateItem from '@/app/ui/categories/cateItem'
 import { Metadata } from 'next'
 const y = new Date().getFullYear()
 import Link from 'next/link'
+import Image from '@/app/ui/Image'
 export const metadata: Metadata = getMetaData({
   title: `The Best Popular Podcasts episodes of ${y - 1}-${y} | PodExtra.AI`,
   description: `Gather the best popular podcasts from across the web in ${y - 1}-${y}, presenting your favorite podcasts with AI-powered transcripts and summaries to enhance your listening experience.`,
@@ -42,7 +43,7 @@ export default async function Page({
               <div
                 className={`flex cursor-pointer ${noMb ? '' : 'mb-[5px]'} p-[10px] rounded-10px overflow-hidden hover:bg-hbg dark:hover:bg-darkHomeBg transition-all`}
               >
-                <img src={coverUrl} alt="" className={`w-[110px] h-[110px] object-cover rounded-10px`} />
+                <Image src={coverUrl} alt="" className={`w-[110px] h-[110px] object-cover rounded-10px`} />
                 <div className={`flex-1 ml-[10px] overflow-hidden`}>
                   <div className={`flex mb-[6px]`}>{categoryList?.map((item: any) => <CateItem {...item} key={item.categoryId} />)}</div>
                   <div className={`overflow-hidden text-ellipsis whitespace-nowrap text-fontGry-600 text-md dark:text-white`} title={title}>

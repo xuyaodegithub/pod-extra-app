@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import { speakerList } from '@/app/lib/config'
 import { timeFormat } from '@/app/lib/utils'
 import { useMyContext } from '@/context/MyContext'
-import { useState } from 'react'
+import Image from '@/app/ui/Image'
 
 export function Highlights({ data }: { data: any }) {
   const { highlights = [] } = data || {}
@@ -28,7 +28,7 @@ export function Highlights({ data }: { data: any }) {
           <div className={`mb-[16px] pb-[12px] border-b-[1px] border-e8e dark:border-fontGry-600`} key={`${item.start}-${ind}`}>
             <div className={`flex mb-[9px]`} style={{ color: speaker.color }}>
               <div className={`w-[50px] h-[50px] mr-[8px] text-max0 leading-[50px] text-center rounded-[6px]`}>
-                <img src={speaker.head} alt="" className={`w-[50px] h-[50px] object-cover`} />
+                <Image src={speaker.head} alt="" className={`w-[50px] h-[50px] object-cover`} />
               </div>
               <div className={`flex flex-col justify-between`}>
                 <div
@@ -37,7 +37,7 @@ export function Highlights({ data }: { data: any }) {
                   style={{ background: speaker.bg }}
                 >
                   <span className={`mr-[10px] leading-[20px] inline-block`}>{timeFormat(item.start)}</span>
-                  <img src="/images/fa-play.png" alt="" className={`inline-block align-baseline w-[10px] h-[10px]`} />
+                  <Image src="/images/fa-play.png" alt="" className={`inline-block align-baseline w-[10px] h-[10px]`} />
                 </div>
                 <div className={`text-md leading-[20px]`}>{item.speaker || `Speaker ${ind + 1}`}</div>
               </div>
