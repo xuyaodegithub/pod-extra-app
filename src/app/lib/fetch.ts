@@ -116,7 +116,7 @@ instance.interceptors.response.use(
     }
     if (typeof window !== 'undefined') {
       // Safe to use window here
-      message.error(err.response?.data?.message || '系统异常')
+      err.response?.data?.message && message.error(err.response?.data?.message)
     }
     return Promise.resolve(err.response)
   }
