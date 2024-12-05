@@ -29,10 +29,6 @@ export async function POST(req: NextRequest) {
     data: { idToken: token, rToken },
   } = await userLogin({ idToken: idToken })
   cookieStore.set(BearerToken, token, cookiesOption())
-  // if (rToken) {
-  //   console.log(rToken, 'rToken')
-  //   cookieStore.set(refreshToken, rToken, cookiesOption())
-  // }
   // 根据 `state` 跳转到目标页面
   const response = NextResponse.redirect(new URL(decodeURIComponent(path), req.nextUrl.origin), {
     status: 302,
@@ -41,18 +37,8 @@ export async function POST(req: NextRequest) {
     },
   })
   response.cookies.set(BearerToken, token)
-  if (rToken) response.cookies.set(refreshToken, rToken)
+  if (rToken) response.cookies.set(refreshToken, rToken, cookiesOption())
   return response
-  // return NextResponse.redirect(new URL(decodeURIComponent(path), req.nextUrl.origin), {
-  //   status: 302,
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // })
-  // } catch (err: any) {
-  //   console.error('Error:', err)
-  //   return NextResponse.json({ error: 'Token validation failed' }, { status: 500 })
-  // }
 }
 
 export const runtime = 'edge' // 推荐在 edge runtime 上运行以提高性能（可选）
