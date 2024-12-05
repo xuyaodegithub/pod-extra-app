@@ -13,7 +13,10 @@ export default async function PopularPodcasts({ title, type, params }: { title: 
     ...params,
   }
   const {
-    data: { resultList },
+    data: {
+      pageQueryResponse: { resultList = [], total = 0 },
+      requestCategoryList,
+    },
   } = await getPodShow(payload)
   const urlObj: any = {
     [POPULARITY]: '/popular-top-best-podcasts',

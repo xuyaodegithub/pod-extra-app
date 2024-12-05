@@ -45,11 +45,11 @@ export default function SearchPodcasts({ podcasts, tab }: { podcasts: any; tab: 
       {list?.length ? (
         <div className={`border-[1px] border-bgGray rounded-[10px] p-[14px] dark:border-fontGry-600`}>
           {list.map((item: any, ind: number) => {
-            const { coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl } = item
+            const { coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl, followed } = item
             const noMb = ind >= list.length - 1
             return (
               <SearchPodcastCard
-                item={{ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl }}
+                item={{ coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl, followed }}
                 noMb={noMb}
                 key={showId}
               />

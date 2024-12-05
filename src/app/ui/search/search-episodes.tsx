@@ -59,6 +59,7 @@ export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: 
               enclosureUrl,
               episodeStatus,
               showUrl,
+              star,
             } = item
             const noMb = ind >= list.length - 1
             return (
@@ -76,6 +77,7 @@ export default function SearchEpisodes({ episodes, tab }: { episodes: any; tab: 
                   enclosureUrl,
                   episodeStatus,
                   showUrl,
+                  star,
                 }}
                 noMb={noMb}
                 key={episodeId}

@@ -6,6 +6,7 @@ import { searchTabs } from '@/app/lib/config'
 import SearchPodcasts from '@/app/ui/search/search-podcasts'
 import SearchEpisodes from '@/app/ui/search/search-episodes'
 import { getSearchList } from '@/app/lib/service'
+import { createServerAxios } from '@/app/lib/serveFetch'
 
 export const metadata: Metadata = getMetaData({
   title: 'Search | PodExtra.AI',
@@ -32,6 +33,12 @@ export default async function Search({
     pageNum: page,
     pageSize: pageSize,
   }
+  const { instance } = await createServerAxios()
+  // const {
+  //   data: {
+  //     data: { resultList = [], total = 0 },
+  //   },
+  // } = await instance.get(`v1/episode/my-favorite`, { params: { pageSize, pageNum, tagType: 'PLAYLIST' } })
   const {
     data: { podcasts = {}, episodes = {} },
   } = await getSearchList(payload)

@@ -40,7 +40,7 @@ export default function Pagination({ totalPages, total, title }: { totalPages: n
       {/*  NOTE: Uncomment this code in Chapter 11 */}
 
       <div className="flex items-center dark:text-fontGry-dark9b">
-        <span className={`mr-[16px] text-sm`}>{`Total ${total} ${title || 'episodes'}`}</span>
+        <span className={`mr-[16px] text-sm`}>{`Total ${total || 0} ${title || 'episodes'}`}</span>
         <PaginationArrow direction="left" href={createPageURL(currentPage - 1)} isDisabled={currentPage <= 1} />
 
         <div className="flex ">

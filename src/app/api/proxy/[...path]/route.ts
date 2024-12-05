@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
-import { BearerToken, googleAccessToken, googleIdToken, refreshToken } from '@/app/lib/config'
+import { BearerToken, cookiesOption, googleAccessToken, googleIdToken, refreshToken } from '@/app/lib/config'
 import axios from 'axios'
 
 export async function POST(req: NextRequest, { params }: { params: { path: string[] } }) {
@@ -24,20 +24,22 @@ export async function POST(req: NextRequest, { params }: { params: { path: strin
       },
       data: body,
     })
-    const { url } = response.config
-    if (url.endsWith('account/auth')) {
-      const Cookie = response.headers['set-cookie']
-      cookieStore.set(refreshToken, Cookie[0] || '')
-    }
-    return new NextResponse(JSON.stringify(response.data), {
+    // const { url } = response.config
+    const newToken = response.data?.data?.idToken
+    let res = new NextResponse(JSON.stringify(response.data), {
       status: response.status,
       headers: {
         'Content-Type': 'application/json', // 确保返回正确的 Content-Type
         ...response.headers,
+        'Access-Control-Allow-Credentials': 'true',
       },
     })
+    if (newToken) {
+      res.cookies.set(BearerToken, newToken, cookiesOption())
+    } //res.cookies.set(BearerToken, newToken)
+    return res
   } catch (e: any) {
-    return new NextResponse(JSON.stringify({ code: 401, message: '登录失效', data: null }), {
+    return new NextResponse(JSON.stringify({ ...e?.response?.data }), {
       status: e.status,
       headers: {
         'Content-Type': 'application/json', // 确保返回正确的 Content-Type
@@ -79,7 +81,7 @@ export async function GET(req: NextRequest, { params }: { params: { path: string
       },
     })
   } catch (e: any) {
-    return new NextResponse(JSON.stringify({ code: 401, message: '登录失效', data: null }), {
+    return new NextResponse(JSON.stringify({ ...e?.response?.data }), {
       status: e.status,
       headers: {
         'Content-Type': 'application/json', // 确保返回正确的 Content-Type

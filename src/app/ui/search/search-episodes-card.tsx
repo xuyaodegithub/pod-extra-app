@@ -3,9 +3,6 @@ import { useMyContext } from '@/context/MyContext'
 import { useState } from 'react'
 import Link from 'next/link'
 import { getCurrentLocalTime, getNoTagText, getTimeWithHoursMin } from '@/app/lib/utils'
-import { clsx } from 'clsx'
-import CateItem from '@/app/ui/categories/cateItem'
-import { FireIcon } from '@heroicons/react/24/outline'
 import { audio_info, summarized } from '@/app/lib/config'
 import { useRouter } from 'next/navigation'
 import PlayBtn from '@/app/ui/search/play-btn'
@@ -78,7 +75,7 @@ export default function SearchPodcastCard({ item, noMb, hiddenPodcast }: { item:
             </div>
             <div className={`flex items-center mt-auto`}>
               <PlayBtn item={item} />
-              {/*<FlowStart item={item} />*/}
+              <FlowStart item={item} />
             </div>
           </div>
         </div>

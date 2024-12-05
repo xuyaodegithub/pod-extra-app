@@ -24,10 +24,10 @@ export function isTokenExpired(min: number = 0): boolean {
 // @ts-ignore
 export async function refreshToken(): Promise<string> {
   try {
-    const response = await axios.post('/api/proxy/v1/account/refreshIdToken', {}, { headers: { Cookie: `${cookies.get(rToken)}` } })
+    const response = await axios.post('/api/proxy/v1/account/refreshIdToken', {}, { withCredentials: true })
     const idToken = response.data?.data?.idToken || ''
-    cookies.set(BearerToken, idToken) // 更新本地idToken
-    cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
+    // cookies.set(BearerToken, idToken) // 更新本地idToken
+    // cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
     return idToken
   } catch (e: any) {
     if (e.status === 401) {
@@ -114,7 +114,11 @@ instance.interceptors.response.use(
       // return axios.request(originalRequest) // 再重复请求一次
       return 'timeout'
     }
-    return Promise.resolve(err)
+    if (typeof window !== 'undefined') {
+      // Safe to use window here
+      message.error(err.response?.data?.message || '系统异常')
+    }
+    return Promise.resolve(err.response)
   }
 )
 

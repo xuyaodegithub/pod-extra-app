@@ -29,10 +29,10 @@ export async function POST(req: NextRequest) {
     data: { idToken: token, rToken },
   } = await userLogin({ idToken: idToken })
   cookieStore.set(BearerToken, token, cookiesOption())
-  if (rToken) {
-    console.log(rToken, 'rToken')
-    cookieStore.set(refreshToken, rToken, cookiesOption())
-  }
+  // if (rToken) {
+  //   console.log(rToken, 'rToken')
+  //   cookieStore.set(refreshToken, rToken, cookiesOption())
+  // }
   // 根据 `state` 跳转到目标页面
   const response = NextResponse.redirect(new URL(decodeURIComponent(path), req.nextUrl.origin), {
     status: 302,
@@ -41,6 +41,7 @@ export async function POST(req: NextRequest) {
     },
   })
   response.cookies.set(BearerToken, token)
+  if (rToken) response.cookies.set(refreshToken, rToken)
   return response
   // return NextResponse.redirect(new URL(decodeURIComponent(path), req.nextUrl.origin), {
   //   status: 302,

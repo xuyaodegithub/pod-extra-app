@@ -48,13 +48,13 @@ export default function RootLayout({
         console.log('token', token, isExpired)
         if (isExpired && token) {
           const token = await getNewToken()
-          if (token) {
-            cookies.set(BearerToken, token)
-            cookies.set(loginTime, String(Date.now()))
-          } else {
-            cookies.remove(BearerToken)
-            cookies.remove(rToken)
-          }
+          // if (token) {
+          //   cookies.set(BearerToken, token)
+          //   cookies.set(loginTime, String(Date.now()))
+          // } else {
+          //   cookies.remove(BearerToken)
+          //   cookies.remove(rToken)
+          // }
         }
       } catch (error) {
         console.error('Failed to refresh token:', error)

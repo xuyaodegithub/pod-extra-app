@@ -5,7 +5,7 @@ import { audio_info } from '@/app/lib/config'
 import { useMyContext } from '@/context/MyContext'
 
 export default function PlayBtn({ item }: { item: any }) {
-  const { data, setData, isPlaying, setIsPlaying, time, allTime } = useMyContext()
+  const { data, setData, isPlaying, setIsPlaying, time, allTime, setAllTime } = useMyContext()
   const { enclosureUrl: url = '' } = data || {}
   const { coverUrl, episodeTitle, showTitle, showNotes, episodeId, duration, enclosureUrl, historyTime = '' } = item
   const play = isPlaying && url && url === enclosureUrl
@@ -18,6 +18,7 @@ export default function PlayBtn({ item }: { item: any }) {
       const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
       console.log(id, episodeId, data, audioInfo, '--------')
       setData(audioInfo)
+      setAllTime(0)
       setTimeout(() => {
         setIsPlaying(true)
         sessionStorage.setItem(audio_info, JSON.stringify({ ...audioInfo, playTime: 0 }))
