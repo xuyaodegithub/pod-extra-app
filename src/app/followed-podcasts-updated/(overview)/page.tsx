@@ -21,12 +21,12 @@ export default async function Page({
 }) {
   const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
   const { instance } = await createServerAxios()
-  console.log({ pageSize, pageNum, sortBy: 'PUB_DATE' }, '11111111')
   const {
     data: {
       data: { resultList = [], total = 0 },
     },
-  } = await instance.get(`v1/episode/my-favorite`, { params: { pageSize, pageNum, sortBy: 'PUB_DATE' } })
+  } = await instance.get(`v1/podcast/my-favorite`, { params: { pageSize, pageNum, sortBy: 'PUB_DATE' } })
+  console.log(resultList, '11111111')
   // const {
   //   data: { resultList = [], total = 0 },
   // } = await getPodEpisode({ pageSize, pageNum, sortBy: 'PUB_DATE' })
