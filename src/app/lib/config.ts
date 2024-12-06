@@ -55,8 +55,10 @@ export const cookiesOption = (data?: any) => {
   return {
     ...data,
     // httpOnly: true,
+    SameSite: 'None',
     secure: true,
     sameSite: 'strict',
+    domain: 'dev.dreamher.cn',
   }
 }
 export const summarized = 'SUMMARIZED'

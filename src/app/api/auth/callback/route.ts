@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { callbackPath, googleAccessToken, refreshToken, expiresIn, loginTime, cookiesOption, BearerToken } from '@/app/lib/config'
-import { userLogin } from '@/app/lib/service'
+import axios from 'axios'
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
@@ -25,9 +25,20 @@ export async function POST(req: NextRequest) {
   if (!idToken) {
     return NextResponse.json({ error: 'Missing id_token or state' }, { status: 400 })
   }
-  const {
-    data: { idToken: token, rToken },
-  } = await userLogin({ idToken: idToken })
+  // @ts-ignore
+  const authRes: any = await axios({
+    url: `${process.env.NEXT_PUBLIC_API_URL}v1/account/auth`,
+    method: 'POST',
+    withCredentials: true,
+    dataType: 'JSON',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: { idToken },
+  })
+  //userLogin({ idToken: idToken })
+  const token = authRes.data?.data?.idToken
+  const rToken = authRes.headers.get('set-cookie') || ''
   cookieStore.set(BearerToken, token, cookiesOption())
   // 根据 `state` 跳转到目标页面
   const response = NextResponse.redirect(new URL(decodeURIComponent(path), req.nextUrl.origin), {
@@ -37,7 +48,12 @@ export async function POST(req: NextRequest) {
     },
   })
   response.cookies.set(BearerToken, token, cookiesOption())
-  if (rToken) response.cookies.set(refreshToken, rToken, cookiesOption({ httpOnly: true }))
+  if (rToken) {
+    const match = rToken.match(/refreshToken=([^;]+)/)
+    const t = `refreshToken=${match ? match[1] : ''}`
+    cookieStore.set(refreshToken, t, cookiesOption())
+    response.cookies.set(refreshToken, t, cookiesOption({ httpOnly: true }))
+  }
   return response
 }
 
