@@ -36,7 +36,7 @@ export default function Audio() {
   const funs: any = { canplaythrough, timeupdate, loadstart, error, ended }
   function handleFlowEpisode(e: string, t: number) {
     const now = Date.now()
-    if (e && now > saveTime + 5000 && !!t) {
+    if (e && now > saveTime + 10000 && !!t) {
       flowEpisode(episodeId, { currentPosition: t, tagType: 'PLAYLIST' })
       setSaveTime(now)
     }

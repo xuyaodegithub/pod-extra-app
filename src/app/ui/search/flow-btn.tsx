@@ -3,12 +3,14 @@ import { useState } from 'react'
 import { flowPodcast, unFlowPodcast } from '@/app/lib/service'
 import { Loader2 } from 'lucide-react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { useRouter } from 'next/navigation'
 
 export default function FlowBtn({ item, noPosition }: { item: any; noPosition?: boolean }) {
   const { showId, followed = false } = item
   const [isFlow, setIsFlow] = useState(followed)
   const [loading, setLoading] = useState(false)
   const [showUnFlower, setShowUnFlower] = useState(false)
+  const { refresh } = useRouter()
 
   async function flowThisItem() {
     if (loading) return
@@ -22,6 +24,7 @@ export default function FlowBtn({ item, noPosition }: { item: any; noPosition?: 
       } catch (e) {}
       setLoading(false)
     }
+    refresh()
   }
   async function confirmUnflow() {
     setLoading(true)
