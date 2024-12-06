@@ -83,12 +83,12 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response: any) => {
     const res = response.data
-    if (response?.config?.url.endsWith('account/auth')) {
-      const cookieString = decodeURIComponent(response.headers['set-cookie'] || '')
-      const match = cookieString.match(/refreshToken=([^;]+)/)
-      const t = match ? match[1] : null
-      res.data.rToken = `refreshToken=${t}`
-    }
+    // if (response?.config?.url.endsWith('account/auth')) {
+    //   const cookieString = decodeURIComponent(response.headers['set-cookie'] || '')
+    //   const match = cookieString.match(/refreshToken=([^;]+)/)
+    //   const t = match ? match[1] : null
+    //   res.data.rToken = `refreshToken=${t}`
+    // }
     // 对响应数据做点什么
     if (res.code === 0) {
       // Promise.resolve(res)
