@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 import UserHead from '@/app/ui/home/userHead'
 import { googleLoginPopup, revokeAccess2, client_id } from '@/app/lib/login'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog'
-import { googleIdToken, BearerToken, loginExpire, free } from '@/app/lib/config'
+import { googleIdToken, BearerToken, loginExpire, free, refreshToken } from '@/app/lib/config'
 import cookies from 'js-cookie'
 import { userLogin, getUerInfo, userLoginOut } from '@/app/lib/service'
 import { usePathname, useRouter } from 'next/navigation'
@@ -92,6 +92,7 @@ export default function UserInfo() {
     await userLoginOut()
     cookies.remove(BearerToken)
     cookies.remove(googleIdToken)
+    cookies.remove(refreshToken)
     //需要返回首页的页面
     const shouldBack = ['/plan-pricing']
     const backUrl = shouldBack.some((item) => pathname.endsWith(item)) ? '/home' : location.href

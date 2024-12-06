@@ -1,8 +1,9 @@
 'use client'
 import { useEffect, useState, useRef } from 'react'
 import { Button } from '@/components/ui/button'
+import FlowBtn from '@/app/ui/search/flow-btn'
 
-export function CardDes({ maxLine = 4, des, lineHeight = 18 }: { maxLine?: number; des: string; lineHeight?: number }) {
+export function CardDes({ maxLine = 4, des, lineHeight = 18, item }: { maxLine?: number; des: string; lineHeight?: number; item: any }) {
   const [initHeight, setInitHeight] = useState(0)
   const [showMore, setShowMore] = useState(false)
   const [showMoreBtn, setShowMoreBtn] = useState(false)
@@ -33,10 +34,10 @@ export function CardDes({ maxLine = 4, des, lineHeight = 18 }: { maxLine?: numbe
           {showMore ? 'show more' : 'show less'}
         </div>
       )}
-      {/*<div className={`w-[100px] text-sm mt-[10px] text-white py-[4px] px-[15px] bg-play flex items-center rounded-[14px] cursor-pointer`}>*/}
-      {/*  <img src="/icons/plus.svg" alt="" className={`mr-[3px] w-[20px] h-[20px]`} />*/}
-      {/*  <span>Follow</span>*/}
-      {/*</div>*/}
+      <br />
+      <div className={`mt-[10px] inline-block`}>
+        <FlowBtn item={item} noPosition />
+      </div>
     </div>
   )
 }

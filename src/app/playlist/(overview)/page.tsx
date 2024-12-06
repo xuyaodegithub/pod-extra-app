@@ -50,6 +50,7 @@ export default async function Page({
               episodeStatus,
               showUrl,
               star,
+              currentPosition,
             } = item
             const noMb = ind >= resultList.length - 1
             return (
@@ -68,6 +69,7 @@ export default async function Page({
                   episodeStatus,
                   showUrl,
                   star,
+                  currentPosition,
                 }}
                 noMb={noMb}
                 key={episodeId}
