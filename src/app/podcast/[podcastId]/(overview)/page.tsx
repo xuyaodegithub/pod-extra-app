@@ -41,7 +41,8 @@ export default async function Page({
 }) {
   const [title, showId] = splitStringFromLastDash(decodeURIComponent(params.podcastId))
   const { data } = await getPodcastsDetail(showId)
-  const { coverUrl, itunesAuthor, showDescription, categoryList, showTitle = '' } = data || {}
+  console.log(data, '——————节目详情')
+  const { coverUrl, itunesAuthor, showDescription, categoryList, showTitle = '', followed = false } = data || {}
   const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
   const {
     data: { resultList, total },
@@ -64,7 +65,7 @@ export default async function Page({
               {itunesAuthor}
             </div>
           </div>
-          <CardDes des={getNoTagText(showDescription)} maxLine={8} />
+          <CardDes des={getNoTagText(showDescription)} maxLine={8} item={{ showId, followed }} />
         </div>
       </div>
       <div className={`py-[20px] sticky top-[57px] bg-white dark:bg-black z-[66]`}>
@@ -86,6 +87,7 @@ export default async function Page({
             episodeStatus,
             showUrl,
             star,
+            currentPosition,
           } = item
           const noMb = ind >= resultList.length - 1
           return (
@@ -104,6 +106,7 @@ export default async function Page({
                 episodeStatus,
                 showUrl,
                 star,
+                currentPosition,
               }}
               noMb={noMb}
               key={episodeId}

@@ -27,7 +27,6 @@ export default function SearchPodcastCard({ item, noMb, hiddenPodcast }: { item:
     enclosureUrl,
     episodeStatus,
     showUrl,
-    historyTime = '',
   } = item
   const des = getNoTagText(showNotes)
   const play = isPlaying && url && url === enclosureUrl

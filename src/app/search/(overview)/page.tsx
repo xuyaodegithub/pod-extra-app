@@ -34,14 +34,16 @@ export default async function Search({
     pageSize: pageSize,
   }
   const { instance } = await createServerAxios()
-  // const {
-  //   data: {
-  //     data: { resultList = [], total = 0 },
-  //   },
-  // } = await instance.get(`v1/episode/my-favorite`, { params: { pageSize, pageNum, tagType: 'PLAYLIST' } })
   const {
-    data: { podcasts = {}, episodes = {} },
-  } = await getSearchList(payload)
+    data: {
+      data: { podcasts = {}, episodes = {} },
+    },
+  } = await instance.post(`/v1/search`, payload)
+  console.log(podcasts, episodes, '——————搜索详情')
+
+  // const {
+  //   data: { podcasts = {}, episodes = {} },
+  // } = await getSearchList(payload)
   return (
     <main className={`flex flex-col`}>
       <SearchTabs className={``} tab={tab} />

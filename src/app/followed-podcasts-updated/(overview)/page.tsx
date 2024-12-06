@@ -25,7 +25,7 @@ export default async function Page({
     data: {
       data: { resultList = [], total = 0 },
     },
-  } = await instance.get(`v1/podcast/my-favorite`, { params: { pageSize, pageNum, sortBy: 'PUB_DATE' } })
+  } = await instance.get(`v1/episode/favorite-podcast-last-update`, { params: { pageSize, pageNum } })
   console.log(resultList, '11111111')
   // const {
   //   data: { resultList = [], total = 0 },
@@ -64,6 +64,7 @@ export default async function Page({
               episodeStatus,
               showUrl,
               star,
+              currentPosition,
             } = item
             const noMb = ind >= resultList.length - 1
             return (
@@ -82,6 +83,7 @@ export default async function Page({
                   episodeStatus,
                   showUrl,
                   star,
+                  currentPosition,
                 }}
                 noMb={noMb}
                 key={episodeId}

@@ -26,8 +26,8 @@ export async function refreshToken(): Promise<string> {
   try {
     const response = await axios.post('/api/proxy/v1/account/refreshIdToken', {}, { withCredentials: true })
     const idToken = response.data?.data?.idToken || ''
-    // cookies.set(BearerToken, idToken) // 更新本地idToken
-    // cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
+    cookies.set(BearerToken, idToken) // 更新本地idToken
+    cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
     return idToken
   } catch (e: any) {
     if (e.status === 401) {
@@ -84,10 +84,10 @@ instance.interceptors.response.use(
   (response: any) => {
     const res = response.data
     if (response?.config?.url.endsWith('account/auth')) {
-      const cookieString = response.headers['set-cookie'] || ''
-      // const match = cookieString.match(/refreshToken=([^;]+)/)
-      // const t = match ? match[1] : null
-      res.data.rToken = cookieString
+      const cookieString = decodeURIComponent(response.headers['set-cookie'] || '')
+      const match = cookieString.match(/refreshToken=([^;]+)/)
+      const t = match ? match[1] : null
+      res.data.rToken = `refreshToken=${t}`
     }
     // 对响应数据做点什么
     if (res.code === 0) {
