@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
       Authorization: `Bearer ${token}`,
     },
   })
-  response.cookies.set(BearerToken, token, cookiesOption({ httpOnly: true }))
+  response.cookies.set(BearerToken, token, cookiesOption())
   if (rToken) response.cookies.set(refreshToken, rToken, cookiesOption({ httpOnly: true }))
   return response
 }
