@@ -18,7 +18,7 @@ export default function FlowStart({ item }: { item: any }) {
     refresh()
   }
   return (
-    <div className={`bg-hbg dark:bg-bgDark rounded-[50%] p-[5px]`} onClick={(e: any) => followEpiosde(e)}>
+    <div className={`cursor-pointer bg-hbg dark:bg-bgDark rounded-[50%] p-[5px]`} onClick={(e: any) => followEpiosde(e)}>
       <img src={`/icons/${isStar ? 'star-filled' : 'star'}.svg`} alt="" />
     </div>
   )

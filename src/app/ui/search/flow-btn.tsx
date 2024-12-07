@@ -39,7 +39,7 @@ export default function FlowBtn({ item, noPosition }: { item: any; noPosition?: 
   return (
     <div>
       <div
-        className={`text-sm text-white py-[4px] px-[15px] bg-play ${noPosition ? '' : 'absolute top-[10px] right-[10px]'}  flex items-center rounded-[14px] cursor-pointer ${isFlow ? 'opacity-80' : ''}`}
+        className={`text-sm text-white py-[4px] w-[100px] bg-play ${noPosition ? '' : 'absolute top-[10px] right-[10px]'} flex justify-center items-center rounded-[14px] cursor-pointer ${isFlow ? 'opacity-80' : ''}`}
         onClick={flowThisItem}
       >
         {loading ? (

@@ -9,7 +9,17 @@ import PlayBtn from '@/app/ui/search/play-btn'
 import FlowStart from '@/app/ui/search/flow-start'
 import Image from '@/app/ui/Image'
 
-export default function SearchPodcastCard({ item, noMb, hiddenPodcast }: { item: any; noMb: boolean; hiddenPodcast?: boolean }) {
+export default function SearchPodcastCard({
+  item,
+  noMb,
+  hiddenPodcast,
+  isFirst,
+}: {
+  item: any
+  noMb: boolean
+  hiddenPodcast?: boolean
+  isFirst?: boolean
+}) {
   const { isDark } = useMyContext()
   const { data, setData, isPlaying, setIsPlaying } = useMyContext()
   const { push, refresh } = useRouter()
@@ -50,6 +60,12 @@ export default function SearchPodcastCard({ item, noMb, hiddenPodcast }: { item:
     e.preventDefault()
     push(showUrl)
   }
+
+  useEffect(() => {
+    if (isFirst) {
+      refresh()
+    }
+  }, [])
   return (
     <div className={` relative ${noMb ? '' : 'pb-[5px] mb-[5px]'}`}>
       <Link href={episodeUrl} key={episodeId} className={``}>

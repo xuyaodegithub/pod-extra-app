@@ -22,7 +22,7 @@ const nextConfig = (phase) => {
     crossOrigin: 'anonymous',
     experimental: {
       cssChunking: 'loose', // default
-      serverActions: true,
+      // serverActions: true,
     },
     env: {
       customKey: 'my-value',
@@ -68,19 +68,19 @@ const nextConfig = (phase) => {
     //   }
     // },
     // generateEtags: false,
-    // async headers() {
-    //   return [
-    //     {
-    //       source: '/episode',
-    //       headers: [
-    //         {
-    //           key: 'Cache-Control',
-    //           value: 'no-store, max-age=0, must-revalidate',
-    //         },
-    //       ],
-    //     },
-    //   ]
-    // },
+    async headers() {
+      return [
+        {
+          source: '/playlist',
+          headers: [
+            {
+              key: 'Cache-Control',
+              value: 'no-store, max-age=0, must-revalidate, proxy-revalidate',
+            },
+          ],
+        },
+      ]
+    },
     // keepAlive: false,
     // devIndicators: {
     //   autoPrerender: false,

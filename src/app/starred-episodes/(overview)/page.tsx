@@ -7,8 +7,8 @@ const y = new Date().getFullYear()
 import SearchEpisodesCard from '@/app/ui/search/search-episodes-card'
 import { createServerAxios } from '@/app/lib/serveFetch'
 export const metadata: Metadata = getMetaData({
-  title: `Followed Podcasts | PodExtra.AI`,
-  description: `Check out the podcasts you've followed. PodExtra's features like transcripts, etc., enable quick access and better experience. All your followed podcasts are ready for you to dive into again.`,
+  title: `Starred Episodes | PodExtra.AI`,
+  description: `On the Starred Episodes page, view your favorite podcast episodes. PodExtra's features like transcripts, etc., help you quickly browse. All your starred ones are ready for you to revisit and enjoy.`,
   keywords: '',
 })
 export default async function Page({
@@ -73,6 +73,7 @@ export default async function Page({
                 }}
                 noMb={noMb}
                 key={episodeId}
+                isFirst={ind === 0}
               />
             )
           })}
@@ -81,7 +82,7 @@ export default async function Page({
         <div
           className={`text-sm text-fontGry-600 leading-[100px] text-center border-[1px] border-bgGray rounded-[10px] dark:border-fontGry-600 dark:text-fontGry-100`}
         >
-          No podcast followed yet.
+          No episode starred yet.
         </div>
       )}
     </main>

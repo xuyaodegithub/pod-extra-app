@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Metadata, ResolvingMetadata } from 'next'
 import CateItem from '@/app/ui/categories/cateItem'
 import { MicrophoneIcon } from '@heroicons/react/24/outline'
-import { Card } from '@/app/ui/home/episodes-card'
+import StickyPagination from '@/app/ui/podcastsDetail/stickyPagination'
 import { ClientSub } from '@/app/ui/clientDispatch'
 import SearchEpisodesCard from '@/app/ui/search/search-episodes-card'
 import Image from '@/app/ui/Image'
@@ -65,12 +65,13 @@ export default async function Page({
               {itunesAuthor}
             </div>
           </div>
-          <CardDes des={getNoTagText(showDescription)} maxLine={8} item={{ showId, followed }} />
+          <CardDes des={getNoTagText(showDescription)} maxLine={6} item={{ showId, followed }} />
         </div>
       </div>
-      <div className={`py-[20px] sticky top-[57px] bg-white dark:bg-black z-[66]`}>
-        <Pagination totalPages={totalPages} total={total} />
-      </div>
+      <StickyPagination totalPages={totalPages} total={total} classDom="episodeDetail" />
+      {/*<div className={`py-[20px] sticky top-[57px] bg-white dark:bg-black z-[66]`}>*/}
+      {/*  <Pagination totalPages={totalPages} total={total} />*/}
+      {/*</div>*/}
       <div className={`border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
         {resultList.map((item: any, ind: number) => {
           const {

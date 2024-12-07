@@ -39,7 +39,7 @@ export default async function Page({
         </Link>
         <Link
           href={'/followed-podcasts-all'}
-          className={`text-sm font-semibold text-fontGry-600 px-[10px] py-[8px] bg-bgGray rounded-[10px]`}
+          className={`text-sm font-semibold text-fontGry-600 px-[10px] py-[8px] bg-bgGray rounded-[10px] dark:bg-bgDark dark:text-homehbg `}
         >
           All podcasts
         </Link>
@@ -95,7 +95,7 @@ export default async function Page({
         <div
           className={`text-sm text-fontGry-600 leading-[100px] text-center border-[1px] border-bgGray rounded-[10px] dark:border-fontGry-600 dark:text-fontGry-100`}
         >
-          No data available at the moment
+          No podcast followed yet.
         </div>
       )}
     </main>

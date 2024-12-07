@@ -136,7 +136,7 @@ export default function PlanSku({ skuList }: { skuList: any[] }) {
         <div className={`flex items-center`}>
           <img src={`/plan/emoji-smile${isDark ? '-dark' : ''}.svg`} alt="" className={`mr-[8px]`} />
           We offer a 7-day full refund service. For details, see our{' '}
-          <Link className={`ml-[4px]`} href="/refund-policy.html" target="_blank">
+          <Link className={`ml-[4px] underline`} href="/refund-policy.html" target="_blank">
             {' '}
             refund policy.
           </Link>

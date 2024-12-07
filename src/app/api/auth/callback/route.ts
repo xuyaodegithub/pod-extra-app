@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
   response.cookies.set(BearerToken, token, cookiesOption())
   console.log(rToken,'rToken','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',authRes.headers)
   if (rToken) {
-    response.cookies.set(refreshToken, rToken, cookiesOption({ httpOnly: true }))
+    response.cookies.set(refreshToken, rToken, cookiesOption())
   }
   return response
 }

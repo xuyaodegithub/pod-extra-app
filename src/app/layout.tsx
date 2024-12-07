@@ -62,7 +62,7 @@ export default function RootLayout({
     }
     // 初始化调用
     refreshToken()
-    const interval = setInterval(refreshToken, 5 * 60 * 1000)
+    const interval = setInterval(refreshToken, 5000)
 
     return () => {
       clearInterval(interval)
