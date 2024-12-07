@@ -12,6 +12,7 @@ import cookies from 'js-cookie'
 import { userLogin, getUerInfo, userLoginOut } from '@/app/lib/service'
 import { usePathname, useRouter } from 'next/navigation'
 import eventBus from '@/app/lib/eventBus'
+import { loginAfterLogin, planPrice } from '@/app/ui/home/nav-links'
 
 export default function UserInfo() {
   const { isDark } = useMyContext()
@@ -89,13 +90,13 @@ export default function UserInfo() {
   }
 
   async function signOut() {
+    const shouldBack = [...loginAfterLogin, planPrice]
     await userLoginOut()
     cookies.remove(BearerToken)
     cookies.remove(googleIdToken)
     cookies.remove(refreshToken)
     //需要返回首页的页面
-    const shouldBack = ['/plan-pricing']
-    const backUrl = shouldBack.some((item) => pathname.endsWith(item)) ? '/home' : location.href
+    const backUrl = shouldBack.some((item) => pathname.endsWith(item.href)) ? '/home' : location.href
     revokeAccess2(backUrl)
   }
   function toPricePage() {

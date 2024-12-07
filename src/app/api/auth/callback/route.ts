@@ -36,10 +36,7 @@ export async function POST(req: NextRequest) {
     },
     data: { idToken },
   })
-  //userLogin({ idToken: idToken })
-  const token = authRes.data?.data?.idToken
-  const rToken = authRes.headers.get('set-cookie') || ''
-  cookieStore.set(BearerToken, token, cookiesOption())
+  const { idToken: token, refreshToken: rToken } = authRes.data?.data || {}
   // 根据 `state` 跳转到目标页面
   const response = NextResponse.redirect(new URL(decodeURIComponent(path), req.nextUrl.origin), {
     status: 302,
@@ -47,13 +44,11 @@ export async function POST(req: NextRequest) {
       Authorization: `Bearer ${token}`,
     },
   })
+  // response.headers.set('Cache-Control', 'no-store') // 禁止缓存
   response.cookies.set(BearerToken, token, cookiesOption())
   console.log(rToken,'rToken','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',authRes.headers)
   if (rToken) {
-    const match = rToken.match(/refreshToken=([^;]+)/)
-    const t = `refreshToken=${match ? match[1] : ''}`
-    cookieStore.set(refreshToken, t, cookiesOption())
-    response.cookies.set(refreshToken, t, cookiesOption({ httpOnly: true }))
+    response.cookies.set(refreshToken, rToken, cookiesOption({ httpOnly: true }))
   }
   return response
 }

@@ -20,7 +20,7 @@ export async function POST(req: NextRequest, { params }: { params: { path: strin
       headers: {
         ...req.headers,
         Authorization: `Bearer ${t.trim()}`,
-        Cookie: `${decodeURIComponent(rToken)}`,
+        Cookie: `refreshToken=${decodeURIComponent(rToken)}`,
       },
       data: body,
     })

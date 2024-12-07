@@ -1,6 +1,5 @@
 'use client'
-import { useMyContext } from '@/context/MyContext'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { getCurrentLocalTime, getNoTagText } from '@/app/lib/utils'
 import CateItem from '@/app/ui/categories/cateItem'

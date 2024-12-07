@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 /*
  * Create form to request access token from Google's OAuth 2.0 server.
  */
-export const oauthSignIn = () => {
+export const oauthSignIn = ({ redirect_uri, response_type, scope, response_mode, state }: any) => {
   // Google's OAuth 2.0 endpoint for requesting an access token
   const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth'
 
@@ -19,12 +19,14 @@ export const oauthSignIn = () => {
   const params: any = {
     client_id,
     redirect_uri, //'http://localhost:3000/home',
-    response_type: 'token',
-    scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+    response_type,
+    scope,
     include_granted_scopes: 'true',
+    nonce: Date.now(),
     // access_type: 'offline',
     // prompt: 'consent',
-    state: 'pass-through value',
+    response_mode,
+    state,
   }
 
   // Add form parameters as hidden input values.
@@ -49,7 +51,6 @@ export const googleLoginPopup = (url: string = '') => {
   // 设置 OAuth 2.0 授权 URL
   const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth'
   const authUrl = `${oauth2Endpoint}?client_id=${client_id}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=id_token token&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid&include_granted_scopes=true&state=${encodeURIComponent(state)}&nonce=${Date.now()}&response_mode=form_post`
-  console.log(authUrl, 'authUrl')
   // 打开小窗口
   const width = 500
   const height = 600
@@ -57,8 +58,14 @@ export const googleLoginPopup = (url: string = '') => {
   const top = (window.screen.height - height) / 2
   // const newWindow = window.open(authUrl, 'googleLogin', `width=${width},height=${height},top=${top},left=${left}`)
   cookies.set(callbackPath, decodeURIComponent(redirectPath))
-  window.location.href = authUrl
-
+  window.location.replace(authUrl) //= authUrl
+  // oauthSignIn({
+  //   redirect_uri: encodeURIComponent(redirectUri),
+  //   response_type: 'id_token token',
+  //   scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid',
+  //   response_mode: 'form_post',
+  //   state: encodeURIComponent(state),
+  // })
   // 轮询检测窗口是否关闭
   // const pollTimer = window.setInterval(() => {
   //   if (newWindow && newWindow.closed) {

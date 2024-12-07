@@ -1,6 +1,6 @@
 'use client'
 import { useMyContext } from '@/context/MyContext'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { getCurrentLocalTime, getNoTagText, getTimeWithHoursMin } from '@/app/lib/utils'
 import { audio_info, summarized } from '@/app/lib/config'
@@ -12,7 +12,7 @@ import Image from '@/app/ui/Image'
 export default function SearchPodcastCard({ item, noMb, hiddenPodcast }: { item: any; noMb: boolean; hiddenPodcast?: boolean }) {
   const { isDark } = useMyContext()
   const { data, setData, isPlaying, setIsPlaying } = useMyContext()
-  const { push } = useRouter()
+  const { push, refresh } = useRouter()
   const { enclosureUrl: url = '' } = data || {}
   const {
     coverUrl,
