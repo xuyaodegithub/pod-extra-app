@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     },
   })
   response.cookies.set(BearerToken, token, cookiesOption())
-  console.log(rToken,'rToken','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',authRes)
+  console.log(rToken,'rToken','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',authRes.headers)
   if (rToken) {
     const match = rToken.match(/refreshToken=([^;]+)/)
     const t = `refreshToken=${match ? match[1] : ''}`
