@@ -90,7 +90,7 @@ export default function UserInfo() {
   }
 
   async function signOut() {
-    const shouldBack = [...loginAfterLogin, planPrice]
+    const shouldBack = [...loginAfterLogin, planPrice, { href: '/followed-podcasts-all' }]
     await userLoginOut()
     cookies.remove(BearerToken)
     cookies.remove(googleIdToken)
@@ -178,14 +178,13 @@ export default function UserInfo() {
                 By clicking "Continue", you agree
                 <br />
                 to the{' '}
-                <Link href="https://www.podextra.ai/terms.html" target="_blank">
+                <Link href="https://www.podextra.ai/terms.html" target="_blank" className={`underline`}>
                   Privacy Policy
                 </Link>{' '}
                 and{' '}
-                <Link href="https://www.podextra.ai/terms.html" target="_blank">
-                  Terms
+                <Link href="https://www.podextra.ai/terms.html" target="_blank" className={`underline`}>
+                  Terms of Service.
                 </Link>{' '}
-                of Service.
               </span>
             </DialogDescription>
           </DialogHeader>

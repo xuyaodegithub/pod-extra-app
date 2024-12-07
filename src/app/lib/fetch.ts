@@ -14,7 +14,7 @@ export function isTokenExpired(min: number = 0): boolean {
     const t = cookies.get(expiresIn) || 0
     const l = cookies.get(loginTime) || 0
     const now = Date.now() // 当前时间
-    return +t + +l < now - min * 60 * 1000 && !!t // 比较 exp（过期时间）
+    return +t + +l > now - min * 60 * 1000 && !!t // 比较 exp（过期时间）
   } catch (e) {
     return true // 如果解析失败，认为 token 已过期
   }

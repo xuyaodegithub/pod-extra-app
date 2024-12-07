@@ -32,7 +32,7 @@ export default async function Page({
       <div className={`flex items-center mb-[20px]`}>
         <Link
           href={'/followed-podcasts-updated'}
-          className={`text-sm font-semibold px-[10px] text-fontGry-600 py-[8px] bg-bgGray mr-[13px] rounded-[10px]`}
+          className={`text-sm font-semibold px-[10px] text-fontGry-600 py-[8px] bg-bgGray mr-[13px] rounded-[10px] dark:bg-bgDark dark:text-homehbg `}
         >
           Updated episodes
         </Link>

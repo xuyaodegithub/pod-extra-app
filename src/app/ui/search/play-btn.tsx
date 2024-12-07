@@ -16,13 +16,12 @@ export default function PlayBtn({ item }: { item: any }) {
     const { episodeId: id = '' } = data || {}
     if (!id || episodeId !== id) {
       const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
-      console.log(id, episodeId, data, audioInfo, '--------')
+      console.log(t, time, duration, currentPosition, '--------')
       setData(audioInfo)
       setAllTime(0)
-      setTime(currentPosition)
+      setStepTime(currentPosition)
       setTimeout(() => {
         setIsPlaying(true)
-        setStepTime(currentPosition)
         sessionStorage.setItem(audio_info, JSON.stringify({ ...audioInfo, playTime: 0 }))
       }, 500)
     } else setIsPlaying(!isPlaying)
