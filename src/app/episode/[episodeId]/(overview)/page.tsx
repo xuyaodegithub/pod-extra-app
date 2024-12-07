@@ -39,7 +39,7 @@ export default async function Page({
   const pageNum = searchParams?.page || 1
   const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   // const { data } = await getEpisodeDetail(episodeId, token, { pageNum, pageSize })
-  const { instance, refresh, token } = await createServerAxios()
+  const { instance, refresh, token, refreshToken } = await createServerAxios()
   const {
     data: { data },
   } = await instance.get(`v1/podEpisode/${episodeId}`)
@@ -47,7 +47,7 @@ export default async function Page({
   const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle, showUrl = '' } = data || {}
   return (
     <main className={`flex flex-col episode-item`}>
-      <ClientSub val={episodeTitle} param={{ pageSize, pageNum }} cookie={{ refresh, token }} />
+      <ClientSub val={episodeTitle} param={{ pageSize, pageNum }} cookie={{ refresh, token, refreshToken }} />
       <div className={`flex `}>
         <Image src={coverUrl} alt="" className={`w-[160px] h-[160px] mr-[17px] rounded-10px object-cover`} />
         <div className={`flex flex-1 flex-col overflow-hidden items-start text-md`}>

@@ -25,9 +25,10 @@ export function isTokenExpired(min: number = 0): boolean {
 export async function refreshToken(): Promise<string> {
   try {
     const response = await axios.post('/api/proxy/v1/account/refreshIdToken', {}, { withCredentials: true })
-    const idToken = response.data?.data?.idToken || ''
+    const { idToken, refreshToken } = response.data?.data || {}
     cookies.set(BearerToken, idToken) // 更新本地idToken
     cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
+    cookies.set(rToken, refreshToken) // 更新本地loginTime
     return idToken
   } catch (e: any) {
     if (e.status === 401) {

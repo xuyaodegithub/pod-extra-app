@@ -34,6 +34,7 @@ export default function FlowBtn({ item, noPosition }: { item: any; noPosition?: 
       setShowUnFlower(false)
     } catch (e) {}
     setLoading(false)
+    refresh()
   }
   return (
     <div>

@@ -19,7 +19,7 @@ export async function isTokenExpired() {
 
 // 刷新 token 函数
 // @ts-ignore
-export async function refreshToken(): Promise<string> {
+export async function refreshTokenFun(): Promise<any> {
   const cookie = cookies()
   try {
     const response = await axios.post(
@@ -27,8 +27,8 @@ export async function refreshToken(): Promise<string> {
       {},
       { headers: { Cookie: `${decodeURIComponent(cookie.get(rToken)?.value || '')}`, withCredentials: true } }
     )
-    const idToken = response.data?.data?.idToken || ''
-    return idToken
+    const { idToken, refreshToken } = response.data?.data || {}
+    return { idToken, refreshToken }
   } catch (e: any) {
     if (e.status === 401) {
       return ''
@@ -39,10 +39,13 @@ export async function refreshToken(): Promise<string> {
 export async function createServerAxios() {
   const cookieStore = await cookies()
   let token = cookieStore.get(BearerToken)?.value
+  let refreshToken = cookieStore.get(rToken)?.value
   const isExpired = await isTokenExpired()
   const needUpdate = isExpired && token
   if (needUpdate) {
-    token = await refreshToken()
+    const { idToken, refreshToken: reToken } = (await refreshTokenFun()) || {}
+    token = idToken
+    refreshToken = reToken
   }
   return {
     instance: axios.create({
@@ -56,5 +59,6 @@ export async function createServerAxios() {
     }),
     refresh: needUpdate ? 1 : 0,
     token,
+    refreshToken,
   }
 }
