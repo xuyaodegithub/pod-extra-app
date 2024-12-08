@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Suspense fallback={<LoadingLine num={12} />}>
       <SaveScroll>
         <main>
-          <Breadcrumb title={title} />
+          <Breadcrumb title={title} className={`podcast-detail`} />
           <section className={``}>{children}</section>
         </main>
       </SaveScroll>

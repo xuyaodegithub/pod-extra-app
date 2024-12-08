@@ -23,8 +23,8 @@ export default function FlowBtn({ item, noPosition }: { item: any; noPosition?: 
         setIsFlow(true)
       } catch (e) {}
       setLoading(false)
+      refresh()
     }
-    refresh()
   }
   async function confirmUnflow() {
     setLoading(true)

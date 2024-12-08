@@ -47,7 +47,7 @@ async function generateEtag(request: NextRequest) {
 export async function middleware(request: NextRequest) {
   //这里做refreshToken
   const res = NextResponse.next()
-  // 禁用缓存
+  // 禁用页面缓存
   res.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate')
   return res
 
@@ -72,7 +72,6 @@ export async function middleware(request: NextRequest) {
   // return res
   // return NextResponse.next()
 }
-
 // export const config = {
-//   matcher: '/about/:path*',
+//   matcher: ['/podcast', '/episode'], // 可根据需求设置
 // }

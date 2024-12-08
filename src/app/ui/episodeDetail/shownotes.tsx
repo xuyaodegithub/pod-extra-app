@@ -71,16 +71,47 @@ export function Shownotes({ data, goThisTime }: { data: any; goThisTime?: any })
 
     return text
   }
+  function modifyLinks(input: string) {
+    // 正则匹配所有 <a> 标签及其属性
+    const aTagRegex = /<a([^>]+)>/g
+
+    const output = input.replace(aTagRegex, (match, attributes) => {
+      // 移除非 href 的属性
+      const hrefMatch = attributes.match(/href=["'][^"']+["']/)
+      console.log('hrefMatch', hrefMatch, attributes)
+      const href = hrefMatch ? hrefMatch[0] : attributes
+      // 为每个 <a> 标签添加 target="_blank" rel="nofollow" class="text-play" 属性
+      const newAttributes = `${href} target="_blank" rel="nofollow" class="text-play"`
+
+      // 构建新的 <a> 标签
+      return `<a ${newAttributes}>`
+    })
+
+    return output
+  }
+  function convertLinksToAnchors(input: string) {
+    // 正则匹配非 a 标签内的超链接文本
+    const urlRegex = /(?:^|\s)(https?:\/\/[^\s<>"']+)/g
+
+    const output = input.replace(urlRegex, (match, url) => {
+      // 将匹配到的链接转换为 <a> 标签，并添加属性
+      const anchorTag = `<a href="${url}" target="_blank" rel="nofollow" class="text-play">${url}</a>`
+      return ` ${anchorTag}` // 保持原始空格格式
+    })
+
+    return output
+  }
   useEffect(() => {
     const box: any = document.querySelector('.ShownotesBox')
     console.log(showNotes)
-    box.innerHTML = replaceLinksWithAnchors(showNotes).replace(
-      /<a\s+([^>]*?href=["'][^"']*["'][^>]*)(?<!target=["']_blank["'][^>]*)(?<!class=["'][^"']*text-play["'][^>]*)([^>]*?)>/g,
-      (match, attrs, existingAttrs) => {
-        // 确保每个<a>标签都加上 target="_blank" 和 class="text-play"
-        return `<a ${attrs} target="_blank" rel="nofollow" class="text-play"${existingAttrs}>`
-      }
-    )
+    box.innerHTML = convertLinksToAnchors(modifyLinks(showNotes))
+    //   .replace(
+    //   /<a\s+([^>]*?href=["'][^"']*["'][^>]*)(?<!target=["']_blank["'][^>]*)(?<!class=["'][^"']*text-play["'][^>]*)([^>]*?)>/g,
+    //   (match, attrs, existingAttrs) => {
+    //     // 确保每个<a>标签都加上 target="_blank" 和 class="text-play"
+    //     return `<a ${attrs} target="_blank" rel="nofollow" class="text-play"${existingAttrs}>`
+    //   }
+    // )
   }, [showNotes])
   return (
     <div key="Shownotes">

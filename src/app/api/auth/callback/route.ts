@@ -46,7 +46,6 @@ export async function POST(req: NextRequest) {
   })
   // response.headers.set('Cache-Control', 'no-store') // 禁止缓存
   response.cookies.set(BearerToken, token, cookiesOption())
-  console.log(rToken,'rToken','~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',authRes.headers)
   if (rToken) {
     response.cookies.set(refreshToken, rToken, cookiesOption())
   }

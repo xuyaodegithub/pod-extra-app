@@ -20,6 +20,8 @@ interface MyContextType {
   setTitle: (title: string) => void
   tabsPage: Map<string, any>
   setTabsPage: (tabsPage: Map<string, any>) => void
+  saveCurrentPosition: any
+  setSaveCurrentPosition: (saveCurrentPosition: any) => void
 }
 
 // 创建上下文，指定默认值
@@ -34,6 +36,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isDark, setIsDark] = useState(false)
   const [title, setTitle] = useState('')
   const [tabsPage, setTabsPage] = useState(new Map())
+  const [saveCurrentPosition, setSaveCurrentPosition] = useState({ id: '', time: 0 })
   useEffect(() => {
     if (!window) return
     const dark = localStorage?.theme ? localStorage.theme === 'dark' : window?.matchMedia('(prefers-color-scheme: dark)').matches
@@ -59,6 +62,8 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setTabsPage,
         allTime,
         setAllTime,
+        saveCurrentPosition,
+        setSaveCurrentPosition,
       }}
     >
       {children}

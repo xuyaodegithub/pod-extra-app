@@ -14,7 +14,8 @@ import { Slider } from 'antd'
 import { flowEpisode } from '@/app/lib/service'
 
 export default function Audio() {
-  const { data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime, allTime, setAllTime } = useMyContext()
+  const { data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime, allTime, setAllTime, setSaveCurrentPosition } =
+    useMyContext()
   const {
     enclosureUrl = '',
     showTitle = '',
@@ -36,8 +37,9 @@ export default function Audio() {
   const funs: any = { canplaythrough, timeupdate, loadstart, error, ended }
   function handleFlowEpisode(e: string, t: number) {
     const now = Date.now()
-    if (e && now > saveTime + 10000 && !!t) {
-      flowEpisode(episodeId, { currentPosition: t, tagType: 'PLAYLIST' })
+    if (e && now > saveTime + 5000 && !!t) {
+      flowEpisode(episodeId, { currentPosition: t, tagType: 'PLAYLIST', duration: allTime })
+      setSaveCurrentPosition({ id: episodeId, time: t })
       setSaveTime(now)
     }
   }
@@ -96,7 +98,9 @@ export default function Audio() {
     if (isPlaying) {
       handleFlowEpisode(episodeId, time)
     }
-    return () => {}
+    return () => {
+      handleFlowEpisode(episodeId, time)
+    }
   }, [episodeId, time, isPlaying])
   function removeEvent() {
     if (isAudio)

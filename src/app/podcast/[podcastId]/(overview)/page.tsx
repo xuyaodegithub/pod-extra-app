@@ -10,6 +10,7 @@ import StickyPagination from '@/app/ui/podcastsDetail/stickyPagination'
 import { ClientSub } from '@/app/ui/clientDispatch'
 import SearchEpisodesCard from '@/app/ui/search/search-episodes-card'
 import Image from '@/app/ui/Image'
+import { createServerAxios } from '@/app/lib/serveFetch'
 export async function generateMetadata({ params, searchParams }: any, parent: ResolvingMetadata): Promise<Metadata> {
   const [title, showId] = splitStringFromLastDash(decodeURIComponent(params.podcastId))
   const { data = {} } = await getPodcastsDetail(showId)
@@ -39,14 +40,19 @@ export default async function Page({
     podcastId: string
   }
 }) {
+  const { instance, refresh, token, refreshToken } = await createServerAxios()
   const [title, showId] = splitStringFromLastDash(decodeURIComponent(params.podcastId))
-  const { data } = await getPodcastsDetail(showId)
-  console.log(data, '——————节目详情')
+  const {
+    data: { data },
+  } = await instance.get(`v1/podShow/${showId}`) //getPodcastsDetail(showId)
   const { coverUrl, itunesAuthor, showDescription, categoryList, showTitle = '', followed = false } = data || {}
   const { pageSize = 50, page: pageNum = 1 } = searchParams || {}
   const {
-    data: { resultList, total },
-  } = await getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
+    data: {
+      data: { resultList, total },
+    },
+  } = await instance.get(`v1/podEpisode/pageQuery`, { params: { showId, sortBy: PUB_DATE, pageNum, pageSize } }) //getPodEpisode({ showId, sortBy: PUB_DATE, pageNum, pageSize })
+  console.log(data, '——————节目详情', resultList)
   const totalPages = Math.ceil(+total / +pageSize)
   return (
     <main className={`flex flex-col`}>
@@ -68,7 +74,7 @@ export default async function Page({
           <CardDes des={getNoTagText(showDescription)} maxLine={6} item={{ showId, followed }} />
         </div>
       </div>
-      <StickyPagination totalPages={totalPages} total={total} classDom="episodeDetail" />
+      <StickyPagination totalPages={totalPages} total={total} classDom="podcast-detail" />
       {/*<div className={`py-[20px] sticky top-[57px] bg-white dark:bg-black z-[66]`}>*/}
       {/*  <Pagination totalPages={totalPages} total={total} />*/}
       {/*</div>*/}
