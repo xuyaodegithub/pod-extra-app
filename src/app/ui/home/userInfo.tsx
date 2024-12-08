@@ -178,7 +178,7 @@ export default function UserInfo() {
                 By clicking "Continue", you agree
                 <br />
                 to the{' '}
-                <Link href="https://www.podextra.ai/terms.html" target="_blank" className={`underline`}>
+                <Link href="https://www.podextra.ai/privacy.html" target="_blank" className={`underline`}>
                   Privacy Policy
                 </Link>{' '}
                 and{' '}
