@@ -11,8 +11,16 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
   const [stopTime, setStopTime] = useState(0)
   const isTranscript = activeTab === 'TRANSCRIPT'
   const { paragraphs = [] } = data || {}
-  const { enclosureUrl = '', showTitle = '', showNotes = '', coverUrl = '', episodeTitle = '', episodeId = '' } = data || {}
-  const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
+  const {
+    enclosureUrl = '',
+    showTitle = '',
+    showNotes = '',
+    coverUrl = '',
+    episodeTitle = '',
+    episodeId = '',
+    episodeUrl = '',
+  } = data || {}
+  const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId, episodeUrl }
   const { setData, setIsPlaying, isPlaying, time, setStepTime, isDark, data: audioData } = useMyContext()
   const isPlayEpisode = audioData?.episodeId === episodeId
   function playCurrTime(t: number, e: any) {

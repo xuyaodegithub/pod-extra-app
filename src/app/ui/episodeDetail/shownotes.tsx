@@ -4,8 +4,17 @@ import { useEffect } from 'react'
 import { useMyContext } from '@/context/MyContext'
 
 export function Shownotes({ data, goThisTime }: { data: any; goThisTime?: any }) {
-  const { enclosureUrl = '', showTitle = '', showNotes = '', coverUrl = '', episodeTitle = '', episodeId = '', duration } = data || {}
-  const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
+  const {
+    enclosureUrl = '',
+    showTitle = '',
+    showNotes = '',
+    coverUrl = '',
+    episodeTitle = '',
+    episodeId = '',
+    duration,
+    episodeUrl = '',
+  } = data || {}
+  const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId, episodeUrl }
   const { setData, setIsPlaying, setStepTime } = useMyContext()
 
   function timeToSeconds(timeStr: string) {

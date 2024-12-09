@@ -4,11 +4,24 @@ import { getTimeWithHoursMin } from '@/app/lib/utils'
 import { audio_info } from '@/app/lib/config'
 import { useMyContext } from '@/context/MyContext'
 import { useEffect, useState } from 'react'
+import { flowEpisode } from '@/app/lib/service'
 
 export default function PlayBtn({ item }: { item: any }) {
-  const { data, setData, isPlaying, setIsPlaying, time, allTime, setAllTime, setStepTime, setTime, saveCurrentPosition } = useMyContext()
+  const {
+    data,
+    setData,
+    isPlaying,
+    setIsPlaying,
+    time,
+    allTime,
+    setAllTime,
+    setStepTime,
+    setTime,
+    saveCurrentPosition,
+    setSaveCurrentPosition,
+  } = useMyContext()
   const { enclosureUrl: url = '' } = data || {}
-  const { coverUrl, episodeTitle, showTitle, showNotes, episodeId, duration, enclosureUrl, currentPosition = 0 } = item
+  const { coverUrl, episodeTitle, showTitle, showNotes, episodeId, duration, enclosureUrl, currentPosition = 0, episodeUrl } = item
   const [currentPosi, setCurrentPosi] = useState(currentPosition)
   const play = isPlaying && url && url === enclosureUrl
   const t = allTime || duration
@@ -17,7 +30,14 @@ export default function PlayBtn({ item }: { item: any }) {
     e.preventDefault()
     const { episodeId: id = '' } = data || {}
     if (!id || episodeId !== id) {
-      const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
+      try {
+        //切换前先存一下
+        if (id) {
+          handleFlowEpisode(id, time)
+          setSaveCurrentPosition({ id, time })
+        }
+      } catch (e) {}
+      const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId, episodeUrl }
       console.log(t, time, duration, currentPosi, '--------')
       setData(audioInfo)
       setAllTime(0)
@@ -29,7 +49,11 @@ export default function PlayBtn({ item }: { item: any }) {
       }, 500)
     } else setIsPlaying(!isPlaying)
   }
-
+  function handleFlowEpisode(id: string, t: number) {
+    if (id && !!t) {
+      flowEpisode(episodeId, { currentPosition: t, tagType: 'PLAYLIST', duration: allTime })
+    }
+  }
   useEffect(() => {
     const { id = '', time } = saveCurrentPosition
     if (id === episodeId) {

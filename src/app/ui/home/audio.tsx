@@ -24,23 +24,25 @@ export default function Audio() {
     episodeTitle = '',
     episodeId = '',
     playTime = 0,
+    episodeUrl,
   }: any = data || {}
+  const episodeIdRef = useRef<string | null>(null)
   const [playbackRate, setPlaybackRate] = useState(1)
   const [voice, setVoice] = useState(1)
   const [oldVoice, setOldVoice] = useState(1)
   const [loading, setLoading] = useState(false)
   const [hiddenNotes, setHiddenNotes] = useState(true)
-  const [saveTime, setSaveTime] = useState(Date.now)
+  const [saveTime, setSaveTime] = useState(Date.now())
   // const [isAudio, setIsAudio] = useState(null)
   let isAudio: any = useRef(null)
   const { push } = useRouter()
   const funs: any = { canplaythrough, timeupdate, loadstart, error, ended }
-  function handleFlowEpisode(e: string, t: number) {
-    const now = Date.now()
-    if (e && now > saveTime + 5000 && !!t) {
-      flowEpisode(episodeId, { currentPosition: t, tagType: 'PLAYLIST', duration: allTime })
+  function handleFlowEpisode(e: string, t: number, allT?: number) {
+    // const now = Date.now()
+    if (e && !!t) {
+      flowEpisode(episodeId, { currentPosition: t, tagType: 'PLAYLIST', duration: allT || allTime })
       setSaveCurrentPosition({ id: episodeId, time: t })
-      setSaveTime(now)
+      // setSaveTime(now)
     }
   }
 
@@ -93,15 +95,6 @@ export default function Audio() {
       }
     }
   }, [isPlaying, stepTime])
-  //加入播放列表
-  useEffect(() => {
-    if (isPlaying) {
-      handleFlowEpisode(episodeId, time)
-    }
-    return () => {
-      handleFlowEpisode(episodeId, time)
-    }
-  }, [episodeId, time, isPlaying])
   function removeEvent() {
     if (isAudio)
       Object.keys(funs).forEach((item) => {
@@ -118,6 +111,7 @@ export default function Audio() {
     const isPaused = isAudio.current.paused
     isPaused ? isAudio.current.play() : isAudio.current.pause()
     setIsPlaying(isPaused)
+    handleFlowEpisode(episodeId, time || 0.1)
   }
 
   function changeProgress(val: any) {
@@ -145,7 +139,7 @@ export default function Audio() {
     isAudio.current.volume = v > 0 ? 0 : oldVoice
   }
   function toEpisodeDetail() {
-    push(`/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`)
+    push(episodeUrl || `/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`)
   }
   function ended() {
     setIsPlaying(false)
@@ -162,6 +156,7 @@ export default function Audio() {
     const t = isAudio.current.duration
     setAllTime(parseInt(t))
     setLoading(false)
+    handleFlowEpisode(episodeId, time, t)
   }
   function timeupdate() {
     const t = isAudio.current.currentTime

@@ -39,23 +39,6 @@ export default function SearchPodcastCard({
     showUrl,
   } = item
   const des = getNoTagText(showNotes)
-  const play = isPlaying && url && url === enclosureUrl
-  function playAuido(e: Event) {
-    e.preventDefault()
-    const { episodeId: id = '' } = data || {}
-    if (!id || episodeId !== id) {
-      const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
-      console.log(id, episodeId, data, audioInfo, '--------')
-      setData(audioInfo)
-      setTimeout(() => {
-        setIsPlaying(true)
-        sessionStorage.setItem(audio_info, JSON.stringify({ ...audioInfo, playTime: 0 }))
-      }, 500)
-    } else setIsPlaying(!isPlaying)
-  }
-  function followEpiosde(e: any) {
-    e.preventDefault()
-  }
   function toPodcast(e: Event) {
     e.preventDefault()
     push(showUrl)
