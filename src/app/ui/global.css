@@ -7,6 +7,11 @@
 /*    --foreground: #ededed;*/
 /*  }*/
 /*}*/
+.left-menu::-webkit-scrollbar {
+    width: 0px!important;
+    /*display: none !important; !* 对于WebKit浏览器隐藏滚动条 *!*/
+    /*scrollbar-width: initial !important;*/
+}
 .mm-toolbar .mm-toolbar-brand {
     display: none;
 }

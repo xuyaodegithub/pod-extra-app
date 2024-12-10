@@ -7,11 +7,12 @@ import { useState, useEffect } from 'react'
 import UserHead from '@/app/ui/home/userHead'
 import { googleLoginPopup, revokeAccess2, client_id } from '@/app/lib/login'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog'
-import { googleIdToken, BearerToken, loginExpire, free } from '@/app/lib/config'
+import { googleIdToken, BearerToken, loginExpire, free, refreshToken } from '@/app/lib/config'
 import cookies from 'js-cookie'
 import { userLogin, getUerInfo, userLoginOut } from '@/app/lib/service'
 import { usePathname, useRouter } from 'next/navigation'
 import eventBus from '@/app/lib/eventBus'
+import { loginAfterLogin, planPrice } from '@/app/ui/home/nav-links'
 
 export default function UserInfo() {
   const { isDark } = useMyContext()
@@ -89,12 +90,13 @@ export default function UserInfo() {
   }
 
   async function signOut() {
+    const shouldBack = [...loginAfterLogin, planPrice, { href: '/followed-podcasts-all' }]
     await userLoginOut()
     cookies.remove(BearerToken)
     cookies.remove(googleIdToken)
+    cookies.remove(refreshToken)
     //需要返回首页的页面
-    const shouldBack = ['/plan-pricing']
-    const backUrl = shouldBack.some((item) => pathname.endsWith(item)) ? '/home' : location.href
+    const backUrl = shouldBack.some((item) => pathname.endsWith(item.href)) ? '/home' : location.href
     revokeAccess2(backUrl)
   }
   function toPricePage() {
@@ -176,14 +178,13 @@ export default function UserInfo() {
                 By clicking "Continue", you agree
                 <br />
                 to the{' '}
-                <Link href="https://www.podextra.ai/terms.html" target="_blank">
+                <Link href="https://www.podextra.ai/privacy.html" target="_blank" className={`underline`}>
                   Privacy Policy
                 </Link>{' '}
                 and{' '}
-                <Link href="https://www.podextra.ai/terms.html" target="_blank">
-                  Terms
+                <Link href="https://www.podextra.ai/terms.html" target="_blank" className={`underline`}>
+                  Terms of Service.
                 </Link>{' '}
-                of Service.
               </span>
             </DialogDescription>
           </DialogHeader>

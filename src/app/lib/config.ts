@@ -55,6 +55,7 @@ export const cookiesOption = (data?: any) => {
   return {
     ...data,
     // httpOnly: true,
+    SameSite: 'None',
     secure: true,
     sameSite: 'strict',
   }

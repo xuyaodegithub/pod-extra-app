@@ -7,6 +7,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { useMyContext } from '@/context/MyContext'
 import { useUserInfo } from '@/context/UserInfo'
 import { useEffect, useState } from 'react'
+import cookies from 'js-cookie'
+import { BearerToken } from '@/app/lib/config'
 const home = { name: 'Home', href: '/home', icon: '/images/home.svg', darkIcon: '/images/darkHome.svg' }
 const signIn = {
   name: 'Sign in',
@@ -46,7 +48,7 @@ export const loginAfterLogin = [
     darkIcon: '/icons/followed-podcasts-dark.svg',
   },
   { name: 'Playlist', href: '/playlist', icon: '/icons/play-circle.svg', darkIcon: '/icons/play-circle-dark.svg' },
-  { name: 'Stared Episodes', href: '/stared-episodes', icon: '/icons/stared-episodes.svg', darkIcon: '/icons/stared-episodes-dark.svg' },
+  { name: 'Starred Episodes', href: '/starred-episodes', icon: '/icons/stared-episodes.svg', darkIcon: '/icons/stared-episodes-dark.svg' },
 ]
 export const planPrice = {
   name: 'Plan & Pricing',
@@ -65,6 +67,11 @@ export default function NavLinks() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const { isDark, setIsDark } = useMyContext()
+  const [showSignIn, setShowSignIn] = useState(false)
+  useEffect(() => {
+    const isLogin = cookies.get(BearerToken) || ''
+    setShowSignIn(!isLogin)
+  }, [])
   function hiddenPopover(e: any) {
     const { clientX, clientY } = e
     const dom = document.querySelector('.popover-content')
@@ -97,7 +104,7 @@ export default function NavLinks() {
   }
 
   return (
-    <div>
+    <div className={`pb-[20px]`}>
       {/*home */}
       <div className={` px-[10px]  mb-[15px]`}>
         <Link
@@ -110,7 +117,7 @@ export default function NavLinks() {
         <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
       </div>
       {/*sigIn*/}
-      {!userInfo?.role && (
+      {showSignIn && (
         <div className={`pb-[18px] px-[10px]  mb-[15px]`} onClick={() => setShowDialog(true)}>
           {titleCase('You')}
           <div
@@ -124,22 +131,22 @@ export default function NavLinks() {
         </div>
       )}
       {/*loginafter*/}
-      {/*{userInfo?.role && (*/}
-      {/*  <div className={` px-[10px]  mb-[10px]`}>*/}
-      {/*    {titleCase('You')}*/}
-      {/*    {loginAfterLogin.map((link, ind: number) => (*/}
-      {/*      <Link*/}
-      {/*        key={ind}*/}
-      {/*        href={link.href}*/}
-      {/*        className={`cursor-pointer flex px-[14px] ${ind === loginAfterLogin.length - 1 ? 'mb-[16px]' : 'mb-[10px]'} h-[40px] items-center transition duration-200 rounded-md text-md ${link.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}*/}
-      {/*      >*/}
-      {/*        <img src={isDark ? link.darkIcon : link.icon} className="w-[20px] mr-[10px]" />*/}
-      {/*        <p>{link.name}</p>*/}
-      {/*      </Link>*/}
-      {/*    ))}*/}
-      {/*    <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>*/}
-      {/*  </div>*/}
-      {/*)}*/}
+      {userInfo?.role && (
+        <div className={` px-[10px]  mb-[10px]`}>
+          {titleCase('You')}
+          {loginAfterLogin.map((link, ind: number) => (
+            <Link
+              key={ind}
+              href={link.href}
+              className={`cursor-pointer flex px-[14px] ${ind === loginAfterLogin.length - 1 ? 'mb-[16px]' : 'mb-[10px]'} h-[40px] items-center transition duration-200 rounded-md text-md ${link.href === pathname ? 'bg-accent ext-accent-foreground' : ''} hover:bg-accent hover:text-accent-foreground`}
+            >
+              <img src={isDark ? link.darkIcon : link.icon} className="w-[20px] mr-[10px]" />
+              <p>{link.name}</p>
+            </Link>
+          ))}
+          <div className={`ml-[14px] w-[210px] border-b-[1px] border-646410 dark:border-darkHomeBg`}></div>
+        </div>
+      )}
       {/*Plan & pricing*/}
       {userInfo?.email && (
         <div className={`px-[10px]  mb-[20px]`}>

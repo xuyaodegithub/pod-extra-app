@@ -14,7 +14,7 @@ export function isTokenExpired(min: number = 0): boolean {
     const t = cookies.get(expiresIn) || 0
     const l = cookies.get(loginTime) || 0
     const now = Date.now() // 当前时间
-    return +t + +l < now - min * 60 * 1000 && !!t // 比较 exp（过期时间）
+    return +t + +l - min * 60 * 1000 < now && !!t // 比较 exp（过期时间）
   } catch (e) {
     return true // 如果解析失败，认为 token 已过期
   }
@@ -24,10 +24,11 @@ export function isTokenExpired(min: number = 0): boolean {
 // @ts-ignore
 export async function refreshToken(): Promise<string> {
   try {
-    const response = await axios.post('/api/proxy/v1/account/refreshIdToken', {}, { headers: { Cookie: `${cookies.get(rToken)}` } })
-    const idToken = response.data?.data?.idToken || ''
+    const response = await axios.post('/api/proxy/v1/account/refreshIdToken', {}, { withCredentials: true })
+    const { idToken, refreshToken } = response.data?.data || {}
     cookies.set(BearerToken, idToken) // 更新本地idToken
     cookies.set(loginTime, String(Date.now())) // 更新本地loginTime
+    cookies.set(rToken, refreshToken) // 更新本地loginTime
     return idToken
   } catch (e: any) {
     if (e.status === 401) {
@@ -83,12 +84,12 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response: any) => {
     const res = response.data
-    if (response?.config?.url.endsWith('account/auth')) {
-      const cookieString = response.headers['set-cookie'] || ''
-      // const match = cookieString.match(/refreshToken=([^;]+)/)
-      // const t = match ? match[1] : null
-      res.data.rToken = cookieString
-    }
+    // if (response?.config?.url.endsWith('account/auth')) {
+    //   const cookieString = decodeURIComponent(response.headers['set-cookie'] || '')
+    //   const match = cookieString.match(/refreshToken=([^;]+)/)
+    //   const t = match ? match[1] : null
+    //   res.data.rToken = `refreshToken=${t}`
+    // }
     // 对响应数据做点什么
     if (res.code === 0) {
       // Promise.resolve(res)
@@ -114,7 +115,11 @@ instance.interceptors.response.use(
       // return axios.request(originalRequest) // 再重复请求一次
       return 'timeout'
     }
-    return Promise.resolve(err)
+    if (typeof window !== 'undefined') {
+      // Safe to use window here
+      err.response?.data?.message && message.error(err.response?.data?.message)
+    }
+    return Promise.resolve(err.response)
   }
 )
 

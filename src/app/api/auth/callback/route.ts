@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { callbackPath, googleAccessToken, refreshToken, expiresIn, loginTime, cookiesOption, BearerToken } from '@/app/lib/config'
-import { userLogin } from '@/app/lib/service'
+import axios from 'axios'
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
@@ -25,14 +25,18 @@ export async function POST(req: NextRequest) {
   if (!idToken) {
     return NextResponse.json({ error: 'Missing id_token or state' }, { status: 400 })
   }
-  const {
-    data: { idToken: token, rToken },
-  } = await userLogin({ idToken: idToken })
-  cookieStore.set(BearerToken, token, cookiesOption())
-  if (rToken) {
-    console.log(rToken, 'rToken')
-    cookieStore.set(refreshToken, rToken, cookiesOption())
-  }
+  // @ts-ignore
+  const authRes: any = await axios({
+    url: `${process.env.NEXT_PUBLIC_API_URL}v1/account/auth`,
+    method: 'POST',
+    withCredentials: true,
+    dataType: 'JSON',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: { idToken },
+  })
+  const { idToken: token, refreshToken: rToken } = authRes.data?.data || {}
   // 根据 `state` 跳转到目标页面
   const response = NextResponse.redirect(new URL(decodeURIComponent(path), req.nextUrl.origin), {
     status: 302,
@@ -40,18 +44,12 @@ export async function POST(req: NextRequest) {
       Authorization: `Bearer ${token}`,
     },
   })
-  response.cookies.set(BearerToken, token)
+  // response.headers.set('Cache-Control', 'no-store') // 禁止缓存
+  response.cookies.set(BearerToken, token, cookiesOption())
+  if (rToken) {
+    response.cookies.set(refreshToken, rToken, cookiesOption())
+  }
   return response
-  // return NextResponse.redirect(new URL(decodeURIComponent(path), req.nextUrl.origin), {
-  //   status: 302,
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // })
-  // } catch (err: any) {
-  //   console.error('Error:', err)
-  //   return NextResponse.json({ error: 'Token validation failed' }, { status: 500 })
-  // }
 }
 
 export const runtime = 'edge' // 推荐在 edge runtime 上运行以提高性能（可选）

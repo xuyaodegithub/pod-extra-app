@@ -1,21 +1,28 @@
 'use client'
 import { useMyContext } from '@/context/MyContext'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { getCurrentLocalTime, getNoTagText, getTimeWithHoursMin } from '@/app/lib/utils'
-import { clsx } from 'clsx'
-import CateItem from '@/app/ui/categories/cateItem'
-import { FireIcon } from '@heroicons/react/24/outline'
 import { audio_info, summarized } from '@/app/lib/config'
 import { useRouter } from 'next/navigation'
 import PlayBtn from '@/app/ui/search/play-btn'
 import FlowStart from '@/app/ui/search/flow-start'
 import Image from '@/app/ui/Image'
 
-export default function SearchPodcastCard({ item, noMb, hiddenPodcast }: { item: any; noMb: boolean; hiddenPodcast?: boolean }) {
+export default function SearchPodcastCard({
+  item,
+  noMb,
+  hiddenPodcast,
+  isFirst,
+}: {
+  item: any
+  noMb: boolean
+  hiddenPodcast?: boolean
+  isFirst?: boolean
+}) {
   const { isDark } = useMyContext()
   const { data, setData, isPlaying, setIsPlaying } = useMyContext()
-  const { push } = useRouter()
+  const { push, refresh } = useRouter()
   const { enclosureUrl: url = '' } = data || {}
   const {
     coverUrl,
@@ -30,30 +37,18 @@ export default function SearchPodcastCard({ item, noMb, hiddenPodcast }: { item:
     enclosureUrl,
     episodeStatus,
     showUrl,
-    historyTime = '',
   } = item
   const des = getNoTagText(showNotes)
-  const play = isPlaying && url && url === enclosureUrl
-  function playAuido(e: Event) {
-    e.preventDefault()
-    const { episodeId: id = '' } = data || {}
-    if (!id || episodeId !== id) {
-      const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
-      console.log(id, episodeId, data, audioInfo, '--------')
-      setData(audioInfo)
-      setTimeout(() => {
-        setIsPlaying(true)
-        sessionStorage.setItem(audio_info, JSON.stringify({ ...audioInfo, playTime: 0 }))
-      }, 500)
-    } else setIsPlaying(!isPlaying)
-  }
-  function followEpiosde(e: any) {
-    e.preventDefault()
-  }
   function toPodcast(e: Event) {
     e.preventDefault()
     push(showUrl)
   }
+
+  useEffect(() => {
+    if (isFirst) {
+      refresh()
+    }
+  }, [])
   return (
     <div className={` relative ${noMb ? '' : 'pb-[5px] mb-[5px]'}`}>
       <Link href={episodeUrl} key={episodeId} className={``}>
@@ -78,7 +73,7 @@ export default function SearchPodcastCard({ item, noMb, hiddenPodcast }: { item:
             </div>
             <div className={`flex items-center mt-auto`}>
               <PlayBtn item={item} />
-              {/*<FlowStart item={item} />*/}
+              <FlowStart item={item} />
             </div>
           </div>
         </div>

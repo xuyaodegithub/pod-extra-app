@@ -1,7 +1,6 @@
 import { fetchPost, fetchGet, upPost, fetchPut } from './fetch'
 export function getPodShow(payload: any) {
-  const isV2 = payload?.categoryId || false
-  return fetchGet(`${isV2 ? 'v2' : 'v1'}/podShow/pageQuery`, payload)
+  return fetchGet(`v2/podShow/pageQuery`, payload)
 }
 export function getPodEpisode(payload: any) {
   return fetchGet('v1/podEpisode/pageQuery', payload)
@@ -81,8 +80,8 @@ export function getFlowEpisode(data: any) {
   return fetchGet(`/v1/episode/my-favorite`, data)
 }
 //收藏单集
-export function flowEpisode(episodeId: any) {
-  return fetchPost(`/api/proxy/v1/episode/${episodeId}/add-favorite`, {})
+export function flowEpisode(episodeId: any, data: any) {
+  return fetchPost(`/api/proxy/v1/episode/${episodeId}/add-favorite`, data)
 }
 //取消收藏单集
 export function unFlowEpisode(episodeId: any) {

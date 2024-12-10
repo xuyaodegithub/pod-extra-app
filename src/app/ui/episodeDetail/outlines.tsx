@@ -8,8 +8,16 @@ import { timeFormat } from '@/app/lib/utils'
 import Image from '@/app/ui/Image'
 
 export function Outlines({ data }: { data: any }) {
-  const { enclosureUrl = '', showTitle = '', showNotes = '', coverUrl = '', episodeTitle = '', episodeId = '' } = data || {}
-  const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId }
+  const {
+    enclosureUrl = '',
+    showTitle = '',
+    showNotes = '',
+    coverUrl = '',
+    episodeTitle = '',
+    episodeId = '',
+    episodeUrl = '',
+  } = data || {}
+  const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId, episodeUrl }
   const { setData, setIsPlaying, isPlaying, time, setStepTime } = useMyContext()
   function playCurrTime(t: number, e: any) {
     e.stopPropagation()

@@ -46,12 +46,10 @@ async function generateEtag(request: NextRequest) {
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   //这里做refreshToken
-  // const tokenIsExpires = isTokenExpired()
-  // const { pathname } = new URL(request.url)
-  // console.log(token, '--------', pathname)
-  // if (token && pathname.startsWith('/v1/podEpisode')) {
-  //   request.headers.set('Authorization', `Bearer ${token}`)
-  // }
+  const res = NextResponse.next()
+  // 禁用页面缓存
+  res.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate')
+  return res
 
   // return NextResponse.redirect(new URL('/home', request.url))
   //   const { pathname } = new URL(request.url);
@@ -72,9 +70,8 @@ export async function middleware(request: NextRequest) {
   // res.headers.set('Last-Modified', new Date().toUTCString())
 
   // return res
-  return NextResponse.next()
+  // return NextResponse.next()
 }
-
 // export const config = {
-//   matcher: '/about/:path*',
+//   matcher: ['/podcast', '/episode'], // 可根据需求设置
 // }

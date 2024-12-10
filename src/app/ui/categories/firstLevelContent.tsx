@@ -21,7 +21,10 @@ export default async function Page({
   const pageSize = searchParams?.pageSize || 50
   const pageNum = searchParams?.page || 1
   const {
-    data: { resultList, total },
+    data: {
+      pageQueryResponse: { resultList = [], total = 0 },
+      requestCategoryList,
+    },
   } = await getPodShow({ pageSize, pageNum, sortBy: PUB_DATE, levelCategoryId: '' })
   const totalPages = Math.ceil(+total / +pageSize)
   return (

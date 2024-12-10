@@ -2,17 +2,13 @@ import { getEpisodeDetail, getEpisodeSummarize, getEpisodeTranscript } from '@/a
 import { getCurrentLocalTime, timeFormat, getMetaData, splitStringFromLastDash } from '@/app/lib/utils'
 import Link from 'next/link'
 import { Metadata, ResolvingMetadata } from 'next'
-import { ClockIcon, MicrophoneIcon } from '@heroicons/react/24/outline'
 import { Tab } from '@/app/ui/episodeDetail/tabs'
-import { BearerToken, loginTime, tabList, refreshToken } from '@/app/lib/config'
-import { PlayAudio } from '@/app/ui/episodeDetail/palyAudio'
+import { tabList } from '@/app/lib/config'
 import PlayBtn from '@/app/ui/search/play-btn'
 import FlowStart from '@/app/ui/search/flow-start'
 import { ClientSub } from '@/app/ui/clientDispatch'
-import { cookies } from 'next/headers'
 import Icon from '@/app/ui/episodeDetail/Icon'
 import { createServerAxios } from '@/app/lib/serveFetch'
-import { redirect } from 'next/navigation'
 import Image from '@/app/ui/Image'
 // 在目标页面处理 Action
 export async function generateMetadata({ params }: any, parent: ResolvingMetadata): Promise<Metadata> {
@@ -41,21 +37,17 @@ export default async function Page({
 }) {
   const pageSize = searchParams?.pageSize || 50
   const pageNum = searchParams?.page || 1
-  const cookie = cookies()
   const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   // const { data } = await getEpisodeDetail(episodeId, token, { pageNum, pageSize })
-  const { instance, refresh, token } = await createServerAxios()
+  const { instance, refresh, token, refreshToken } = await createServerAxios()
   const {
     data: { data },
   } = await instance.get(`v1/podEpisode/${episodeId}`)
-
+  console.log(data, '---单集详情')
   const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle, showUrl = '' } = data || {}
-  function followEpiosde(e: any) {
-    e.preventDefault()
-  }
   return (
     <main className={`flex flex-col episode-item`}>
-      <ClientSub val={episodeTitle} param={{ pageSize, pageNum }} cookie={{ refresh, token }} />
+      <ClientSub val={episodeTitle} param={{ pageSize, pageNum }} cookie={{ refresh, token, refreshToken }} />
       <div className={`flex `}>
         <Image src={coverUrl} alt="" className={`w-[160px] h-[160px] mr-[17px] rounded-10px object-cover`} />
         <div className={`flex flex-1 flex-col overflow-hidden items-start text-md`}>
@@ -73,7 +65,7 @@ export default async function Page({
           <div className={`mt-[10px] flex items-center`}>
             {/*<PlayAudio audioInfo={data} classStyle={`mt-0 mb-0`} />*/}
             <PlayBtn item={data} />
-            {/*<FlowStart item={data} />*/}
+            <FlowStart item={data} />
           </div>
           <Link
             href={showUrl}

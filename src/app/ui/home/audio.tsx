@@ -1,6 +1,6 @@
 'use client'
 import { PlayCircleIcon, PauseIcon, SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/react/24/outline'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 // import { Slider } from '@/components/ui/slider'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
 import Image from '@/app/ui/Image'
@@ -11,9 +11,11 @@ import { useRouter } from 'next/navigation'
 import { Loading } from '@/app/ui/home/loading'
 import { audio_info } from '@/app/lib/config'
 import { Slider } from 'antd'
+import { flowEpisode } from '@/app/lib/service'
 
 export default function Audio() {
-  const { data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime, allTime, setAllTime } = useMyContext()
+  const { data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime, allTime, setAllTime, setSaveCurrentPosition } =
+    useMyContext()
   const {
     enclosureUrl = '',
     showTitle = '',
@@ -22,17 +24,28 @@ export default function Audio() {
     episodeTitle = '',
     episodeId = '',
     playTime = 0,
+    episodeUrl,
   }: any = data || {}
+  const episodeIdRef = useRef<string | null>(null)
   const [playbackRate, setPlaybackRate] = useState(1)
   const [voice, setVoice] = useState(1)
   const [oldVoice, setOldVoice] = useState(1)
   const [loading, setLoading] = useState(false)
   const [hiddenNotes, setHiddenNotes] = useState(true)
+  const [saveTime, setSaveTime] = useState(Date.now())
   // const [isAudio, setIsAudio] = useState(null)
   let isAudio: any = useRef(null)
   const { push } = useRouter()
   const funs: any = { canplaythrough, timeupdate, loadstart, error, ended }
-  // const newUrlAudio = enclosureUrl.includes('?') ? `${enclosureUrl}&t=${Date.now()}` : `${enclosureUrl}?t=${Date.now()}`
+  function handleFlowEpisode(e: string, t: number, allT?: number) {
+    // const now = Date.now()
+    if (e && !!t) {
+      flowEpisode(episodeId, { currentPosition: t, tagType: 'PLAYLIST', duration: allT || allTime })
+      setSaveCurrentPosition({ id: episodeId, time: t })
+      // setSaveTime(now)
+    }
+  }
+
   useEffect(() => {
     const audioInfo = JSON.parse(sessionStorage.getItem(audio_info) || '{}')
     if (audioInfo?.episodeId) {
@@ -98,6 +111,7 @@ export default function Audio() {
     const isPaused = isAudio.current.paused
     isPaused ? isAudio.current.play() : isAudio.current.pause()
     setIsPlaying(isPaused)
+    handleFlowEpisode(episodeId, time || 0.1)
   }
 
   function changeProgress(val: any) {
@@ -125,7 +139,7 @@ export default function Audio() {
     isAudio.current.volume = v > 0 ? 0 : oldVoice
   }
   function toEpisodeDetail() {
-    push(`/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`)
+    push(episodeUrl || `/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`)
   }
   function ended() {
     setIsPlaying(false)
@@ -142,6 +156,7 @@ export default function Audio() {
     const t = isAudio.current.duration
     setAllTime(parseInt(t))
     setLoading(false)
+    handleFlowEpisode(episodeId, time, t)
   }
   function timeupdate() {
     const t = isAudio.current.currentTime
@@ -174,22 +189,6 @@ export default function Audio() {
       className={`w-[1200px] fixed left-[50%] translate-x-[-50%] bottom-0 bg-bgGray py-[6px] px-[35px] dark:bg-bgDark dark:text-gray-200 rounded-[10px] dark:border-[1px] dark:border-fontGry-600`}
     >
       <div className={`flex items-center`}>
-        {/*<audio*/}
-        {/*  src={enclosureUrl}*/}
-        {/*  ref={isAudio}*/}
-        {/*  className={`hidden`}*/}
-        {/*  controls={true}*/}
-        {/*  crossOrigin={'anonymous'}*/}
-        {/*  onCanPlayThrough={loadRead}*/}
-        {/*  onTimeUpdate={timeUpdate}*/}
-        {/*  onEnded={palyEnd}*/}
-        {/*  onError={playError}*/}
-        {/*  onLoadStart={loadStart}*/}
-        {/*>*/}
-        {/*  <source src={`/17193_1461772397.mp3`} type={'audio/mpeg'} />*/}
-        {/*  <source src={`/17193_1461772397.mp3`} type={'audio/ogg'} />*/}
-        {/*  your browser does not support the audio element*/}
-        {/*</audio>*/}
         <img
           src={`/images/${isPlaying ? 'playing' : 'paused'}.svg`}
           alt={'play'}
