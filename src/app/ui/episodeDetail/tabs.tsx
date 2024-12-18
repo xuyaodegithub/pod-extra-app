@@ -171,7 +171,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
       )}
       <Tabs value={activeTab}>
         <TabsList
-          className={`flex tab_scroll sticky bg-white mb-[15px] z-10 dark:bg-black border-b-[1px] border-[#FFE1D3] dark:border-play rounded-[0px]`}
+          className={`flex tab_scroll sticky bg-white mb-[20px] z-10 dark:bg-black border-b-[1px] border-[#FFE1D3] dark:border-play rounded-[0px]`}
           style={{ top: `${topNum}px` }}
         >
           {tabs.map((item: any) => (

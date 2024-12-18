@@ -26,7 +26,7 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   // another ellipsis, and the last page.
   return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages]
 }
-export const timeFormatter = (val: any, type: string) => {
+export const timeFormatter = (val: any) => {
   const time = new Date(val)
   const y = time.getFullYear()
   const m = time.getMonth() + 1
@@ -34,7 +34,7 @@ export const timeFormatter = (val: any, type: string) => {
   const h = time.getHours()
   const min = time.getMinutes()
   const s = time.getSeconds()
-  return
+  return `${y}-${m > 9 ? m : '0' + m}-${d > 9 ? d : '0' + d}`
 }
 
 export const formatTime = function (date: any, mode: any) {

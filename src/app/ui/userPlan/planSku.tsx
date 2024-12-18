@@ -6,12 +6,14 @@ import { useMyContext } from '@/context/MyContext'
 import { createOrder } from '@/app/lib/service'
 import { Loader2 } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
-export default function PlanSku({ skuList }: { skuList: any[] }) {
-  const { userInfo } = useUserInfo()
+export default function PlanSku({ skuList, isLanding }: { skuList: any[]; isLanding?: boolean }) {
+  const { userInfo, setShowDialog } = useUserInfo()
   const [activeTab, setActiveTab] = useState(yearly)
   const [loadingSkuId, setLoadingSkuId] = useState('')
   const { isDark } = useMyContext()
+  const { push } = useRouter()
   //FREE|STANDARD｜PRO  付费周期MONTHLY|YEAYLY
   let { role = free, billingCycle = monthly, gmtSubscriptionStart, gmtSubscriptionEnd } = userInfo || {}
 
@@ -52,6 +54,13 @@ export default function PlanSku({ skuList }: { skuList: any[] }) {
       if (checkoutUrl) window.location.href = checkoutUrl
     }
   }
+  function previewPlan() {
+    if (userInfo?.role) {
+      push('/plan-pricing')
+    } else {
+      setShowDialog(true)
+    }
+  }
   return (
     <div>
       <div
@@ -74,7 +83,7 @@ export default function PlanSku({ skuList }: { skuList: any[] }) {
           </div>
         ))}
       </div>
-      <div className={`flex mb-[20px]`}>
+      <div className={`flex mb-[20px] ${isLanding && 'justify-center'}`}>
         {skuList.map((item) => {
           const { planName, planCode, planDescription, benefits, skus } = item
           const isFree = planCode === 'FREE'
@@ -88,7 +97,7 @@ export default function PlanSku({ skuList }: { skuList: any[] }) {
           const showLoading = skus.some((i: any) => i?.skuId === loadingSkuId)
           return (
             <div
-              className={`shadow-planShow rounded-[26px] w-[320px] py-[50px] px-[30px] bg-hbg  dark:bg-bgDark dark:text-white ${isStandard ? 'bg-play text-white mx-[20px] dark:bg-play dark:text-white' : 'text-fontGry-600'}`}
+              className={`shadow-planShow rounded-[26px] w-[320px] py-[50px] px-[30px] bg-hbg  dark:bg-bgDark dark:text-white ${isStandard ? `bg-play text-white ${isLanding ? 'mx-[60px]' : 'mx-[20px]'} dark:bg-play dark:text-white` : 'text-fontGry-600'}`}
               key={planCode}
             >
               <div
@@ -106,13 +115,22 @@ export default function PlanSku({ skuList }: { skuList: any[] }) {
               )}
               <div className={`font-semibold text-[28px] leading-[38px] mb-[10px]`}>{planName}</div>
               <div className={`text-[15px] leading-[20px] mb-[20px]`}>{planDescription}</div>
-              <div
-                className={`flex items-center justify-center font-semibold cursor-pointer text-[15px] leading-[45px] mb-[22px] rounded-[24px] ${dis ? 'bg-he5 text-fontGry-100 cursor-not-allowed dark:bg-darkHomeBg dark:text-fontGry-100' : 'bg-[#FFE1D3] text-play'} ${isCurrent ? 'text-fontGry-600 dark:text-fontGry-100 dark:bg-he5' : ''}`}
-                onClick={() => createNewOrder(item, dis, showLoading)}
-              >
-                {showLoading && <Loader2 className="animate-spin mr-[8px]" />}
-                {label}
-              </div>
+              {!isLanding ? (
+                <div
+                  className={`flex items-center justify-center font-semibold cursor-pointer text-[15px] leading-[45px] mb-[22px] rounded-[24px] ${dis ? 'bg-he5 text-fontGry-100 cursor-not-allowed dark:bg-darkHomeBg dark:text-fontGry-100' : 'bg-[#FFE1D3] text-play'} ${isCurrent ? 'text-fontGry-600 dark:text-fontGry-100 dark:bg-he5' : ''}`}
+                  onClick={() => createNewOrder(item, dis, showLoading)}
+                >
+                  {showLoading && <Loader2 className="animate-spin mr-[8px]" />}
+                  {label}
+                </div>
+              ) : (
+                <div
+                  className={`flex items-center justify-center font-semibold cursor-pointer text-[15px] leading-[45px] mb-[22px] rounded-[24px] bg-[#FFE1D3] text-play`}
+                  onClick={previewPlan}
+                >
+                  Get Started
+                </div>
+              )}
               <div className={`text-[15px] leading-[20px]`}>
                 {benefits?.map((benefit: any) => (
                   <div className={`flex items-center mb-[5px] tracking-[-0.5px]`} key={benefit.content}>
@@ -125,7 +143,7 @@ export default function PlanSku({ skuList }: { skuList: any[] }) {
           )
         })}
       </div>
-      <div className={`text-[15px] leading-[25px] text-[#C3C3C3] px-[20px] dark:text-fontGry-600`}>
+      <div className={`text-[15px] leading-[25px] text-[#C3C3C3] px-[20px] dark:text-fontGry-600 ${isLanding && 'pl-[100px]'}`}>
         <div>
           <span className={`inline-block mr-[8px]`}>*</span> Only episodes that have already been AI-processed.
         </div>

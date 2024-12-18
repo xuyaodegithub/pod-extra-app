@@ -14,8 +14,20 @@ import { Slider } from 'antd'
 import { flowEpisode } from '@/app/lib/service'
 
 export default function Audio() {
-  const { data, setData, isPlaying, setIsPlaying, time, setTime, stepTime, setStepTime, allTime, setAllTime, setSaveCurrentPosition } =
-    useMyContext()
+  const {
+    data,
+    setData,
+    isPlaying,
+    setIsPlaying,
+    time,
+    setTime,
+    stepTime,
+    setStepTime,
+    allTime,
+    setAllTime,
+    setSaveCurrentPosition,
+    isDark,
+  } = useMyContext()
   const {
     enclosureUrl = '',
     showTitle = '',
@@ -141,6 +153,10 @@ export default function Audio() {
   function toEpisodeDetail() {
     push(episodeUrl || `/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`)
   }
+  function toTranscript(e: any) {
+    e.stopPropagation()
+    push(episodeUrl || `/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`)
+  }
   function ended() {
     setIsPlaying(false)
   }
@@ -176,7 +192,7 @@ export default function Audio() {
     } else if (voice > 0.6) {
       type = 'max'
     } else type = 'medium'
-    return <img src={urlObj[type]} alt="" className={`w-[24px] h-[24px] mr-[12px]`} onClick={closeViose} />
+    return <img src={urlObj[type]} alt="" className={`w-[24px] h-[24px] mr-[10px]`} onClick={closeViose} />
   }
 
   useEffect(() => {
@@ -184,17 +200,33 @@ export default function Audio() {
     const h = domH?.offsetHeight || 0
     setHiddenNotes(h > 20)
   }, [episodeTitle])
+  function fastorWard(sec: number) {
+    setIsPlaying(true)
+    setStepTime(time + sec)
+  }
   return enclosureUrl ? (
     <div
-      className={`w-[1200px] fixed left-[50%] translate-x-[-50%] bottom-0 bg-bgGray py-[6px] px-[35px] dark:bg-bgDark dark:text-gray-200 rounded-[10px] dark:border-[1px] dark:border-fontGry-600`}
+      className={`w-[1200px] fixed left-[50%] translate-x-[-50%] bottom-0 bg-bgGray py-[6px] px-[22px] dark:bg-bgDark dark:text-gray-200 rounded-[10px] dark:border-[1px] dark:border-fontGry-600`}
     >
       <div className={`flex items-center`}>
+        <img
+          src={`/images/back15${isDark ? '-dark' : ''}.svg`}
+          alt=""
+          className={`mr-[10px] cursor-pointer`}
+          onClick={() => fastorWard(-15)}
+        />
         <img
           src={`/images/${isPlaying ? 'playing' : 'paused'}.svg`}
           alt={'play'}
           title={'play'}
           className={`mr-[10px] cursor-pointer w-[34px] h-[34px]`}
           onClick={palyAudio}
+        />
+        <img
+          src={`/images/fast15${isDark ? '-dark' : ''}.svg`}
+          alt=""
+          className={`mr-[20px] cursor-pointer`}
+          onClick={() => fastorWard(15)}
         />
         <div className={`w-[400px] flex items-center`}>
           <span className={`mr-[10px] text-min`}>{timeFormat(time)}</span>
@@ -205,7 +237,7 @@ export default function Audio() {
             step={1}
             max={allTime}
             min={0}
-            className={`relative flex-1 flex items-center mr-[18px] m-0 p-0`}
+            className={`relative flex-1 flex items-center mr-[10px] m-0 p-0`}
             onChange={(e: any) => changeProgress(e)}
             range={false}
           />
@@ -225,13 +257,13 @@ export default function Audio() {
           max={1}
           min={0}
           step={0.01}
-          className={`mr-[25px] w-[55px] flex items-center m-0 p-0 shrink-0`}
+          className={`mr-[15px] w-[55px] flex items-center m-0 p-0 shrink-0`}
           value={voice}
           defaultValue={voice}
           onChange={(e: any) => changeVoice(e)}
         />
         <Select onValueChange={(e: any) => selectChange(e)} defaultValue={`${playbackRate}`} value={`${playbackRate}`}>
-          <SelectTrigger className="w-auto bg-transparent border-0 p-0 shadow-none focus:ring-0 focus:ring-offset-0">
+          <SelectTrigger className="w-auto bg-transparent border-0 p-0 shadow-none focus:ring-0 focus:ring-offset-0 mr-[30px]">
             <span
               className={`font-bold bg-gray-300 w-[82px] px-[8px] py-[2px] text-white text-min rounded-10px cursor-pointer dark:bg-fontGry-600 dark:text-homehbg`}
             >
@@ -258,6 +290,7 @@ export default function Audio() {
             <div
               className={`episodeTitle-line w-[380px] text-[14px] text-fontGry-600 leading-[19px] overflow-hidden text-ellipsis line-clamp-2 dark:text-fontGry-100`}
             >
+              <img src="/images/transcript-icon.svg" alt="" className={`inline-block mr-[10px]`} onClick={(e) => toTranscript(e)} />
               {episodeTitle}
             </div>
             {!hiddenNotes && (

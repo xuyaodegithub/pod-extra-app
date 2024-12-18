@@ -14,7 +14,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import eventBus from '@/app/lib/eventBus'
 import { loginAfterLogin, planPrice } from '@/app/ui/home/nav-links'
 
-export default function UserInfo() {
+export default function UserInfo({ hiddenPrice }: { hiddenPrice?: boolean }) {
   const { isDark } = useMyContext()
   const { userInfo, setUserInfo, showDialog, setShowDialog, setLoading, initUserInfo } = useUserInfo()
   const [open, setOpen] = useState(false)
@@ -114,7 +114,7 @@ export default function UserInfo() {
   return (
     <div className="flex items-center">
       {/*付费用户隐藏price入口*/}
-      {!isVip && showLogin && (
+      {!isVip && showLogin && !hiddenPrice && (
         <div onClick={toPricePage} className={`cursor-pointer mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}>
           Pricing
         </div>

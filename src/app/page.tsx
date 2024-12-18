@@ -1,15 +1,20 @@
 import type { Metadata, Viewport } from 'next'
 import { LoadingLine } from '@/app/ui/skeletons'
-import { getMetaData } from '@/app/lib/utils'
+import { getMetaData, POPULARITY, PUB_DATE } from '@/app/lib/utils'
 import Link from 'next/link'
 import fs from 'fs'
 import path from 'path'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import LandingTab from '@/app/ui/ladingPage/landingTab'
+import ThemeRight from '@/app/ui/ladingPage/themeRight'
+import TagCard from '@/app/ui/ladingPage/tagCard'
+import PlanSku from '@/app/ui/userPlan/planSku'
 export const metadata: Metadata = getMetaData({
   alternates: {
     canonical: process.env.NEXT_PUBLIC_NEXTAUTH_URL,
   },
 })
+import PodcastSwiper from '@/app/ui/ladingPage/podcastSwiper'
 import AcmeLogo from '@/app/ui/acme-logo'
 import OtherLogo from '@/app/ui/other-logo'
 
@@ -224,38 +229,148 @@ export default function IndexPage() {
     },
   ]
   // redirect('/home') // 重定向到 /home
+  const memberPlan = [
+    {
+      planName: 'Free',
+      planCode: 'FREE',
+      planDescription: 'View Al-processed content in a few episodes for free.',
+      benefits: [
+        {
+          content: 'View Al-processed content in 4 Episodes for free per month',
+          description: 'Only episodes that have already been Al-processed.',
+        },
+        {
+          content: 'No credit card required',
+          description: null,
+        },
+      ],
+      skus: [],
+    },
+    {
+      planName: 'Standard',
+      planCode: 'STANDARD',
+      planDescription: 'For those who like podcasts and listen to them often.',
+      benefits: [
+        {
+          content: 'Unlimited viewing of Al-processed content in Episodes',
+          description: 'Only episodes that have already been Al-processed.',
+        },
+        {
+          content: 'Initiate Al processing of 20 episodes per month',
+          description: null,
+        },
+        {
+          content: 'Copy transcript',
+          description: null,
+        },
+        {
+          content: 'Download mindmap',
+          description: null,
+        },
+        {
+          content: 'More to come',
+          description: null,
+        },
+      ],
+      skus: [
+        {
+          skuId: 'standard_monthly',
+          unitPrice: 9.9,
+          currency: 'USD',
+          skuName: 'MONTHLY',
+          tag: '',
+          isDefault: false,
+          billingCycle: 'MONTHLY',
+        },
+        {
+          skuId: 'standard_yearly',
+          unitPrice: 70.8,
+          currency: 'USD',
+          skuName: 'YEARLY',
+          tag: 'MOST POPULAR',
+          isDefault: true,
+          billingCycle: 'YEARLY',
+        },
+      ],
+    },
+    {
+      planName: 'Pro',
+      planCode: 'PRO',
+      planDescription: 'For podcast enthusiasts needing info from numerous podcasts.',
+      benefits: [
+        {
+          content: ' Everything in Standard',
+          description: null,
+        },
+        {
+          content: ' Initiate Al processing of 50 episodes per month in total',
+          description: null,
+        },
+      ],
+      skus: [
+        {
+          skuId: 'pro_monthly',
+          unitPrice: 19.9,
+          currency: 'USD',
+          skuName: 'MONTHLY',
+          tag: '',
+          isDefault: false,
+          billingCycle: 'MONTHLY',
+        },
+        {
+          skuId: 'pro_yearly',
+          unitPrice: 142.8,
+          currency: 'USD',
+          skuName: 'YEARLY',
+          tag: 'MOST POPULAR',
+          isDefault: true,
+          billingCycle: 'YEARLY',
+        },
+      ],
+    },
+  ]
   return (
     <main className={`landing`}>
+      <LandingTab />
       <div className={`w-1280 mx-auto`}>
-        <div className={`flex justify-between pt-[24px] items-center mb-[124px]`}>
+        <div className={`flex justify-between pt-[24px] items-center mb-[90px] relative`}>
           <AcmeLogo />
-          <Link href={'/home'} className={`text-md py-[10px] px-[16px] text-play bg-[#FFF0D7] rounded-[5px] font-bold dark:bg-bgDark`}>
-            Get Started
-          </Link>
+          <div className={`ml-auto absolute top-[20px] right-0`}>
+            <ThemeRight />
+          </div>
         </div>
-        <div className={`relative mb-[146px]`}>
-          <h1 className={`text-[80px] tracking-[-3px] text-[#02073E] w-[753px] mb-[30px] leading-[80px] dark:text-white font-Tilt`}>
-            Unleash the power of podcast with AI
-          </h1>
-          <div className={`text-[30px] leading-[45px] mb-[30px] dark:text-homehbg`}>
-            Transcripts, Summaries, Mind maps,
-            <br /> Outlines, Highlights and Takeaways
+        <div className={`relative mb-[30px] flex justify-between`}>
+          <div className={`mr-[70px]`}>
+            <h1 className={`text-[50px] tracking-[-3px] text-[#02073E] w-[460px] mb-[20px] leading-[60px] dark:text-white font-Tilt`}>
+              Unleash the power of podcast with AI
+            </h1>
+            <div className={`text-[24px] leading-[40px] mb-[30px] dark:text-homehbg`}>
+              Transcripts, Summaries, Mind maps,
+              <br /> Outlines, Highlights and Takeaways
+            </div>
+            <Link
+              href={'/home'}
+              className={`text-[20px] inline-block leading-[50px] px-[10px]  text-white bg-play rounded-[5px] font-bold`}
+            >
+              Get Started for free
+            </Link>
+            <div className={`text-[#C8C8C8] text-sm dark:text-fontGry-100 mb-[20px]`}>No credit card required</div>
+            <div className={`flex text-sm`}>
+              <span className={`mr-[17px]`}>Powered by:</span>
+              <img src="/images/openai.svg" className={`mr-[10px] w-[20px] h-[20px]`} alt="" />
+              <img src="/images/Podcast.svg" className={`mr-[10px] w-[20px] h-[20px]`} alt="" />
+              <img src="/images/spotify.svg" className={`mr-[10px] w-[20px] h-[20px]`} alt="" />
+            </div>
           </div>
-          <Link
-            href={'/home'}
-            className={`ml-[30px] text-[23px] inline-block leading-[40px] p-[10px]  text-white bg-play rounded-[5px] font-bold mb-[50px]`}
-          >
-            Get Started for free
-          </Link>
-          <div className={`flex text-md leading-[42px]`}>
-            <span className={`mr-[17px]`}>Powered by:</span>
-            <img src="/images/openai.svg" className={`mr-[26px] w-[40px] h-[40px]`} alt="" />
-            <img src="/images/Podcast.svg" className={`mr-[26px] w-[40px] h-[40px]`} alt="" />
-            <img src="/images/spotify.svg" className={`mr-[26px] w-[40px] h-[40px]`} alt="" />
+          <div className={`flex-1 mt-[-40px] overflow-hidden`}>
+            <TagCard />
           </div>
-          <div className={`absolute right-0 top-0 w-[644px]`}>
-            <img src="/images/people.png" alt="" />
-          </div>
+        </div>
+        <div className={`mb-[30px]`}>
+          <PodcastSwiper type={POPULARITY} />
+        </div>
+        <div className={`mb-[150px]`}>
+          <PodcastSwiper type={PUB_DATE} />
         </div>
         <div className={`mb-[84px]`}>
           <div className={`text-center text-[80px] leading-[80px] mb-[80px] tracking-[-3px] font-Tilt`}>
@@ -280,7 +395,7 @@ export default function IndexPage() {
             })}
           </div>
         </div>
-        <div className={`relative flex flex-wrap mb-[348px]`}>
+        <div className={`relative flex flex-wrap mb-[300px]`}>
           <div className={`w-[50%] mb-[146px]`}>
             <h2 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black dark:text-white tracking-[-1.5px] font-Tilt`}>
               Summarize podcasts with AI
@@ -432,7 +547,12 @@ export default function IndexPage() {
           })}
         </div>
       </div>
-      <div className={`w-1280 mx-auto mb-[190px]`}>
+      <div className={`mb-[150px] w-1280 mx-auto Pricing`}>
+        <h1 className={`text-[68px] leading-[102px] text-center font-bold text-black dark:text-white`}>Choose the plan you like</h1>
+        <div className={`text-[30px] text-fontGry-600 mb-[50px] dark:text-fontGry-100 text-center`}>Free to try without a credit card</div>
+        <PlanSku skuList={memberPlan} isLanding />
+      </div>
+      <div className={`w-1280 mx-auto mb-[150px] FAQ`}>
         <h1 className={`text-black text-[60px] text-center mb-[65px] dark:text-white font-Tilt`}>Frequently Asked Questions</h1>
         <div className={`w-[880px] mx-auto`}>
           <Accordion type="single" collapsible defaultValue={'item-1'} className={`dark:bg-bgDark`}>
