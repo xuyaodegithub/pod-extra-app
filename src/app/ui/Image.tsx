@@ -26,5 +26,13 @@ export default function Image({
       setHasError(true)
     }
   }
-  return <img src={url} alt={alt} title={title} onError={errorHandler} className={`object-cover ${className}`} />
+  return (
+    <img
+      src={url || `/images/${isDark ? 'no-picture-dark-mode' : 'no-picture-light-mode'}.jpg`}
+      alt={alt}
+      title={title}
+      onError={errorHandler}
+      className={`object-cover ${className}`}
+    />
+  )
 }
