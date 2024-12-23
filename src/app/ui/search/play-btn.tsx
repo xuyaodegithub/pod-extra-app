@@ -21,7 +21,18 @@ export default function PlayBtn({ item }: { item: any }) {
     setSaveCurrentPosition,
   } = useMyContext()
   const { enclosureUrl: url = '' } = data || {}
-  const { coverUrl, episodeTitle, showTitle, showNotes, episodeId, duration, enclosureUrl, currentPosition = 0, episodeUrl } = item
+  const {
+    coverUrl,
+    episodeTitle,
+    showTitle,
+    showNotes,
+    episodeId,
+    duration,
+    enclosureUrl,
+    currentPosition = 0,
+    episodeUrl,
+    episodeStatus,
+  } = item
   const [currentPosi, setCurrentPosi] = useState(currentPosition)
   const play = isPlaying && url && url === enclosureUrl
   const t = allTime || duration
@@ -37,7 +48,7 @@ export default function PlayBtn({ item }: { item: any }) {
           setSaveCurrentPosition({ id, time })
         }
       } catch (e) {}
-      const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId, episodeUrl }
+      const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId, episodeUrl, episodeStatus }
       console.log(t, time, duration, currentPosi, '--------')
       setData(audioInfo)
       setAllTime(0)

@@ -9,6 +9,7 @@ import LandingTab from '@/app/ui/ladingPage/landingTab'
 import ThemeRight from '@/app/ui/ladingPage/themeRight'
 import TagCard from '@/app/ui/ladingPage/tagCard'
 import PlanSku from '@/app/ui/userPlan/planSku'
+import { getLandingTag, getLandingTagEpisode } from '@/app/lib/service'
 export const metadata: Metadata = getMetaData({
   alternates: {
     canonical: process.env.NEXT_PUBLIC_NEXTAUTH_URL,
@@ -18,7 +19,29 @@ import PodcastSwiper from '@/app/ui/ladingPage/podcastSwiper'
 import AcmeLogo from '@/app/ui/acme-logo'
 import OtherLogo from '@/app/ui/other-logo'
 
-export default function IndexPage() {
+export default async function IndexPage({
+  searchParams,
+}: {
+  searchParams?: {
+    pageSize?: string
+    page?: string
+  }
+}) {
+  const pageSize = searchParams?.pageSize || 30
+  const pageNum = searchParams?.page || 1
+  let firstTagEpisodes: any = []
+  const params = {
+    pageNum,
+    pageSize,
+  }
+  const { data: tags } = await getLandingTag(params)
+  if (tags.length > 0) {
+    const payload = { pageNum, pageSize: 20 }
+    const {
+      data: { resultList },
+    } = await getLandingTagEpisode(tags[0]?.tagId, payload)
+    firstTagEpisodes = [...resultList]
+  }
   const imagesDirectory = path.join(process.cwd(), 'public/images/imgWall')
   const filenames = fs.readdirSync(imagesDirectory).sort((a: string, b: string) => +a.split('.')[0] - +b.split('.')[0])
   function chunkArray(array: any[], size: number): any[][] {
@@ -363,14 +386,14 @@ export default function IndexPage() {
             </div>
           </div>
           <div className={`flex-1 mt-[-40px] overflow-hidden`}>
-            <TagCard />
+            <TagCard tags={tags} firstTagEpisodes={firstTagEpisodes} />
           </div>
         </div>
         <div className={`mb-[30px]`}>
-          <PodcastSwiper type={POPULARITY} />
+          <PodcastSwiper type={POPULARITY} params={params} />
         </div>
         <div className={`mb-[150px]`}>
-          <PodcastSwiper type={PUB_DATE} />
+          <PodcastSwiper type={PUB_DATE} params={params} />
         </div>
         <div className={`mb-[84px]`}>
           <div className={`text-center text-[80px] leading-[80px] mb-[80px] tracking-[-3px] font-Tilt`}>

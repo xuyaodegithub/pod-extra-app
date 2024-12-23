@@ -7,13 +7,14 @@ import Image from '@/app/ui/Image'
 const volumeList: number[] = [0.5, 0.8, 1, 1.1, 1.2, 1.3, 1.5, 1.8, 2.0, 3.0]
 import { useMyContext } from '@/context/MyContext'
 import { getNoTagText, timeFormat } from '@/app/lib/utils'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { Loading } from '@/app/ui/home/loading'
-import { audio_info } from '@/app/lib/config'
+import { audio_info, summarized } from '@/app/lib/config'
 import { Slider } from 'antd'
 import { flowEpisode } from '@/app/lib/service'
 
 export default function Audio() {
+  const pathName = usePathname()
   const {
     data,
     setData,
@@ -37,6 +38,7 @@ export default function Audio() {
     episodeId = '',
     playTime = 0,
     episodeUrl,
+    episodeStatus,
   }: any = data || {}
   const episodeIdRef = useRef<string | null>(null)
   const [playbackRate, setPlaybackRate] = useState(1)
@@ -151,11 +153,12 @@ export default function Audio() {
     isAudio.current.volume = v > 0 ? 0 : oldVoice
   }
   function toEpisodeDetail() {
+    if (episodeUrl === pathName) return
     push(episodeUrl || `/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`)
   }
   function toTranscript(e: any) {
     e.stopPropagation()
-    push(episodeUrl || `/episode/${encodeURIComponent(episodeTitle.replace(/\-/g, '_'))}-${episodeId}`)
+    push(`${episodeUrl}${episodeUrl.includes('?') ? '&' : '?'}tab=transcript`)
   }
   function ended() {
     setIsPlaying(false)
@@ -290,7 +293,9 @@ export default function Audio() {
             <div
               className={`episodeTitle-line w-[380px] text-[14px] text-fontGry-600 leading-[19px] overflow-hidden text-ellipsis line-clamp-2 dark:text-fontGry-100`}
             >
-              <img src="/images/transcript-icon.svg" alt="" className={`inline-block mr-[10px]`} onClick={(e) => toTranscript(e)} />
+              {episodeStatus === summarized && (
+                <img src="/images/transcript-icon.svg" alt="" className={`inline-block mr-[10px]`} onClick={(e) => toTranscript(e)} />
+              )}
               {episodeTitle}
             </div>
             {!hiddenNotes && (

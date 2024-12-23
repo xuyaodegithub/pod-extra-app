@@ -12,12 +12,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   //这个代码不能去
   const pathname = usePathname()
   const { tagId }: { tagId: string } = useParams()
-  const [podcastName, showId] = splitStringFromLastDash(decodeURIComponent(tagId))
+  const [tagName, tagIdNum] = splitStringFromLastDash(decodeURIComponent(tagId))
   return (
     <Suspense fallback={<LoadingLine num={12} />}>
       <SaveScroll>
         <main>
-          <Breadcrumb title={'# Lex'} tagDes={`Related Episodes`} className={`podcast-detail pb-[20px]`} />
+          <Breadcrumb title={`# ${tagName}`} tagDes={`Related Episodes`} className={`podcast-detail pb-[20px]`} />
           <section className={``}>{children}</section>
         </main>
       </SaveScroll>

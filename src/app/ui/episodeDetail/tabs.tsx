@@ -5,7 +5,7 @@ import { delay, free, summarized, summarizing, standard, pro, yearly } from '@/a
 import { useMyContext } from '@/context/MyContext'
 import { useUserInfo } from '@/context/UserInfo'
 import { formatDate, monthsUntilEnd, timeFormat, capitalizeFirstLetter } from '@/app/lib/utils'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { getEpisodeSummarize, getEpisodeTranscript, createSummarizeTask } from '@/app/lib/service'
 import { Spin } from 'antd'
 import { Loader2 } from 'lucide-react'
@@ -13,6 +13,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { getNextResetTimeString } from '@/lib/utils'
 
 export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
   const {
     enclosureUrl = '',
     showTitle = '',
@@ -38,7 +40,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
   const [hasViewed, setHasViewed] = useState(data?.hasViewed || false)
   const [summarizedByMe, setSummarizedByMe] = useState(data?.summarizedByMe || false)
   const [episodeStatus, setEpisodeStatus] = useState(data?.episodeStatus || '')
-  const { push, refresh } = useRouter()
+  const { push, refresh }: any = useRouter()
   function tabChange(key: string) {
     if (activeTab === key) return
     const box: any = document.querySelector('.episode-item')
@@ -96,8 +98,8 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
   const isSummarizing = episodeStatus === summarizing
   // free  且 没view次数了
   const isFreeNoViewNum = isFree && viewQuota < 1
-  //refresh day
-  const refreshDay = new Date(gmtSubscriptionStart).getDay()
+  //已查看
+  const hasViewSummary = isVip || (isFree && hasViewed)
   async function fetchData() {
     setLoadData(true)
     try {
@@ -125,7 +127,6 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
     }
   }, [setTabs, isSummarized, hasViewed, setActiveTab, isFree, isLogin])
   useEffect(() => {
-    console.log(hasViewed, 'hasViewed', data)
     if (isSummarized && isLogin && hasViewed) {
       fetchData()
     }
@@ -164,6 +165,12 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
   function runAiTask() {
     setShowConfirm(true)
   }
+  useEffect(() => {
+    const tabType = searchParams.get('tab')
+    if (tabType === 'transcript') {
+      setActiveTab('TRANSCRIPT')
+    }
+  }, [])
   return (
     <div className={`flex flex-col`}>
       {(loading || loadData) && (
@@ -301,7 +308,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
           <div className={`text-md text-fontGry-600 flex-1 overflow-hidden`}>
             {tabList.map((tab) => (
               <div key={tab.key} style={{ display: activeTab === tab.key ? 'block' : 'none' }}>
-                {tab.com({ data: { ...data, ...dataWithAi }, activeTab, goThisTime })}
+                {tab.com({ data: { ...data, ...dataWithAi, hasViewSummary, isSummarized }, activeTab, goThisTime })}
               </div>
             ))}
           </div>

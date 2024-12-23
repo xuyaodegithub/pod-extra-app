@@ -40,10 +40,14 @@ export default async function Page({
   const [name, episodeId] = splitStringFromLastDash(decodeURIComponent(params.episodeId))
   // const { data } = await getEpisodeDetail(episodeId, token, { pageNum, pageSize })
   const { instance, refresh, token, refreshToken } = await createServerAxios()
-  const {
-    data: { data },
-  } = await instance.get(`v1/podEpisode/${episodeId}`)
-  console.log(data, '---单集详情')
+  const [res, res2] = await Promise.all([
+    instance.get(`v1/podEpisode/${episodeId}`),
+    instance.get(`/v1/episode/${episodeId}/related-episodes`, { params: { pageNum, pageSize: 10 } }),
+  ])
+  const [data, relatedEpisodes] = [res.data?.data, res2.data?.data]
+  // const {
+  //   data: { data },
+  // } = await instance.get(`v1/podEpisode/${episodeId}`)
   const { coverUrl, showCoverUrl, itunesAuthor, gmtPubDate, showTitle, duration, episodeTitle, showUrl = '' } = data || {}
   return (
     <main className={`flex flex-col episode-item`}>
@@ -78,7 +82,7 @@ export default async function Page({
         </div>
       </div>
       <div className={`mt-[13px]`}>
-        <Tab tabList={tabList} data={{ ...data }} />
+        <Tab tabList={tabList} data={{ ...data, relatedEpisodes }} />
       </div>
     </main>
   )

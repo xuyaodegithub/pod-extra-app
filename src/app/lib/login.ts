@@ -45,7 +45,6 @@ export const oauthSignIn = ({ redirect_uri, response_type, scope, response_mode,
 
 export const googleLoginPopup = (url: string = '') => {
   const redirectPath = encodeURIComponent(url || window.location.href)
-  console.log(window.location.pathname + window.location.search, 'redirectPath')
   const state = `${redirectPath}`
   const redirectUri = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/auth/callback`
   // 设置 OAuth 2.0 授权 URL
@@ -58,23 +57,16 @@ export const googleLoginPopup = (url: string = '') => {
   const top = (window.screen.height - height) / 2
   // const newWindow = window.open(authUrl, 'googleLogin', `width=${width},height=${height},top=${top},left=${left}`)
   cookies.set(callbackPath, decodeURIComponent(redirectPath))
-  window.location.replace(authUrl) //= authUrl
-  // oauthSignIn({
-  //   redirect_uri: encodeURIComponent(redirectUri),
-  //   response_type: 'id_token token',
-  //   scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid',
-  //   response_mode: 'form_post',
-  //   state: encodeURIComponent(state),
-  // })
+  // window.location.replace(authUrl) //= authUrl
+  const newWindow = window.open(authUrl, 'googleLogin', `width=${width},height=${height},top=${top},left=${left}`)
   // 轮询检测窗口是否关闭
-  // const pollTimer = window.setInterval(() => {
-  //   if (newWindow && newWindow.closed) {
-  //     window.clearInterval(pollTimer)
-  //     // 在窗口关闭后处理用户登录状态
-  //     console.log('Google login window closed')
-  //     // 此处可以执行进一步操作，例如刷新页面、获取用户信息等
-  //   }
-  // }, 500)
+  const pollTimer = window.setInterval(() => {
+    if (newWindow && newWindow.closed) {
+      window.clearInterval(pollTimer)
+      // 在窗口关闭后处理用户登录状态
+      window.location.reload()
+    }
+  }, 300)
 }
 
 // export const revokeAccess = () => {

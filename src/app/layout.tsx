@@ -15,7 +15,7 @@ import { Suspense } from 'react'
 import { LoadingLine } from '@/app/ui/skeletons'
 // import { SessionProvider } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { BearerToken, refreshToken as rToken, loginTime } from '@/app/lib/config'
+import { BearerToken } from '@/app/lib/config'
 import LoginDialog from '@/app/ui/home/loginDialog'
 //字体
 import { Tilt_Warp, Open_Sans } from 'next/font/google'
@@ -38,7 +38,6 @@ export default function RootLayout({
   const pathname = usePathname()
   const isLanding = pathname === '/'
   const { replace } = useRouter()
-
   useEffect(() => {
     const refreshToken = async () => {
       try {
@@ -48,13 +47,6 @@ export default function RootLayout({
         console.log('token', token, isExpired)
         if (isExpired && token) {
           const token = await getNewToken()
-          // if (token) {
-          //   cookies.set(BearerToken, token)
-          //   cookies.set(loginTime, String(Date.now()))
-          // } else {
-          //   cookies.remove(BearerToken)
-          //   cookies.remove(rToken)
-          // }
         }
       } catch (error) {
         console.error('Failed to refresh token:', error)
@@ -70,6 +62,9 @@ export default function RootLayout({
   }, [])
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search.substring(1))
+    const needClose = urlParams.get('needClose') || false
+    if (needClose) window.close()
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window?.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.body.classList.add('dark')

@@ -52,6 +52,10 @@ const nextConfig = (phase) => {
           source: '/sitemap:version(\\d+).xml', // 匹配 `sitemap` 后的数字部分
           destination: 'https://api.podextra.ai/sitemap:version.xml', // 将匹配到的版本号放到目标 URL 中
         },
+        {
+          source: '/blog2/:path*',
+          destination: 'https://blog2.podextra.ai/blog/:path*',
+        },
       ]
     },
     // distDir: '.next',

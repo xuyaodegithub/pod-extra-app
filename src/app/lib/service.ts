@@ -87,3 +87,15 @@ export function flowEpisode(episodeId: any, data: any) {
 export function unFlowEpisode(episodeId: any) {
   return fetchPost(`/api/proxy/v1/episode/${episodeId}/remove-favorite`, {})
 }
+//landing  tag
+export function getLandingTag(data?: any) {
+  return fetchGet(`/v1/tag/query-all`, data)
+}
+//  tag下的单集
+export function getLandingTagEpisode(tagId: string, data: any) {
+  return fetchGet(`/v1/tag/${tagId}/page-query-episodes`, data)
+}
+//  tag下的单集Client
+export function getLandingTagEpisodeByClient(tagId: string, data: any) {
+  return fetchGet(`/api/proxy/v1/tag/${tagId}/page-query-episodes`, data)
+}

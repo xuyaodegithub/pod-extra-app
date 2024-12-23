@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
-import { callbackPath, googleAccessToken, refreshToken, expiresIn, loginTime, cookiesOption, BearerToken } from '@/app/lib/config'
+import { googleAccessToken, refreshToken, expiresIn, loginTime, cookiesOption, BearerToken } from '@/app/lib/config'
 import axios from 'axios'
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   const accessToken = body.get('access_token') || ''
   const idToken = body.get('id_token') || ''
   const expires_in = body.get('expires_in') || 60 * 60 * 1000
-  const path = String(body.get('state')) || ''
+  const path = decodeURIComponent(String(body.get('state') || ''))
   cookieStore.set(googleAccessToken, String(accessToken), cookiesOption())
   //idToken
   // cookieStore.set(googleIdToken, String(idToken), cookiesOption())
@@ -38,12 +38,16 @@ export async function POST(req: NextRequest) {
   })
   const { idToken: token, refreshToken: rToken } = authRes.data?.data || {}
   // 根据 `state` 跳转到目标页面
-  const response = NextResponse.redirect(new URL(decodeURIComponent(path), req.nextUrl.origin), {
-    status: 302,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  console.log(path, 'path')
+  const response = NextResponse.redirect(
+    new URL(decodeURIComponent(`${path}${path.includes('?') ? '&' : '?'}needClose=true`), req.nextUrl.origin),
+    {
+      status: 302,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
   // response.headers.set('Cache-Control', 'no-store') // 禁止缓存
   response.cookies.set(BearerToken, token, cookiesOption())
   if (rToken) {

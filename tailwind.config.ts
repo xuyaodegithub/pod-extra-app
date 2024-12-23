@@ -81,6 +81,7 @@ const config: Config = {
       646410: 'rgba(100, 100, 100, 0.1)',
       darkBody: '#0a0a0a',
       darkText: '#fafafa',
+      linear: `linear-gradient(270deg, rgba(240, 240, 240, 0.05) 0%, rgba(240, 240, 240, 0.80) 49.5%, rgba(240, 240, 240, 0.05) 100%)`,
     },
     borderRadius: {
       none: '0',
