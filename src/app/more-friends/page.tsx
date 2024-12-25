@@ -39,7 +39,7 @@ export default async function Home() {
           return (
             <div className={`mb-[25px]`} key={href}>
               <h3 className={`inline-block cursor-pointer text-max1 mb-[4px] relative group`}>
-                <Link href={href} target="_blank" title={title || ''}>
+                <Link href={href} target="_blank" title={title || ''} rel={`nofollow`}>
                   {isImg ? <Image src={name} alt="" className={`w-[150px] h-[54px]`} /> : <span>{name}</span>}
                 </Link>
               </h3>

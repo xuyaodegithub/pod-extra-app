@@ -11,10 +11,8 @@ const tabList = [
   { label: 'Get Started', className: 'Started' },
 ]
 export default function LandingTab() {
-  const [active, setActive] = useState(tabList[0].label)
   const { push } = useRouter()
   function changeTab(tab: any) {
-    setActive(tab.label)
     const toDo: any = {
       'Get Started': () => {
         push('/home')
@@ -39,7 +37,7 @@ export default function LandingTab() {
     >
       {tabList.map((tab, index) => (
         <div
-          className={`text-md font-bold leading-[40px] cursor-pointer ${index === tabList.length - 1 ? '' : 'mr-[40px]'} ${active === tab.label ? 'text-play underline' : 'text-[#02073E] dark:dark:text-white'}`}
+          className={`text-md font-bold leading-[40px] cursor-pointer ${index === tabList.length - 1 ? '' : 'mr-[40px]'} ${tab.className === 'Started' ? 'text-play underline' : 'text-[#02073E] dark:dark:text-white'}`}
           onClick={() => changeTab(tab)}
           key={index}
         >

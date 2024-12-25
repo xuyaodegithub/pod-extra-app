@@ -22,6 +22,8 @@ interface MyContextType {
   setTabsPage: (tabsPage: Map<string, any>) => void
   saveCurrentPosition: any
   setSaveCurrentPosition: (saveCurrentPosition: any) => void
+  toTranscript: boolean
+  setToTranscript: (toTranscript: boolean) => void
 }
 
 // 创建上下文，指定默认值
@@ -30,6 +32,7 @@ const MyContext = createContext<MyContextType | undefined>(undefined)
 export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [data, setData] = useState<any | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [toTranscript, setToTranscript] = useState(false)
   const [time, setTime] = useState(0)
   const [allTime, setAllTime] = useState(0)
   const [stepTime, setStepTime] = useState(0)
@@ -64,6 +67,8 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setAllTime,
         saveCurrentPosition,
         setSaveCurrentPosition,
+        toTranscript,
+        setToTranscript,
       }}
     >
       {children}

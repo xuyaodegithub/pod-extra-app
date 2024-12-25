@@ -21,7 +21,7 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
     episodeUrl = '',
   } = data || {}
   const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId, episodeUrl }
-  const { setData, setIsPlaying, isPlaying, time, setStepTime, isDark, data: audioData } = useMyContext()
+  const { setData, setIsPlaying, isPlaying, time, setStepTime, isDark, data: audioData, toTranscript, setToTranscript } = useMyContext()
   const isPlayEpisode = audioData?.episodeId === episodeId
   function playCurrTime(t: number, e: any) {
     if (t === 0) t = t + 0.1
@@ -33,10 +33,10 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
       setAutoMove(true)
     }, 500)
   }
-  const handleScroll = () => {
+  const handleScroll = (t = 0) => {
     const scrollBox = document.querySelector('.episode-item')
     const activeDom = document.querySelector('.activeSpan')
-
+    console.log('activeDom', activeDom, toTranscript)
     if (activeDom) {
       const activeDom: any = document.querySelector('.activeSpan')
       const tab: any = document.querySelector('.tab_scroll')
@@ -45,9 +45,12 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
       const h = top - tabB
       // scrollBox?.scrollTo(0, 84 + h - 120)
       scrollBox?.scrollTo({
-        top: 84 + h - 120, // 目标高度，可以根据需求更改
+        top: 84 + h - 120 + t, // 目标高度，可以根据需求更改
         behavior: 'smooth', // 平滑滚动
       })
+      if (toTranscript) {
+        setToTranscript(false)
+      }
     }
   }
   const throttledHandleScroll = useThrottledCallback(handleScroll, 300)
@@ -78,6 +81,17 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
   function handleAutoMove(e: any) {
     setAutoMove(false)
   }
+
+  useEffect(() => {
+    if (toTranscript) {
+      // 非吸顶状态  需要加上170
+      setTimeout(() => {
+        const top = document.querySelector('.episode-item')?.scrollTop || 0
+        handleScroll(top > 0 ? 0 : 170)
+      }, 100)
+    }
+    return () => {}
+  }, [toTranscript, isTranscript, setToTranscript, paragraphs])
   return (
     <div key="Transcript">
       {paragraphs?.map((item: any, ind: number) => {
@@ -133,7 +147,7 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
             <div className={`text-md text-fontGry-600`}>
               {item.sentences.map((it: any, ind: number) => {
                 // const { start, end } = it
-                const isactive = isPlaying && time >= it.start && time <= it.end && isPlayEpisode
+                const isactive = (isPlaying || toTranscript) && time >= it.start && time <= it.end && isPlayEpisode
                 const stopActive = !isPlaying && stopTime > 0 && stopTime >= it.start && stopTime <= it.end && isPlayEpisode
                 const isActiveBg = isactive || stopActive
                 const bg = isDark ? '#404040' : speaker.bg
