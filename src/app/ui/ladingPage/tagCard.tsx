@@ -37,29 +37,29 @@ export default function TagCard({ tags, firstTagEpisodes }: { tags: any[]; first
     dataMap.set(activeTag.tagId, resultList)
   }
   useEffect(() => {
-    const timer = setInterval(() => {
-      const box: any = scrollRef.current
-      const list = [...document.querySelectorAll('.tagCardItem')]
-      const { top } = box.getBoundingClientRect()
-      const current: any = list.find((i) => {
-        const rect = i.getBoundingClientRect()
-        return rect.top - top >= 0
-      })
-      if (current) {
-        const { top: t } = current.getBoundingClientRect()
-        const { scrollHeight, scrollTop, offsetHeight } = box
-        const maxScrollTop = scrollHeight - offsetHeight
-        const endScrollTop = scrollTop + current?.offsetHeight + t - top
-        box.scrollTo({ top: endScrollTop > maxScrollTop ? 0 : endScrollTop, behavior: 'smooth' })
-      }
-    }, 3000)
-    return () => {
-      clearInterval(timer)
-    }
+    // const timer = setInterval(() => {
+    //   const box: any = scrollRef.current
+    //   const list = [...document.querySelectorAll('.tagCardItem')]
+    //   const { top } = box.getBoundingClientRect()
+    //   const current: any = list.find((i) => {
+    //     const rect = i.getBoundingClientRect()
+    //     return rect.top - top >= 0
+    //   })
+    //   if (current) {
+    //     const { top: t } = current.getBoundingClientRect()
+    //     const { scrollHeight, scrollTop, offsetHeight } = box
+    //     const maxScrollTop = scrollHeight - offsetHeight
+    //     const endScrollTop = scrollTop + current?.offsetHeight + t - top
+    //     box.scrollTo({ top: endScrollTop > maxScrollTop ? 0 : endScrollTop, behavior: 'smooth' })
+    //   }
+    // }, 3000)
+    // return () => {
+    //   clearInterval(timer)
+    // }
   }, [])
   return (
     <div className={``}>
-      <div className={`flex flex-wrap mb-[10px]`}>
+      <div className={`flex flex-wrap`}>
         {tags.map((tab: any, index: number) => (
           <div
             className={`cursor-pointer text-sm px-[5px] mr-[10px] mb-[10px] py-[4px] rounded-5px ${isDark ? 'bg-bgDark text-white' : 'bg-bgGray text-fontGry-600'} ${activeTag.tagId === tab?.tagId ? 'bg-play text-white' : ''}`}

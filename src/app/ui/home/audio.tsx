@@ -28,6 +28,7 @@ export default function Audio() {
     setAllTime,
     setSaveCurrentPosition,
     isDark,
+    setToTranscript,
   } = useMyContext()
   const {
     enclosureUrl = '',
@@ -158,7 +159,10 @@ export default function Audio() {
   }
   function toTranscript(e: any) {
     e.stopPropagation()
-    push(`${episodeUrl}${episodeUrl.includes('?') ? '&' : '?'}tab=transcript`)
+    setToTranscript(true)
+    if (episodeUrl !== pathName) {
+      push(`${episodeUrl}`)
+    }
   }
   function ended() {
     setIsPlaying(false)

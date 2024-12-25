@@ -5,7 +5,7 @@ import { delay, free, summarized, summarizing, standard, pro, yearly } from '@/a
 import { useMyContext } from '@/context/MyContext'
 import { useUserInfo } from '@/context/UserInfo'
 import { formatDate, monthsUntilEnd, timeFormat, capitalizeFirstLetter } from '@/app/lib/utils'
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { getEpisodeSummarize, getEpisodeTranscript, createSummarizeTask } from '@/app/lib/service'
 import { Spin } from 'antd'
 import { Loader2 } from 'lucide-react'
@@ -13,7 +13,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { getNextResetTimeString } from '@/lib/utils'
 
 export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
-  const searchParams = useSearchParams()
   const pathname = usePathname()
   const {
     enclosureUrl = '',
@@ -30,7 +29,7 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
   const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId, episodeUrl }
   const [activeTab, setActiveTab] = useState(tabList[0].key)
   const [tabs, setTabs] = useState(tabList)
-  const { setData, setIsPlaying, setStepTime, isDark } = useMyContext()
+  const { setData, setIsPlaying, setStepTime, isDark, toTranscript, setToTranscript } = useMyContext()
   const { userInfo, setShowDialog, loading, initUserInfo } = useUserInfo()
   const [dataWithAi, setDataWithAi] = useState({})
   const [topNum, setTopNum] = useState(57)
@@ -166,11 +165,10 @@ export function Tab({ tabList = [], data }: { tabList: any[]; data: any }) {
     setShowConfirm(true)
   }
   useEffect(() => {
-    const tabType = searchParams.get('tab')
-    if (tabType === 'transcript') {
+    if (toTranscript && activeTab !== 'TRANSCRIPT') {
       setActiveTab('TRANSCRIPT')
     }
-  }, [])
+  }, [toTranscript, setToTranscript])
   return (
     <div className={`flex flex-col`}>
       {(loading || loadData) && (

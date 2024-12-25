@@ -5,7 +5,7 @@ import { useMyContext } from '@/context/MyContext'
 export default function AcmeLogo() {
   const { isDark } = useMyContext()
   return (
-    <div className={`ml-24px mt-[6px]`}>
+    <div className={`ml-24px mt-[6px] pb-[20px]`}>
       <Image
         src={`/images/${isDark ? 'darkLogo' : 'logo'}.svg`}
         width={188}

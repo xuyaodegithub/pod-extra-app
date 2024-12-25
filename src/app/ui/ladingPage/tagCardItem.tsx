@@ -2,14 +2,17 @@
 import { AtSymbolIcon, KeyIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { timeFormatter, getCurrentLocalTime, getNoTagText } from '@/app/lib/utils'
+import { timeFormatter, getCurrentLocalTime, getNoTagText, splitStringFromLastDash } from '@/app/lib/utils'
 import { useMyContext } from '@/context/MyContext'
 import Image from '@/app/ui/Image'
 import Link from 'next/link'
 import { summarized } from '@/app/lib/config'
+import { useParams } from 'next/navigation'
 
 export default function TagCardItem({ card, isDetail }: { card: any; isDetail?: boolean }) {
   const { isDark } = useMyContext()
+  const { tagId }: any = useParams()
+  const [tagName, id] = splitStringFromLastDash(decodeURIComponent(tagId))
   const {
     coverUrl,
     gmtPubDate,
@@ -25,19 +28,24 @@ export default function TagCardItem({ card, isDetail }: { card: any; isDetail?: 
     episodeUrl,
     showUrl,
   } = card
-
+  const filterTags = id ? tags?.filter((tag: any) => +tag.tagId !== +id) : tags
   return (
-    <div className={`flex mb-[10px] p-[10px] items-center hover:bg-[#F8F8F8] rounded-[5px] dark:hover:bg-bgDark tagCardItem`}>
-      <Image src={coverUrl} className={`mr-[10px] self-start w-[50px] h-[50px] rounded-[10px]`} />
+    <div
+      className={`flex p-[10px] ${isDetail ? 'pb-[0]' : ''} items-center hover:bg-[#F8F8F8] rounded-[5px] dark:hover:bg-bgDark tagCardItem`}
+    >
+      <Link href={episodeUrl} className={` self-start`}>
+        <Image src={coverUrl} className={`mr-[10px] w-[50px] h-[50px] rounded-[10px]`} />
+      </Link>
       <div className={`flex-1 text-sm text-fontGry-600 overflow-hidden dark:text-homehbg`}>
         <div className={`flex`}>
           <span className={`mr-[20px]`}>{getCurrentLocalTime(gmtPubDate)}</span>
-          <Link href={showUrl} className={`flex-1 overflow-hidden text-ellipsis whitespace-nowrap`}>
+          <Link href={showUrl} className={`flex-1 overflow-hidden text-ellipsis whitespace-nowrap hover:underline`}>
             {showTitle}
           </Link>
         </div>
-        <Link href={episodeUrl} className={`text-black dark:text-white flex items-center`}>
-          {episodeStatus === summarized && <img src="/icons/ai-ready-icon.svg" className={`h-[20px] mr-[10px]`} />} {episodeTitle}
+        <Link href={episodeUrl} className={`font-semibold text-fontGry-600  dark:text-white items-center hover:underline inline-block`}>
+          {episodeStatus === summarized && <img src="/icons/ai-icon.svg" className={`h-[20px] mr-[10px] inline-block`} />}
+          {episodeTitle}
         </Link>
         {episodeStatus === summarized ? (
           <div>
@@ -66,7 +74,7 @@ export default function TagCardItem({ card, isDetail }: { card: any; isDetail?: 
               <span className={`text-fontGry-600 dark:text-homehbg flex-1 font-bold`}>{currentTagText}</span>
             </h1>
             <div className={`flex flex-wrap max-h-[50px] overflow-hidden`}>
-              {tags?.map((tag: any, ind: number) => (
+              {filterTags?.map((tag: any, ind: number) => (
                 <Link href={tag.tagUrl} key={ind} className={` mr-[10px] mb-[10px]`}>
                   <span
                     className={`inline-block bg-bgGray rounded-[10px] px-[10px] hover:text-play dark:bg-darkHomeBg dark:text-white dark:hover:text-play`}
@@ -78,10 +86,8 @@ export default function TagCardItem({ card, isDetail }: { card: any; isDetail?: 
             </div>
           </div>
         ) : (
-          <div
-            className={`w-[100%] flex items-center text-fontGry-100 dark:text-[#888888] overflow-hidden text-ellipsis whitespace-normal`}
-          >
-            <img src="/images/cateIcon/tag.svg" alt="" className={`mr-[7px]`} />
+          <div className={`w-[100%] text-fontGry-100 dark:text-[#888888] overflow-hidden text-ellipsis whitespace-nowrap`}>
+            <img src="/images/cateIcon/tag.svg" alt="" className={`mr-[7px] inline-block`} />
             {tags?.map((tag: any, ind: number) => (
               <span className={` shrink-0`} key={ind}>
                 {ind > 0 && <span className={`mx-[10px] font-bold`}>·</span>}

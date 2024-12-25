@@ -242,11 +242,11 @@ export default async function IndexPage({
     {
       title: 'FRIENDS',
       list: [
-        { name: 'Creati.ai AI Tools Directory', href: 'https://creati.ai', title: 'Creati.ai AI Tools Directory' },
-        { name: 'iuu AI', href: 'https://iuu.ai/', title: '' },
-        { name: 'Flux AI Pro', href: 'https://fluxai.pro/', title: 'Flux AI Pro' },
-        { name: 'AI With Me', href: 'https://aiwith.me/', title: 'AI With Me: Discover thousands of AI Tools' },
-        { name: 'AI Tool Trek', href: 'https://aitooltrek.com', title: 'AI Tool Trek' },
+        { name: 'Creati.ai AI Tools Directory', href: 'https://creati.ai', title: 'Creati.ai AI Tools Directory', nofollow: true },
+        { name: 'iuu AI', href: 'https://iuu.ai/', title: '', nofollow: true },
+        { name: 'Flux AI Pro', href: 'https://fluxai.pro/', title: 'Flux AI Pro', nofollow: true },
+        { name: 'AI With Me', href: 'https://aiwith.me/', title: 'AI With Me: Discover thousands of AI Tools', nofollow: true },
+        { name: 'AI Tool Trek', href: 'https://aitooltrek.com', title: 'AI Tool Trek', nofollow: true },
         { name: 'more', href: '/more-friends', title: '' },
       ],
     },
@@ -512,7 +512,7 @@ export default async function IndexPage({
         </h1>
         <div className={`text-[26px] leading-[30px] mt-[10px]`}>Less time, more gains</div>
       </div>
-      <div className={`relative overflow-hidden flex mb-[150px]`}>
+      <div className={`relative overflow-hidden flex mb-[130px]`}>
         <div className={`flex items-start animate-scroll-x`}>
           {messageList.map((it, index) => {
             return (
@@ -575,7 +575,7 @@ export default async function IndexPage({
         <div className={`text-[30px] text-fontGry-600 mb-[50px] dark:text-fontGry-100 text-center`}>Free to try without a credit card</div>
         <PlanSku skuList={memberPlan} isLanding />
       </div>
-      <div className={`w-1280 mx-auto mb-[150px] FAQ`}>
+      <div className={`w-1280 mx-auto mb-[140px] FAQ`}>
         <h1 className={`text-black text-[60px] text-center mb-[65px] dark:text-white font-Tilt`}>Frequently Asked Questions</h1>
         <div className={`w-[880px] mx-auto`}>
           <Accordion type="single" collapsible defaultValue={'item-1'} className={`dark:bg-bgDark`}>
@@ -606,7 +606,7 @@ export default async function IndexPage({
               <h3 className={` font-bold mb-[30px] dark:text-homehbg`}>{item.title}</h3>
               {item.list.map((item: any) => (
                 <div className={`mb-[15px] dark:text-fontGry-100`} key={item.href}>
-                  <Link href={item.href} target="_blank" title={item.title || ''}>
+                  <Link href={item.href} target="_blank" title={item.title || ''} rel={item.nofollow ? 'nofollow' : ''}>
                     {item.name}
                   </Link>
                 </div>

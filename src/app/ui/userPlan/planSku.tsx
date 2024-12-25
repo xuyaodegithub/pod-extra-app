@@ -101,9 +101,9 @@ export default function PlanSku({ skuList, isLanding }: { skuList: any[]; isLand
               key={planCode}
             >
               <div
-                className={`flex text-[17px] leading-[23px] ${activeTab === monthly ? 'mb-[20px]' : ''} ${isFree ? (activeTab === monthly ? 'mb-[20px]' : 'mb-[40px]') : ''}`}
+                className={`flex text-[17px] pb-[8px] leading-[23px] ${activeTab === monthly ? 'mb-[20px]' : ''} ${isFree ? (activeTab === monthly ? 'mb-[20px]' : 'mb-[40px]') : ''}`}
               >
-                <span className={`text-[36px] leading-[46px] font-bold`}>{isFree ? 'USD 0' : `${currency} ${price}`}</span>
+                <span className={`text-[36px] leading-[1] font-bold`}>{isFree ? 'USD 0' : `${currency} ${price}`}</span>
                 <span className={`self-end ml-[5px]`}>/month</span>
               </div>
               {!isMonth && !isFree && (
