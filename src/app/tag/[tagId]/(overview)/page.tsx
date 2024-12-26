@@ -49,7 +49,9 @@ export default async function Page({
         <Pagination totalPages={totalPages} total={total} title="episodes" />
       </div>
       <div className={`border-[1px] border-gray-1000 rounded-10px p-[10px] dark:border-fontGry-600`}>
-        {resultList?.map((card: any, index: number) => <TagCardItem card={card} key={index} isDetail />)}
+        {resultList?.map((card: any, index: number) => (
+          <TagCardItem card={card} key={index} isDetail isLast={index === resultList?.length - 1} />
+        ))}
       </div>
     </main>
   )

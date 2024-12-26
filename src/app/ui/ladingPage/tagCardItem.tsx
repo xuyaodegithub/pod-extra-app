@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { summarized } from '@/app/lib/config'
 import { useParams } from 'next/navigation'
 
-export default function TagCardItem({ card, isDetail }: { card: any; isDetail?: boolean }) {
+export default function TagCardItem({ card, isDetail, isLast }: { card: any; isDetail?: boolean; isLast?: boolean }) {
   const { isDark } = useMyContext()
   const { tagId }: any = useParams()
   const [tagName, id] = splitStringFromLastDash(decodeURIComponent(tagId))
@@ -31,7 +31,7 @@ export default function TagCardItem({ card, isDetail }: { card: any; isDetail?: 
   const filterTags = id ? tags?.filter((tag: any) => +tag.tagId !== +id) : tags
   return (
     <div
-      className={`flex p-[10px] ${isDetail ? 'pb-[0]' : ''} items-center hover:bg-[#F8F8F8] rounded-[5px] dark:hover:bg-bgDark tagCardItem`}
+      className={`flex p-[10px] ${isDetail ? 'pb-[0]' : ''} ${isDetail && !isLast ? 'mb-[10px]' : ''} items-center hover:bg-[#F8F8F8] rounded-[5px] dark:hover:bg-bgDark tagCardItem`}
     >
       <Link href={episodeUrl} className={` self-start`}>
         <Image src={coverUrl} className={`mr-[10px] w-[50px] h-[50px] rounded-[10px]`} />
@@ -66,27 +66,33 @@ export default function TagCardItem({ card, isDetail }: { card: any; isDetail?: 
           <div className={`overflow-hidden text-ellipsis line-clamp-3`}>{getNoTagText(showNotes)}</div>
         )}
         {isDetail ? (
-          <div className={`mt-[20px] text-sm`}>
-            <h1 className={`flex mb-[10px]`}>
-              <span className={`h-[20px] leading-[20px] bg-bgGray rounded-[10px] px-[10px] mr-[10px] dark:bg-bgDark `}>
-                # {currentTagName}
+          <div className={`mt-[10px] text-sm`}>
+            <h1 className={`flex mb-[10px] ${!currentTagName && !currentTagText && 'hidden'}`}>
+              <span
+                className={`${!currentTagName && 'hidden'} h-[20px] leading-[20px] bg-bgGray rounded-[10px] px-[10px] mr-[10px] dark:bg-bgDark `}
+              >
+                # {currentTagName || '-'}
               </span>
-              <span className={`text-fontGry-600 dark:text-homehbg flex-1 font-bold`}>{currentTagText}</span>
+              <span className={`${!currentTagText && 'hidden'} text-fontGry-600 dark:text-homehbg flex-1 font-bold`}>{currentTagText}</span>
             </h1>
-            <div className={`flex flex-wrap max-h-[50px] overflow-hidden`}>
-              {filterTags?.map((tag: any, ind: number) => (
-                <Link href={tag.tagUrl} key={ind} className={` mr-[10px] mb-[10px]`}>
-                  <span
-                    className={`inline-block bg-bgGray rounded-[10px] px-[10px] hover:text-play dark:bg-darkHomeBg dark:text-white dark:hover:text-play`}
-                  >
-                    # {tag?.tagName || '-'}
-                  </span>
-                </Link>
-              ))}
-            </div>
+            {!!filterTags?.length && (
+              <div className={`flex flex-wrap max-h-[60px] overflow-hidden`}>
+                {filterTags?.map((tag: any, ind: number) => (
+                  <Link href={tag.tagUrl} key={ind} className={` mr-[10px] mb-[10px]`}>
+                    <span
+                      className={`inline-block bg-bgGray rounded-[10px] px-[10px] hover:text-play dark:bg-darkHomeBg dark:text-white dark:hover:text-play`}
+                    >
+                      # {tag?.tagName || '-'}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
-          <div className={`w-[100%] text-fontGry-100 dark:text-[#888888] overflow-hidden text-ellipsis whitespace-nowrap`}>
+          <div
+            className={`${!tags?.length && 'hidden'} w-[100%] text-fontGry-100 dark:text-[#888888] overflow-hidden text-ellipsis whitespace-nowrap`}
+          >
             <img src="/images/cateIcon/tag.svg" alt="" className={`mr-[7px] inline-block`} />
             {tags?.map((tag: any, ind: number) => (
               <span className={` shrink-0`} key={ind}>

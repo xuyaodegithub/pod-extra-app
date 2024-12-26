@@ -27,7 +27,7 @@ export default function LandingTab() {
       const dom: any = document.querySelector(`.${tab.className}`)
       const t = dom?.offsetTop
       console.log(t, '--')
-      document.documentElement.scrollTo({ top: t, behavior: 'smooth' })
+      document.documentElement.scrollTo({ top: t - 60, behavior: 'smooth' })
     }
   }
 
