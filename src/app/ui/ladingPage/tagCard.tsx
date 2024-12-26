@@ -72,7 +72,9 @@ export default function TagCard({ tags, firstTagEpisodes }: { tags: any[]; first
       </div>
       <div className={`min-h-[200px]`}>
         <div className={`max-h-[500px] overflow-auto relative`} ref={scrollRef}>
-          {resultList?.map((card: any, index: number) => <TagCardItem card={card} key={card.episodeId} />)}
+          {resultList?.map((card: any, index: number) => (
+            <TagCardItem card={card} key={card.episodeId} isLast={index === resultList?.length - 1} />
+          ))}
         </div>
         <Link
           href={`${activeTag.tagUrl}`}

@@ -151,7 +151,11 @@ export function Shownotes({ data, goThisTime }: { data: any; goThisTime?: any })
           <h3 className={`font-bold mb-[20px] text-play flex items-center`}>
             <span className={`h-[20px] w-[5px] bg-play rounded-[3px] mr-[10px]`}></span>Related Episodes
           </h3>
-          <div className={`flex flex-wrap`}>{relatedEpisodes?.map((item: any, ind: number) => <TagCardItem key={ind} card={item} />)}</div>
+          <div className={`flex flex-wrap`}>
+            {relatedEpisodes?.map((item: any, ind: number) => (
+              <TagCardItem key={ind} card={item} isLast={ind === relatedEpisodes?.length - 1} />
+            ))}
+          </div>
         </div>
       )}
     </div>

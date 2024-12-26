@@ -136,7 +136,9 @@ export default function RootLayout({
               ) : (
                 <section className={``}>{children}</section>
               )}
-              {!isLanding && <Audio />}
+              <div className={`${isLanding && 'hidden'}`}>
+                <Audio />
+              </div>
               <LoginDialog />
             </body>
           </html>

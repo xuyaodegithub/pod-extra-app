@@ -89,6 +89,7 @@ export function Transcript({ data, activeTab }: { data: any; activeTab: string }
         const top = document.querySelector('.episode-item')?.scrollTop || 0
         handleScroll(top > 0 ? 0 : 170)
       }, 100)
+      setAutoMove(true)
     }
     return () => {}
   }, [toTranscript, isTranscript, setToTranscript, paragraphs])
