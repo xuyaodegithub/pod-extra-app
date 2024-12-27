@@ -19,7 +19,7 @@ export function Shownotes({ data, goThisTime }: { data: any; goThisTime?: any })
     relatedEpisodes = [],
   } = data || {}
   const audioInfo = { enclosureUrl, showTitle, showNotes, coverUrl, episodeTitle, episodeId, episodeUrl }
-  const { setData, setIsPlaying, setStepTime } = useMyContext()
+  const { setData, setIsPlaying, setStepTime, data: data2 } = useMyContext()
 
   function timeToSeconds(timeStr: string) {
     const regex = /^(?:(\d{1,2}):)?(\d{2})(?::(\d{2}))?$/ // 更新的正则表达式
@@ -37,7 +37,7 @@ export function Shownotes({ data, goThisTime }: { data: any; goThisTime?: any })
     if (el.classList.contains('clickable')) {
       const timeStr = el.getAttribute('data-val')
       const s = timeToSeconds(timeStr)
-      if (s > duration) return
+      if (s > duration && episodeId === data2?.episodeId) return
       setData(audioInfo)
       setTimeout(() => {
         setIsPlaying(true)
@@ -83,6 +83,11 @@ export function Shownotes({ data, goThisTime }: { data: any; goThisTime?: any })
     return text
   }
   function modifyLinks(input: string) {
+    // 4. 将时间格式替换为带有点击效果的 span 标签
+    input = input.replace(/\b(\d{1,2}):(\d{2})(?::(\d{2}))?\b/g, `<span class="clickable cursor-pointer text-play" data-val="$&">$&</span>`)
+
+    // 5. 将换行符 (\n) 替换为 <br /> 标签
+    input = input.replace(/\n/g, '<br />')
     // 正则匹配所有 <a> 标签及其属性
     const aTagRegex = /<a([^>]+)>/g
 
