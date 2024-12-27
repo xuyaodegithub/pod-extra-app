@@ -32,14 +32,22 @@ const nextConfig = (phase) => {
     pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
     async rewrites() {
       return [
+        // {
+        //   source: '/blog2/:path*',
+        //   destination: 'https://blog2.podextra.ai/:path*',
+        // },
+        // {
+        //   source: '/blog2/',
+        //   destination: 'https://www.podextra.ai/blog2',
+        // },
         {
           source: '/blog/:path*',
-          destination: 'https://blog.podextra.ai/:path*',
+          destination: 'https://blog2.podextra.ai/:path*',
         },
-        {
-          source: '/blog/',
-          destination: 'https://www.podextra.ai/blog',
-        },
+        // {
+        //   source: '/blog/',
+        //   destination: 'https://www.podextra.ai/blog',
+        // },
         {
           source: '/robots.txt',
           destination: 'https://api.podextra.ai/robots.txt',
