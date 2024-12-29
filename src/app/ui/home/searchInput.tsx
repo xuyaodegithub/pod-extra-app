@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce' //useThrottledCallback
 import { useMyContext } from '@/context/MyContext'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useEffect } from 'react'
 
@@ -13,6 +13,7 @@ export default function SearchInput({ ...props }: {}) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace, back, push } = useRouter()
+  const [showX, setShowX] = useState(false)
   const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams)
     params.set('page', '1')
@@ -41,7 +42,8 @@ export default function SearchInput({ ...props }: {}) {
       refInput.current.focus()
       setInputFocus(false)
     }
-  }, [pathname, inputFocus])
+    setShowX(!!refInput.current.value)
+  }, [pathname, inputFocus, refInput])
   return (
     <div className={`px-[15px] border-[1px] border-[#D9D9D9] rounded-[20px] w-[360px] flex dark:bg-bgDark dark:border-darkHomeBg relative`}>
       <Input
@@ -54,7 +56,7 @@ export default function SearchInput({ ...props }: {}) {
           e.key === 'Enter' && handleSearch(e.currentTarget.value)
         }}
       />
-      {refInput?.current?.value && (
+      {showX && (
         <XMarkIcon
           className={`w-[20px] h-[20px] absolute top-[50%] right-[66px] translate-y-[-50%] cursor-pointer`}
           onClick={(e) => clearInput(e)}

@@ -13,8 +13,8 @@ export async function generateMetadata({ params, searchParams }: any, parent: Re
   const [title, tagId] = splitStringFromLastDash(decodeURIComponent(params.tagId))
 
   return getMetaData({
-    title: `[# ${title}] Related Episodes and Podcasts | PodExtra.AI`,
-    description: `Dive into all "[# tag name]" related episodes and podcasts, enhanced with AI-powered transcription, summaries, takeaways, topics, mindmaps, outlines, keywords and highlights.`,
+    title: `# ${title} Related Episodes and Podcasts | PodExtra.AI`,
+    description: `Dive into all # ${title} related episodes and podcasts, enhanced with AI-powered transcription, summaries, takeaways, topics, mindmaps, outlines, keywords and highlights.`,
     keywords: `[tag名称], episodes, podcast summaries, podcast transcripts, AI transcription, mind maps, outlines, highlights, takeaways`,
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/tag/${title}-${tagId}`,
