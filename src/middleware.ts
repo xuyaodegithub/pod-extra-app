@@ -48,7 +48,7 @@ export async function middleware(request: NextRequest) {
   //这里做refreshToken
   const res = NextResponse.next()
   // 禁用页面缓存
-  res.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate')
+  // res.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate')
   return res
 
   // return NextResponse.redirect(new URL('/home', request.url))

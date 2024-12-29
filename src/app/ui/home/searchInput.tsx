@@ -5,10 +5,11 @@ import { useDebouncedCallback } from 'use-debounce' //useThrottledCallback
 import { useMyContext } from '@/context/MyContext'
 import { useRef } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import { useEffect } from 'react'
 
 export default function SearchInput({ ...props }: {}) {
   const refInput = useRef<any>(null)
-  const { isDark } = useMyContext()
+  const { isDark, inputFocus, setInputFocus } = useMyContext()
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace, back, push } = useRouter()
@@ -32,6 +33,15 @@ export default function SearchInput({ ...props }: {}) {
     refInput.current.value = ''
     refInput.current.focus()
   }
+  useEffect(() => {
+    if (pathname !== '/search') {
+      refInput.current.value = ''
+    }
+    if (inputFocus) {
+      refInput.current.focus()
+      setInputFocus(false)
+    }
+  }, [pathname, inputFocus])
   return (
     <div className={`px-[15px] border-[1px] border-[#D9D9D9] rounded-[20px] w-[360px] flex dark:bg-bgDark dark:border-darkHomeBg relative`}>
       <Input

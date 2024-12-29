@@ -82,12 +82,32 @@ const nextConfig = (phase) => {
     // generateEtags: false,
     async headers() {
       return [
+        // {
+        //   source: '/playlist',
+        //   headers: [
+        //     {
+        //       key: 'Cache-Control',
+        //       value: 'no-store, max-age=0, must-revalidate, proxy-revalidate',
+        //     },
+        //   ],
+        // },
         {
-          source: '/playlist',
+          // 对所有静态资源设置缓存头
+          source: '/_next/static/:path*',
           headers: [
             {
               key: 'Cache-Control',
-              value: 'no-store, max-age=0, must-revalidate, proxy-revalidate',
+              value: 'public, max-age=0, must-revalidate', // 协商缓存
+            },
+          ],
+        },
+        {
+          // 对图片资源设置缓存策略
+          source: '/:path*.svg',
+          headers: [
+            {
+              key: 'Cache-Control',
+              value: 'public, max-age=31536000, immutable', // 强缓存
             },
           ],
         },
