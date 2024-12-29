@@ -24,6 +24,8 @@ interface MyContextType {
   setSaveCurrentPosition: (saveCurrentPosition: any) => void
   toTranscript: boolean
   setToTranscript: (toTranscript: boolean) => void
+  inputFocus: boolean
+  setInputFocus: (inputFocus: boolean) => void
 }
 
 // 创建上下文，指定默认值
@@ -38,6 +40,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [stepTime, setStepTime] = useState(0)
   const [isDark, setIsDark] = useState(false)
   const [title, setTitle] = useState('')
+  const [inputFocus, setInputFocus] = useState(false)
   const [tabsPage, setTabsPage] = useState(new Map())
   const [saveCurrentPosition, setSaveCurrentPosition] = useState({ id: '', time: 0 })
   useEffect(() => {
@@ -69,6 +72,8 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setSaveCurrentPosition,
         toTranscript,
         setToTranscript,
+        inputFocus,
+        setInputFocus,
       }}
     >
       {children}

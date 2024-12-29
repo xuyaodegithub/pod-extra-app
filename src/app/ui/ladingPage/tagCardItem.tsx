@@ -43,8 +43,8 @@ export default function TagCardItem({ card, isDetail, isLast }: { card: any; isD
             {showTitle}
           </Link>
         </div>
-        <Link href={episodeUrl} className={`font-semibold text-fontGry-600  dark:text-white items-center hover:underline inline-block`}>
-          {episodeStatus === summarized && <img src="/icons/ai-icon.svg" className={`h-[20px] mr-[10px] inline-block`} />}
+        <Link href={episodeUrl} className={`font-semibold text-fontGry-600 w-auto  dark:text-white items-center hover:underline flex`}>
+          {episodeStatus === summarized && <img src="/icons/ai-icon.svg" className={`h-[20px] mr-[10px] inline-block `} />}
           {episodeTitle}
         </Link>
         {episodeStatus === summarized ? (

@@ -7,7 +7,7 @@ import { useMyContext } from '@/context/MyContext'
 import Link from 'next/link'
 
 export default function ThemeRight() {
-  const { isDark, setIsDark } = useMyContext()
+  const { isDark, setIsDark, setInputFocus } = useMyContext()
   const { push } = useRouter()
   function changeTheme() {
     localStorage.theme = isDark ? 'light' : 'dark'
@@ -27,6 +27,7 @@ export default function ThemeRight() {
       <Link
         className={`flex justify-center items-center w-[40px] h-[40px] rounded-[50%] border-[1px] mr-[10px] ${isDark ? 'border-darkHomeBg' : 'border-[#D9D9D9]'}`}
         href={`/home`}
+        onClick={() => setInputFocus(true)}
       >
         <img src={`/icons/${isDark ? 'darkSearch' : 'search'}.svg`} alt="" className={`w-[18px]`} />
       </Link>

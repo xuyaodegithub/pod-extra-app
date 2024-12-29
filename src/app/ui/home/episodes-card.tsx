@@ -56,9 +56,7 @@ export function Card({
             className={`text-md overflow-hidden text-ellipsis line-clamp-2 text-fontGry-600 dark:text-white`}
             title={episodeTitle}
           >
-            {episodeStatus === summarized && (
-              <img src="/icons/ai-ready-icon.svg" className={`inline-block h-[20px] mr-[5px] align-text-bottom`} />
-            )}
+            {episodeStatus === summarized && <img src="/icons/ai-ready-icon.svg" className={`inline-block h-[20px] mr-[5px] mt-[-4px]`} />}
             {episodeTitle}
             {/*{episodeStatus === summarized && <img src="/icons/ai-ready-icon.svg" className={`h-[20px] mr-[5px]`} />}*/}
             {/*<span className={`flex-1 overflow-hidden text-ellipsis whitespace-nowrap`}>{episodeTitle}</span>*/}
