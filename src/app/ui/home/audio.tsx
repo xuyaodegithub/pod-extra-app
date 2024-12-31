@@ -12,6 +12,7 @@ import { Loading } from '@/app/ui/home/loading'
 import { audio_info, summarized } from '@/app/lib/config'
 import { Slider } from 'antd'
 import { flowEpisode } from '@/app/lib/service'
+import { useUserInfo } from '@/context/UserInfo'
 
 export default function Audio() {
   const pathName = usePathname()
@@ -30,6 +31,8 @@ export default function Audio() {
     isDark,
     setToTranscript,
   } = useMyContext()
+  const { userInfo } = useUserInfo()
+  const { role = '' } = userInfo || {}
   const {
     enclosureUrl = '',
     showTitle = '',
@@ -54,7 +57,8 @@ export default function Audio() {
   const funs: any = { canplaythrough, timeupdate, loadstart, error, ended }
   function handleFlowEpisode(e: string, t: number, allT?: number) {
     // const now = Date.now()
-    if (e && !!t) {
+    const isLogin = !!role
+    if (e && !!t && isLogin) {
       flowEpisode(episodeId, { currentPosition: t, tagType: 'PLAYLIST', duration: allT || allTime })
       setSaveCurrentPosition({ id: episodeId, time: t })
       // setSaveTime(now)
