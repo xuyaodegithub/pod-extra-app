@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { getTimeWithHoursMin } from '@/app/lib/utils'
 import { audio_info } from '@/app/lib/config'
 import { useMyContext } from '@/context/MyContext'
+import { useUserInfo } from '@/context/UserInfo'
 import { useEffect, useState } from 'react'
 import { flowEpisode } from '@/app/lib/service'
 
@@ -20,6 +21,8 @@ export default function PlayBtn({ item }: { item: any }) {
     saveCurrentPosition,
     setSaveCurrentPosition,
   } = useMyContext()
+  const { userInfo } = useUserInfo()
+  const { role = '' } = userInfo || {}
   const { enclosureUrl: url = '' } = data || {}
   const {
     coverUrl,
@@ -61,7 +64,8 @@ export default function PlayBtn({ item }: { item: any }) {
     } else setIsPlaying(!isPlaying)
   }
   function handleFlowEpisode(id: string, t: number) {
-    if (id && !!t) {
+    const isLogin = !!role
+    if (id && !!t && isLogin) {
       flowEpisode(episodeId, { currentPosition: t, tagType: 'PLAYLIST', duration: allTime })
     }
   }
