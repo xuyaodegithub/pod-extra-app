@@ -40,7 +40,7 @@ export default function Pagination({ totalPages, total, title }: { totalPages: n
       {/*  NOTE: Uncomment this code in Chapter 11 */}
 
       <div className="flex items-center dark:text-fontGry-dark9b">
-        <span className={`mr-[16px] text-sm`}>{`Total ${total || 0} ${title || 'episodes'}`}</span>
+        <span className={`mr-[16px] max-plus:hidden text-sm`}>{`Total ${total || 0} ${title || 'episodes'}`}</span>
         <PaginationArrow direction="left" href={createPageURL(currentPage - 1)} isDisabled={currentPage <= 1} />
 
         <div className="flex ">
@@ -67,7 +67,7 @@ export default function Pagination({ totalPages, total, title }: { totalPages: n
 
         <PaginationArrow direction="right" href={createPageURL(currentPage + 1)} isDisabled={currentPage >= totalPages} />
         <Select onValueChange={(e: any) => selectChange(e)} defaultValue={`${pageSize}`} disabled>
-          <SelectTrigger className="w-auto h-[32px] bg-transparent rounded-[10px] border shadow-none focus:ring-0 focus:ring-offset-0 ml-[16px] cursor-default">
+          <SelectTrigger className="max-plus:hidden w-auto h-[32px] bg-transparent rounded-[10px] border shadow-none focus:ring-0 focus:ring-offset-0 ml-[16px] cursor-default">
             <span className={` py-[2px] text-min rounded-10px  cursor-default`}>{pageSize || 50} / page</span>
           </SelectTrigger>
           <SelectContent>
@@ -81,7 +81,7 @@ export default function Pagination({ totalPages, total, title }: { totalPages: n
           </SelectContent>
         </Select>
         {totalPages > 1 && (
-          <div className={`flex items-center`}>
+          <div className={`flex items-center max-plus:hidden`}>
             <span className={`mx-[10px] inline-block leading-[30px]`}> Go to </span>
             <Input
               className={`w-[60px] h-[32px] rounded-[10px]`}
@@ -137,7 +137,8 @@ function PaginationArrow({ href, direction, isDisabled }: { href: string; direct
     'ml-[8px] ': direction === 'right',
   })
 
-  const icon = direction === 'left' ? <ChevronLeftIcon className="w-4" /> : <ChevronRightIcon className="w-4" />
+  const icon =
+    direction === 'left' ? <ChevronLeftIcon className="w-[0.14rem] plus:w-4" /> : <ChevronRightIcon className="w-[0.14rem] plus:w-4" />
 
   return isDisabled ? (
     <div className={className}>{icon}</div>

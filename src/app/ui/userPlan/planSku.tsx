@@ -64,18 +64,18 @@ export default function PlanSku({ skuList, isLanding }: { skuList: any[]; isLand
   return (
     <div>
       <div
-        className={`w-[320px] mx-auto rounded-[22px] mb-[30px] font-bold text-[15px] text-fontGry-600 flex justify-center leading-[45px] bg-hbg dark:bg-bgDark dark:text-white`}
+        className={`w-[2.6rem] plus:w-[320px] mx-auto rounded-[22px] mb-[30px] font-bold text-[13px] plus:text-[15px] text-fontGry-600 flex plus:justify-center leading-[0.35rem] plus:leading-[45px] bg-hbg dark:bg-bgDark dark:text-white`}
       >
         {planTab.map((item) => (
           <div
             key={item.val}
-            className={`flex items-center justify-center cursor-pointer w-[160px] rounded-[22px] text-center transition-colors ${activeTab === item.val ? 'bg-play text-white' : ''}`}
+            className={`flex items-center justify-center cursor-pointer w-[1.3rem] plus:w-[160px] rounded-[22px] text-center transition-colors ${activeTab === item.val ? 'bg-play text-white' : ''}`}
             onClick={() => setActiveTab(item.val)}
           >
             {item.label}
             {item.val === yearly && (
               <span
-                className={`ml-[4px] rounded-[10px] text-min px-[8px] ${activeTab === yearly ? 'text-[#D64300] bg-[#FFE1D3]' : 'text-hbg bg-[#c9c9c9]'}`}
+                className={`max-plus:leading-[18px] ml-[4px] rounded-[8px] plus:rounded-[10px] text-[10px] plus:text-min px-[0.05rem] plus:px-[8px] ${activeTab === yearly ? 'text-[#D64300] bg-[#FFE1D3]' : 'text-hbg bg-[#c9c9c9]'}`}
               >
                 {+percent * 100}% OFF
               </span>
@@ -83,7 +83,7 @@ export default function PlanSku({ skuList, isLanding }: { skuList: any[]; isLand
           </div>
         ))}
       </div>
-      <div className={`flex mb-[20px] ${isLanding && 'justify-center'}`}>
+      <div className={`flex mb-[20px] max-plus:px-[15px] max-plus:overflow-auto ${isLanding && 'plus:justify-center'}`}>
         {skuList.map((item) => {
           const { planName, planCode, planDescription, benefits, skus } = item
           const isFree = planCode === 'FREE'
@@ -97,13 +97,13 @@ export default function PlanSku({ skuList, isLanding }: { skuList: any[]; isLand
           const showLoading = skus.some((i: any) => i?.skuId === loadingSkuId)
           return (
             <div
-              className={`shadow-planShow rounded-[26px] w-[320px] py-[50px] px-[30px] bg-hbg  dark:bg-bgDark dark:text-white ${isStandard ? `bg-play text-white ${isLanding ? 'mx-[60px]' : 'mx-[20px]'} dark:bg-play dark:text-white` : 'text-fontGry-600'}`}
+              className={`shrink-0 shadow-planShow rounded-[26px] w-[2.6rem] plus:w-[320px] py-[0.4rem] px-[0.24rem] plus:py-[50px] plus:px-[30px] bg-hbg  dark:bg-bgDark dark:text-white ${isStandard ? `bg-play text-white ${isLanding ? 'mx-[0.4rem] plus:mx-[60px]' : 'mx-[20px]'} dark:bg-play dark:text-white` : 'text-fontGry-600'}`}
               key={planCode}
             >
               <div
-                className={`flex text-[17px] pb-[8px] leading-[23px] ${activeTab === monthly ? 'mb-[20px]' : ''} ${isFree ? (activeTab === monthly ? 'mb-[20px]' : 'mb-[40px]') : ''}`}
+                className={`flex text-min plus:text-[17px] pb-[8px] leading-[23px] ${activeTab === monthly ? 'mb-[20px]' : ''} ${isFree ? (activeTab === monthly ? 'mb-[20px]' : 'mb-[40px]') : ''}`}
               >
-                <span className={`text-[36px] leading-[1] font-bold`}>{isFree ? 'USD 0' : `${currency} ${price}`}</span>
+                <span className={`text-[0.24rem] plus:text-[36px] leading-[1] font-bold`}>{isFree ? 'USD 0' : `${currency} ${price}`}</span>
                 <span className={`self-end ml-[5px]`}>/month</span>
               </div>
               {!isMonth && !isFree && (
@@ -113,11 +113,13 @@ export default function PlanSku({ skuList, isLanding }: { skuList: any[]; isLand
                   {`${currency} ${skuForYear.unitPrice} yearly`}
                 </div>
               )}
-              <div className={`font-semibold text-[28px] leading-[38px] mb-[10px]`}>{planName}</div>
-              <div className={`text-[15px] leading-[20px] mb-[20px]`}>{planDescription}</div>
+              <div className={`font-semibold text-[0.24rem] plus:text-[28px] leading-[0.3rem] plus:leading-[38px] mb-[10px]`}>
+                {planName}
+              </div>
+              <div className={`text-min plus:text-[15px] plus:leading-[20px] mb-[20px]`}>{planDescription}</div>
               {!isLanding ? (
                 <div
-                  className={`flex items-center justify-center font-semibold cursor-pointer text-[15px] leading-[45px] mb-[22px] rounded-[24px] ${dis ? 'bg-he5 text-fontGry-100 cursor-not-allowed dark:bg-darkHomeBg dark:text-fontGry-100' : 'bg-[#FFE1D3] text-play'} ${isCurrent ? 'text-fontGry-600 dark:text-fontGry-100 dark:bg-he5' : ''}`}
+                  className={`flex items-center justify-center font-semibold cursor-pointer text-min plus:text-[15px] leading-[0.32rem] plus:leading-[45px] mb-[22px] rounded-[24px] ${dis ? 'bg-he5 text-fontGry-100 cursor-not-allowed dark:bg-darkHomeBg dark:text-fontGry-100' : 'bg-[#FFE1D3] text-play'} ${isCurrent ? 'text-fontGry-600 dark:text-fontGry-100 dark:bg-he5' : ''}`}
                   onClick={() => createNewOrder(item, dis, showLoading)}
                 >
                   {showLoading && <Loader2 className="animate-spin mr-[8px]" />}
@@ -125,13 +127,13 @@ export default function PlanSku({ skuList, isLanding }: { skuList: any[]; isLand
                 </div>
               ) : (
                 <div
-                  className={`flex items-center justify-center font-semibold cursor-pointer text-[15px] leading-[45px] mb-[22px] rounded-[24px] bg-[#FFE1D3] text-play`}
+                  className={`flex items-center justify-center font-semibold cursor-pointer text-min plus:text-[15px] leading-[0.36rem] plus:leading-[45px] mb-[0.16rem] plus:mb-[22px] rounded-[0.18rem] plus:rounded-[24px] bg-[#FFE1D3] text-play`}
                   onClick={previewPlan}
                 >
                   Get Started
                 </div>
               )}
-              <div className={`text-[15px] leading-[20px]`}>
+              <div className={`text-min plus:text-[15px] plus:leading-[20px]`}>
                 {benefits?.map((benefit: any) => (
                   <div className={`flex items-center mb-[5px] tracking-[-0.5px]`} key={benefit.content}>
                     <img src={`/plan/check-circle-${isStandard ? '2' : '1'}.svg`} alt="" className={`self-start mr-[10px]`} />
@@ -143,21 +145,25 @@ export default function PlanSku({ skuList, isLanding }: { skuList: any[]; isLand
           )
         })}
       </div>
-      <div className={`text-[15px] leading-[25px] text-[#C3C3C3] px-[20px] dark:text-fontGry-600 ${isLanding && 'pl-[100px]'}`}>
+      <div
+        className={`text-min plus:text-[15px] plus:leading-[25px] text-[#C3C3C3] px-[17px] plus:px-[20px] dark:text-fontGry-600 ${isLanding && 'plus:pl-[100px]'}`}
+      >
         <div>
           <span className={`inline-block mr-[8px]`}>*</span> Only episodes that have already been AI-processed.
         </div>
         <div className={`flex items-center`}>
-          <img src={`/plan/${isDark ? 'robot-white' : 'robot'}.svg`} alt="" className={`mr-[8px]`} />
+          <img src={`/plan/${isDark ? 'robot-white' : 'robot'}.svg`} alt="" className={`mr-[8px] max-plus:self-start`} />
           We will automatically process the episodes of top podcasts with AI.
         </div>
         <div className={`flex items-center`}>
-          <img src={`/plan/emoji-smile${isDark ? '-dark' : ''}.svg`} alt="" className={`mr-[8px]`} />
-          We offer a 7-day full refund service. For details, see our{' '}
-          <Link className={`ml-[4px] underline`} href="/refund-policy.html" target="_blank">
-            {' '}
-            refund policy.
-          </Link>
+          <img src={`/plan/emoji-smile${isDark ? '-dark' : ''}.svg`} alt="" className={`mr-[8px] max-plus:self-start`} />
+          <span>
+            We offer a 7-day full refund service. For details, see our{' '}
+            <Link className={`ml-[4px] underline`} href="/refund-policy.html" target="_blank">
+              {' '}
+              refund policy.
+            </Link>
+          </span>
         </div>
       </div>
     </div>

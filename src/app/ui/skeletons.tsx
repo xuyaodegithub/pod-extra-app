@@ -6,7 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 export function LoadingLine({ num = 4 }: { num?: number }) {
   const arr: any[] = Array.from({ length: num })
   return (
-    <div className={`relative overflow-hidden rounded-xl p-24px mb-24px border border-accent`}>
+    <div className={`relative overflow-hidden plus:rounded-xl p-24px mb-24px border border-accent`}>
       {arr.map((item, ind) => (
         <Skeleton key={ind} className="h-24px mb-24px" style={{ width: ((ind + 1) / num) * 100 + '%' }} />
       ))}

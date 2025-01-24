@@ -45,10 +45,10 @@ export default async function Page({
     <main className={`flex flex-col`}>
       {/*<ClientSub val={showTitle} />*/}
       <div className={`flex `}></div>
-      <div className={`sticky top-[60px] bg-white dark:bg-black pb-[20px] z-[99]`}>
+      <div className={`sticky top-[66px] plus:top-[60px] bg-white dark:bg-black pb-[20px] z-[99] max-plus:px-[15px]`}>
         <Pagination totalPages={totalPages} total={total} title="episodes" />
       </div>
-      <div className={`border-[1px] border-gray-1000 rounded-10px p-[10px] dark:border-fontGry-600`}>
+      <div className={`plus:border-[1px] plus:border-gray-1000 rounded-10px px-[15px] plus:p-[10px] dark:border-fontGry-600`}>
         {resultList?.map((card: any, index: number) => (
           <TagCardItem card={card} key={index} isDetail isLast={index === resultList?.length - 1} />
         ))}

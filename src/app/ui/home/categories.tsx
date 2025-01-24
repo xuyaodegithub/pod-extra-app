@@ -57,14 +57,16 @@ export default async function Categories({ title }: { title: string }) {
     data: { resultList },
   } = await getPodCategory(payload)
   return (
-    <div className={`bg-gray-1000 rounded-10px py-[25px] px-[25px] pt-[19px] mb-[100px] dark:bg-bgDark`}>
-      <div className={`mb-[22px] text-max0 text-fontGry-600 flex items-center font-bold cursor-pointer`}>
+    <div
+      className={`plus:bg-gray-1000 rounded-10px py-[15px] px-[15px] plus:py-[25px] plus:px-[25px] plus:pt-[19px] mb-[1rem] plus:mb-[100px] dark:bg-bgDark`}
+    >
+      <div className={`mb-[22px] text-msd plus:text-max0 text-fontGry-600 flex items-center font-bold cursor-pointer`}>
         <Link href={`/podcasts-categories`} className={`${styles.hoverBBorder} dark:text-white`}>
           {title}
         </Link>
-        <ChevronRightIcon className={`ml-[10px] w-[20px] dark:text-white`} />
+        <ChevronRightIcon className={`ml-[10px] w-[0.16rem] plus:w-[20px] dark:text-white`} />
       </div>
-      <div className={`flex flex-wrap`}>
+      <div className={`flex flex-wrap max-plus:justify-between`}>
         {resultList?.map((item: any, index: number) => {
           const { categoryName, categoryId, categoryUrl = '' } = item
           return (
@@ -77,6 +79,8 @@ export default async function Categories({ title }: { title: string }) {
             />
           )
         })}
+        {/*//is mobile  占位*/}
+        <div className={`w-[0.85rem] h-[0.5rem] plus:hidden`}></div>
       </div>
     </div>
   )
@@ -102,11 +106,11 @@ export function Cate({
   return (
     <Link href={categoryUrl}>
       <div
-        className={`hover:opacity-80 relative transition-all rounded-5px ${noMd ? '' : 'mb-24px'} cursor-pointer ${noMr ? '' : 'mr-24px'} w-[170px] h-[100px] leading-[100px] text-white`}
+        className={`hover:opacity-80 relative transition-all rounded-5px ${noMd ? '' : 'mb-[0.1rem] plus:mb-24px'} cursor-pointer ${noMr ? '' : 'plus:mr-24px'} w-[0.85rem] h-[0.5rem] plus:w-[170px] plus:h-[100px] plus:leading-[100px] text-white`}
         style={{ backgroundColor: color }}
       >
-        <span className={`absolute top-[10px] left-[10px] text-sm`}>{categoryName}</span>
-        <Image src={url} alt="" className={`absolute top-[50%] right-[10px] translate-y-[-50%]`} />
+        <span className={`absolute top-[10px] left-[10px] text-min plus:text-sm`}>{categoryName}</span>
+        <Image src={url} alt="" className={`absolute top-[50%] right-[5px] plus:right-[10px] translate-y-[-50%] max-plus:w-[0.4rem] `} />
       </div>
     </Link>
   )

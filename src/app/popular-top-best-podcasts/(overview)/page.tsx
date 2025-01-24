@@ -33,23 +33,26 @@ export default async function Page({
   const totalPages = Math.ceil(+total / +pageSize)
   return (
     <main className={`flex flex-col`}>
-      <div className={`sticky top-[57px] bg-white dark:bg-black pb-[22px]`}>
+      <div className={`sticky top-[66px] plus:top-[57px] bg-white dark:bg-black pb-[22px] max-plus:px-[15px]`}>
         <Pagination totalPages={totalPages} total={total} title="podcasts" />
       </div>
-      <div className={`flex flex-wrap border border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
+      <div className={`plus:flex plus:flex-wrap plus:border plus:border-gray-1000 rounded-10px p-[15px] dark:border-fontGry-600`}>
         {resultList.map((item: any, ind: number) => {
           const { coverUrl, categoryList, showId, itunesAuthor, showTitle, showDescription, gmtLastUpdate, showUrl } = item
           const [title, des] = [getNoTagText(showTitle) || '-', getNoTagText(showDescription) || '-']
           const noMb = ind >= resultList.length - 2
           return (
-            <Link href={showUrl} key={showId} className={`w-[50%]`}>
+            <Link href={showUrl} key={showId} className={`w-[100%] plus:w-[50%]`}>
               <div
-                className={`flex cursor-pointer ${noMb ? '' : 'mb-[5px]'} p-[10px] rounded-10px overflow-hidden hover:bg-hbg dark:hover:bg-darkHomeBg transition-all`}
+                className={`flex cursor-pointer ${noMb ? 'max-plus:mb-[0.2rem]' : 'mb-[0.2rem] plus:mb-[5px]'} plus:p-[10px] rounded-10px overflow-hidden hover:bg-hbg dark:hover:bg-darkHomeBg transition-all`}
               >
-                <Image src={coverUrl} alt="" className={`w-[110px] h-[110px] object-cover rounded-10px`} />
+                <Image src={coverUrl} alt="" className={`w-[0.6rem] h-[0.6rem] plus:w-[110px] plus:h-[110px] object-cover rounded-10px`} />
                 <div className={`flex-1 ml-[10px] overflow-hidden`}>
                   <div className={`flex mb-[6px]`}>{categoryList?.map((item: any) => <CateItem {...item} key={item.categoryId} />)}</div>
-                  <div className={`overflow-hidden text-ellipsis whitespace-nowrap text-fontGry-600 text-md dark:text-white`} title={title}>
+                  <div
+                    className={`overflow-hidden text-ellipsis max-plus:line-clamp-2 plus:whitespace-nowrap text-fontGry-600 text-rsm plus:text-md dark:text-white`}
+                    title={title}
+                  >
                     {title}
                   </div>
                   <div className={`text-sm text-fontGry-100 flex items-center`} title={des}>
@@ -58,7 +61,10 @@ export default async function Page({
                     </span>
                     <span>（{`Update ${getCurrentLocalTime(gmtLastUpdate)}`}）</span>
                   </div>
-                  <div className={`text-sm overflow-hidden text-ellipsis line-clamp-2 text-fontGry-100`} title={des}>
+                  <div
+                    className={`text-min plus:text-sm overflow-hidden text-ellipsis line-clamp-3 plus:line-clamp-2 text-fontGry-100`}
+                    title={des}
+                  >
                     {des}
                   </div>
                 </div>

@@ -37,6 +37,7 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname()
   const isLanding = pathname === '/'
+  const isHome = pathname === '/home'
   const { replace } = useRouter()
   useEffect(() => {
     const refreshToken = async () => {
@@ -121,16 +122,18 @@ export default function RootLayout({
             </head>
             <body className={`opacity-0 antialiased h-[100%] dark:bg-black dark:text-darkTheme-900 font-sans`}>
               {!isLanding ? (
-                <div className="flex w-xl py-[24px] w-1280 mx-auto h-[100%]">
+                <div className="flex plus:w-xl plus:py-[24px] plus:w-1280 mx-auto h-[100%]">
                   <SideNav />
                   <main className={`flex-1 overflow-hidden flex flex-col`}>
-                    <div className={`mb-[22px] flex justify-between items-center pr-[20px]`}>
+                    <div
+                      className={`mb-[22px] flex justify-between items-center pr-[20px] max-plus:px-[0.15rem] ${!isHome && 'max-plus:hidden'}`}
+                    >
                       <Suspense fallback={<LoadingLine num={1} />}>
                         <SearchInput />
                       </Suspense>
                       <UserInfo />
                     </div>
-                    <section className={`flex-1 overflow-hidden pr-[20px]`}>{children}</section>
+                    <section className={`flex-1 overflow-hidden plus:pr-[20px]`}>{children}</section>
                   </main>
                 </div>
               ) : (

@@ -7,17 +7,21 @@ const config: Config = {
     screens: {
       sm: '480px',
       md: '768px',
+      plus: '431px',
       lg: '976px',
       xl: '1280px',
     },
     fontSize: {
       min: ['12px', { lineHeight: '18px' }],
       sm: ['14px', { lineHeight: '20px' }],
+      rsm: ['0.14rem', { lineHeight: '20px' }],
       md: ['16px', { lineHeight: '24px' }],
+      msd: ['0.16rem', { lineHeight: '24px' }],
       lg: ['18px', { lineHeight: '28px' }],
       max0: ['20px', { lineHeight: '32px' }],
       max1: ['22px', { lineHeight: '36px' }],
       max2: ['24px', { lineHeight: '40px' }],
+      rmax2: ['0.24rem', { lineHeight: '40px' }],
       max3: ['28px', { lineHeight: '40px' }],
     },
     zIndex: {
@@ -229,6 +233,7 @@ const config: Config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'scroll-x': 'linear scroll-x 60s infinite',
+        'scroll-x-slow': 'linear scroll-x-slow 20s infinite',
         spin: 'spin 1s linear infinite',
       },
       fontFamily: {

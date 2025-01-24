@@ -2,6 +2,7 @@ export const POPULARITY = 'POPULARITY'
 export const PUB_DATE = 'PUB_DATE'
 export const TRANSCRIPT_TIME = 'TRANSCRIPT_TIME'
 export const SUMMARIZE_TIME = 'SUMMARIZE_TIME'
+export const isMobileKey = 'x-is-mobile'
 export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the total number of pages is 7 or less,
   // display all pages without any ellipsis.
@@ -191,4 +192,8 @@ export function monthsUntilEnd(endTimestamp: number): number {
   const diffInMonths = diffInMs / (1000 * 60 * 60 * 24 * 30.44) // 平均每月天数约为30.44天
 
   return Math.ceil(diffInMonths)
+}
+export function getCookieStore(cookies: any, key: string = isMobileKey) {
+  const cookieStore = cookies()
+  return cookieStore.get(key)?.value || ''
 }

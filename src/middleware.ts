@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from 'next/server'
 // import { BearerToken, expiresIn, loginTime } from '@/app/lib/config'
 // import { cookies } from 'next/headers'
 // import axios from 'axios'
+import { isMobileKey } from '@/app/lib/utils'
 
 // import crypto from 'crypto'
 async function generateEtag(request: NextRequest) {
@@ -46,10 +47,18 @@ async function generateEtag(request: NextRequest) {
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   //这里做refreshToken
-  const res = NextResponse.next()
+  const userAgent: any = request.headers.get('user-agent')
+  const isMobile: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
+  // 设置自定义请求头或 cookie
+  const response = NextResponse.next()
+
+  // 设置一个名为 'x-is-mobile' 的 cookie  判断当前是移动端还是 pc
+  response.cookies.set(isMobileKey, isMobile ? 'true' : 'false')
+  return response
+
   // 禁用页面缓存
   // res.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate')
-  return res
+  // return res
 
   // return NextResponse.redirect(new URL('/home', request.url))
   //   const { pathname } = new URL(request.url);

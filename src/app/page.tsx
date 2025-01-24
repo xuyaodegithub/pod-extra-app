@@ -18,6 +18,8 @@ export const metadata: Metadata = getMetaData({
 import PodcastSwiper from '@/app/ui/ladingPage/podcastSwiper'
 import AcmeLogo from '@/app/ui/acme-logo'
 import OtherLogo from '@/app/ui/other-logo'
+import { cookies } from 'next/headers'
+import { getCookieStore } from '@/app/lib/utils'
 
 export default async function IndexPage({
   searchParams,
@@ -27,6 +29,7 @@ export default async function IndexPage({
     page?: string
   }
 }) {
+  const isMobile = getCookieStore(cookies)
   const pageSize = searchParams?.pageSize || 30
   const pageNum = searchParams?.page || 1
   let firstTagEpisodes: any = []
@@ -355,62 +358,76 @@ export default async function IndexPage({
   return (
     <main className={`landing`}>
       <LandingTab />
-      <div className={`w-1280 mx-auto`}>
-        <div className={`flex justify-between pt-[24px] items-center mb-[90px] relative`}>
+      <div className={`plus:w-1280 mx-auto`}>
+        <div className={`plus:flex justify-between pt-[24px] items-center mb-[50px] plus:mb-[90px] relative`}>
           <AcmeLogo />
-          <div className={`ml-auto absolute top-[20px] right-0`}>
+          <div className={`ml-auto absolute top-[20px] right-0 z-[44]`}>
             <ThemeRight />
           </div>
         </div>
-        <div className={`relative mb-[30px] flex justify-between`}>
-          <div className={`mr-[70px]`}>
-            <h1 className={`text-[50px] tracking-[-3px] text-[#02073E] w-[460px] mb-[20px] leading-[60px] dark:text-white font-Tilt`}>
-              Unleash the power of podcast with AI
-            </h1>
-            <div className={`text-[24px] leading-[40px] mb-[30px] dark:text-homehbg`}>
+        <div className={`relative mb-[30px] plus:flex justify-between px-[15px] plus:px-0`}>
+          <div className={`plus:mr-[70px]`}>
+            <div className={`flex items-center`}>
+              <img src="/images/mobile-logo.svg" alt="" className={`plus:hidden w-[0.5rem] h-[0.5rem] mr-[0.1rem]`} />
+              <h1
+                className={`text-rmax2 plus:text-[50px] plus:tracking-[-3px] text-[#02073E] plus:w-[460px] plus:mb-[20px] leading-[1] plus:leading-[60px] dark:text-white font-Tilt`}
+              >
+                Unleash the power of <br className={`plus:hidden`} />
+                podcast with <span className={`max-plus:text-play`}>AI</span>
+              </h1>
+            </div>
+            <div
+              className={`text-[0.14rem] plus:text-[24px] leading-[20px] max-plus:ml-[0.6rem] plus:leading-[40px] mb-[30px] dark:text-homehbg`}
+            >
               Transcripts, Summaries, Mind maps,
               <br /> Outlines, Highlights and Takeaways
             </div>
             <Link
               href={'/home'}
-              className={`text-[20px] inline-block leading-[50px] px-[10px]  text-white bg-play rounded-[5px] font-bold`}
+              className={`w-[1.60rem] plus:w-auto text-rsm plus:text-[20px] block plus:inline-block leading-[37px] plus:leading-[50px] px-[10px]  text-white bg-play rounded-[0.1rem] plus:rounded-[5px] font-bold`}
             >
               Get Started for free
             </Link>
-            <div className={`text-[#C8C8C8] text-sm dark:text-fontGry-100 mb-[20px]`}>No credit card required</div>
-            <div className={`flex text-sm`}>
+            <div className={`text-[#C8C8C8] text-min plus:text-sm dark:text-fontGry-100 plus:mb-[20px] mt-[5px]`}>
+              No credit card required
+            </div>
+            <div className={`flex text-min plus:text-sm text-fontGry-c8`}>
               <span className={`mr-[17px]`}>Powered by:</span>
               <img src="/images/openai.svg" className={`mr-[10px] w-[20px] h-[20px]`} alt="" />
               <img src="/images/Podcast.svg" className={`mr-[10px] w-[20px] h-[20px]`} alt="" />
               <img src="/images/spotify.svg" className={`mr-[10px] w-[20px] h-[20px]`} alt="" />
             </div>
           </div>
-          <div className={`flex-1 mt-[-40px] overflow-hidden`}>
+          <div className={`flex-1 mt-[0.3rem] plus:mt-[-40px] plus:overflow-hidden`}>
             <TagCard tags={tags} firstTagEpisodes={firstTagEpisodes} />
           </div>
         </div>
         <div className={`mb-[30px]`}>
           <PodcastSwiper type={POPULARITY} params={params} />
         </div>
-        <div className={`mb-[150px]`}>
+        <div className={`mb-[100px] plus:mb-[150px]`}>
           <PodcastSwiper type={PUB_DATE} params={params} />
         </div>
         <div className={`mb-[84px]`}>
-          <div className={`text-center text-[80px] leading-[80px] mb-[80px] tracking-[-3px] font-Tilt`}>
+          <div
+            className={`text-center text-[0.4rem] plus:text-[80px] leading-[1] plus:leading-[80px] mb-[20px] plus:mb-[80px] tracking-[-2px] plus:tracking-[-3px] font-Tilt`}
+          >
             <span className={`text-play`}>An advanced AI tool </span>for
-            <div className={`text-[65px]`}>podcast listening and knowledge acquisition</div>
+            <div className={`text-[0.24rem] max-plus:leading-[30px] max-plus:tracking-normal plus:text-[65px]`}>
+              podcast listening and knowledge acquisition
+            </div>
           </div>
-          <div className={`flex flex-wrap justify-between`}>
+          <div className={`max-plus:px-[0.05rem] flex flex-wrap justify-between`}>
             {tools.map((item: any, ind: number) => {
               const { title, desc, img } = item
               return (
                 <div
                   key={ind}
-                  className={`w-[420px] bg-[#F6F8FB] ${(ind + 1) % 3 === 0 ? '' : 'mr-[10px]'} mb-[30px] rounded-[8px] py-[22px] px-[26px] text-md leading-[32px] dark:bg-bgDark`}
+                  className={`w-[2.05rem] plus:w-[420px] bg-[#F6F8FB] ${(ind + 1) % (isMobile ? 2 : 3) === 0 ? '' : isMobile ? 'mr-[0.1rem]' : 'mr-[10px]'} mb-[0.2rem] plus:mb-[30px] rounded-[8px] py-[0.2rem] px-[0.1rem] plus:py-[22px] plus:px-[26px] text-rsm plus:text-md leading-[0.2rem] plus:leading-[32px] dark:bg-bgDark`}
                 >
                   <div className={`flex mb-[15px]`}>
-                    <img src={img} className={`w-[66px] h-[66px] mr-[22px]`} alt="" />
-                    <h2 className={`text-[40px] leading-[1] self-end dark:text-white`}>{title}</h2>
+                    <img src={img} className={`w-[0.40rem] h-[0.40rem] plus:w-[66px] plus:h-[66px] mr-[0.15rem] plus:mr-[22px]`} alt="" />
+                    <h2 className={`text-[20px] plus:text-[40px] leading-[1] self-end dark:text-white`}>{title}</h2>
                   </div>
                   <div className={`dark:text-homehbg`}>{desc}</div>
                 </div>
@@ -418,24 +435,32 @@ export default async function IndexPage({
             })}
           </div>
         </div>
-        <div className={`relative flex flex-wrap mb-[300px]`}>
-          <div className={`w-[50%] mb-[146px]`}>
-            <h2 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black dark:text-white tracking-[-1.5px] font-Tilt`}>
+        <div className={`relative plus:flex flex-wrap mb-[4.38rem] plus:mb-[300px] max-plus:px-[15px]`}>
+          <div className={`plus:w-[50%] mb-[0.64rem] plus:mb-[146px]`}>
+            <h2
+              className={`text-[20px] plus:text-[40px] leading-[0.24rem] plus:leading-[50px] mb-[6px] plus:space-x-[-1.5px] text-black dark:text-white plus:tracking-[-1.5px] font-Tilt`}
+            >
               Summarize podcasts with AI
             </h2>
-            <div className={`text-[30px] leading-[45px] dark:text-homehbg`}>
+            <div className={`text-[0.16rem] plus:text-[30px] leading-[20px] plus:leading-[45px] dark:text-homehbg`}>
               Generate podcast summaries with AI to quickly grasp the gist of the content before listening.
             </div>
           </div>
-          <div className={`w-[50%] relative`}>
-            <img src="/images/right-man.png" alt="" className={`absolute top-0 right-[50px] w-[300px]`} />
-            <div className={`rounded-[10px] absolute left-0 top-[250px] w-[330px] bg-[#F6F8FB] py-[20px] px-[25px] dark:bg-bgDark`}>
+          <div className={`max-plus:mb-[0.3rem] max-plus:left-[12px] w-[3rem] plus:w-[50%] relative`}>
+            <img
+              src="/images/right-man.png"
+              alt=""
+              className={`absolute top-[-0.54rem] plus:top-0 right-[-0.8rem] plus:right-[50px] w-[1.2rem] plus:w-[300px]`}
+            />
+            <div
+              className={`rounded-[10px] relative z-10 plus:absolute left-0 plus:top-[250px] plus:w-[330px] bg-[#F6F8FB] py-[0.19rem] plus:py-[20px] px-[0.18rem] plus:px-[25px] dark:bg-bgDark`}
+            >
               <h3
-                className={`text-black  text-[26px] leading-[30px] pb-[15px] border-b-[1px] border-[#E0E2E4] mb-[15px] font-bold dark:border-darkHomeBg dark:text-homehbg`}
+                className={`text-black text-msd plus:text-[26px] leading-[20px] plus:leading-[30px] pb-[10px] plus:pb-[15px] border-b-[1px] border-[#E0E2E4] mb-[10px] plus:mb-[15px] font-bold dark:border-darkHomeBg dark:text-homehbg`}
               >
                 AI Summary
               </h3>
-              <div className={`text-sm text-[#343D48] dark:text-fontGry-100`}>
+              <div className={`text-rsm plus:text-sm text-[#343D48] dark:text-fontGry-100`}>
                 In this podcast episode, Dr. Koniver and Andrew Huberman dive into the fascinating world of peptides and growth hormone
                 secretagogues, discussing their health implications and the need for personalized therapy and mindset for optimal
                 well-being. They examine various compounds, including GLP-1 agonists, BPC-157, and NAD infusions, highlighting their unique
@@ -443,15 +468,24 @@ export default async function IndexPage({
               </div>
             </div>
           </div>
-          <div className={`w-[50%] relative mb-[140px]`}>
-            <img src="/images/left-man.png" alt="" className={`w-[300px] block`} />
-            <div className={`rounded-[10px] absolute top-[230px] left-[88px] w-[325px] bg-[#F6F8FB] py-[20px] px-[25px] dark:bg-bgDark`}>
+          <div className={`relative text-right plus:hidden mb-[10px]`}>
+            <h3 className={`text-[20px] leading-[24px] mb-[10px] text-black dark:text-white font-Tilt`}>AI Podcast Transcript</h3>
+            <div className={`text-msd leading-[20px] dark:text-homehbg`}>
+              Accurate and comprehensive full transcripts of podcasts, supporting the distinction of speakers. You can listen while reading,
+              or quickly jump to the corresponding position by clicking on the text.
+            </div>
+          </div>
+          <div className={`plus:w-[50%] relative plus:mb-[140px]`}>
+            <img src="/images/left-man.png" alt="" className={`max-plus:ml-[10px] w-[1.2rem] plus:w-[300px] block`} />
+            <div
+              className={`rounded-[10px] absolute top-[0.63rem] plus:top-[230px] left-[0.66rem] plus:left-[88px] w-[3.2rem] plus:w-[325px] bg-[#F6F8FB] py-[20px] px-[25px] dark:bg-bgDark`}
+            >
               <h3
-                className={`text-black text-[26px] leading-[30px] pb-[15px] border-b-[1px] border-[#E0E2E4] mb-[15px] font-bold dark:border-darkHomeBg dark:text-homehbg`}
+                className={`text-black text-msd plus:text-[26px] leading-[20px] plus:leading-[30px] pb-[10px] plus:pb-[15px] border-b-[1px] border-[#E0E2E4] mb-[10px] plus:mb-[15px] font-bold dark:border-darkHomeBg dark:text-homehbg`}
               >
                 AI Transcript
               </h3>
-              <div className={`text-sm text-[#343D48] leading-[24px] dark:text-fontGry-100`}>
+              <div className={`text-min plus:text-sm text-[#343D48] leading-[16px] plus:leading-[24px] dark:text-fontGry-100`}>
                 <span className={`text-play`}>Lex Fridman 13:47</span>
                 <p>So Copilot was kind of like the first killer app for LLMs.</p>
                 <span className={`text-play`}>SPEAKER_01 13:53</span>
@@ -469,7 +503,7 @@ export default async function IndexPage({
               </div>
             </div>
           </div>
-          <div className={`w-[50%] relative mt-[386px]`}>
+          <div className={`plus:w-[50%] relative mt-[386px] max-plus:hidden`}>
             <h3 className={`text-[40px] leading-[50px] mb-[6px] space-x-[-1.5px] text-black dark:text-white font-Tilt`}>
               AI Podcast Transcript
             </h3>
@@ -481,38 +515,46 @@ export default async function IndexPage({
         </div>
       </div>
       <div>
-        <div className={`w-1280 mx-auto text-center text-[30px] leading-[45px] mb-[30px]`}>
-          <h1 className={`text-[80px] leading-[1] text-play tracking-[-2px] font-Tilt`}>10x Speed</h1>
-          <h3 className={`text-[65px] leading-[80px] tracking-[-2px] font-Tilt`}>Gain knowledge from your favorite podcasts</h3>
+        <div className={`plus:w-1280 mx-auto text-center text-rsm plus:text-[30px] leading-[0.16rem] plus:leading-[45px] mb-[30px]`}>
+          <h1 className={`text-[0.4rem] plus:text-[80px] leading-[1] text-play tracking-[-2px] font-Tilt`}>10x Speed</h1>
+          <h3 className={`text-[0.24rem] plus:text-[65px] leading-[0.3rem] plus:leading-[80px] plus:tracking-[-2px] font-Tilt`}>
+            Gain knowledge from your favorite podcasts
+          </h3>
           <p>Podcast fans, on average, consume over 8 episodes per week. </p>
           <p>However, globally there are more than 4 million shows available.</p>
         </div>
-        <div className={`mx-auto`}>
+        <div className={`plus:mx-auto max-plus:overflow-hidden`}>
           {fileImages.map((item, ind) => {
             return (
-              <div key={ind} className={`flex justify-center `}>
+              <div key={ind} className={`flex plus:justify-center max-plus:w-[14.3rem] max-plus:animate-scroll-x-slow`}>
                 {item.map((item: string) => (
-                  <img src={`/images/imgWall/${item}`} alt="" key={item} className={`w-[142px] shrink-0`} />
+                  <img src={`/images/imgWall/${item}`} alt="" key={item} className={`w-[0.65rem] plus:w-[142px] shrink-0`} />
                 ))}
+                {isMobile &&
+                  item.map((item: string) => (
+                    <img src={`/images/imgWall/${item}`} alt="" key={item} className={`w-[0.65rem] plus:w-[142px] shrink-0`} />
+                  ))}
               </div>
             )
           })}
         </div>
       </div>
-      <div className={`w-1280 flex items-center mx-auto text-[20px] leading-[60px] mb-[150px]`}>
+      <div
+        className={`max-plus:mt-[0.1rem] plus:w-1280 flex items-center mx-auto text-[10px] plus:text-[20px] leading-[20px] plus:leading-[60px] mb-[1rem] plus:mb-[150px]`}
+      >
         Enjoy Your Podcasts from：
-        <img src="/images/speakBox/Podcast.svg" alt="" className={`mr-[14px]`} />
-        <img src="/images/speakBox/spotify.svg" alt="" className={`mr-[14px]`} />
-        <img src="/images/speakBox/rss.svg" alt="" className={`mr-[14px]`} />
-        <img src="/images/speakBox/Vector.svg" alt="" className={`mr-[14px]`} />
+        <img src="/images/speakBox/Podcast.svg" alt="" className={`max-plus:w-[15px] mr-[6px] plus:mr-[14px] `} />
+        <img src="/images/speakBox/spotify.svg" alt="" className={`max-plus:w-[15px] mr-[6px] plus:mr-[14px]`} />
+        <img src="/images/speakBox/rss.svg" alt="" className={`max-plus:w-[15px] mr-[6px] plus:mr-[14px]`} />
+        <img src="/images/speakBox/Vector.svg" alt="" className={`max-plus:w-[15px] mr-[6px] plus:mr-[14px]`} />
       </div>
-      <div className={`w-1280 mx-auto mb-[50px] text-center`}>
-        <h1 className={`text-[68px] leading-[55px] font-Tilt`}>
-          <span className={`text-play`}>Over 40,000</span> podcast lovers are using it
+      <div className={`plus:w-1280 mx-auto mb-[20px] plus:mb-[50px] text-center`}>
+        <h1 className={`text-[0.24rem] plus:text-[68px] leading-[1] plus:leading-[55px] font-Tilt`}>
+          <span className={`text-play max-plus:text-[0.4rem]`}>Over 40,000</span> {isMobile && <br />} podcast lovers are using it
         </h1>
-        <div className={`text-[26px] leading-[30px] mt-[10px]`}>Less time, more gains</div>
+        <div className={`text-[14px] plus:text-[26px] leading-[16px] plus:leading-[30px] mt-[10px]`}>Less time, more gains</div>
       </div>
-      <div className={`relative overflow-hidden flex mb-[130px]`}>
+      <div className={`relative overflow-hidden flex mb-[1rem] plus:mb-[130px]`}>
         <div className={`flex items-start animate-scroll-x`}>
           {messageList.map((it, index) => {
             return (
@@ -520,14 +562,16 @@ export default async function IndexPage({
                 {it.map((item, ind) => {
                   return (
                     <div
-                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[480px] rounded-[5px] mr-[20px] mb-[20px] dark:bg-bgDark dark:text-homehbg`}
+                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[4rem] plus:w-[480px] rounded-[5px] mr-[20px] mb-[20px] dark:bg-bgDark dark:text-homehbg`}
                       key={index + '-' + ind}
                     >
-                      <div className={`text-md leading-[30px] mb-[15px]`}>{item.message}</div>
+                      <div className={`text-rsm leading-[20px] plus:text-md plus:leading-[30px] mb-[15px]`}>{item.message}</div>
                       <div className={`flex justify-between items-center`}>
                         <div className={`flex items-center`}>
                           <img src={item.img} alt="" className={`w-[45px] h-[45px] object-cover mr-[15px] rounded-[50%]`} />
-                          <div className={`max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap font-bold`}>{item.title}</div>
+                          <div className={`max-w-[100px] text-msd overflow-hidden text-ellipsis whitespace-nowrap font-bold`}>
+                            {item.title}
+                          </div>
                         </div>
                         <div className={`flex items-center`}>
                           {Array.from({ length: 5 }).map((i, ind) => (
@@ -547,14 +591,16 @@ export default async function IndexPage({
                 {it.map((item, ind) => {
                   return (
                     <div
-                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[480px] rounded-[5px] mr-[20px] mb-[20px] dark:bg-bgDark dark:text-homehbg`}
+                      className={`py-[14px] px-[34px] bg-[#FFFCF7] w-[4rem] plus:w-[480px] rounded-[5px] mr-[20px] mb-[20px] dark:bg-bgDark dark:text-homehbg`}
                       key={index + '-' + ind}
                     >
-                      <div className={`text-md leading-[30px] mb-[15px]`}>{item.message}</div>
+                      <div className={`text-rsm leading-[20px] plus:text-md plus:leading-[30px] mb-[15px]`}>{item.message}</div>
                       <div className={`flex justify-between items-center`}>
                         <div className={`flex items-center`}>
                           <img src={item.img} alt="" className={`w-[45px] h-[45px] object-cover mr-[15px] rounded-[50%]`} />
-                          <div className={`max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap font-bold`}>{item.title}</div>
+                          <div className={`max-w-[100px] text-msd overflow-hidden text-ellipsis whitespace-nowrap font-bold`}>
+                            {item.title}
+                          </div>
                         </div>
                         <div className={`flex items-center`}>
                           {Array.from({ length: 5 }).map((i, ind) => (
@@ -570,19 +616,29 @@ export default async function IndexPage({
           })}
         </div>
       </div>
-      <div className={`mb-[150px] w-1280 mx-auto Pricing`}>
-        <h1 className={`text-[68px] leading-[102px] text-center font-bold text-black dark:text-white`}>Choose the plan you like</h1>
-        <div className={`text-[30px] text-fontGry-600 mb-[50px] dark:text-fontGry-100 text-center`}>Free to try without a credit card</div>
+      <div className={`mb-[1rem] plus:mb-[150px] plus:w-1280 mx-auto Pricing`}>
+        <h1
+          className={`text-[0.32rem] plus:text-[68px] leading-[0.4rem] plus:leading-[102px] text-center font-bold text-black dark:text-white`}
+        >
+          Choose the plan you like
+        </h1>
+        <div className={`text-msd plus:text-[30px] text-fontGry-600 mb-[0.4rem] plus:mb-[50px] dark:text-fontGry-100 text-center`}>
+          Free to try without a credit card
+        </div>
         <PlanSku skuList={memberPlan} isLanding />
       </div>
-      <div className={`w-1280 mx-auto mb-[140px] FAQ`}>
-        <h1 className={`text-black text-[60px] text-center mb-[65px] dark:text-white font-Tilt`}>Frequently Asked Questions</h1>
-        <div className={`w-[880px] mx-auto`}>
+      <div className={`plus:w-1280 mx-auto mb-[1rem] plus:mb-[140px] FAQ max-plus:px-[0.15rem]`}>
+        <h1
+          className={`max-plus:leading-[0.35rem] text-black text-[0.28rem] plus:text-[60px] text-center mb-[0.2rem] plus:mb-[65px] dark:text-white font-Tilt`}
+        >
+          Frequently Asked Questions
+        </h1>
+        <div className={`plus:w-[880px] mx-auto`}>
           <Accordion type="single" collapsible defaultValue={'item-1'} className={`dark:bg-bgDark`}>
             {QAList.map((it, index) => (
               <AccordionItem value={`item-${index + 1}`} key={index} className={`mb-[15px] border-[1px]  rounded-[10px] border-[#D9D9D9]`}>
                 <AccordionTrigger
-                  className={`text-lg font-bold p-[20px] data-[state=closed]:bg-[#f5f5f5] dark:data-[state=closed]:bg-bgDark rounded-[10px]`}
+                  className={`text-rsm plus:text-lg font-bold p-[20px] data-[state=closed]:bg-[#f5f5f5] dark:data-[state=closed]:bg-bgDark rounded-[10px]`}
                 >
                   {it.q}
                 </AccordionTrigger>
@@ -598,12 +654,12 @@ export default async function IndexPage({
           </Accordion>
         </div>
       </div>
-      <div className={`w-1280 mx-auto p-[32px] flex items-start mb-[110px]`}>
-        <OtherLogo />
+      <div className={`plus:w-1280 mx-auto p-[15px] plus:p-[32px] plus:flex items-start plus:mb-[110px]`}>
+        {!isMobile && <OtherLogo />}
         {otherLinks.map((item: any) =>
           !!item.list.length ? (
-            <div className={`w-[260px] text-md`} key={item.title}>
-              <h3 className={` font-bold mb-[30px] dark:text-homehbg`}>{item.title}</h3>
+            <div className={`plus:w-[260px] text-md max-plus:mb-[0.5rem]`} key={item.title}>
+              <h3 className={` font-bold mb-[0.2rem] plus:mb-[30px] dark:text-homehbg`}>{item.title}</h3>
               {item.list.map((item: any) => (
                 <div className={`mb-[15px] dark:text-fontGry-100`} key={item.href}>
                   <Link href={item.href} target="_blank" title={item.title || ''} rel={item.nofollow ? 'nofollow' : ''}>
@@ -616,9 +672,9 @@ export default async function IndexPage({
         )}
       </div>
       <div className={`bg-play`}>
-        <div className={`w-1280 mx-auto py-[18px] flex`}>
-          <img src="/images/bottomLogo.svg" alt="" className={`mr-[42px]`} />
-          <div className={`text-sm text-white`}>Copyright by 2024 PodExtra, Inc</div>
+        <div className={`plus:w-1280 mx-auto py-[18px] flex`}>
+          <img src="/images/bottomLogo.svg" alt="" className={`mr-[0.32rem] plus:mr-[42px]`} />
+          <div className={`text-min plus:text-sm text-white`}>Copyright by 2024 PodExtra, Inc</div>
         </div>
       </div>
     </main>

@@ -31,7 +31,7 @@ export default function TagCardItem({ card, isDetail, isLast }: { card: any; isD
   const filterTags = id ? tags?.filter((tag: any) => +tag.tagId !== +id) : tags
   return (
     <div
-      className={`flex p-[10px] ${isDetail ? 'pb-[0]' : ''} ${isDetail && !isLast ? 'mb-[10px]' : ''} items-center hover:bg-[#F8F8F8] rounded-[5px] dark:hover:bg-bgDark tagCardItem`}
+      className={`flex p-[10px] px-0 plus:px-[10px] ${isDetail ? 'pb-[0]' : ''} ${isDetail && !isLast ? 'mb-[10px]' : ''} items-center plus:hover:bg-[#F8F8F8] rounded-[5px] dark:plus:hover:bg-bgDark tagCardItem`}
     >
       <Link href={episodeUrl} className={` self-start`}>
         <Image src={coverUrl} className={`mr-[10px] w-[50px] h-[50px] rounded-[10px]`} />
@@ -43,20 +43,26 @@ export default function TagCardItem({ card, isDetail, isLast }: { card: any; isD
             {showTitle}
           </Link>
         </div>
-        <Link href={episodeUrl} className={`font-semibold text-fontGry-600 w-auto  dark:text-white items-center hover:underline flex`}>
-          {episodeStatus === summarized && <img src="/icons/ai-icon.svg" className={`h-[20px] mr-[10px] inline-block `} />}
+        <Link
+          href={episodeUrl}
+          className={`max-plus:overflow-hidden max-plus:text-ellipsis max-plus:line-clamp-2 font-semibold text-fontGry-600 w-auto dark:text-white items-center hover:underline flex`}
+        >
+          {episodeStatus === summarized && (
+            <img src="/icons/ai-icon.svg" className={`h-[20px] mr-[10px] inline-block max-plus:mt-[-2px]`} />
+          )}
           {episodeTitle}
         </Link>
         {episodeStatus === summarized ? (
           <div>
-            <div className={`overflow-hidden text-ellipsis line-clamp-2`}>{summary}</div>
+            <div className={`overflow-hidden text-ellipsis line-clamp-5 plus:line-clamp-2`}>{summary}</div>
             <ol className={`w-[100%]`}>
               {takeaway?.slice(0, 2)?.map((i: any, index: number) => (
                 <li
                   key={index}
-                  className={`overflow-hidden text-ellipsis whitespace-nowrap w-[100%] indent-[10px]`}
-                  style={{ listStyle: 'inside' }}
+                  className={`pointLi relative overflow-hidden text-ellipsis max-plus:line-clamp-3 plus:whitespace-nowrap w-[100%] indent-[15px]`}
+                  style={{ listStyle: 'none' }}
                 >
+                  <i className={`w-[5px] h-[5px] dark:bg-white bg-darkBody rounded-[50%] absolute top-[8px] left-[5px]`}></i>
                   {i}
                 </li>
               ))}
@@ -69,7 +75,7 @@ export default function TagCardItem({ card, isDetail, isLast }: { card: any; isD
           <div className={`mt-[10px] text-sm`}>
             <h1 className={`flex mb-[10px] ${!currentTagName && !currentTagText && 'hidden'}`}>
               <span
-                className={`${!currentTagName && 'hidden'} h-[20px] leading-[20px] bg-bgGray rounded-[10px] px-[10px] mr-[10px] dark:bg-bgDark `}
+                className={`${!currentTagName && 'hidden'} h-[20px] leading-[20px] bg-bgGray rounded-[10px] px-[10px] mr-[10px] dark:bg-bgDark max-plus:max-w-[30%] max-plus:overflow-hidden max-plus:text-ellipsis max-plus:whitespace-nowrap`}
               >
                 # {currentTagName || '-'}
               </span>
@@ -91,13 +97,13 @@ export default function TagCardItem({ card, isDetail, isLast }: { card: any; isD
           </div>
         ) : (
           <div
-            className={`${!tags?.length && 'hidden'} w-[100%] text-fontGry-100 dark:text-[#888888] overflow-hidden text-ellipsis whitespace-nowrap`}
+            className={`${!tags?.length && 'hidden'} w-[100%] text-fontGry-100 dark:text-[#888888] overflow-hidden text-ellipsis line-clamp-2 plus:whitespace-nowrap`}
           >
             <img src="/images/cateIcon/tag.svg" alt="" className={`mr-[7px] inline-block`} />
             {tags?.map((tag: any, ind: number) => (
-              <span className={` shrink-0`} key={ind}>
+              <span className={`shrink-0`} key={ind}>
                 {ind > 0 && <span className={`mx-[10px] font-bold`}>·</span>}
-                <Link href={tag.tagUrl} key={ind} className={`hover:underline`}>
+                <Link href={tag.tagUrl} key={ind} className={`hover:underline break-all`}>
                   {tag.tagName}
                 </Link>
               </span>

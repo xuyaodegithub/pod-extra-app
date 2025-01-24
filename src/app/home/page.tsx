@@ -6,6 +6,8 @@ const LatestEpisodes = lazy(() => import('@/app/ui/home/latest-episodes')) //imp
 const Categories = lazy(() => import('@/app/ui/home/categories')) //import Categories from '@/app/ui/home/categories'
 import { POPULARITY, PUB_DATE, SUMMARIZE_TIME, TRANSCRIPT_TIME, getMetaData } from '@/app/lib/utils'
 import { Metadata } from 'next'
+import { cookies } from 'next/headers'
+
 export const metadata: Metadata = getMetaData({
   title: 'PodExtra.AI - Best Podcast Tool With AI Podcast Transcript and Summary',
   description:
@@ -23,7 +25,9 @@ export default async function Home({
     page?: string
   }
 }) {
-  const pageSize = searchParams?.pageSize || 10
+  const cookieStore: any = cookies()
+  const isMobile = cookieStore.get('x-is-mobile')?.value === 'true'
+  const pageSize = searchParams?.pageSize || (isMobile ? 30 : 10)
   const pageNum = searchParams?.page || 1
   const params = {
     pageNum,

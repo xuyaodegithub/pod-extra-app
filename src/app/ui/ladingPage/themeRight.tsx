@@ -19,19 +19,19 @@ export default function ThemeRight() {
   return (
     <div className={`flex items-center`}>
       <div
-        className={`cursor-pointer flex justify-center items-center w-[40px] h-[40px] rounded-[50%] border-[1px] mr-[10px] ${isDark ? 'border-darkHomeBg' : 'border-[#D9D9D9]'}`}
+        className={`cursor-pointer plus:flex hidden justify-center items-center w-[40px] h-[40px] rounded-[50%] border-[1px] mr-[10px] ${isDark ? 'border-darkHomeBg' : 'border-[#D9D9D9]'}`}
         onClick={changeTheme}
       >
         <img src={`/icons/${isDark ? 'Shape-moon' : 'Shape-sun'}.svg`} className={`w-[18px]`} />
       </div>
       <Link
-        className={`flex justify-center items-center w-[40px] h-[40px] rounded-[50%] border-[1px] mr-[10px] ${isDark ? 'border-darkHomeBg' : 'border-[#D9D9D9]'}`}
+        className={`hidden plus:flex justify-center items-center w-[40px] h-[40px] rounded-[50%] border-[1px] mr-[10px] ${isDark ? 'border-darkHomeBg' : 'border-[#D9D9D9]'}`}
         href={`/home`}
         onClick={() => setInputFocus(true)}
       >
         <img src={`/icons/${isDark ? 'darkSearch' : 'search'}.svg`} alt="" className={`w-[18px]`} />
       </Link>
-      <UserInfo hiddenPrice />
+      <UserInfo hiddenPrice className={`fixed right-[15px] top-[15px] plus:relative plus:top-0 plus:right-0`} />
     </div>
   )
 }

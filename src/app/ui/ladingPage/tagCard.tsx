@@ -59,7 +59,9 @@ export default function TagCard({ tags, firstTagEpisodes }: { tags: any[]; first
   }, [])
   return (
     <div className={``}>
-      <div className={`flex flex-wrap`}>
+      <div
+        className={`flex flex-wrap max-h-[86px] overflow-hidden plus:max-h-none sticky z-[33] bg-white dark:bg-darkBody py-[10px] top-[56px] plus:relative plus:top-0`}
+      >
         {tags.map((tab: any, index: number) => (
           <div
             className={`cursor-pointer text-sm px-[5px] mr-[10px] mb-[10px] py-[4px] rounded-5px ${isDark ? 'bg-bgDark text-white' : 'bg-bgGray text-fontGry-600'} ${activeTag.tagId === tab?.tagId ? 'bg-play text-white' : ''}`}
@@ -70,15 +72,15 @@ export default function TagCard({ tags, firstTagEpisodes }: { tags: any[]; first
           </div>
         ))}
       </div>
-      <div className={`min-h-[200px]`}>
-        <div className={`max-h-[500px] overflow-auto relative`} ref={scrollRef}>
-          {resultList?.map((card: any, index: number) => (
-            <TagCardItem card={card} key={card.episodeId} isLast={index === resultList?.length - 1} />
-          ))}
+      <div className={`plus:min-h-[200px]`}>
+        <div className={`plus:max-h-[500px] overflow-auto relative`} ref={scrollRef}>
+          {resultList
+            ?.slice(0, 5)
+            ?.map((card: any, index: number) => <TagCardItem card={card} key={card.episodeId} isLast={index === resultList?.length - 1} />)}
         </div>
         <Link
           href={`${activeTag.tagUrl}`}
-          className={`mt-[20px] block text-center w-[88px] mx-auto text-sm text-fontGry-600 py-[4px] border-[1px] rounded-[8px] border-[#D9D9D9] dark:bg-bgDark dark:border-darkHomeBg dark:text-fontGry-c8`}
+          className={`sticky plus:static top-[182px] mt-[20px] block text-center w-[88px] mx-auto text-sm text-fontGry-600 py-[4px] border-[1px] rounded-[8px] border-[#D9D9D9] dark:bg-bgDark dark:border-darkHomeBg dark:text-fontGry-c8`}
         >
           view all
         </Link>

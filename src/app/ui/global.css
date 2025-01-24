@@ -109,6 +109,15 @@
     }
 
 }
+@keyframes scroll-x-slow {
+    to {
+        transform: translateX(-50%);
+    }
+    from {
+        transform: translateX(0);
+    }
+
+}
 
 @keyframes highlight-flash {
     0%, 100% {
@@ -136,3 +145,30 @@
     border-radius: 50%;
     display: none;
 }
+@media (max-width: 430px) {
+    html {
+        font-size:100px; /* iphone 6/7/8 pro max */
+    }
+}
+@media (max-width: 414px) {
+    html {
+        font-size:96px; /* iphone 6/7/8 pro max */
+    }
+}
+@media (max-width: 393px) {
+    html {
+        font-size:91px; /* iphone 6/7/8  pro */
+    }
+}
+@media (max-width: 390px) {
+    html {
+        font-size:90px; /* iphone 6/7/8  pro */
+    }
+}
+@media (max-width: 375px) {
+    html {
+        font-size:87px; /* iphone 6/7/8 */
+    }
+}
+
+

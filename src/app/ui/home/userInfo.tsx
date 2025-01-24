@@ -14,7 +14,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import eventBus from '@/app/lib/eventBus'
 import { loginAfterLogin, planPrice } from '@/app/ui/home/nav-links'
 
-export default function UserInfo({ hiddenPrice }: { hiddenPrice?: boolean }) {
+export default function UserInfo({ hiddenPrice, className }: { hiddenPrice?: boolean; className?: string }) {
   const { isDark } = useMyContext()
   const { userInfo, setUserInfo, showDialog, setShowDialog, setLoading, initUserInfo } = useUserInfo()
   const [open, setOpen] = useState(false)
@@ -112,10 +112,13 @@ export default function UserInfo({ hiddenPrice }: { hiddenPrice?: boolean }) {
     setShowDialog(true)
   }
   return (
-    <div className="flex items-center">
+    <div className={`flex items-center ${className}`}>
       {/*付费用户隐藏price入口*/}
       {!isVip && showLogin && !hiddenPrice && (
-        <div onClick={toPricePage} className={`cursor-pointer mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}>
+        <div
+          onClick={toPricePage}
+          className={`max-plus:hidden cursor-pointer mr-[30px] text-md text-fontGry-600 font-bold dark:text-homehbg`}
+        >
           Pricing
         </div>
       )}
@@ -150,10 +153,10 @@ export default function UserInfo({ hiddenPrice }: { hiddenPrice?: boolean }) {
       )}
       {showLogin && !userInfo?.role && (
         <div
-          className={`cursor-pointer flex items-center py-[8px] px-[11px] bg-play font-bold text-md text-white dark:bg-bgDark rounded-[10px] dark:text-homehbg`}
+          className={`cursor-pointer flex items-center py-[8px] px-[11px] bg-play font-bold text-rsm plus:text-md text-white dark:bg-bgDark rounded-[18px] plus:rounded-[10px] dark:text-homehbg`}
           onClick={onlyToLogin}
         >
-          <img src={loginBtn.darkIcon} alt="" className={`mr-[6px]`} />
+          <img src={loginBtn.darkIcon} alt="" className={`mr-[6px] hidden plus:block`} />
           <span>{loginBtn.text}</span>
         </div>
       )}

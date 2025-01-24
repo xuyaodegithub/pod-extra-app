@@ -34,20 +34,21 @@ export default function LandingTab() {
 
   return (
     <div
-      className={`z-10 flex justify-center items-center border-[1px] border-[#D9D9D9] rounded-[20px] w-[465px] fixed top-[20px] left-[50%] translate-x-[-50%] bg-white dark:bg-bgDark dark:border-darkHomeBg`}
+      className={`z-[100] flex justify-between plus:justify-center items-center border-[1px] border-[#D9D9D9] rounded-[20px] w-[3rem] plus:w-[465px] fixed top-[15px] plus:top-[20px] left-[15px] plus:left-[50%] plus:translate-x-[-50%] bg-white dark:bg-bgDark dark:border-darkHomeBg px-[20px] plus:px-0`}
     >
       {tabList.map((tab, index) =>
         tab.className === 'Blog' ? (
           <Link
+            key={index}
             href={`/blog `}
             target={`_blank`}
-            className={`text-md font-bold leading-[40px] mr-[40px] text-[#02073E] dark:dark:text-white`}
+            className={`plus:text-md font-bold plus:leading-[40px] plus:mr-[40px] text-[#02073E] dark:dark:text-white text-[0.14rem] leading-[34px]`}
           >
             {tab.label}
           </Link>
         ) : (
           <div
-            className={`text-md font-bold leading-[40px] cursor-pointer ${index === tabList.length - 1 ? '' : 'mr-[40px]'} ${tab.className === 'Started' ? 'text-play underline' : 'text-[#02073E] dark:dark:text-white'}`}
+            className={`plus:text-md font-bold leading-[34px] plus:leading-[40px] cursor-pointer ${index === tabList.length - 1 ? '' : 'plus:mr-[40px]'} ${tab.className === 'Started' ? 'text-play underline' : 'text-[#02073E] dark:dark:text-white'} text-[0.14rem]`}
             onClick={() => changeTab(tab)}
             key={index}
           >

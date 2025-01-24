@@ -10,7 +10,7 @@ export default function Page({ categoryName, categoryId, categoryUrl }: { catego
   }
   return (
     <div
-      className={`cursor-pointer text-white mr-[6px] text-min px-[6px] rounded-10px bg-[#c8c8c8] hover:bg-play transition-all dark:hover:bg-play dark:hover:text-white dark:bg-bgDark dark:text-fontGry-100`}
+      className={`cursor-pointer text-white mr-[6px] text-min max-plus:leading-20px[] px-[6px] rounded-10px bg-[#c8c8c8] hover:bg-play transition-all dark:hover:bg-play dark:hover:text-white dark:bg-bgDark dark:text-fontGry-100`}
       onClick={goCaategory}
     >
       {categoryName}

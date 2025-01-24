@@ -45,10 +45,12 @@ export default function SearchInput({ ...props }: {}) {
     setShowX(!!refInput.current.value)
   }, [pathname, inputFocus, refInput])
   return (
-    <div className={`px-[15px] border-[1px] border-[#D9D9D9] rounded-[20px] w-[360px] flex dark:bg-bgDark dark:border-darkHomeBg relative`}>
+    <div
+      className={`px-[15px] border-[1px] border-[#D9D9D9] rounded-[20px] w-[3rem] plus:w-[360px] flex dark:bg-bgDark dark:border-darkHomeBg relative`}
+    >
       <Input
         ref={refInput}
-        className={`w-[280px] h-[40px] border-none flex-1 dark:bg-bgDark`}
+        className={`w-[280px] h-[0.36rem] plus:h-[40px] border-none flex-1 dark:bg-bgDark`}
         defaultValue={decodeURIComponent(searchParams.get('word') || '')}
         {...props}
         placeholder="Search"
